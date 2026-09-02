@@ -31,8 +31,10 @@ jobs:
 
       - run: npm ci
 
-      - run: npx expo export --platform web
+      - run: npx expo export --platform web --clear
         timeout-minutes: 5
+
+      - run: ls -la dist/ && grep -o 'src="[^"]*"' dist/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
