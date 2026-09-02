@@ -17,6 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CI: true
+      EXPO_PUBLIC_SUPABASE_URL: ""
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ""
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +32,7 @@ jobs:
       - run: npm ci
 
       - run: npx expo export --platform web
+        timeout-minutes: 5
 
       - uses: actions/upload-pages-artifact@v3
         with:
