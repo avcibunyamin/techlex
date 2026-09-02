@@ -1,0 +1,2497 @@
+[
+  {
+    "id": "dev-001",
+    "term": "HTML",
+    "translations": {
+      "tr": {
+        "definition": "HyperText Markup Language; web sayfalarının yapısını ve içeriğini tanımlamak için kullanılan standart işaretleme dilidir.",
+        "example": "Her web sayfası HTML etiketleri kullanılarak yapılandırılır."
+      },
+      "en": {
+        "definition": "HyperText Markup Language; the standard markup language used to define the structure and content of web pages.",
+        "example": "Every web page is structured using HTML tags to define its content."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "markup"
+    ],
+    "relatedTerms": [
+      "dev-002",
+      "dev-003"
+    ],
+    "order": 1
+  },
+  {
+    "id": "dev-002",
+    "term": "CSS",
+    "translations": {
+      "tr": {
+        "definition": "Cascading Style Sheets; web sayfalarının görünümünü, düzenini ve tasarımını kontrol eden stil dilidir.",
+        "example": "CSS ile butonların rengi, yazı tipi ve sayfa düzeni özelleştirildi."
+      },
+      "en": {
+        "definition": "Cascading Style Sheets; a style language that controls the appearance, layout, and design of web pages.",
+        "example": "CSS was used to customize button colors, fonts, and page layout."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "styling"
+    ],
+    "relatedTerms": [
+      "dev-001",
+      "dev-003"
+    ],
+    "order": 2
+  },
+  {
+    "id": "dev-003",
+    "term": "JavaScript",
+    "translations": {
+      "tr": {
+        "definition": "Web sayfalarına etkileşim ve dinamik davranış eklemek için kullanılan programlama dilidir. Hem istemci hem sunucu tarafında çalışır.",
+        "example": "JavaScript ile kullanıcı butona tıkladığında form doğrulaması yapılıyor."
+      },
+      "en": {
+        "definition": "A programming language used to add interactivity and dynamic behavior to web pages, running on both client and server side.",
+        "example": "JavaScript validates the form when the user clicks the submit button."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "programming-language"
+    ],
+    "relatedTerms": [
+      "dev-001",
+      "dev-002",
+      "dev-004"
+    ],
+    "order": 3
+  },
+  {
+    "id": "dev-004",
+    "term": "TypeScript",
+    "translations": {
+      "tr": {
+        "definition": "JavaScript'in üzerine statik tip denetimi ekleyen, Microsoft tarafından geliştirilen programlama dilidir.",
+        "example": "TypeScript kullanarak değişkenlerin tiplerini tanımlayıp derleme zamanında hataları yakalıyoruz."
+      },
+      "en": {
+        "definition": "A programming language developed by Microsoft that adds static type checking on top of JavaScript.",
+        "example": "Using TypeScript, we define variable types and catch errors at compile time."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "programming-language"
+    ],
+    "relatedTerms": [
+      "dev-003",
+      "dev-005"
+    ],
+    "order": 4
+  },
+  {
+    "id": "dev-005",
+    "term": "DOM",
+    "translations": {
+      "tr": {
+        "definition": "Document Object Model; HTML belgesinin programatik olarak erişilebilen ve değiştirilebilen ağaç yapısındaki nesne temsilidir.",
+        "example": "JavaScript, DOM üzerinden HTML elementlerini dinamik olarak ekleyip kaldırabiliyor."
+      },
+      "en": {
+        "definition": "Document Object Model; a tree-structured object representation of an HTML document that can be programmatically accessed and modified.",
+        "example": "JavaScript can dynamically add and remove HTML elements through the DOM."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "browser"
+    ],
+    "relatedTerms": [
+      "dev-001",
+      "dev-003"
+    ],
+    "order": 5
+  },
+  {
+    "id": "dev-006",
+    "term": "API",
+    "translations": {
+      "tr": {
+        "definition": "Application Programming Interface; farklı yazılım bileşenlerinin birbiriyle iletişim kurmasını sağlayan kurallar ve tanımlar kümesidir.",
+        "example": "Hava durumu verileri üçüncü parti bir API üzerinden uygulamaya entegre edildi."
+      },
+      "en": {
+        "definition": "Application Programming Interface; a set of rules and definitions that enable different software components to communicate with each other.",
+        "example": "Weather data was integrated into the application through a third-party API."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "integration"
+    ],
+    "relatedTerms": [
+      "dev-013",
+      "dev-014",
+      "dev-015"
+    ],
+    "order": 6
+  },
+  {
+    "id": "dev-007",
+    "term": "Server",
+    "translations": {
+      "tr": {
+        "definition": "İstemcilerden gelen istekleri işleyen, veri depolayan ve hizmet sunan bilgisayar veya yazılımdır.",
+        "example": "Web server, kullanıcıların tarayıcılarından gelen HTTP isteklerini işliyor."
+      },
+      "en": {
+        "definition": "A computer or software that processes requests from clients, stores data, and provides services.",
+        "example": "The web server processes HTTP requests from users' browsers."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "infrastructure"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-016"
+    ],
+    "order": 7
+  },
+  {
+    "id": "dev-008",
+    "term": "Database",
+    "translations": {
+      "tr": {
+        "definition": "Verilerin yapılandırılmış bir şekilde depolandığı, yönetildiği ve sorgulandığı sistemdir.",
+        "example": "Kullanıcı bilgileri PostgreSQL database'inde güvenli şekilde saklanıyor."
+      },
+      "en": {
+        "definition": "A system for storing, managing, and querying data in a structured manner.",
+        "example": "User information is securely stored in the PostgreSQL database."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-009",
+      "dev-010"
+    ],
+    "order": 8
+  },
+  {
+    "id": "dev-009",
+    "term": "SQL",
+    "translations": {
+      "tr": {
+        "definition": "Structured Query Language; ilişkisel veritabanlarında veri sorgulamak, eklemek, güncellemek ve silmek için kullanılan standart dildir.",
+        "example": "SQL sorgusu ile veritabanından son 30 günde kayıt olan kullanıcılar listelendi."
+      },
+      "en": {
+        "definition": "Structured Query Language; the standard language for querying, inserting, updating, and deleting data in relational databases.",
+        "example": "An SQL query listed all users who registered in the last 30 days."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "database",
+      "query-language"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-010"
+    ],
+    "order": 9
+  },
+  {
+    "id": "dev-010",
+    "term": "NoSQL",
+    "translations": {
+      "tr": {
+        "definition": "Geleneksel ilişkisel yapıya bağlı olmayan, esnek şemalarla büyük ve değişken veri kümelerini depolamaya uygun veritabanı türüdür.",
+        "example": "MongoDB gibi NoSQL veritabanları, yapılandırılmamış veri depolama için tercih ediliyor."
+      },
+      "en": {
+        "definition": "A database type not bound to traditional relational structures, suited for storing large and variable datasets with flexible schemas.",
+        "example": "NoSQL databases like MongoDB are preferred for storing unstructured data."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-009"
+    ],
+    "order": 10
+  },
+  {
+    "id": "dev-011",
+    "term": "Algorithm",
+    "translations": {
+      "tr": {
+        "definition": "Belirli bir problemi çözmek veya bir görevi tamamlamak için izlenen adım adım talimatlar dizisidir.",
+        "example": "Arama motoru, en alakalı sonuçları sıralamak için karmaşık bir algorithm kullanıyor."
+      },
+      "en": {
+        "definition": "A step-by-step set of instructions designed to solve a specific problem or complete a task.",
+        "example": "The search engine uses a complex algorithm to rank the most relevant results."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "computer-science"
+    ],
+    "relatedTerms": [
+      "dev-012"
+    ],
+    "order": 11
+  },
+  {
+    "id": "dev-012",
+    "term": "Data Structure",
+    "translations": {
+      "tr": {
+        "definition": "Verileri verimli bir şekilde organize etmek, saklamak ve erişmek için kullanılan yapılardır (dizi, bağlı liste, ağaç, graf vb.).",
+        "example": "Doğru data structure seçimi, uygulamanın performansını önemli ölçüde etkiler."
+      },
+      "en": {
+        "definition": "Structures used to efficiently organize, store, and access data, such as arrays, linked lists, trees, and graphs.",
+        "example": "Choosing the right data structure significantly impacts application performance."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "computer-science"
+    ],
+    "relatedTerms": [
+      "dev-011"
+    ],
+    "order": 12
+  },
+  {
+    "id": "dev-013",
+    "term": "REST",
+    "translations": {
+      "tr": {
+        "definition": "Representational State Transfer; HTTP protokolü üzerinden kaynakları standart yöntemlerle (GET, POST, PUT, DELETE) yöneten web API mimari stilidir.",
+        "example": "REST API'de kullanıcı bilgilerini almak için GET /api/users endpoint'i kullanılıyor."
+      },
+      "en": {
+        "definition": "Representational State Transfer; a web API architectural style that manages resources through standard HTTP methods (GET, POST, PUT, DELETE).",
+        "example": "The REST API uses the GET /api/users endpoint to retrieve user information."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "web-backend",
+      "api"
+    ],
+    "relatedTerms": [
+      "dev-006",
+      "dev-014"
+    ],
+    "order": 13
+  },
+  {
+    "id": "dev-014",
+    "term": "GraphQL",
+    "translations": {
+      "tr": {
+        "definition": "İstemcinin tam olarak ihtiyaç duyduğu veriyi tek bir istekle sorgulamasına olanak tanıyan, Facebook tarafından geliştirilen API sorgu dilidir.",
+        "example": "GraphQL sayesinde istemci yalnızca kullanıcı adı ve e-posta bilgilerini tek sorguda alabiliyor."
+      },
+      "en": {
+        "definition": "A query language for APIs developed by Facebook that allows clients to request exactly the data they need in a single query.",
+        "example": "With GraphQL, the client can fetch only the username and email in a single query."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "web-backend",
+      "api"
+    ],
+    "relatedTerms": [
+      "dev-006",
+      "dev-013"
+    ],
+    "order": 14
+  },
+  {
+    "id": "dev-015",
+    "term": "WebSocket",
+    "translations": {
+      "tr": {
+        "definition": "İstemci ve sunucu arasında çift yönlü, gerçek zamanlı iletişim sağlayan kalıcı bağlantı protokolüdür.",
+        "example": "Canlı sohbet uygulaması, anlık mesajlaşma için WebSocket bağlantısı kullanıyor."
+      },
+      "en": {
+        "definition": "A protocol providing full-duplex, real-time communication over a persistent connection between client and server.",
+        "example": "The live chat application uses WebSocket connections for instant messaging."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "web-backend",
+      "real-time"
+    ],
+    "relatedTerms": [
+      "dev-006",
+      "dev-013"
+    ],
+    "order": 15
+  },
+  {
+    "id": "dev-016",
+    "term": "React",
+    "translations": {
+      "tr": {
+        "definition": "Facebook tarafından geliştirilen, bileşen tabanlı kullanıcı arayüzleri oluşturmak için kullanılan popüler JavaScript kütüphanesidir.",
+        "example": "Uygulama React ile geliştirildi ve her sayfa yeniden kullanılabilir bileşenlerden oluşuyor."
+      },
+      "en": {
+        "definition": "A popular JavaScript library developed by Facebook for building component-based user interfaces.",
+        "example": "The application was built with React, and each page consists of reusable components."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "framework"
+    ],
+    "relatedTerms": [
+      "dev-017",
+      "dev-018",
+      "dev-003"
+    ],
+    "order": 16
+  },
+  {
+    "id": "dev-017",
+    "term": "Angular",
+    "translations": {
+      "tr": {
+        "definition": "Google tarafından geliştirilen, TypeScript tabanlı tam kapsamlı web uygulama çerçevesidir.",
+        "example": "Kurumsal web uygulaması Angular framework'ü kullanılarak geliştirildi."
+      },
+      "en": {
+        "definition": "A comprehensive TypeScript-based web application framework developed by Google.",
+        "example": "The enterprise web application was developed using the Angular framework."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "framework"
+    ],
+    "relatedTerms": [
+      "dev-016",
+      "dev-018",
+      "dev-004"
+    ],
+    "order": 17
+  },
+  {
+    "id": "dev-018",
+    "term": "Vue",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcı arayüzleri ve tek sayfalık uygulamalar geliştirmek için kullanılan, öğrenmesi kolay ve esnek bir JavaScript çerçevesidir.",
+        "example": "Küçük projeler için Vue, hızlı prototipleme imkanı sağlıyor."
+      },
+      "en": {
+        "definition": "A flexible and easy-to-learn JavaScript framework used for building user interfaces and single-page applications.",
+        "example": "Vue provides rapid prototyping capabilities for small projects."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "framework"
+    ],
+    "relatedTerms": [
+      "dev-016",
+      "dev-017"
+    ],
+    "order": 18
+  },
+  {
+    "id": "dev-019",
+    "term": "Responsive Design",
+    "translations": {
+      "tr": {
+        "definition": "Web sayfalarının farklı ekran boyutlarına ve cihazlara otomatik olarak uyum sağlamasını hedefleyen tasarım yaklaşımıdır.",
+        "example": "Responsive design sayesinde web sitesi hem masaüstünde hem de mobilde düzgün görüntüleniyor."
+      },
+      "en": {
+        "definition": "A design approach that ensures web pages automatically adapt to different screen sizes and devices.",
+        "example": "Responsive design ensures the website displays correctly on both desktop and mobile devices."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "design"
+    ],
+    "relatedTerms": [
+      "dev-002",
+      "dev-001"
+    ],
+    "order": 19
+  },
+  {
+    "id": "dev-020",
+    "term": "SPA",
+    "translations": {
+      "tr": {
+        "definition": "Single Page Application; tüm içeriğin tek bir HTML sayfasında dinamik olarak yüklendiği, sayfa yenilenmesi gerektirmeyen web uygulamasıdır.",
+        "example": "Gmail bir SPA örneğidir; e-postalar arasında geçiş yaparken sayfa yenilenmez."
+      },
+      "en": {
+        "definition": "Single Page Application; a web application that dynamically loads all content on a single HTML page without requiring page reloads.",
+        "example": "Gmail is a SPA; switching between emails doesn't require a page reload."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "architecture"
+    ],
+    "relatedTerms": [
+      "dev-021",
+      "dev-016"
+    ],
+    "order": 20
+  },
+  {
+    "id": "dev-021",
+    "term": "SSR",
+    "translations": {
+      "tr": {
+        "definition": "Server-Side Rendering; web sayfasının HTML içeriğinin sunucu tarafında oluşturularak istemciye gönderilmesidir. SEO ve ilk yükleme hızı avantajı sağlar.",
+        "example": "SSR kullanarak arama motorlarının sayfa içeriğini daha iyi indekslemesini sağladık."
+      },
+      "en": {
+        "definition": "Server-Side Rendering; the process of generating HTML content on the server and sending it to the client, benefiting SEO and initial load performance.",
+        "example": "We used SSR to ensure search engines could properly index the page content."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-frontend",
+      "web-backend",
+      "rendering"
+    ],
+    "relatedTerms": [
+      "dev-020",
+      "dev-007"
+    ],
+    "order": 21
+  },
+  {
+    "id": "dev-022",
+    "term": "ORM",
+    "translations": {
+      "tr": {
+        "definition": "Object-Relational Mapping; veritabanı tablolarını programlama dilindeki nesnelere eşleyerek SQL yazmadan veritabanı işlemleri yapmayı sağlayan araçtır.",
+        "example": "ORM sayesinde SQL yazmadan veritabanındaki kullanıcı kayıtlarını sorgulayabiliyoruz."
+      },
+      "en": {
+        "definition": "Object-Relational Mapping; a tool that maps database tables to objects in a programming language, enabling database operations without writing raw SQL.",
+        "example": "With ORM, we can query user records from the database without writing raw SQL."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-009"
+    ],
+    "order": 22
+  },
+  {
+    "id": "dev-023",
+    "term": "Middleware",
+    "translations": {
+      "tr": {
+        "definition": "İstek ve yanıt döngüsü arasında çalışan, kimlik doğrulama, loglama gibi ara işlemleri gerçekleştiren yazılım katmanıdır.",
+        "example": "Authentication middleware, her API isteğinde kullanıcının oturum bilgisini kontrol ediyor."
+      },
+      "en": {
+        "definition": "A software layer that runs between request and response cycles, handling operations like authentication and logging.",
+        "example": "The authentication middleware checks the user's session on every API request."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "architecture"
+    ],
+    "relatedTerms": [
+      "dev-007",
+      "dev-006"
+    ],
+    "order": 23
+  },
+  {
+    "id": "dev-024",
+    "term": "Session",
+    "translations": {
+      "tr": {
+        "definition": "Sunucu tarafında kullanıcının oturum bilgilerini tutan ve istemci ile sunucu arasındaki durumu koruyan mekanizmadır.",
+        "example": "Kullanıcı giriş yaptığında sunucu bir session oluşturur ve oturum bilgilerini saklar."
+      },
+      "en": {
+        "definition": "A server-side mechanism that stores user session data and maintains state between client and server interactions.",
+        "example": "When a user logs in, the server creates a session and stores the session information."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "state-management"
+    ],
+    "relatedTerms": [
+      "dev-025",
+      "dev-026"
+    ],
+    "order": 24
+  },
+  {
+    "id": "dev-025",
+    "term": "Cookie",
+    "translations": {
+      "tr": {
+        "definition": "Web sunucusu tarafından kullanıcının tarayıcısında depolanan küçük veri parçasıdır. Oturum yönetimi ve tercih kaydetme için kullanılır.",
+        "example": "Cookie, kullanıcının dil tercihini hatırlamak için tarayıcıda saklanıyor."
+      },
+      "en": {
+        "definition": "A small piece of data stored in the user's browser by the web server, used for session management and storing preferences.",
+        "example": "A cookie is stored in the browser to remember the user's language preference."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "web-frontend",
+      "state-management"
+    ],
+    "relatedTerms": [
+      "dev-024",
+      "dev-026"
+    ],
+    "order": 25
+  },
+  {
+    "id": "dev-026",
+    "term": "JWT",
+    "translations": {
+      "tr": {
+        "definition": "JSON Web Token; istemci ve sunucu arasında güvenli bilgi alışverişi için kullanılan, dijital olarak imzalanmış kompakt token formatıdır.",
+        "example": "Kullanıcı girişinden sonra sunucu bir JWT oluşturup istemciye gönderiyor."
+      },
+      "en": {
+        "definition": "JSON Web Token; a compact, digitally signed token format used for securely transmitting information between client and server.",
+        "example": "After login, the server generates a JWT and sends it to the client for subsequent requests."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "authentication",
+      "security"
+    ],
+    "relatedTerms": [
+      "dev-024",
+      "dev-025"
+    ],
+    "order": 26
+  },
+  {
+    "id": "dev-027",
+    "term": "Microservices",
+    "translations": {
+      "tr": {
+        "definition": "Uygulamayı bağımsız olarak dağıtılabilir, küçük ve özerk servislere bölen yazılım mimari yaklaşımıdır.",
+        "example": "E-ticaret platformu microservices mimarisine geçerek ödeme, sipariş ve envanter servislerini birbirinden ayırdı."
+      },
+      "en": {
+        "definition": "A software architecture approach that structures an application as a collection of small, independently deployable, autonomous services.",
+        "example": "The e-commerce platform migrated to microservices, separating payment, order, and inventory services."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "architecture"
+    ],
+    "relatedTerms": [
+      "dev-028",
+      "dev-045"
+    ],
+    "order": 27
+  },
+  {
+    "id": "dev-028",
+    "term": "Monolith",
+    "translations": {
+      "tr": {
+        "definition": "Tüm uygulama bileşenlerinin tek bir kod tabanında birleştirildiği ve tek birim olarak dağıtıldığı geleneksel mimari yaklaşımdır.",
+        "example": "Startup başlangıçta monolith mimari ile hızlıca geliştirme yaptı, sonra microservices'e geçti."
+      },
+      "en": {
+        "definition": "A traditional architecture where all application components are combined in a single codebase and deployed as one unit.",
+        "example": "The startup initially developed quickly with a monolith architecture, then migrated to microservices."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "architecture"
+    ],
+    "relatedTerms": [
+      "dev-027"
+    ],
+    "order": 28
+  },
+  {
+    "id": "dev-029",
+    "term": "Load Balancer",
+    "translations": {
+      "tr": {
+        "definition": "Gelen ağ trafiğini birden fazla sunucuya dağıtarak performansı ve kullanılabilirliği artıran altyapı bileşenidir.",
+        "example": "Load balancer, kullanıcı isteklerini üç farklı sunucuya eşit şekilde dağıtıyor."
+      },
+      "en": {
+        "definition": "An infrastructure component that distributes incoming network traffic across multiple servers to improve performance and availability.",
+        "example": "The load balancer distributes user requests equally across three different servers."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "infrastructure"
+    ],
+    "relatedTerms": [
+      "dev-007",
+      "dev-030"
+    ],
+    "order": 29
+  },
+  {
+    "id": "dev-030",
+    "term": "Caching",
+    "translations": {
+      "tr": {
+        "definition": "Sık erişilen verilerin hızlı erişilebilir bir katmanda geçici olarak saklanarak performansı artırma tekniğidir.",
+        "example": "Redis caching katmanı sayesinde veritabanı sorgu sayısı yüzde 70 azaldı."
+      },
+      "en": {
+        "definition": "A technique of temporarily storing frequently accessed data in a fast-access layer to improve performance.",
+        "example": "The Redis caching layer reduced database query count by 70 percent."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "performance"
+    ],
+    "relatedTerms": [
+      "dev-031",
+      "dev-008"
+    ],
+    "order": 30
+  },
+  {
+    "id": "dev-031",
+    "term": "CDN",
+    "translations": {
+      "tr": {
+        "definition": "Content Delivery Network; statik içerikleri dünya genelindeki sunuculara dağıtarak kullanıcılara en yakın noktadan hızlı erişim sağlayan ağdır.",
+        "example": "Görseller ve CSS dosyaları CDN üzerinden sunularak sayfa yükleme hızı artırıldı."
+      },
+      "en": {
+        "definition": "Content Delivery Network; a network of distributed servers that delivers static content from the nearest location to users for faster access.",
+        "example": "Images and CSS files are served through a CDN to improve page load speed."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "infrastructure",
+      "performance"
+    ],
+    "relatedTerms": [
+      "dev-030",
+      "dev-007"
+    ],
+    "order": 31
+  },
+  {
+    "id": "dev-032",
+    "term": "CRUD",
+    "translations": {
+      "tr": {
+        "definition": "Create, Read, Update, Delete; veritabanı ve uygulama geliştirmede temel veri işleme operasyonlarının kısaltmasıdır.",
+        "example": "Admin paneli, kullanıcılar için tam CRUD işlemleri sunuyor."
+      },
+      "en": {
+        "definition": "Create, Read, Update, Delete; the four basic data manipulation operations in database and application development.",
+        "example": "The admin panel provides full CRUD operations for managing users."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "database",
+      "web-backend"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-009"
+    ],
+    "order": 32
+  },
+  {
+    "id": "dev-033",
+    "term": "Query",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanından belirli verileri almak, filtrelemek veya işlemek için yazılan sorgudur.",
+        "example": "Performans sorunu yaşayan query optimize edilerek çalışma süresi 5 saniyeden 200 milisaniyeye düşürüldü."
+      },
+      "en": {
+        "definition": "A request written to retrieve, filter, or manipulate specific data from a database.",
+        "example": "The slow query was optimized, reducing execution time from 5 seconds to 200 milliseconds."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-009",
+      "dev-034"
+    ],
+    "order": 33
+  },
+  {
+    "id": "dev-034",
+    "term": "Index",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanında sorguların daha hızlı çalışmasını sağlamak için oluşturulan, verilere hızlı erişim yapısıdır.",
+        "example": "Kullanıcı tablosundaki e-posta sütununa index eklenerek arama sorguları hızlandırıldı."
+      },
+      "en": {
+        "definition": "A database structure created to enable faster query execution by providing quick access to data.",
+        "example": "Adding an index to the email column in the users table sped up search queries significantly."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "database",
+      "performance"
+    ],
+    "relatedTerms": [
+      "dev-033",
+      "dev-008"
+    ],
+    "order": 34
+  },
+  {
+    "id": "dev-035",
+    "term": "Primary Key",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanı tablosundaki her kaydı benzersiz şekilde tanımlayan sütun veya sütun kombinasyonudur.",
+        "example": "Her kullanıcı kaydı, benzersiz bir user_id primary key ile tanımlanıyor."
+      },
+      "en": {
+        "definition": "A column or combination of columns that uniquely identifies each record in a database table.",
+        "example": "Each user record is identified by a unique user_id primary key."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-036",
+      "dev-008"
+    ],
+    "order": 35
+  },
+  {
+    "id": "dev-036",
+    "term": "Foreign Key",
+    "translations": {
+      "tr": {
+        "definition": "Bir tablodaki sütunun başka bir tablonun primary key'ine referans vererek tablolar arasında ilişki kuran kısıtlamadır.",
+        "example": "Sipariş tablosundaki user_id foreign key, kullanıcılar tablosuna referans veriyor."
+      },
+      "en": {
+        "definition": "A constraint where a column in one table references the primary key of another table, establishing a relationship between tables.",
+        "example": "The user_id foreign key in the orders table references the users table."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-035",
+      "dev-037"
+    ],
+    "order": 36
+  },
+  {
+    "id": "dev-037",
+    "term": "Normalization",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanındaki veri tekrarını azaltmak ve veri bütünlüğünü sağlamak için tabloları yapılandırma sürecidir.",
+        "example": "Normalization uygulanarak müşteri adresleri ayrı bir tabloya taşındı ve veri tekrarı önlendi."
+      },
+      "en": {
+        "definition": "The process of organizing database tables to reduce data redundancy and improve data integrity.",
+        "example": "Normalization moved customer addresses to a separate table, eliminating data duplication."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "database",
+      "design"
+    ],
+    "relatedTerms": [
+      "dev-035",
+      "dev-036"
+    ],
+    "order": 37
+  },
+  {
+    "id": "dev-038",
+    "term": "Transaction",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanında ya tamamen uygulanan ya da hiç uygulanmayan, bölünmez işlem birimidir. Veri tutarlılığını garanti eder.",
+        "example": "Para transferi sırasında transaction kullanılarak hem gönderen hem alıcı hesabı atomik olarak güncelleniyor."
+      },
+      "en": {
+        "definition": "An indivisible unit of work in a database that either completes entirely or not at all, guaranteeing data consistency.",
+        "example": "A transaction ensures both the sender and receiver accounts are updated atomically during a money transfer."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-032"
+    ],
+    "order": 38
+  },
+  {
+    "id": "dev-039",
+    "term": "Schema",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanının yapısını tanımlayan şemadır; tabloları, sütunları, veri tiplerini ve ilişkileri içerir.",
+        "example": "Yeni özellik için veritabanı schema'sına iki yeni tablo eklendi."
+      },
+      "en": {
+        "definition": "The blueprint that defines the structure of a database, including tables, columns, data types, and relationships.",
+        "example": "Two new tables were added to the database schema for the new feature."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "database"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-040"
+    ],
+    "order": 39
+  },
+  {
+    "id": "dev-040",
+    "term": "Migration",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanı şemasındaki değişiklikleri (tablo ekleme, sütun değiştirme vb.) sürüm kontrollü ve tekrarlanabilir şekilde uygulayan betiklerdir.",
+        "example": "Yeni bir sütun eklemek için bir migration dosyası oluşturuldu ve uygulandı."
+      },
+      "en": {
+        "definition": "Version-controlled scripts that apply changes to the database schema (adding tables, modifying columns, etc.) in a repeatable manner.",
+        "example": "A migration file was created and applied to add a new column to the users table."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "database",
+      "devops"
+    ],
+    "relatedTerms": [
+      "dev-039",
+      "dev-008"
+    ],
+    "order": 40
+  },
+  {
+    "id": "dev-041",
+    "term": "Replication",
+    "translations": {
+      "tr": {
+        "definition": "Veritabanı verilerinin birden fazla sunucuya kopyalanarak yüksek erişilebilirlik ve yedekleme sağlama sürecidir.",
+        "example": "Database replication sayesinde ana sunucu çöktüğünde yedek sunucu otomatik devreye giriyor."
+      },
+      "en": {
+        "definition": "The process of copying database data across multiple servers to ensure high availability and data backup.",
+        "example": "Database replication ensures the backup server automatically takes over when the primary server fails."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "database",
+      "infrastructure"
+    ],
+    "relatedTerms": [
+      "dev-008",
+      "dev-029"
+    ],
+    "order": 41
+  },
+  {
+    "id": "dev-042",
+    "term": "Git",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım projelerinde kod değişikliklerini izlemek, yönetmek ve işbirliği yapmak için kullanılan dağıtık sürüm kontrol sistemidir.",
+        "example": "Tüm geliştirme ekibi Git kullanarak aynı kod tabanı üzerinde eş zamanlı çalışabiliyor."
+      },
+      "en": {
+        "definition": "A distributed version control system used to track, manage code changes, and collaborate on software projects.",
+        "example": "The entire development team can work simultaneously on the same codebase using Git."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-043",
+      "dev-044",
+      "dev-046"
+    ],
+    "order": 42
+  },
+  {
+    "id": "dev-043",
+    "term": "Repository",
+    "translations": {
+      "tr": {
+        "definition": "Bir projenin tüm dosyalarını, değişiklik geçmişini ve sürüm bilgilerini barındıran depolama alanıdır.",
+        "example": "Projenin kaynak kodu GitHub'daki bir repository'de barındırılıyor."
+      },
+      "en": {
+        "definition": "A storage location that contains all project files, change history, and version information.",
+        "example": "The project's source code is hosted in a repository on GitHub."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-042",
+      "dev-051"
+    ],
+    "order": 43
+  },
+  {
+    "id": "dev-044",
+    "term": "Branch",
+    "translations": {
+      "tr": {
+        "definition": "Ana kod tabanından ayrılarak bağımsız geliştirme yapılmasına olanak tanıyan paralel çalışma dalıdır.",
+        "example": "Yeni özellik için feature/user-profile adında bir branch oluşturuldu."
+      },
+      "en": {
+        "definition": "A parallel line of development that diverges from the main codebase, allowing independent work on features or fixes.",
+        "example": "A branch named feature/user-profile was created for the new feature."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-042",
+      "dev-045"
+    ],
+    "order": 44
+  },
+  {
+    "id": "dev-045",
+    "term": "Merge",
+    "translations": {
+      "tr": {
+        "definition": "Farklı branch'lardaki kod değişikliklerini birleştirme işlemidir.",
+        "example": "Özellik geliştirme tamamlandıktan sonra feature branch, main branch'e merge edildi."
+      },
+      "en": {
+        "definition": "The process of combining code changes from different branches into one.",
+        "example": "After feature development was completed, the feature branch was merged into the main branch."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-044",
+      "dev-046"
+    ],
+    "order": 45
+  },
+  {
+    "id": "dev-046",
+    "term": "Pull Request",
+    "translations": {
+      "tr": {
+        "definition": "Kod değişikliklerinin ana dala birleştirilmeden önce ekip üyeleri tarafından incelenmesini sağlayan işbirliği mekanizmasıdır.",
+        "example": "Geliştirici, yeni özellik için bir pull request açtı ve iki kişinin onayını bekledi."
+      },
+      "en": {
+        "definition": "A collaboration mechanism that enables team members to review code changes before they are merged into the main branch.",
+        "example": "The developer opened a pull request for the new feature and awaited approval from two reviewers."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "version-control",
+      "collaboration"
+    ],
+    "relatedTerms": [
+      "dev-045",
+      "dev-047"
+    ],
+    "order": 46
+  },
+  {
+    "id": "dev-047",
+    "term": "Commit",
+    "translations": {
+      "tr": {
+        "definition": "Kod değişikliklerinin açıklayıcı bir mesajla birlikte sürüm kontrol sistemine kaydedilmesidir.",
+        "example": "Her commit'e açıklayıcı bir mesaj yazarak değişikliklerin amacını belgeliyoruz."
+      },
+      "en": {
+        "definition": "The act of saving code changes to the version control system along with a descriptive message.",
+        "example": "We write a descriptive message with every commit to document the purpose of the changes."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-042",
+      "dev-046"
+    ],
+    "order": 47
+  },
+  {
+    "id": "dev-048",
+    "term": "Rebase",
+    "translations": {
+      "tr": {
+        "definition": "Bir branch'in başlangıç noktasını değiştirerek commit geçmişini yeniden düzenleyen Git işlemidir.",
+        "example": "Feature branch'i güncel tutmak için main branch üzerine rebase yapıldı."
+      },
+      "en": {
+        "definition": "A Git operation that changes the base of a branch, reorganizing the commit history.",
+        "example": "The feature branch was rebased onto main to keep it up to date."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-044",
+      "dev-045"
+    ],
+    "order": 48
+  },
+  {
+    "id": "dev-049",
+    "term": "Conflict",
+    "translations": {
+      "tr": {
+        "definition": "İki veya daha fazla geliştiricinin aynı dosyanın aynı satırlarını farklı şekilde değiştirmesi sonucu oluşan ve manuel çözüm gerektiren durumdur.",
+        "example": "Merge sırasında oluşan conflict, geliştiriciler tarafından el ile çözüldü."
+      },
+      "en": {
+        "definition": "A situation where two or more developers modify the same lines of a file differently, requiring manual resolution.",
+        "example": "The conflict that occurred during the merge was resolved manually by the developers."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-045",
+      "dev-048"
+    ],
+    "order": 49
+  },
+  {
+    "id": "dev-050",
+    "term": "Stash",
+    "translations": {
+      "tr": {
+        "definition": "Git'te henüz commit edilmeyen değişiklikleri geçici olarak saklayarak çalışma dizinini temizleme işlemidir.",
+        "example": "Acil bir düzeltme yapmak için mevcut değişiklikler stash'e alındı."
+      },
+      "en": {
+        "definition": "A Git operation that temporarily saves uncommitted changes, cleaning the working directory.",
+        "example": "Current changes were stashed to switch to an urgent hotfix branch."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-042",
+      "dev-044"
+    ],
+    "order": 50
+  },
+  {
+    "id": "dev-051",
+    "term": "Fork",
+    "translations": {
+      "tr": {
+        "definition": "Başka bir geliştiricinin repository'sinin tam kopyasını kendi hesabınıza alarak bağımsız geliştirme yapmanıza olanak tanıyan işlemdir.",
+        "example": "Açık kaynak projeyi fork'layarak kendi değişikliklerimizi yaptık ve pull request gönderdik."
+      },
+      "en": {
+        "definition": "Creating a complete copy of another developer's repository in your own account to make independent changes.",
+        "example": "We forked the open-source project, made our changes, and submitted a pull request."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control",
+      "open-source"
+    ],
+    "relatedTerms": [
+      "dev-043",
+      "dev-046"
+    ],
+    "order": 51
+  },
+  {
+    "id": "dev-052",
+    "term": "Tag",
+    "translations": {
+      "tr": {
+        "definition": "Git'te belirli bir commit'i işaretleyerek sürüm numarası (v1.0.0 gibi) atamak için kullanılan referanstır.",
+        "example": "Yeni sürüm yayınlanmadan önce commit'e v2.1.0 tag'i eklendi."
+      },
+      "en": {
+        "definition": "A reference in Git used to mark a specific commit with a version number (such as v1.0.0).",
+        "example": "A v2.1.0 tag was added to the commit before releasing the new version."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "version-control"
+    ],
+    "relatedTerms": [
+      "dev-047",
+      "dev-042"
+    ],
+    "order": 52
+  },
+  {
+    "id": "dev-053",
+    "term": "Docker",
+    "translations": {
+      "tr": {
+        "definition": "Uygulamaları ve bağımlılıklarını izole konteyner'larda paketleyerek her ortamda tutarlı çalışmasını sağlayan platformdur.",
+        "example": "Uygulama Docker container'ı içinde paketlenerek geliştirme ve production ortamlarında aynı şekilde çalışıyor."
+      },
+      "en": {
+        "definition": "A platform that packages applications and their dependencies into isolated containers, ensuring consistent execution across environments.",
+        "example": "The application is packaged in a Docker container to run consistently in development and production environments."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "containerization"
+    ],
+    "relatedTerms": [
+      "dev-054",
+      "dev-055"
+    ],
+    "order": 53
+  },
+  {
+    "id": "dev-054",
+    "term": "Kubernetes",
+    "translations": {
+      "tr": {
+        "definition": "Konteynerleştirilmiş uygulamaların dağıtımını, ölçeklenmesini ve yönetimini otomatikleştiren açık kaynak orkestrasyon platformudur.",
+        "example": "Kubernetes, yoğun trafik dönemlerinde otomatik olarak yeni pod'lar oluşturarak uygulamayı ölçeklendiriyor."
+      },
+      "en": {
+        "definition": "An open-source orchestration platform that automates the deployment, scaling, and management of containerized applications.",
+        "example": "Kubernetes automatically scales the application by creating new pods during high traffic periods."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "containerization",
+      "orchestration"
+    ],
+    "relatedTerms": [
+      "dev-053",
+      "dev-056"
+    ],
+    "order": 54
+  },
+  {
+    "id": "dev-055",
+    "term": "CI/CD",
+    "translations": {
+      "tr": {
+        "definition": "Continuous Integration / Continuous Delivery; kod değişikliklerinin otomatik olarak test edilmesi, birleştirilmesi ve dağıtılması sürecidir.",
+        "example": "CI/CD pipeline sayesinde her commit otomatik olarak test ediliyor ve staging ortamına dağıtılıyor."
+      },
+      "en": {
+        "definition": "Continuous Integration / Continuous Delivery; the process of automatically testing, merging, and deploying code changes.",
+        "example": "The CI/CD pipeline automatically tests and deploys every commit to the staging environment."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "automation"
+    ],
+    "relatedTerms": [
+      "dev-056",
+      "dev-053"
+    ],
+    "order": 55
+  },
+  {
+    "id": "dev-056",
+    "term": "Pipeline",
+    "translations": {
+      "tr": {
+        "definition": "Kod değişikliklerinin derleme, test ve dağıtım aşamalarından otomatik olarak geçirildiği iş akışıdır.",
+        "example": "Deployment pipeline, kodu derliyor, testleri çalıştırıyor ve başarılıysa production'a dağıtıyor."
+      },
+      "en": {
+        "definition": "An automated workflow that processes code changes through build, test, and deployment stages.",
+        "example": "The deployment pipeline compiles the code, runs tests, and deploys to production if successful."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "automation"
+    ],
+    "relatedTerms": [
+      "dev-055",
+      "dev-053"
+    ],
+    "order": 56
+  },
+  {
+    "id": "dev-057",
+    "term": "Container",
+    "translations": {
+      "tr": {
+        "definition": "Uygulamayı ve tüm bağımlılıklarını kapsayan, işletim sistemi seviyesinde izole edilmiş hafif sanal ortamdır.",
+        "example": "Her microservice ayrı bir container içinde çalışarak birbirlerinden izole ediliyor."
+      },
+      "en": {
+        "definition": "A lightweight, OS-level isolated virtual environment that encapsulates an application and all its dependencies.",
+        "example": "Each microservice runs in a separate container, isolated from one another."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "containerization"
+    ],
+    "relatedTerms": [
+      "dev-053",
+      "dev-054"
+    ],
+    "order": 57
+  },
+  {
+    "id": "dev-058",
+    "term": "Orchestration",
+    "translations": {
+      "tr": {
+        "definition": "Birden fazla konteyner veya servisin dağıtımını, ölçeklenmesini ve yönetimini koordine eden süreçtir.",
+        "example": "Kubernetes, container orchestration için en yaygın kullanılan araçtır."
+      },
+      "en": {
+        "definition": "The process of coordinating the deployment, scaling, and management of multiple containers or services.",
+        "example": "Kubernetes is the most widely used tool for container orchestration."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "containerization",
+      "orchestration"
+    ],
+    "relatedTerms": [
+      "dev-054",
+      "dev-053"
+    ],
+    "order": 58
+  },
+  {
+    "id": "dev-059",
+    "term": "Infrastructure as Code",
+    "translations": {
+      "tr": {
+        "definition": "Sunucu ve ağ altyapısının kod dosyaları aracılığıyla tanımlanıp yönetilmesini sağlayan yaklaşımdır.",
+        "example": "Infrastructure as Code sayesinde tüm sunucu konfigürasyonu versiyon kontrol altında tutuluyor."
+      },
+      "en": {
+        "definition": "An approach that enables infrastructure (servers, networks) to be defined and managed through code files.",
+        "example": "Infrastructure as Code keeps all server configurations under version control."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "infrastructure"
+    ],
+    "relatedTerms": [
+      "dev-060",
+      "dev-061"
+    ],
+    "order": 59
+  },
+  {
+    "id": "dev-060",
+    "term": "Terraform",
+    "translations": {
+      "tr": {
+        "definition": "HashiCorp tarafından geliştirilen, bulut altyapısını kod olarak tanımlayıp yönetmeyi sağlayan açık kaynak Infrastructure as Code aracıdır.",
+        "example": "AWS altyapısı Terraform konfigürasyonları ile otomatik olarak oluşturuluyor ve yönetiliyor."
+      },
+      "en": {
+        "definition": "An open-source Infrastructure as Code tool by HashiCorp that enables defining and managing cloud infrastructure through code.",
+        "example": "AWS infrastructure is automatically provisioned and managed using Terraform configurations."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "infrastructure",
+      "iac"
+    ],
+    "relatedTerms": [
+      "dev-059",
+      "dev-061"
+    ],
+    "order": 60
+  },
+  {
+    "id": "dev-061",
+    "term": "Ansible",
+    "translations": {
+      "tr": {
+        "definition": "Sunucu yapılandırma, uygulama dağıtımı ve otomasyon görevlerini basit YAML dosyalarıyla yöneten açık kaynak araçtır.",
+        "example": "Ansible playbook'ları ile 50 sunucunun konfigürasyonu aynı anda güncellendi."
+      },
+      "en": {
+        "definition": "An open-source tool that manages server configuration, application deployment, and automation tasks using simple YAML files.",
+        "example": "Ansible playbooks updated the configuration of 50 servers simultaneously."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "automation",
+      "configuration-management"
+    ],
+    "relatedTerms": [
+      "dev-059",
+      "dev-060"
+    ],
+    "order": 61
+  },
+  {
+    "id": "dev-062",
+    "term": "Monitoring",
+    "translations": {
+      "tr": {
+        "definition": "Uygulama ve altyapı performansını, sağlığını ve kullanılabilirliğini sürekli izleyerek sorunları erken tespit etmeyi sağlayan süreçtir.",
+        "example": "Monitoring sistemi, sunucu CPU kullanımı yüzde 90'ı aştığında otomatik alarm gönderiyor."
+      },
+      "en": {
+        "definition": "The continuous process of tracking application and infrastructure performance, health, and availability to detect issues early.",
+        "example": "The monitoring system automatically sends alerts when server CPU usage exceeds 90 percent."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "observability"
+    ],
+    "relatedTerms": [
+      "dev-063",
+      "dev-067"
+    ],
+    "order": 62
+  },
+  {
+    "id": "dev-063",
+    "term": "Logging",
+    "translations": {
+      "tr": {
+        "definition": "Uygulama olaylarını, hataları ve işlemleri kayıt altına alarak hata ayıklama ve analiz için kullanılan süreçtir.",
+        "example": "Merkezi logging sistemi, tüm microservices'lerden gelen logları tek bir yerde topluyor."
+      },
+      "en": {
+        "definition": "The process of recording application events, errors, and operations for debugging and analysis purposes.",
+        "example": "The centralized logging system aggregates logs from all microservices in one place."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "devops",
+      "observability"
+    ],
+    "relatedTerms": [
+      "dev-062",
+      "dev-083"
+    ],
+    "order": 63
+  },
+  {
+    "id": "dev-064",
+    "term": "Blue-Green Deployment",
+    "translations": {
+      "tr": {
+        "definition": "İki özdeş üretim ortamı (mavi ve yeşil) kullanarak kesintisiz dağıtım yapan ve anında geri alma imkanı sunan stratejidir.",
+        "example": "Blue-green deployment ile yeni sürüm yeşil ortamda test edildi ve trafik sorunsuzca yönlendirildi."
+      },
+      "en": {
+        "definition": "A deployment strategy using two identical production environments (blue and green) enabling zero-downtime releases and instant rollback.",
+        "example": "With blue-green deployment, the new version was tested in the green environment and traffic was seamlessly switched."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "deployment"
+    ],
+    "relatedTerms": [
+      "dev-065",
+      "dev-066"
+    ],
+    "order": 64
+  },
+  {
+    "id": "dev-065",
+    "term": "Canary Release",
+    "translations": {
+      "tr": {
+        "definition": "Yeni sürümü önce küçük bir kullanıcı grubuna sunarak sorunları erken tespit etmeyi amaçlayan kademeli dağıtım stratejisidir.",
+        "example": "Canary release ile yeni sürüm önce kullanıcıların yüzde 5'ine sunuldu ve hatalar izlendi."
+      },
+      "en": {
+        "definition": "A gradual deployment strategy that releases new versions to a small subset of users first to detect issues early.",
+        "example": "With canary release, the new version was rolled out to 5 percent of users first while monitoring for errors."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "deployment"
+    ],
+    "relatedTerms": [
+      "dev-064",
+      "dev-066"
+    ],
+    "order": 65
+  },
+  {
+    "id": "dev-066",
+    "term": "Rollback",
+    "translations": {
+      "tr": {
+        "definition": "Yeni sürümde sorun tespit edildiğinde uygulamayı önceki kararlı sürüme geri döndürme işlemidir.",
+        "example": "Production'da kritik bir hata bulununca 5 dakika içinde rollback yapılarak önceki sürüme dönüldü."
+      },
+      "en": {
+        "definition": "The process of reverting an application to its previous stable version when issues are detected in the new release.",
+        "example": "A critical bug in production triggered a rollback to the previous version within 5 minutes."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "devops",
+      "deployment"
+    ],
+    "relatedTerms": [
+      "dev-064",
+      "dev-065"
+    ],
+    "order": 66
+  },
+  {
+    "id": "dev-067",
+    "term": "SLA",
+    "translations": {
+      "tr": {
+        "definition": "Service Level Agreement; hizmet sağlayıcı ile müşteri arasında hizmetin kalitesini, erişilebilirliğini ve performansını garanti eden anlaşmadır.",
+        "example": "SLA'ya göre sistemin aylık yüzde 99.9 erişilebilirlik oranını sağlaması gerekiyor."
+      },
+      "en": {
+        "definition": "Service Level Agreement; a contract between a service provider and customer guaranteeing service quality, availability, and performance.",
+        "example": "According to the SLA, the system must maintain 99.9 percent monthly availability."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "devops",
+      "operations"
+    ],
+    "relatedTerms": [
+      "dev-062",
+      "dev-029"
+    ],
+    "order": 67
+  },
+  {
+    "id": "dev-068",
+    "term": "Unit Test",
+    "translations": {
+      "tr": {
+        "definition": "Bir yazılımın en küçük test edilebilir birimlerini (fonksiyon, metod) izole ederek doğruluğunu kontrol eden test türüdür.",
+        "example": "Her fonksiyon için en az bir unit test yazarak kodun beklenen şekilde çalıştığı doğrulanıyor."
+      },
+      "en": {
+        "definition": "A type of test that verifies the correctness of the smallest testable units (functions, methods) of software in isolation.",
+        "example": "At least one unit test is written for each function to verify it behaves as expected."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-069",
+      "dev-070"
+    ],
+    "order": 68
+  },
+  {
+    "id": "dev-069",
+    "term": "Integration Test",
+    "translations": {
+      "tr": {
+        "definition": "Birden fazla bileşenin veya modülün birlikte doğru çalışıp çalışmadığını kontrol eden test türüdür.",
+        "example": "Integration test, API'nin veritabanı ile doğru şekilde iletişim kurduğunu doğruladı."
+      },
+      "en": {
+        "definition": "A type of test that verifies whether multiple components or modules work correctly together.",
+        "example": "The integration test verified that the API communicates correctly with the database."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-068",
+      "dev-070"
+    ],
+    "order": 69
+  },
+  {
+    "id": "dev-070",
+    "term": "E2E Test",
+    "translations": {
+      "tr": {
+        "definition": "End-to-End Test; uygulamanın baştan sona tüm iş akışını gerçek kullanıcı senaryolarıyla doğrulayan kapsamlı test türüdür.",
+        "example": "E2E test, kullanıcının kayıt olma, giriş yapma ve sipariş verme sürecini otomatik olarak test ediyor."
+      },
+      "en": {
+        "definition": "End-to-End Test; a comprehensive test type that validates the entire application workflow through real user scenarios.",
+        "example": "The E2E test automatically tests the user registration, login, and order placement flow."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-068",
+      "dev-069"
+    ],
+    "order": 70
+  },
+  {
+    "id": "dev-071",
+    "term": "TDD",
+    "translations": {
+      "tr": {
+        "definition": "Test-Driven Development; önce testi yazıp, ardından testi geçirecek kodu geliştiren yazılım geliştirme metodolojisidir.",
+        "example": "TDD yaklaşımıyla önce beklenen davranışı tanımlayan test yazılıyor, sonra kod geliştiriliyor."
+      },
+      "en": {
+        "definition": "Test-Driven Development; a methodology where tests are written first, then the code is developed to pass those tests.",
+        "example": "With TDD, a test defining the expected behavior is written first, then the code is developed."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing",
+      "methodology"
+    ],
+    "relatedTerms": [
+      "dev-072",
+      "dev-068"
+    ],
+    "order": 71
+  },
+  {
+    "id": "dev-072",
+    "term": "BDD",
+    "translations": {
+      "tr": {
+        "definition": "Behavior-Driven Development; yazılımın beklenen davranışlarını iş gereksinimleri dilinde tanımlayarak geliştirme yapan yaklaşımdır.",
+        "example": "BDD senaryoları 'Given-When-Then' formatında yazılarak hem geliştiriciler hem iş analistleri tarafından anlaşılıyor."
+      },
+      "en": {
+        "definition": "Behavior-Driven Development; an approach that defines software behavior in business-readable language to drive development.",
+        "example": "BDD scenarios are written in 'Given-When-Then' format, understood by both developers and business analysts."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "testing",
+      "methodology"
+    ],
+    "relatedTerms": [
+      "dev-071",
+      "dev-068"
+    ],
+    "order": 72
+  },
+  {
+    "id": "dev-073",
+    "term": "Mock",
+    "translations": {
+      "tr": {
+        "definition": "Testlerde gerçek bağımlılıkların yerine geçen, beklenen davranışları taklit eden sahte nesnedir.",
+        "example": "Veritabanı çağrıları mock nesne ile simüle edilerek unit test'ler hızla çalıştırılıyor."
+      },
+      "en": {
+        "definition": "A fake object used in tests to simulate the expected behavior of real dependencies.",
+        "example": "Database calls are simulated with mock objects to run unit tests quickly."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-074",
+      "dev-068"
+    ],
+    "order": 73
+  },
+  {
+    "id": "dev-074",
+    "term": "Stub",
+    "translations": {
+      "tr": {
+        "definition": "Testlerde harici bağımlılıkların yerine önceden belirlenmiş yanıtlar döndüren basitleştirilmiş uygulamadır.",
+        "example": "API çağrısı yerine stub kullanılarak test ortamında sabit bir yanıt döndürülüyor."
+      },
+      "en": {
+        "definition": "A simplified implementation used in tests that returns predefined responses in place of external dependencies.",
+        "example": "A stub is used instead of the actual API call to return a fixed response in the test environment."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-073",
+      "dev-068"
+    ],
+    "order": 74
+  },
+  {
+    "id": "dev-075",
+    "term": "Code Coverage",
+    "translations": {
+      "tr": {
+        "definition": "Testlerin kaynak kodun yüzde kaçını çalıştırdığını gösteren metrik; test kalitesinin göstergelerinden biridir.",
+        "example": "Proje politikası gereği code coverage oranının yüzde 80'in altına düşmemesi gerekiyor."
+      },
+      "en": {
+        "definition": "A metric showing what percentage of source code is executed by tests, serving as one indicator of test quality.",
+        "example": "The project policy requires code coverage to remain above 80 percent."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "testing",
+      "quality"
+    ],
+    "relatedTerms": [
+      "dev-068",
+      "dev-076"
+    ],
+    "order": 75
+  },
+  {
+    "id": "dev-076",
+    "term": "Regression Test",
+    "translations": {
+      "tr": {
+        "definition": "Yeni değişikliklerin mevcut işlevselliği bozmadığını doğrulamak için yapılan test türüdür.",
+        "example": "Her sprint sonunda regression test çalıştırılarak mevcut özelliklerin hala çalıştığı kontrol ediliyor."
+      },
+      "en": {
+        "definition": "A type of test performed to verify that new changes have not broken existing functionality.",
+        "example": "Regression tests are run at the end of each sprint to ensure existing features still work correctly."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing"
+    ],
+    "relatedTerms": [
+      "dev-068",
+      "dev-077"
+    ],
+    "order": 76
+  },
+  {
+    "id": "dev-077",
+    "term": "Load Test",
+    "translations": {
+      "tr": {
+        "definition": "Uygulamanın belirli bir yük altında nasıl performans gösterdiğini ölçmek için yapılan performans testidir.",
+        "example": "Load test sonuçlarına göre sistem 10.000 eş zamanlı kullanıcıyı sorunsuz destekleyebiliyor."
+      },
+      "en": {
+        "definition": "A performance test conducted to measure how an application performs under a specific load.",
+        "example": "Load test results showed the system can handle 10,000 concurrent users without issues."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "testing",
+      "performance"
+    ],
+    "relatedTerms": [
+      "dev-076",
+      "dev-029"
+    ],
+    "order": 77
+  },
+  {
+    "id": "dev-078",
+    "term": "SDK",
+    "translations": {
+      "tr": {
+        "definition": "Software Development Kit; belirli bir platform veya hizmet için uygulama geliştirmeyi kolaylaştıran araçlar, kütüphaneler ve belgeler paketidir.",
+        "example": "Firebase SDK entegre edilerek push notification özelliği hızla uygulamaya eklendi."
+      },
+      "en": {
+        "definition": "Software Development Kit; a package of tools, libraries, and documentation that simplifies application development for a specific platform or service.",
+        "example": "The Firebase SDK was integrated to quickly add push notification functionality to the app."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools"
+    ],
+    "relatedTerms": [
+      "dev-006",
+      "dev-079"
+    ],
+    "order": 78
+  },
+  {
+    "id": "dev-079",
+    "term": "IDE",
+    "translations": {
+      "tr": {
+        "definition": "Integrated Development Environment; kod yazma, hata ayıklama, derleme ve test etme gibi geliştirme araçlarını tek bir platformda birleştiren yazılımdır.",
+        "example": "VS Code, en popüler IDE'lerden biri olarak milyonlarca geliştirici tarafından kullanılıyor."
+      },
+      "en": {
+        "definition": "Integrated Development Environment; software that combines development tools like code editing, debugging, compiling, and testing in a single platform.",
+        "example": "VS Code is one of the most popular IDEs, used by millions of developers worldwide."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools"
+    ],
+    "relatedTerms": [
+      "dev-080",
+      "dev-078"
+    ],
+    "order": 79
+  },
+  {
+    "id": "dev-080",
+    "term": "Debugging",
+    "translations": {
+      "tr": {
+        "definition": "Yazılımdaki hataları (bug) tespit etme, analiz etme ve düzeltme sürecidir.",
+        "example": "Debugging sırasında sorunun yanlış bir koşul ifadesinden kaynaklandığı tespit edildi."
+      },
+      "en": {
+        "definition": "The process of identifying, analyzing, and fixing errors (bugs) in software.",
+        "example": "During debugging, the issue was traced to an incorrect conditional statement."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "development"
+    ],
+    "relatedTerms": [
+      "dev-079",
+      "dev-081"
+    ],
+    "order": 80
+  },
+  {
+    "id": "dev-081",
+    "term": "Refactoring",
+    "translations": {
+      "tr": {
+        "definition": "Yazılımın dış davranışını değiştirmeden iç yapısını iyileştirerek daha okunabilir, bakımı kolay ve verimli hale getirme sürecidir.",
+        "example": "Refactoring sonrasında kod tekrarı azaltıldı ve fonksiyonlar daha anlaşılır hale getirildi."
+      },
+      "en": {
+        "definition": "The process of improving the internal structure of software without changing its external behavior to make it more readable and maintainable.",
+        "example": "After refactoring, code duplication was reduced and functions were made more readable."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "code-quality"
+    ],
+    "relatedTerms": [
+      "dev-080",
+      "dev-082"
+    ],
+    "order": 81
+  },
+  {
+    "id": "dev-082",
+    "term": "Design Pattern",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım geliştirmede sık karşılaşılan problemlere yönelik kanıtlanmış, yeniden kullanılabilir çözüm şablonlarıdır.",
+        "example": "Singleton design pattern kullanılarak uygulama genelinde tek bir veritabanı bağlantısı yönetiliyor."
+      },
+      "en": {
+        "definition": "Proven, reusable solution templates for commonly occurring problems in software development.",
+        "example": "The Singleton design pattern is used to manage a single database connection throughout the application."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "general",
+      "architecture"
+    ],
+    "relatedTerms": [
+      "dev-083",
+      "dev-084"
+    ],
+    "order": 82
+  },
+  {
+    "id": "dev-083",
+    "term": "Singleton",
+    "translations": {
+      "tr": {
+        "definition": "Bir sınıftan yalnızca tek bir örnek (instance) oluşturulmasını garantileyen ve bu örneğe global erişim noktası sağlayan tasarım kalıbıdır.",
+        "example": "Logger sınıfı singleton pattern ile tasarlanarak uygulamada tek bir log nesnesi kullanılıyor."
+      },
+      "en": {
+        "definition": "A design pattern that guarantees only one instance of a class is created and provides a global access point to it.",
+        "example": "The Logger class is designed with the singleton pattern to ensure a single log object is used application-wide."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "general",
+      "design-pattern"
+    ],
+    "relatedTerms": [
+      "dev-082",
+      "dev-084"
+    ],
+    "order": 83
+  },
+  {
+    "id": "dev-084",
+    "term": "MVC",
+    "translations": {
+      "tr": {
+        "definition": "Model-View-Controller; uygulamayı veri (Model), kullanıcı arayüzü (View) ve iş mantığı (Controller) olarak üç katmana ayıran mimari kalıptır.",
+        "example": "MVC yapısı sayesinde frontend ve backend geliştiricileri birbirinden bağımsız çalışabiliyor."
+      },
+      "en": {
+        "definition": "Model-View-Controller; an architectural pattern that separates an application into three layers: data (Model), UI (View), and business logic (Controller).",
+        "example": "The MVC structure allows frontend and backend developers to work independently."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "general",
+      "architecture",
+      "design-pattern"
+    ],
+    "relatedTerms": [
+      "dev-082",
+      "dev-085"
+    ],
+    "order": 84
+  },
+  {
+    "id": "dev-085",
+    "term": "SOLID",
+    "translations": {
+      "tr": {
+        "definition": "Nesne yönelimli programlamada bakımı kolay, esnek ve ölçeklenebilir kod yazmak için beş temel tasarım ilkesinin kısaltmasıdır.",
+        "example": "SOLID prensiplerine uyarak yazılan kod, değişikliklere karşı daha dayanıklı ve test edilebilir oluyor."
+      },
+      "en": {
+        "definition": "An acronym for five fundamental design principles in OOP for writing maintainable, flexible, and scalable code.",
+        "example": "Code written following SOLID principles is more resilient to changes and easier to test."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "general",
+      "design-principles"
+    ],
+    "relatedTerms": [
+      "dev-082",
+      "dev-084"
+    ],
+    "order": 85
+  },
+  {
+    "id": "dev-086",
+    "term": "Agile",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım geliştirmede esneklik, müşteri işbirliği ve iteratif teslimatı ön plana çıkaran proje yönetimi yaklaşımıdır.",
+        "example": "Agile metodolojisine geçtikten sonra ekip müşteri geri bildirimlerine daha hızlı yanıt verebiliyor."
+      },
+      "en": {
+        "definition": "A project management approach emphasizing flexibility, customer collaboration, and iterative delivery in software development.",
+        "example": "After adopting Agile methodology, the team can respond to customer feedback more quickly."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "methodology"
+    ],
+    "relatedTerms": [
+      "dev-087",
+      "dev-088"
+    ],
+    "order": 86
+  },
+  {
+    "id": "dev-087",
+    "term": "Scrum",
+    "translations": {
+      "tr": {
+        "definition": "Agile çerçevesinde çalışan, sabit süreli iterasyonlar (sprint) ve günlük toplantılarla yazılım geliştirmeyi organize eden yönetim çerçevesidir.",
+        "example": "Scrum çerçevesinde iki haftalık sprint'ler halinde çalışarak her sprint sonunda çalışan bir ürün sunuyoruz."
+      },
+      "en": {
+        "definition": "An Agile framework that organizes software development through fixed-length iterations (sprints) and daily meetings.",
+        "example": "Working in two-week sprints within the Scrum framework, we deliver a working product at the end of each sprint."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "methodology",
+      "agile"
+    ],
+    "relatedTerms": [
+      "dev-086",
+      "dev-088"
+    ],
+    "order": 87
+  },
+  {
+    "id": "dev-088",
+    "term": "Sprint",
+    "translations": {
+      "tr": {
+        "definition": "Scrum metodolojisinde belirli bir iş listesinin tamamlanması hedeflenen, genellikle 1-4 haftalık sabit süreli geliştirme döngüsüdür.",
+        "example": "Bu sprint'te kullanıcı profil sayfası ve bildirim sistemi tamamlanacak."
+      },
+      "en": {
+        "definition": "A fixed-length development cycle in Scrum, typically 1-4 weeks, aimed at completing a specific set of work items.",
+        "example": "The user profile page and notification system will be completed in this sprint."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "methodology",
+      "agile"
+    ],
+    "relatedTerms": [
+      "dev-087",
+      "dev-086"
+    ],
+    "order": 88
+  },
+  {
+    "id": "dev-089",
+    "term": "Technical Debt",
+    "translations": {
+      "tr": {
+        "definition": "Hızlı çözümler veya kısa yol tercihlerinden kaynaklanan, gelecekte düzeltilmesi gereken yazılım kalitesi sorunlarının birikmiş maliyetidir.",
+        "example": "Technical debt biriktiği için yeni özellik eklemek giderek daha uzun sürüyor."
+      },
+      "en": {
+        "definition": "The accumulated cost of software quality issues caused by quick fixes or shortcuts that will need to be addressed in the future.",
+        "example": "Due to accumulated technical debt, adding new features is taking increasingly longer."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "code-quality"
+    ],
+    "relatedTerms": [
+      "dev-081",
+      "dev-086"
+    ],
+    "order": 89
+  },
+  {
+    "id": "dev-090",
+    "term": "Open Source",
+    "translations": {
+      "tr": {
+        "definition": "Kaynak kodu herkese açık olan, özgürce kullanılabilen, değiştirilebilen ve dağıtılabilen yazılımdır.",
+        "example": "Linux, dünyanın en başarılı open source projelerinden biridir."
+      },
+      "en": {
+        "definition": "Software whose source code is publicly available and can be freely used, modified, and distributed.",
+        "example": "Linux is one of the most successful open source projects in the world."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "open-source"
+    ],
+    "relatedTerms": [
+      "dev-051",
+      "dev-091"
+    ],
+    "order": 90
+  },
+  {
+    "id": "dev-091",
+    "term": "Framework",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım geliştirmede temel yapıyı ve kuralları sağlayan, geliştiricinin üzerine inşa ettiği hazır yazılım iskeletidir.",
+        "example": "Django framework'ü kullanarak web uygulamasının temel yapısını hızla oluşturduk."
+      },
+      "en": {
+        "definition": "A pre-built software skeleton that provides the foundational structure and conventions for developers to build upon.",
+        "example": "We quickly built the web application's foundation using the Django framework."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools"
+    ],
+    "relatedTerms": [
+      "dev-092",
+      "dev-016"
+    ],
+    "order": 91
+  },
+  {
+    "id": "dev-092",
+    "term": "Library",
+    "translations": {
+      "tr": {
+        "definition": "Belirli işlevleri gerçekleştiren, yeniden kullanılabilir kod parçalarından oluşan ve projelere dahil edilen yazılım paketidir.",
+        "example": "Tarih işlemleri için moment.js library'si projeye eklendi."
+      },
+      "en": {
+        "definition": "A reusable software package consisting of code modules that perform specific functions and can be included in projects.",
+        "example": "The moment.js library was added to the project for date manipulation."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools"
+    ],
+    "relatedTerms": [
+      "dev-091",
+      "dev-093"
+    ],
+    "order": 92
+  },
+  {
+    "id": "dev-093",
+    "term": "Package Manager",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım projelerindeki harici kütüphane ve bağımlılıkları indirme, güncelleme ve yönetme işlemlerini otomatikleştiren araçtır.",
+        "example": "npm package manager ile projenin tüm bağımlılıkları tek komutla yükleniyor."
+      },
+      "en": {
+        "definition": "A tool that automates downloading, updating, and managing external libraries and dependencies in software projects.",
+        "example": "All project dependencies are installed with a single command using the npm package manager."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools"
+    ],
+    "relatedTerms": [
+      "dev-094",
+      "dev-092"
+    ],
+    "order": 93
+  },
+  {
+    "id": "dev-094",
+    "term": "Dependency",
+    "translations": {
+      "tr": {
+        "definition": "Bir yazılım projesinin çalışması için gerekli olan harici kütüphane, araç veya modüldür.",
+        "example": "Güvenlik açığı bulunan bir dependency güncellenerek proje güvenliği sağlandı."
+      },
+      "en": {
+        "definition": "An external library, tool, or module required for a software project to function properly.",
+        "example": "A dependency with a security vulnerability was updated to ensure project security."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general"
+    ],
+    "relatedTerms": [
+      "dev-093",
+      "dev-092"
+    ],
+    "order": 94
+  },
+  {
+    "id": "dev-095",
+    "term": "Build Tool",
+    "translations": {
+      "tr": {
+        "definition": "Kaynak kodunu derleme, paketleme ve dağıtıma hazır hale getirme sürecini otomatikleştiren araçtır.",
+        "example": "Webpack build tool olarak kullanılarak JavaScript dosyaları optimize edilip tek dosyada birleştiriliyor."
+      },
+      "en": {
+        "definition": "A tool that automates the process of compiling, bundling, and preparing source code for distribution.",
+        "example": "Webpack is used as a build tool to optimize and bundle JavaScript files into a single output."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "software-dev",
+      "general",
+      "tools",
+      "build"
+    ],
+    "relatedTerms": [
+      "dev-096",
+      "dev-097"
+    ],
+    "order": 95
+  },
+  {
+    "id": "dev-096",
+    "term": "Compiler",
+    "translations": {
+      "tr": {
+        "definition": "Yüksek seviyeli programlama dilinde yazılmış kaynak kodu, bilgisayarın doğrudan çalıştırabileceği makine koduna dönüştüren yazılımdır.",
+        "example": "C compiler kaynak kodu makine koduna çevirerek çalıştırılabilir bir dosya oluşturuyor."
+      },
+      "en": {
+        "definition": "Software that translates source code written in a high-level programming language into machine code that a computer can directly execute.",
+        "example": "The C compiler converts source code into machine code to create an executable file."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "general",
+      "programming-language"
+    ],
+    "relatedTerms": [
+      "dev-097",
+      "dev-098"
+    ],
+    "order": 96
+  },
+  {
+    "id": "dev-097",
+    "term": "Interpreter",
+    "translations": {
+      "tr": {
+        "definition": "Kaynak kodu satır satır okuyarak anında çalıştıran, derleme adımı gerektirmeyen yazılımdır.",
+        "example": "Python bir interpreter dili olduğu için kod yazıldıktan sonra derlemeye gerek kalmadan çalıştırılabiliyor."
+      },
+      "en": {
+        "definition": "Software that reads and executes source code line by line without requiring a separate compilation step.",
+        "example": "Python is an interpreted language, so code can be run immediately without compilation."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "general",
+      "programming-language"
+    ],
+    "relatedTerms": [
+      "dev-096",
+      "dev-098"
+    ],
+    "order": 97
+  },
+  {
+    "id": "dev-098",
+    "term": "Runtime",
+    "translations": {
+      "tr": {
+        "definition": "Bir programın çalışma zamanında ihtiyaç duyduğu ortam ve hizmetleri sağlayan yazılım katmanıdır.",
+        "example": "Node.js, JavaScript kodunu tarayıcı dışında çalıştırmayı sağlayan bir runtime ortamıdır."
+      },
+      "en": {
+        "definition": "The software layer that provides the environment and services a program needs during execution.",
+        "example": "Node.js is a runtime environment that enables JavaScript code to run outside the browser."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "software-dev",
+      "general",
+      "infrastructure"
+    ],
+    "relatedTerms": [
+      "dev-096",
+      "dev-097"
+    ],
+    "order": 98
+  },
+  {
+    "id": "dev-099",
+    "term": "Deployment",
+    "translations": {
+      "tr": {
+        "definition": "Geliştirilen yazılımın test, staging veya production ortamına kurulup kullanıma sunulması sürecidir.",
+        "example": "Otomatik deployment pipeline sayesinde onaylanan her değişiklik production ortamına 10 dakikada dağıtılıyor."
+      },
+      "en": {
+        "definition": "The process of installing and releasing developed software to test, staging, or production environments.",
+        "example": "The automated deployment pipeline delivers every approved change to production within 10 minutes."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "devops",
+      "deployment"
+    ],
+    "relatedTerms": [
+      "dev-055",
+      "dev-056"
+    ],
+    "order": 99
+  },
+  {
+    "id": "dev-100",
+    "term": "Authentication (Backend)",
+    "translations": {
+      "tr": {
+        "definition": "Web uygulamalarında kullanıcının kimliğini doğrulama mekanizmasıdır. Oturum, token veya OAuth gibi yöntemler kullanılır.",
+        "example": "Backend authentication sistemi JWT token'ları kullanarak kullanıcı kimliğini doğruluyor."
+      },
+      "en": {
+        "definition": "The mechanism of verifying user identity in web applications using methods such as sessions, tokens, or OAuth.",
+        "example": "The backend authentication system verifies user identity using JWT tokens."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "software-dev",
+      "web-backend",
+      "security"
+    ],
+    "relatedTerms": [
+      "dev-026",
+      "dev-024"
+    ],
+    "order": 100
+  }
+]

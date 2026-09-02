@@ -1,0 +1,2522 @@
+[
+  {
+    "id": "cyber-001",
+    "term": "Firewall",
+    "translations": {
+      "tr": {
+        "definition": "Ağ trafiğini belirli güvenlik kurallarına göre izleyen ve filtreleyen bir ağ güvenlik sistemidir.",
+        "example": "Şirketimizin firewall'u dışarıdan gelen yetkisiz bağlantıları engelliyor."
+      },
+      "en": {
+        "definition": "A network security system that monitors and filters incoming and outgoing network traffic based on predefined security rules.",
+        "example": "The firewall blocked all unauthorized incoming connections to the corporate network."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "network-security",
+      "defense"
+    ],
+    "relatedTerms": [
+      "cyber-044",
+      "cyber-045",
+      "cyber-046"
+    ],
+    "order": 1
+  },
+  {
+    "id": "cyber-002",
+    "term": "Malware",
+    "translations": {
+      "tr": {
+        "definition": "Bilgisayar sistemlerine zarar vermek, verileri çalmak veya yetkisiz erişim sağlamak amacıyla tasarlanmış kötü amaçlı yazılımdır.",
+        "example": "Antivirüs yazılımı sistemde bir malware tespit etti ve karantinaya aldı."
+      },
+      "en": {
+        "definition": "Malicious software designed to damage, disrupt, or gain unauthorized access to computer systems.",
+        "example": "The security team discovered malware that had been exfiltrating data for weeks."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "malware",
+      "threat"
+    ],
+    "relatedTerms": [
+      "cyber-086",
+      "cyber-064",
+      "cyber-065"
+    ],
+    "order": 2
+  },
+  {
+    "id": "cyber-003",
+    "term": "Encryption",
+    "translations": {
+      "tr": {
+        "definition": "Verileri yalnızca yetkili tarafların okuyabileceği şekilde kodlayarak koruyan bir güvenlik yöntemidir.",
+        "example": "Müşteri verileri veritabanında encryption ile korunuyor."
+      },
+      "en": {
+        "definition": "The process of converting data into a coded format to prevent unauthorized access, ensuring only authorized parties can read it.",
+        "example": "All customer data is protected using AES-256 encryption at rest."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "data-protection"
+    ],
+    "relatedTerms": [
+      "cyber-070",
+      "cyber-071",
+      "cyber-076"
+    ],
+    "order": 3
+  },
+  {
+    "id": "cyber-004",
+    "term": "Antivirus",
+    "translations": {
+      "tr": {
+        "definition": "Bilgisayardaki kötü amaçlı yazılımları tespit eden, engelleyen ve kaldıran güvenlik yazılımıdır.",
+        "example": "Tüm şirket bilgisayarlarına güncel bir antivirus programı kuruldu."
+      },
+      "en": {
+        "definition": "Security software designed to detect, prevent, and remove malicious software from computer systems.",
+        "example": "The antivirus software detected a trojan hidden in the email attachment."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "defense",
+      "endpoint-security"
+    ],
+    "relatedTerms": [
+      "cyber-002",
+      "cyber-042"
+    ],
+    "order": 4
+  },
+  {
+    "id": "cyber-005",
+    "term": "VPN",
+    "translations": {
+      "tr": {
+        "definition": "İnternet üzerinden şifreli bir tünel oluşturarak güvenli ve gizli bağlantı sağlayan sanal özel ağdır.",
+        "example": "Uzaktan çalışan personel, şirket ağına VPN üzerinden bağlanıyor."
+      },
+      "en": {
+        "definition": "A Virtual Private Network creates an encrypted tunnel over the internet, providing secure and private connectivity.",
+        "example": "Employees use the company VPN to securely access internal resources from home."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "network-security",
+      "privacy"
+    ],
+    "relatedTerms": [
+      "cyber-003",
+      "cyber-087"
+    ],
+    "order": 5
+  },
+  {
+    "id": "cyber-006",
+    "term": "Authentication",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcının veya sistemin kimliğini doğrulama sürecidir. Parola, biyometri veya token gibi yöntemler kullanılır.",
+        "example": "Sisteme giriş yapmak için iki aşamalı authentication gereklidir."
+      },
+      "en": {
+        "definition": "The process of verifying the identity of a user or system, typically through passwords, biometrics, or tokens.",
+        "example": "The application uses multi-factor authentication to verify user identity."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-007",
+      "cyber-091",
+      "cyber-092"
+    ],
+    "order": 6
+  },
+  {
+    "id": "cyber-007",
+    "term": "Authorization",
+    "translations": {
+      "tr": {
+        "definition": "Kimliği doğrulanmış bir kullanıcının hangi kaynaklara erişebileceğini ve hangi işlemleri yapabileceğini belirleyen süreçtir.",
+        "example": "Stajyerlerin authorization seviyesi yalnızca belirli dosyalara erişim ile sınırlıdır."
+      },
+      "en": {
+        "definition": "The process of determining what permissions and access rights an authenticated user has within a system.",
+        "example": "After authentication, the authorization system checks if the user has admin privileges."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authorization"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-091"
+    ],
+    "order": 7
+  },
+  {
+    "id": "cyber-008",
+    "term": "Phishing",
+    "translations": {
+      "tr": {
+        "definition": "Sahte e-posta veya web siteleri kullanarak kullanıcıların hassas bilgilerini çalmayı amaçlayan bir sosyal mühendislik saldırısıdır.",
+        "example": "Çalışanlar phishing e-postalarını tanımaları için düzenli eğitim alıyor."
+      },
+      "en": {
+        "definition": "A social engineering attack that uses fraudulent emails or websites to trick users into revealing sensitive information.",
+        "example": "The phishing email impersonated the CEO and asked employees to transfer funds."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "social-engineering"
+    ],
+    "relatedTerms": [
+      "cyber-009",
+      "cyber-069"
+    ],
+    "order": 8
+  },
+  {
+    "id": "cyber-009",
+    "term": "Social Engineering",
+    "translations": {
+      "tr": {
+        "definition": "İnsanları manipüle ederek gizli bilgileri paylaşmaya veya güvenlik protokollerini ihlal etmeye yönlendiren psikolojik saldırı tekniğidir.",
+        "example": "Saldırgan, social engineering kullanarak resepsiyon görevlisini sunucu odasına girmeye ikna etti."
+      },
+      "en": {
+        "definition": "The psychological manipulation of people into performing actions or divulging confidential information for malicious purposes.",
+        "example": "The attacker used social engineering to convince the receptionist to grant access to the server room."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "social-engineering"
+    ],
+    "relatedTerms": [
+      "cyber-008",
+      "cyber-069"
+    ],
+    "order": 9
+  },
+  {
+    "id": "cyber-010",
+    "term": "Password",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcının kimliğini doğrulamak için kullanılan gizli karakter dizisidir.",
+        "example": "Güçlü bir password en az 12 karakter uzunluğunda olmalı ve özel karakterler içermelidir."
+      },
+      "en": {
+        "definition": "A secret string of characters used to verify a user's identity during the authentication process.",
+        "example": "A strong password should be at least 12 characters long and include special characters."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-091",
+      "cyber-050"
+    ],
+    "order": 10
+  },
+  {
+    "id": "cyber-011",
+    "term": "Vulnerability",
+    "translations": {
+      "tr": {
+        "definition": "Bir sistemdeki saldırganların yararlanabileceği güvenlik zayıflığı veya açıktır.",
+        "example": "Güvenlik taramasında web uygulamasında kritik bir vulnerability tespit edildi."
+      },
+      "en": {
+        "definition": "A weakness or flaw in a system that can be exploited by attackers to gain unauthorized access or cause damage.",
+        "example": "The vulnerability scanner found a critical SQL injection flaw in the web application."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "vulnerability-management"
+    ],
+    "relatedTerms": [
+      "cyber-012",
+      "cyber-013",
+      "cyber-014"
+    ],
+    "order": 11
+  },
+  {
+    "id": "cyber-012",
+    "term": "Exploit",
+    "translations": {
+      "tr": {
+        "definition": "Bir güvenlik açığından yararlanmak için kullanılan kod, yazılım veya teknik yöntemdir.",
+        "example": "Hacker, sunucuya erişim sağlamak için bilinen bir exploit kullandı."
+      },
+      "en": {
+        "definition": "A piece of code, software, or technique that takes advantage of a vulnerability to compromise a system.",
+        "example": "The hacker used a known exploit to gain root access to the server."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "exploitation"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-013",
+      "cyber-057"
+    ],
+    "order": 12
+  },
+  {
+    "id": "cyber-013",
+    "term": "Patch",
+    "translations": {
+      "tr": {
+        "definition": "Yazılımdaki güvenlik açıklarını veya hataları düzeltmek için yayınlanan güncellemedir.",
+        "example": "Sistem yöneticisi kritik güvenlik açığı için acil bir patch uyguladı."
+      },
+      "en": {
+        "definition": "A software update released to fix security vulnerabilities, bugs, or improve functionality.",
+        "example": "The sysadmin applied an emergency patch to fix the critical vulnerability."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "vulnerability-management",
+      "defense"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-012"
+    ],
+    "order": 13
+  },
+  {
+    "id": "cyber-014",
+    "term": "Zero-Day",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım geliştiricisinin henüz bilmediği ve düzeltme yayınlamadığı güvenlik açığıdır.",
+        "example": "Saldırganlar tarayıcıdaki bir zero-day açığını kullanarak sistemlere sızdı."
+      },
+      "en": {
+        "definition": "A previously unknown vulnerability that has no available patch, giving defenders zero days to prepare.",
+        "example": "The attackers exploited a zero-day vulnerability in the browser before any patch was available."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "vulnerability-management",
+      "threat"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-012",
+      "cyber-015"
+    ],
+    "order": 14
+  },
+  {
+    "id": "cyber-015",
+    "term": "CVE",
+    "translations": {
+      "tr": {
+        "definition": "Common Vulnerabilities and Exposures; bilinen güvenlik açıklarını kataloglamak için kullanılan standart tanımlama sistemidir.",
+        "example": "Bu güvenlik açığı CVE-2024-12345 numarasıyla kayıt altına alındı."
+      },
+      "en": {
+        "definition": "Common Vulnerabilities and Exposures; a standardized identification system for publicly known cybersecurity vulnerabilities.",
+        "example": "The vulnerability was assigned CVE-2024-12345 in the national vulnerability database."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "vulnerability-management",
+      "standards"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-014"
+    ],
+    "order": 15
+  },
+  {
+    "id": "cyber-016",
+    "term": "Threat",
+    "translations": {
+      "tr": {
+        "definition": "Bir bilgi sisteminin güvenliğini tehlikeye atabilecek potansiyel tehlike veya zararlı olaydır.",
+        "example": "Güvenlik ekibi yeni ortaya çıkan threat'leri günlük olarak değerlendiriyor."
+      },
+      "en": {
+        "definition": "Any potential danger or harmful event that could exploit a vulnerability and compromise information security.",
+        "example": "The security team assesses emerging threats on a daily basis to stay ahead of attackers."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "risk-management",
+      "threat"
+    ],
+    "relatedTerms": [
+      "cyber-017",
+      "cyber-011"
+    ],
+    "order": 16
+  },
+  {
+    "id": "cyber-017",
+    "term": "Risk",
+    "translations": {
+      "tr": {
+        "definition": "Bir tehdidin bir güvenlik açığından yararlanma olasılığı ve bunun yaratacağı potansiyel etkinin bileşimidir.",
+        "example": "Risk değerlendirmesi sonucunda veritabanının yedeklenmesi öncelikli hale getirildi."
+      },
+      "en": {
+        "definition": "The potential for loss or damage resulting from the likelihood of a threat exploiting a vulnerability and its impact.",
+        "example": "The risk assessment determined that the database backup process needed immediate improvement."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "risk-management"
+    ],
+    "relatedTerms": [
+      "cyber-016",
+      "cyber-018"
+    ],
+    "order": 17
+  },
+  {
+    "id": "cyber-018",
+    "term": "Compliance",
+    "translations": {
+      "tr": {
+        "definition": "Kuruluşların yasal düzenlemelere, standartlara ve güvenlik politikalarına uyum sağlama sürecidir.",
+        "example": "Şirket KVKK compliance gereksinimlerini karşılamak için güvenlik politikalarını güncelledi."
+      },
+      "en": {
+        "definition": "The process of adhering to laws, regulations, standards, and security policies relevant to an organization.",
+        "example": "The company updated its security policies to meet GDPR compliance requirements."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "compliance",
+      "governance"
+    ],
+    "relatedTerms": [
+      "cyber-082",
+      "cyber-083",
+      "cyber-084"
+    ],
+    "order": 18
+  },
+  {
+    "id": "cyber-019",
+    "term": "Incident",
+    "translations": {
+      "tr": {
+        "definition": "Bilgi güvenliğini tehlikeye atan veya tehlikeye atma potansiyeli taşıyan herhangi bir olay veya ihlaldir.",
+        "example": "Veri sızıntısı bir güvenlik incident'ı olarak sınıflandırıldı ve soruşturma başlatıldı."
+      },
+      "en": {
+        "definition": "Any event or breach that compromises or has the potential to compromise information security.",
+        "example": "The data breach was classified as a security incident and an investigation was launched."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "incident-response"
+    ],
+    "relatedTerms": [
+      "cyber-037",
+      "cyber-020"
+    ],
+    "order": 19
+  },
+  {
+    "id": "cyber-020",
+    "term": "Hardening",
+    "translations": {
+      "tr": {
+        "definition": "Gereksiz servisleri kapatarak, yapılandırmaları sıkılaştırarak ve güvenlik kontrollerini uygulayarak sistemi saldırılara karşı güçlendirme sürecidir.",
+        "example": "Sunucu hardening işlemi sırasında kullanılmayan portlar kapatıldı."
+      },
+      "en": {
+        "definition": "The process of securing a system by reducing its attack surface through disabling unnecessary services and applying security controls.",
+        "example": "During server hardening, all unused ports were closed and default accounts were disabled."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "defense",
+      "system-security"
+    ],
+    "relatedTerms": [
+      "cyber-001",
+      "cyber-046"
+    ],
+    "order": 20
+  },
+  {
+    "id": "cyber-021",
+    "term": "Penetration Testing",
+    "translations": {
+      "tr": {
+        "definition": "Bir sistemin güvenlik açıklarını bulmak amacıyla yetkilendirilmiş ve kontrollü bir şekilde gerçekleştirilen simüle saldırı testidir.",
+        "example": "Yıllık penetration testing sonucunda üç kritik güvenlik açığı tespit edildi."
+      },
+      "en": {
+        "definition": "An authorized simulated cyberattack performed to evaluate the security of a system by identifying vulnerabilities.",
+        "example": "The annual penetration testing revealed three critical vulnerabilities in the web application."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "offensive-security"
+    ],
+    "relatedTerms": [
+      "cyber-012",
+      "cyber-088",
+      "cyber-067"
+    ],
+    "order": 21
+  },
+  {
+    "id": "cyber-022",
+    "term": "MFA",
+    "translations": {
+      "tr": {
+        "definition": "Multi-Factor Authentication; kullanıcı kimliğini doğrulamak için iki veya daha fazla bağımsız doğrulama faktörü gerektiren güvenlik yöntemidir.",
+        "example": "Tüm çalışan hesaplarında MFA zorunlu hale getirildi."
+      },
+      "en": {
+        "definition": "Multi-Factor Authentication; a security method requiring two or more independent verification factors to confirm a user's identity.",
+        "example": "MFA was made mandatory for all employee accounts to prevent unauthorized access."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-092"
+    ],
+    "order": 22
+  },
+  {
+    "id": "cyber-023",
+    "term": "Proxy",
+    "translations": {
+      "tr": {
+        "definition": "İstemci ile sunucu arasında aracı olarak çalışan, trafiği yönlendiren ve filtreleyebilen bir sunucudur.",
+        "example": "Şirket ağında web trafiği bir proxy sunucu üzerinden yönlendiriliyor."
+      },
+      "en": {
+        "definition": "An intermediary server that sits between a client and a destination server, forwarding requests and optionally filtering traffic.",
+        "example": "All web traffic in the corporate network is routed through a proxy server for inspection."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "network-security",
+      "privacy"
+    ],
+    "relatedTerms": [
+      "cyber-005",
+      "cyber-001"
+    ],
+    "order": 23
+  },
+  {
+    "id": "cyber-024",
+    "term": "Token",
+    "translations": {
+      "tr": {
+        "definition": "Kimlik doğrulama ve yetkilendirme işlemlerinde kullanılan, belirli bir süre geçerli olan dijital kimlik bilgisidir.",
+        "example": "API isteği yapmak için geçerli bir access token gereklidir."
+      },
+      "en": {
+        "definition": "A digital credential used in authentication and authorization processes, typically valid for a limited time period.",
+        "example": "A valid access token is required to make authenticated API requests."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-007"
+    ],
+    "order": 24
+  },
+  {
+    "id": "cyber-025",
+    "term": "DDoS",
+    "translations": {
+      "tr": {
+        "definition": "Distributed Denial of Service; birden fazla kaynaktan eş zamanlı olarak hedef sisteme aşırı trafik göndererek hizmet dışı bırakmayı amaçlayan saldırıdır.",
+        "example": "Web sitesi üç saat süren bir DDoS saldırısı nedeniyle erişilemez hale geldi."
+      },
+      "en": {
+        "definition": "Distributed Denial of Service; an attack that floods a target with traffic from multiple sources to overwhelm and disrupt its services.",
+        "example": "The website was taken offline for three hours due to a massive DDoS attack."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "network-attack"
+    ],
+    "relatedTerms": [
+      "cyber-016",
+      "cyber-002"
+    ],
+    "order": 25
+  },
+  {
+    "id": "cyber-026",
+    "term": "Ransomware",
+    "translations": {
+      "tr": {
+        "definition": "Kurbanın dosyalarını şifreleyerek erişimi engelleyen ve şifre çözme karşılığında fidye talep eden kötü amaçlı yazılımdır.",
+        "example": "Hastane sistemleri ransomware saldırısına uğradı ve tüm hasta kayıtları şifrelendi."
+      },
+      "en": {
+        "definition": "Malware that encrypts a victim's files and demands a ransom payment in exchange for the decryption key.",
+        "example": "The hospital's systems were hit by ransomware, encrypting all patient records."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "malware",
+      "red-team"
+    ],
+    "relatedTerms": [
+      "cyber-002",
+      "cyber-003"
+    ],
+    "order": 26
+  },
+  {
+    "id": "cyber-027",
+    "term": "Biometrics",
+    "translations": {
+      "tr": {
+        "definition": "Parmak izi, yüz tanıma veya iris taraması gibi biyolojik özellikleri kullanarak kimlik doğrulama yapan teknolojilerdir.",
+        "example": "Yeni ofis binasında giriş kontrolü biometrics sistemi ile sağlanıyor."
+      },
+      "en": {
+        "definition": "Authentication technology that uses unique biological characteristics such as fingerprints, facial recognition, or iris scans.",
+        "example": "The new office building uses biometrics for access control at all entry points."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "identity-access",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-022"
+    ],
+    "order": 27
+  },
+  {
+    "id": "cyber-028",
+    "term": "Sandbox",
+    "translations": {
+      "tr": {
+        "definition": "Şüpheli yazılımları ana sistemden izole bir ortamda güvenli şekilde çalıştırıp analiz etmek için kullanılan kontrollü alandır.",
+        "example": "Şüpheli dosya önce sandbox ortamında çalıştırılarak davranışı analiz edildi."
+      },
+      "en": {
+        "definition": "An isolated environment used to safely execute and analyze suspicious software without affecting the main system.",
+        "example": "The suspicious file was first run in a sandbox to analyze its behavior before allowing it on the network."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "malware-analysis"
+    ],
+    "relatedTerms": [
+      "cyber-002",
+      "cyber-043"
+    ],
+    "order": 28
+  },
+  {
+    "id": "cyber-029",
+    "term": "Brute Force",
+    "translations": {
+      "tr": {
+        "definition": "Tüm olası kombinasyonları sistematik olarak deneyerek parola veya şifreleme anahtarını kırmaya çalışan saldırı yöntemidir.",
+        "example": "Saldırgan brute force yöntemiyle admin hesabının parolasını kırmaya çalıştı."
+      },
+      "en": {
+        "definition": "An attack method that systematically tries all possible combinations to crack a password or encryption key.",
+        "example": "The attacker attempted a brute force attack against the admin account, trying millions of password combinations."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "password-attack"
+    ],
+    "relatedTerms": [
+      "cyber-010",
+      "cyber-006"
+    ],
+    "order": 29
+  },
+  {
+    "id": "cyber-030",
+    "term": "SQL Injection",
+    "translations": {
+      "tr": {
+        "definition": "Web uygulamalarındaki giriş alanlarına kötü amaçlı SQL kodu enjekte ederek veritabanına yetkisiz erişim sağlayan saldırı tekniğidir.",
+        "example": "Giriş formundaki SQL injection açığı sayesinde saldırgan tüm kullanıcı verilerini ele geçirdi."
+      },
+      "en": {
+        "definition": "An attack technique that injects malicious SQL code through input fields to manipulate or access the database unauthorized.",
+        "example": "The SQL injection vulnerability in the login form allowed the attacker to dump the entire user database."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "web-security",
+      "injection"
+    ],
+    "relatedTerms": [
+      "cyber-031",
+      "cyber-032",
+      "cyber-011"
+    ],
+    "order": 30
+  },
+  {
+    "id": "cyber-031",
+    "term": "XSS",
+    "translations": {
+      "tr": {
+        "definition": "Cross-Site Scripting; web sayfalarına kötü amaçlı istemci taraflı betik kodu enjekte ederek diğer kullanıcıları hedefleyen saldırı türüdür.",
+        "example": "Yorum bölümündeki XSS açığı, saldırganın kullanıcıların çerezlerini çalmasına olanak tanıdı."
+      },
+      "en": {
+        "definition": "Cross-Site Scripting; an attack that injects malicious client-side scripts into web pages viewed by other users.",
+        "example": "The XSS vulnerability in the comment section allowed the attacker to steal user session cookies."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "web-security",
+      "injection"
+    ],
+    "relatedTerms": [
+      "cyber-030",
+      "cyber-032"
+    ],
+    "order": 31
+  },
+  {
+    "id": "cyber-032",
+    "term": "CSRF",
+    "translations": {
+      "tr": {
+        "definition": "Cross-Site Request Forgery; kimliği doğrulanmış bir kullanıcının tarayıcısını kullanarak onun adına yetkisiz işlemler yaptıran saldırı türüdür.",
+        "example": "CSRF koruması olmayan formda saldırgan, kullanıcının bilgisi dışında para transferi gerçekleştirdi."
+      },
+      "en": {
+        "definition": "Cross-Site Request Forgery; an attack that tricks an authenticated user's browser into making unauthorized requests on their behalf.",
+        "example": "The lack of CSRF protection allowed the attacker to initiate fund transfers through the victim's session."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "web-security"
+    ],
+    "relatedTerms": [
+      "cyber-030",
+      "cyber-031"
+    ],
+    "order": 32
+  },
+  {
+    "id": "cyber-033",
+    "term": "SIEM",
+    "translations": {
+      "tr": {
+        "definition": "Security Information and Event Management; güvenlik olaylarını gerçek zamanlı olarak toplayan, analiz eden ve raporlayan merkezi güvenlik yönetim sistemidir.",
+        "example": "SIEM sistemi gece yarısı şüpheli bir giriş denemesi tespit ederek alarm üretti."
+      },
+      "en": {
+        "definition": "Security Information and Event Management; a centralized system that collects, analyzes, and reports on security events in real time.",
+        "example": "The SIEM system detected a suspicious login attempt at midnight and generated an alert."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "siem-log-analysis"
+    ],
+    "relatedTerms": [
+      "cyber-034",
+      "cyber-038",
+      "cyber-039"
+    ],
+    "order": 33
+  },
+  {
+    "id": "cyber-034",
+    "term": "SOC",
+    "translations": {
+      "tr": {
+        "definition": "Security Operations Center; bir kuruluşun güvenlik olaylarını 7/24 izleyen, analiz eden ve müdahale eden merkezi güvenlik birimi.",
+        "example": "SOC ekibi, şüpheli ağ trafiğini tespit ederek hemen müdahale etti."
+      },
+      "en": {
+        "definition": "Security Operations Center; a centralized unit that monitors, analyzes, and responds to security incidents 24/7.",
+        "example": "The SOC team detected suspicious network traffic and immediately initiated the incident response process."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "operations"
+    ],
+    "relatedTerms": [
+      "cyber-033",
+      "cyber-037"
+    ],
+    "order": 34
+  },
+  {
+    "id": "cyber-035",
+    "term": "IDS/IPS",
+    "translations": {
+      "tr": {
+        "definition": "Intrusion Detection/Prevention System; ağ trafiğini izleyerek saldırıları tespit eden (IDS) ve otomatik olarak engelleyen (IPS) güvenlik sistemleridir.",
+        "example": "IPS sistemi, şüpheli trafik kalıbını tespit ederek bağlantıyı otomatik olarak engelledi."
+      },
+      "en": {
+        "definition": "Intrusion Detection/Prevention Systems; security tools that monitor network traffic to detect (IDS) and automatically block (IPS) attacks.",
+        "example": "The IPS automatically blocked the connection after detecting a suspicious traffic pattern."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "network-security"
+    ],
+    "relatedTerms": [
+      "cyber-001",
+      "cyber-033"
+    ],
+    "order": 35
+  },
+  {
+    "id": "cyber-036",
+    "term": "Threat Intelligence",
+    "translations": {
+      "tr": {
+        "definition": "Mevcut ve potansiyel siber tehditleri anlamak için toplanan, analiz edilen ve kullanılan bilgilerdir.",
+        "example": "Threat intelligence raporlarına göre yeni bir fidye yazılımı kampanyası finans sektörünü hedefliyor."
+      },
+      "en": {
+        "definition": "Information collected, analyzed, and used to understand current and potential cyber threats targeting an organization.",
+        "example": "Threat intelligence reports indicated a new ransomware campaign targeting the financial sector."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "threat-intelligence"
+    ],
+    "relatedTerms": [
+      "cyber-016",
+      "cyber-034"
+    ],
+    "order": 36
+  },
+  {
+    "id": "cyber-037",
+    "term": "Incident Response",
+    "translations": {
+      "tr": {
+        "definition": "Güvenlik olaylarını tespit etme, analiz etme, kontrol altına alma ve sonuçlarını giderme sürecini kapsayan yapılandırılmış yaklaşımdır.",
+        "example": "Incident response planı devreye alınarak veri sızıntısı iki saat içinde kontrol altına alındı."
+      },
+      "en": {
+        "definition": "A structured approach to detecting, analyzing, containing, and recovering from security incidents.",
+        "example": "The incident response plan was activated, and the data breach was contained within two hours."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "incident-response"
+    ],
+    "relatedTerms": [
+      "cyber-019",
+      "cyber-034"
+    ],
+    "order": 37
+  },
+  {
+    "id": "cyber-038",
+    "term": "Log Analysis",
+    "translations": {
+      "tr": {
+        "definition": "Sistem, uygulama ve ağ günlüklerini inceleyerek güvenlik olaylarını, anormallikleri ve tehditleri tespit etme sürecidir.",
+        "example": "Log analysis sırasında başarısız giriş denemelerinde anormal bir artış fark edildi."
+      },
+      "en": {
+        "definition": "The process of examining system, application, and network logs to identify security events, anomalies, and threats.",
+        "example": "Log analysis revealed an unusual spike in failed login attempts from a foreign IP range."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "siem-log-analysis"
+    ],
+    "relatedTerms": [
+      "cyber-033",
+      "cyber-034"
+    ],
+    "order": 38
+  },
+  {
+    "id": "cyber-039",
+    "term": "SOAR",
+    "translations": {
+      "tr": {
+        "definition": "Security Orchestration, Automation and Response; güvenlik operasyonlarını otomatikleştiren ve koordine eden platformdur.",
+        "example": "SOAR platformu sayesinde tekrarlayan güvenlik alarmları otomatik olarak yanıtlanıyor."
+      },
+      "en": {
+        "definition": "Security Orchestration, Automation and Response; a platform that automates and coordinates security operations and incident response.",
+        "example": "The SOAR platform automatically responds to repetitive security alerts, reducing analyst workload."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "automation"
+    ],
+    "relatedTerms": [
+      "cyber-033",
+      "cyber-037"
+    ],
+    "order": 39
+  },
+  {
+    "id": "cyber-040",
+    "term": "EDR",
+    "translations": {
+      "tr": {
+        "definition": "Endpoint Detection and Response; uç nokta cihazlarında tehditleri sürekli izleyen, tespit eden ve otomatik yanıt veren güvenlik çözümüdür.",
+        "example": "EDR ajanı, çalışanın bilgisayarında şüpheli bir süreç tespit ederek otomatik olarak karantinaya aldı."
+      },
+      "en": {
+        "definition": "Endpoint Detection and Response; a security solution that continuously monitors endpoint devices to detect and respond to threats.",
+        "example": "The EDR agent detected a suspicious process on the employee's workstation and automatically quarantined it."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "endpoint-security"
+    ],
+    "relatedTerms": [
+      "cyber-004",
+      "cyber-042"
+    ],
+    "order": 40
+  },
+  {
+    "id": "cyber-041",
+    "term": "DLP",
+    "translations": {
+      "tr": {
+        "definition": "Data Loss Prevention; hassas verilerin yetkisiz şekilde kuruluş dışına çıkmasını önleyen güvenlik teknolojisi ve politikalarıdır.",
+        "example": "DLP sistemi, kredi kartı numarası içeren bir e-postanın gönderilmesini engelledi."
+      },
+      "en": {
+        "definition": "Data Loss Prevention; security technology and policies that prevent sensitive data from being transmitted outside the organization.",
+        "example": "The DLP system blocked an email containing credit card numbers from being sent externally."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "data-protection"
+    ],
+    "relatedTerms": [
+      "cyber-003",
+      "cyber-018"
+    ],
+    "order": 41
+  },
+  {
+    "id": "cyber-042",
+    "term": "Forensics",
+    "translations": {
+      "tr": {
+        "definition": "Siber saldırıların kanıtlarını toplamak, analiz etmek ve belgelemek için kullanılan dijital adli bilişim sürecidir.",
+        "example": "Forensics ekibi, saldırganın sisteme nasıl girdiğini belirlemek için disk imajlarını inceledi."
+      },
+      "en": {
+        "definition": "The process of collecting, analyzing, and documenting digital evidence from cyberattacks for investigation and legal proceedings.",
+        "example": "The forensics team examined disk images to determine how the attacker gained initial access."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "forensics"
+    ],
+    "relatedTerms": [
+      "cyber-037",
+      "cyber-019"
+    ],
+    "order": 42
+  },
+  {
+    "id": "cyber-043",
+    "term": "Sandboxing",
+    "translations": {
+      "tr": {
+        "definition": "Şüpheli uygulamaları veya dosyaları izole bir ortamda çalıştırarak ana sisteme zarar vermesini önleme tekniğidir.",
+        "example": "E-posta eklerinin otomatik sandboxing işlemi, zararlı yazılımların ağa bulaşmasını önlüyor."
+      },
+      "en": {
+        "definition": "A technique of running suspicious applications or files in an isolated environment to prevent damage to the main system.",
+        "example": "Automatic sandboxing of email attachments prevents malware from infecting the network."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "malware-analysis"
+    ],
+    "relatedTerms": [
+      "cyber-028",
+      "cyber-002"
+    ],
+    "order": 43
+  },
+  {
+    "id": "cyber-044",
+    "term": "WAF",
+    "translations": {
+      "tr": {
+        "definition": "Web Application Firewall; web uygulamalarını HTTP/HTTPS trafiğini filtreleyerek SQL injection, XSS gibi saldırılardan koruyan güvenlik duvarıdır.",
+        "example": "WAF kuralları güncellenerek yeni tespit edilen XSS saldırı vektörü engellendi."
+      },
+      "en": {
+        "definition": "Web Application Firewall; a firewall that protects web applications by filtering HTTP/HTTPS traffic against attacks like SQL injection and XSS.",
+        "example": "The WAF rules were updated to block the newly discovered XSS attack vector."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "web-security",
+      "network-security"
+    ],
+    "relatedTerms": [
+      "cyber-001",
+      "cyber-030",
+      "cyber-031"
+    ],
+    "order": 44
+  },
+  {
+    "id": "cyber-045",
+    "term": "NGFW",
+    "translations": {
+      "tr": {
+        "definition": "Next-Generation Firewall; geleneksel güvenlik duvarı özelliklerine ek olarak uygulama farkındalığı, derin paket inceleme ve tehdit önleme sunan gelişmiş güvenlik duvarıdır.",
+        "example": "NGFW, uygulama seviyesinde trafik analizi yaparak gelişmiş tehditleri tespit edebiliyor."
+      },
+      "en": {
+        "definition": "Next-Generation Firewall; an advanced firewall that adds application awareness, deep packet inspection, and threat prevention to traditional firewall capabilities.",
+        "example": "The NGFW provides application-level traffic analysis to detect advanced threats."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "network-security"
+    ],
+    "relatedTerms": [
+      "cyber-001",
+      "cyber-044"
+    ],
+    "order": 45
+  },
+  {
+    "id": "cyber-046",
+    "term": "Network Segmentation",
+    "translations": {
+      "tr": {
+        "definition": "Ağı daha küçük, izole bölümlere ayırarak güvenlik ihlallerinin yayılmasını sınırlandıran ağ mimarisi stratejisidir.",
+        "example": "Network segmentation sayesinde saldırgan yalnızca tek bir ağ segmentine erişebildi."
+      },
+      "en": {
+        "definition": "A network architecture strategy that divides a network into smaller, isolated segments to limit the spread of security breaches.",
+        "example": "Network segmentation ensured the attacker could only access a single network segment."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "network-security"
+    ],
+    "relatedTerms": [
+      "cyber-001",
+      "cyber-020"
+    ],
+    "order": 46
+  },
+  {
+    "id": "cyber-047",
+    "term": "Baseline",
+    "translations": {
+      "tr": {
+        "definition": "Bir sistemin normal çalışma durumunu tanımlayan referans noktasıdır; anormallikleri tespit etmek için kullanılır.",
+        "example": "Ağ trafiği baseline'ı oluşturularak olağandışı aktiviteler daha hızlı tespit ediliyor."
+      },
+      "en": {
+        "definition": "A reference point defining the normal operating state of a system, used to detect deviations and anomalies.",
+        "example": "A network traffic baseline was established to quickly identify unusual activity patterns."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "monitoring"
+    ],
+    "relatedTerms": [
+      "cyber-038",
+      "cyber-033"
+    ],
+    "order": 47
+  },
+  {
+    "id": "cyber-048",
+    "term": "Honeypot",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganları çekmek ve saldırı yöntemlerini analiz etmek amacıyla kasıtlı olarak savunmasız bırakılmış sahte sistemdir.",
+        "example": "Honeypot sistemi, saldırganın kullandığı araçları ve teknikleri belgelemek için kullanıldı."
+      },
+      "en": {
+        "definition": "A decoy system intentionally left vulnerable to attract attackers and study their methods and tools.",
+        "example": "The honeypot was used to document the tools and techniques employed by the attacker."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "deception"
+    ],
+    "relatedTerms": [
+      "cyber-036",
+      "cyber-049"
+    ],
+    "order": 48
+  },
+  {
+    "id": "cyber-049",
+    "term": "Threat Hunting",
+    "translations": {
+      "tr": {
+        "definition": "Mevcut güvenlik araçlarının tespit edemediği gizli tehditleri proaktif olarak arama ve ortaya çıkarma sürecidir.",
+        "example": "Threat hunting ekibi, ağda aylardır fark edilmeyen bir APT grubunun izlerini keşfetti."
+      },
+      "en": {
+        "definition": "The proactive process of searching for hidden threats that existing security tools may have missed.",
+        "example": "The threat hunting team discovered traces of an APT group that had remained undetected for months."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "threat-hunting"
+    ],
+    "relatedTerms": [
+      "cyber-036",
+      "cyber-048"
+    ],
+    "order": 49
+  },
+  {
+    "id": "cyber-050",
+    "term": "Vulnerability Scanning",
+    "translations": {
+      "tr": {
+        "definition": "Sistemlerdeki bilinen güvenlik açıklarını otomatik araçlarla tarayan ve raporlayan süreçtir.",
+        "example": "Haftalık vulnerability scanning taramaları sonucunda üç yeni açık tespit edildi."
+      },
+      "en": {
+        "definition": "The automated process of scanning systems for known vulnerabilities and generating reports on the findings.",
+        "example": "Weekly vulnerability scanning identified three new security flaws that required patching."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "vulnerability-management"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-013"
+    ],
+    "order": 50
+  },
+  {
+    "id": "cyber-051",
+    "term": "Security Audit",
+    "translations": {
+      "tr": {
+        "definition": "Bir kuruluşun güvenlik politikalarını, kontrollerini ve uygulamalarını değerlendiren sistematik inceleme sürecidir.",
+        "example": "Yıllık security audit sonucunda erişim kontrol politikalarının güncellenmesi gerektiği belirlendi."
+      },
+      "en": {
+        "definition": "A systematic evaluation of an organization's security policies, controls, and practices to identify weaknesses.",
+        "example": "The annual security audit revealed that access control policies needed to be updated."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "compliance"
+    ],
+    "relatedTerms": [
+      "cyber-018",
+      "cyber-050"
+    ],
+    "order": 51
+  },
+  {
+    "id": "cyber-052",
+    "term": "Disaster Recovery",
+    "translations": {
+      "tr": {
+        "definition": "Felaket veya büyük çaplı bir kesinti sonrasında kritik sistemlerin ve verilerin hızla kurtarılması için hazırlanan plan ve süreçlerdir.",
+        "example": "Disaster recovery planı sayesinde veri merkezi yangınından sonra sistemler 4 saat içinde yeniden çalışmaya başladı."
+      },
+      "en": {
+        "definition": "Plans and processes designed to rapidly restore critical systems and data after a disaster or major disruption.",
+        "example": "The disaster recovery plan enabled systems to be restored within 4 hours after the data center fire."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "business-continuity"
+    ],
+    "relatedTerms": [
+      "cyber-037",
+      "cyber-019"
+    ],
+    "order": 52
+  },
+  {
+    "id": "cyber-053",
+    "term": "Buffer Overflow",
+    "translations": {
+      "tr": {
+        "definition": "Bir programın bellek tamponunun kapasitesinden fazla veri yazılarak komşu bellek alanlarının üzerine yazılmasına neden olan güvenlik açığıdır.",
+        "example": "Buffer overflow açığı sayesinde saldırgan kendi kodunu çalıştırarak sistem üzerinde kontrol sağladı."
+      },
+      "en": {
+        "definition": "A vulnerability where a program writes more data to a buffer than it can hold, overwriting adjacent memory and potentially allowing code execution.",
+        "example": "The buffer overflow vulnerability allowed the attacker to execute arbitrary code on the server."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "exploitation",
+      "memory-corruption"
+    ],
+    "relatedTerms": [
+      "cyber-012",
+      "cyber-011"
+    ],
+    "order": 53
+  },
+  {
+    "id": "cyber-054",
+    "term": "Privilege Escalation",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın düşük yetkili bir hesaptan daha yüksek yetkili bir hesaba (örneğin admin) geçiş yaparak sistem üzerinde daha fazla kontrol elde etmesidir.",
+        "example": "Saldırgan, kernel açığını kullanarak privilege escalation ile root yetkisi elde etti."
+      },
+      "en": {
+        "definition": "The act of exploiting a vulnerability to gain elevated access rights, moving from a low-privilege account to a higher one like admin or root.",
+        "example": "The attacker achieved privilege escalation to root by exploiting a kernel vulnerability."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "post-exploitation"
+    ],
+    "relatedTerms": [
+      "cyber-055",
+      "cyber-012"
+    ],
+    "order": 54
+  },
+  {
+    "id": "cyber-055",
+    "term": "Lateral Movement",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın bir ağda ilk erişim noktasından diğer sistemlere yatay olarak hareket ederek erişim alanını genişletmesidir.",
+        "example": "Saldırgan lateral movement tekniği ile etki alanı denetleyicisine ulaşmayı başardı."
+      },
+      "en": {
+        "definition": "The technique of moving horizontally through a network from the initial point of compromise to access other systems and expand reach.",
+        "example": "The attacker used lateral movement techniques to reach the domain controller from the compromised workstation."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "post-exploitation"
+    ],
+    "relatedTerms": [
+      "cyber-054",
+      "cyber-056"
+    ],
+    "order": 55
+  },
+  {
+    "id": "cyber-056",
+    "term": "C2 (Command & Control)",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın ele geçirdiği sistemlerle iletişim kurmak ve uzaktan komut göndermek için kullandığı altyapıdır.",
+        "example": "Zararlı yazılım, şifreli bir C2 kanalı üzerinden saldırgandan komut alıyordu."
+      },
+      "en": {
+        "definition": "The infrastructure used by an attacker to communicate with and send commands to compromised systems.",
+        "example": "The malware was receiving commands from the attacker through an encrypted C2 channel."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "command-control"
+    ],
+    "relatedTerms": [
+      "cyber-057",
+      "cyber-058"
+    ],
+    "order": 56
+  },
+  {
+    "id": "cyber-057",
+    "term": "Payload",
+    "translations": {
+      "tr": {
+        "definition": "Bir siber saldırıda hedef sistem üzerinde çalıştırılmak istenen zararlı kod veya veridir.",
+        "example": "Exploit başarılı oldu ve payload hedef sunucuda bir ters kabuk açtı."
+      },
+      "en": {
+        "definition": "The malicious code or data intended to be executed on the target system during a cyberattack.",
+        "example": "The exploit succeeded and the payload opened a reverse shell on the target server."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "exploitation"
+    ],
+    "relatedTerms": [
+      "cyber-012",
+      "cyber-063"
+    ],
+    "order": 57
+  },
+  {
+    "id": "cyber-058",
+    "term": "Backdoor",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın normal kimlik doğrulama süreçlerini atlayarak sisteme tekrar erişim sağlamak için bıraktığı gizli giriş noktasıdır.",
+        "example": "Forensics ekibi, web sunucusunda gizlenmiş bir backdoor keşfetti."
+      },
+      "en": {
+        "definition": "A hidden entry point left by an attacker to bypass normal authentication and regain access to a compromised system.",
+        "example": "The forensics team discovered a hidden backdoor in the web server's codebase."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "persistence"
+    ],
+    "relatedTerms": [
+      "cyber-059",
+      "cyber-056"
+    ],
+    "order": 58
+  },
+  {
+    "id": "cyber-059",
+    "term": "Rootkit",
+    "translations": {
+      "tr": {
+        "definition": "Kendini ve diğer kötü amaçlı yazılımları işletim sistemi seviyesinde gizleyerek tespit edilmesini zorlaştıran yazılımdır.",
+        "example": "Rootkit, işletim sistemi çekirdeğine yerleşerek kendini güvenlik taramalarından gizledi."
+      },
+      "en": {
+        "definition": "Software that hides itself and other malware at the operating system level, making detection extremely difficult.",
+        "example": "The rootkit embedded itself in the OS kernel, hiding its presence from security scans."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "malware",
+      "persistence"
+    ],
+    "relatedTerms": [
+      "cyber-058",
+      "cyber-002"
+    ],
+    "order": 59
+  },
+  {
+    "id": "cyber-060",
+    "term": "Keylogger",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının klavyede bastığı tüm tuşları gizlice kaydeden ve saldırgana ileten kötü amaçlı yazılımdır.",
+        "example": "Keylogger sayesinde saldırgan, kurbanın banka hesabı parolasını ele geçirdi."
+      },
+      "en": {
+        "definition": "Malware that secretly records all keystrokes made by a user and transmits them to the attacker.",
+        "example": "The keylogger captured the victim's banking credentials and sent them to the attacker."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "malware",
+      "spyware"
+    ],
+    "relatedTerms": [
+      "cyber-066",
+      "cyber-002"
+    ],
+    "order": 60
+  },
+  {
+    "id": "cyber-061",
+    "term": "Man-in-the-Middle",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın iki taraf arasındaki iletişimi gizlice dinlediği veya değiştirdiği saldırı türüdür.",
+        "example": "Güvensiz Wi-Fi ağında man-in-the-middle saldırısıyla kullanıcıların verileri ele geçirildi."
+      },
+      "en": {
+        "definition": "An attack where the attacker secretly intercepts and potentially alters communication between two parties.",
+        "example": "A man-in-the-middle attack on the unsecured Wi-Fi network captured users' login credentials."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "network-attack"
+    ],
+    "relatedTerms": [
+      "cyber-076",
+      "cyber-003"
+    ],
+    "order": 61
+  },
+  {
+    "id": "cyber-062",
+    "term": "Trojan",
+    "translations": {
+      "tr": {
+        "definition": "Meşru bir yazılım gibi görünerek kullanıcıyı kandıran ve arka planda kötü amaçlı işlemler gerçekleştiren zararlı yazılımdır.",
+        "example": "Ücretsiz oyun olarak indirilen dosya aslında bir trojan çıktı ve kullanıcı verilerini çaldı."
+      },
+      "en": {
+        "definition": "Malware disguised as legitimate software that tricks users into installing it while performing malicious activities in the background.",
+        "example": "The free game download turned out to be a trojan that stole user data."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "malware",
+      "red-team"
+    ],
+    "relatedTerms": [
+      "cyber-002",
+      "cyber-058"
+    ],
+    "order": 62
+  },
+  {
+    "id": "cyber-063",
+    "term": "Reverse Shell",
+    "translations": {
+      "tr": {
+        "definition": "Hedef sistemin saldırganın kontrol sunucusuna geri bağlantı kurmasını sağlayan, uzaktan komut çalıştırma imkanı veren tekniktir.",
+        "example": "Saldırgan, web uygulamasındaki açıktan yararlanarak sunucuda bir reverse shell elde etti."
+      },
+      "en": {
+        "definition": "A technique where the target system initiates a connection back to the attacker's server, enabling remote command execution.",
+        "example": "The attacker exploited the web application vulnerability to establish a reverse shell on the server."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "exploitation",
+      "post-exploitation"
+    ],
+    "relatedTerms": [
+      "cyber-057",
+      "cyber-056"
+    ],
+    "order": 63
+  },
+  {
+    "id": "cyber-064",
+    "term": "Worm",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcı etkileşimi olmadan kendi kendine çoğalarak ağ üzerinden diğer sistemlere yayılan kötü amaçlı yazılımdır.",
+        "example": "Worm, yamayı uygulanmamış sistemlere otomatik olarak yayılarak tüm ağı etkiledi."
+      },
+      "en": {
+        "definition": "Self-replicating malware that spreads across networks to other systems without requiring user interaction.",
+        "example": "The worm automatically spread to all unpatched systems across the network."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "malware",
+      "red-team"
+    ],
+    "relatedTerms": [
+      "cyber-002",
+      "cyber-062"
+    ],
+    "order": 64
+  },
+  {
+    "id": "cyber-065",
+    "term": "Spyware",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının bilgisi ve izni olmadan bilgilerini toplayan ve saldırgana ileten gizli izleme yazılımıdır.",
+        "example": "Spyware, kullanıcının tarama geçmişini ve kişisel bilgilerini gizlice kaydediyordu."
+      },
+      "en": {
+        "definition": "Software that secretly monitors and collects user information without their knowledge or consent.",
+        "example": "The spyware was secretly recording the user's browsing history and personal information."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "malware",
+      "red-team",
+      "spyware"
+    ],
+    "relatedTerms": [
+      "cyber-060",
+      "cyber-002"
+    ],
+    "order": 65
+  },
+  {
+    "id": "cyber-066",
+    "term": "Port Scanning",
+    "translations": {
+      "tr": {
+        "definition": "Hedef sistemdeki açık ağ portlarını ve çalışan servisleri tespit etmek için kullanılan keşif tekniğidir.",
+        "example": "Nmap ile yapılan port scanning sonucunda sunucuda açık bırakılmış üç gereksiz port tespit edildi."
+      },
+      "en": {
+        "definition": "A reconnaissance technique used to discover open network ports and running services on a target system.",
+        "example": "Port scanning with Nmap revealed three unnecessarily open ports on the server."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "reconnaissance"
+    ],
+    "relatedTerms": [
+      "cyber-067",
+      "cyber-068"
+    ],
+    "order": 66
+  },
+  {
+    "id": "cyber-067",
+    "term": "Reconnaissance",
+    "translations": {
+      "tr": {
+        "definition": "Saldırı öncesinde hedef hakkında bilgi toplama aşamasıdır; pasif ve aktif yöntemler kullanılır.",
+        "example": "Reconnaissance aşamasında saldırgan, hedef şirketin altyapısı hakkında detaylı bilgi topladı."
+      },
+      "en": {
+        "definition": "The information-gathering phase before an attack, using passive and active methods to learn about the target.",
+        "example": "During reconnaissance, the attacker gathered detailed information about the target company's infrastructure."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "reconnaissance"
+    ],
+    "relatedTerms": [
+      "cyber-066",
+      "cyber-068"
+    ],
+    "order": 67
+  },
+  {
+    "id": "cyber-068",
+    "term": "OSINT",
+    "translations": {
+      "tr": {
+        "definition": "Open Source Intelligence; kamuya açık kaynaklardan (web siteleri, sosyal medya, forumlar) istihbarat bilgisi toplama yöntemidir.",
+        "example": "OSINT araçlarıyla hedef şirketin çalışan e-posta formatı ve kullanılan teknolojiler belirlendi."
+      },
+      "en": {
+        "definition": "Open Source Intelligence; the practice of collecting intelligence from publicly available sources such as websites, social media, and forums.",
+        "example": "OSINT tools were used to identify the target company's email format and technology stack."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "reconnaissance",
+      "intelligence"
+    ],
+    "relatedTerms": [
+      "cyber-067",
+      "cyber-036"
+    ],
+    "order": 68
+  },
+  {
+    "id": "cyber-069",
+    "term": "Pretexting",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganın sahte bir senaryo veya kimlik oluşturarak hedefi bilgi paylaşmaya ikna ettiği sosyal mühendislik tekniğidir.",
+        "example": "Saldırgan, IT departmanından arıyormuş gibi pretexting yaparak çalışanın parolasını öğrendi."
+      },
+      "en": {
+        "definition": "A social engineering technique where the attacker creates a fabricated scenario or identity to manipulate the target into sharing information.",
+        "example": "The attacker used pretexting, posing as IT support, to trick the employee into revealing their password."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "social-engineering"
+    ],
+    "relatedTerms": [
+      "cyber-009",
+      "cyber-008"
+    ],
+    "order": 69
+  },
+  {
+    "id": "cyber-070",
+    "term": "AES",
+    "translations": {
+      "tr": {
+        "definition": "Advanced Encryption Standard; dünya genelinde en yaygın kullanılan simetrik şifreleme algoritmasıdır. 128, 192 veya 256 bit anahtar uzunluğu kullanır.",
+        "example": "Veritabanındaki hassas veriler AES-256 algoritmasıyla şifreleniyor."
+      },
+      "en": {
+        "definition": "Advanced Encryption Standard; the most widely used symmetric encryption algorithm, supporting 128, 192, or 256-bit key lengths.",
+        "example": "Sensitive data in the database is encrypted using the AES-256 algorithm."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "symmetric-encryption"
+    ],
+    "relatedTerms": [
+      "cyber-071",
+      "cyber-076"
+    ],
+    "order": 70
+  },
+  {
+    "id": "cyber-071",
+    "term": "RSA",
+    "translations": {
+      "tr": {
+        "definition": "Asal sayıların çarpanlarına ayrılmasının zorluğuna dayanan, dijital imza ve anahtar değişiminde kullanılan asimetrik şifreleme algoritmasıdır.",
+        "example": "SSL sertifikasında anahtar değişimi RSA algoritması ile gerçekleştiriliyor."
+      },
+      "en": {
+        "definition": "An asymmetric encryption algorithm based on the difficulty of factoring large prime numbers, used for digital signatures and key exchange.",
+        "example": "The SSL certificate uses RSA for key exchange during the TLS handshake."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "asymmetric-encryption"
+    ],
+    "relatedTerms": [
+      "cyber-070",
+      "cyber-077"
+    ],
+    "order": 71
+  },
+  {
+    "id": "cyber-072",
+    "term": "Hash",
+    "translations": {
+      "tr": {
+        "definition": "Herhangi bir boyuttaki veriyi sabit uzunlukta benzersiz bir değere dönüştüren tek yönlü matematiksel fonksiyondur.",
+        "example": "Parolalar veritabanında hash'lenerek saklanır, bu sayede doğrudan okunamazlar."
+      },
+      "en": {
+        "definition": "A one-way mathematical function that converts data of any size into a fixed-length unique value.",
+        "example": "Passwords are stored as hashes in the database so they cannot be read directly."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "hashing"
+    ],
+    "relatedTerms": [
+      "cyber-073",
+      "cyber-010"
+    ],
+    "order": 72
+  },
+  {
+    "id": "cyber-073",
+    "term": "Salt",
+    "translations": {
+      "tr": {
+        "definition": "Parola hash'lenmeden önce eklenen rastgele veridir; aynı parolaların farklı hash değerleri üretmesini sağlayarak güvenliği artırır.",
+        "example": "Her kullanıcının parolasına benzersiz bir salt eklenerek rainbow table saldırıları önleniyor."
+      },
+      "en": {
+        "definition": "Random data added to a password before hashing, ensuring identical passwords produce different hash values to enhance security.",
+        "example": "A unique salt is added to each user's password to prevent rainbow table attacks."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "hashing"
+    ],
+    "relatedTerms": [
+      "cyber-072",
+      "cyber-010"
+    ],
+    "order": 73
+  },
+  {
+    "id": "cyber-074",
+    "term": "Digital Signature",
+    "translations": {
+      "tr": {
+        "definition": "Dijital belgelerin bütünlüğünü ve gönderenin kimliğini doğrulamak için kriptografik yöntemlerle oluşturulan elektronik imzadır.",
+        "example": "Yazılım güncellemeleri, değiştirilmediğinden emin olmak için digital signature ile doğrulanıyor."
+      },
+      "en": {
+        "definition": "A cryptographic mechanism used to verify the integrity of a digital document and authenticate the sender's identity.",
+        "example": "Software updates are verified using digital signatures to ensure they haven't been tampered with."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "authentication"
+    ],
+    "relatedTerms": [
+      "cyber-075",
+      "cyber-071"
+    ],
+    "order": 74
+  },
+  {
+    "id": "cyber-075",
+    "term": "PKI",
+    "translations": {
+      "tr": {
+        "definition": "Public Key Infrastructure; dijital sertifikaların oluşturulması, dağıtılması ve yönetilmesi için kullanılan güvenlik altyapısıdır.",
+        "example": "Şirketin PKI altyapısı tüm iç iletişimlerde şifreleme ve kimlik doğrulamayı sağlıyor."
+      },
+      "en": {
+        "definition": "Public Key Infrastructure; a framework for creating, distributing, and managing digital certificates for secure communication.",
+        "example": "The company's PKI infrastructure ensures encryption and authentication for all internal communications."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "pki"
+    ],
+    "relatedTerms": [
+      "cyber-074",
+      "cyber-078"
+    ],
+    "order": 75
+  },
+  {
+    "id": "cyber-076",
+    "term": "TLS/SSL",
+    "translations": {
+      "tr": {
+        "definition": "İnternet üzerindeki iletişimi şifreleyerek güvenli hale getiren kriptografik protokollerdir. HTTPS bu protokolleri kullanır.",
+        "example": "Web sitesi TLS 1.3 kullanarak kullanıcı verileri aktarım sırasında şifreleniyor."
+      },
+      "en": {
+        "definition": "Cryptographic protocols that encrypt internet communications to ensure secure data transmission. HTTPS relies on these protocols.",
+        "example": "The website uses TLS 1.3 to encrypt user data during transmission."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "network-security"
+    ],
+    "relatedTerms": [
+      "cyber-003",
+      "cyber-078"
+    ],
+    "order": 76
+  },
+  {
+    "id": "cyber-077",
+    "term": "Symmetric Encryption",
+    "translations": {
+      "tr": {
+        "definition": "Şifreleme ve şifre çözme işlemlerinde aynı gizli anahtarın kullanıldığı şifreleme yöntemidir.",
+        "example": "Dosya şifrelemede hız avantajı nedeniyle symmetric encryption tercih edildi."
+      },
+      "en": {
+        "definition": "An encryption method where the same secret key is used for both encrypting and decrypting data.",
+        "example": "Symmetric encryption was chosen for file encryption due to its speed advantage."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "symmetric-encryption"
+    ],
+    "relatedTerms": [
+      "cyber-070",
+      "cyber-078"
+    ],
+    "order": 77
+  },
+  {
+    "id": "cyber-078",
+    "term": "Asymmetric Encryption",
+    "translations": {
+      "tr": {
+        "definition": "Biri açık (public), diğeri gizli (private) olmak üzere bir çift anahtar kullanan şifreleme yöntemidir.",
+        "example": "E-posta şifrelemesinde asymmetric encryption ile mesajlar alıcının açık anahtarıyla şifreleniyor."
+      },
+      "en": {
+        "definition": "An encryption method that uses a pair of keys: a public key for encryption and a private key for decryption.",
+        "example": "In email encryption, asymmetric encryption uses the recipient's public key to encrypt messages."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "asymmetric-encryption"
+    ],
+    "relatedTerms": [
+      "cyber-071",
+      "cyber-077"
+    ],
+    "order": 78
+  },
+  {
+    "id": "cyber-079",
+    "term": "Key Exchange",
+    "translations": {
+      "tr": {
+        "definition": "İki tarafın güvenli olmayan bir kanal üzerinden şifreleme anahtarlarını güvenli şekilde paylaşma yöntemidir.",
+        "example": "Diffie-Hellman key exchange protokolü, TLS bağlantılarında oturum anahtarlarının güvenli paylaşımını sağlıyor."
+      },
+      "en": {
+        "definition": "A method that allows two parties to securely share encryption keys over an insecure channel.",
+        "example": "The Diffie-Hellman key exchange protocol enables secure sharing of session keys in TLS connections."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "key-management"
+    ],
+    "relatedTerms": [
+      "cyber-076",
+      "cyber-078"
+    ],
+    "order": 79
+  },
+  {
+    "id": "cyber-080",
+    "term": "Cipher",
+    "translations": {
+      "tr": {
+        "definition": "Verileri şifrelemek ve şifresini çözmek için kullanılan matematiksel algoritmadır.",
+        "example": "Sunucu yapılandırmasında yalnızca güçlü cipher algoritmaları etkinleştirildi."
+      },
+      "en": {
+        "definition": "A mathematical algorithm used to encrypt and decrypt data.",
+        "example": "Only strong cipher algorithms were enabled in the server configuration."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography"
+    ],
+    "relatedTerms": [
+      "cyber-081",
+      "cyber-070"
+    ],
+    "order": 80
+  },
+  {
+    "id": "cyber-081",
+    "term": "Plaintext / Ciphertext",
+    "translations": {
+      "tr": {
+        "definition": "Plaintext şifrelenmemiş okunabilir veridir; ciphertext ise şifreleme sonrası oluşan okunamaz veridir.",
+        "example": "Şifreleme işlemi plaintext'i ciphertext'e dönüştürür, şifre çözme ise tersi işlemi yapar."
+      },
+      "en": {
+        "definition": "Plaintext is unencrypted readable data; ciphertext is the unreadable data produced after encryption.",
+        "example": "Encryption converts plaintext into ciphertext, and decryption reverses the process."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography"
+    ],
+    "relatedTerms": [
+      "cyber-080",
+      "cyber-003"
+    ],
+    "order": 81
+  },
+  {
+    "id": "cyber-082",
+    "term": "Certificate",
+    "translations": {
+      "tr": {
+        "definition": "Bir web sitesinin veya sunucunun kimliğini doğrulayan, güvenilir bir sertifika otoritesi tarafından imzalanmış dijital belgedir.",
+        "example": "Web sitesinin SSL certificate süresi dolduğu için tarayıcı güvenlik uyarısı verdi."
+      },
+      "en": {
+        "definition": "A digital document signed by a trusted certificate authority that verifies the identity of a website or server.",
+        "example": "The browser displayed a security warning because the website's SSL certificate had expired."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "pki"
+    ],
+    "relatedTerms": [
+      "cyber-075",
+      "cyber-076"
+    ],
+    "order": 82
+  },
+  {
+    "id": "cyber-083",
+    "term": "Blockchain",
+    "translations": {
+      "tr": {
+        "definition": "Verileri kriptografik olarak birbirine bağlı bloklarda saklayan, dağıtık ve değiştirilemez bir dijital kayıt defteridir.",
+        "example": "Blockchain teknolojisi, işlem kayıtlarının değiştirilmesini pratik olarak imkansız hale getiriyor."
+      },
+      "en": {
+        "definition": "A distributed, immutable digital ledger that stores data in cryptographically linked blocks.",
+        "example": "Blockchain technology makes it practically impossible to alter transaction records."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "cryptography",
+      "distributed-systems"
+    ],
+    "relatedTerms": [
+      "cyber-072",
+      "cyber-003"
+    ],
+    "order": 83
+  },
+  {
+    "id": "cyber-084",
+    "term": "OWASP",
+    "translations": {
+      "tr": {
+        "definition": "Open Web Application Security Project; web uygulama güvenliğini iyileştirmek için standartlar, araçlar ve bilgi kaynakları sunan açık topluluktur.",
+        "example": "Geliştirme ekibi, OWASP Top 10 listesindeki güvenlik risklerine karşı uygulamayı test etti."
+      },
+      "en": {
+        "definition": "Open Web Application Security Project; an open community that provides standards, tools, and resources to improve web application security.",
+        "example": "The development team tested the application against the OWASP Top 10 security risks."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "web-security"
+    ],
+    "relatedTerms": [
+      "cyber-030",
+      "cyber-031",
+      "cyber-085"
+    ],
+    "order": 84
+  },
+  {
+    "id": "cyber-085",
+    "term": "MITRE ATT&CK",
+    "translations": {
+      "tr": {
+        "definition": "Saldırganların kullandığı taktik ve teknikleri sistematik olarak kategorize eden, siber güvenlik alanında yaygın kullanılan bilgi tabanıdır.",
+        "example": "SOC ekibi, tespit edilen saldırıyı MITRE ATT&CK çerçevesine göre sınıflandırdı."
+      },
+      "en": {
+        "definition": "A comprehensive knowledge base that systematically categorizes adversary tactics and techniques used in cyberattacks.",
+        "example": "The SOC team classified the detected attack according to the MITRE ATT&CK framework."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "threat-intelligence"
+    ],
+    "relatedTerms": [
+      "cyber-084",
+      "cyber-096"
+    ],
+    "order": 85
+  },
+  {
+    "id": "cyber-086",
+    "term": "NIST",
+    "translations": {
+      "tr": {
+        "definition": "National Institute of Standards and Technology; siber güvenlik standartları ve çerçeveleri geliştiren ABD devlet kurumudur.",
+        "example": "Şirket, güvenlik programını NIST Cybersecurity Framework'e uygun olarak yapılandırdı."
+      },
+      "en": {
+        "definition": "National Institute of Standards and Technology; a U.S. government agency that develops cybersecurity standards and frameworks.",
+        "example": "The company aligned its security program with the NIST Cybersecurity Framework."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "compliance"
+    ],
+    "relatedTerms": [
+      "cyber-087",
+      "cyber-018"
+    ],
+    "order": 86
+  },
+  {
+    "id": "cyber-087",
+    "term": "ISO 27001",
+    "translations": {
+      "tr": {
+        "definition": "Bilgi güvenliği yönetim sistemi (BGYS) için gereksinimleri tanımlayan uluslararası standarttır.",
+        "example": "Şirket, müşteri güvenini artırmak için ISO 27001 sertifikası aldı."
+      },
+      "en": {
+        "definition": "An international standard that specifies requirements for establishing, implementing, and maintaining an information security management system (ISMS).",
+        "example": "The company obtained ISO 27001 certification to strengthen client confidence."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "compliance"
+    ],
+    "relatedTerms": [
+      "cyber-086",
+      "cyber-018"
+    ],
+    "order": 87
+  },
+  {
+    "id": "cyber-088",
+    "term": "GDPR",
+    "translations": {
+      "tr": {
+        "definition": "General Data Protection Regulation; Avrupa Birliği'nin kişisel verilerin korunmasını düzenleyen kapsamlı veri gizliliği yasasıdır.",
+        "example": "GDPR uyumluluğu için kullanıcılardan veri işleme konusunda açık onay alınması gerekiyor."
+      },
+      "en": {
+        "definition": "General Data Protection Regulation; the European Union's comprehensive data privacy law governing the protection of personal data.",
+        "example": "GDPR compliance requires obtaining explicit consent from users for data processing."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "compliance",
+      "privacy"
+    ],
+    "relatedTerms": [
+      "cyber-018",
+      "cyber-041"
+    ],
+    "order": 88
+  },
+  {
+    "id": "cyber-089",
+    "term": "PCI DSS",
+    "translations": {
+      "tr": {
+        "definition": "Payment Card Industry Data Security Standard; kredi kartı verilerini işleyen kuruluşların uyması gereken güvenlik standartlarıdır.",
+        "example": "E-ticaret platformu, kredi kartı ödemelerini kabul edebilmek için PCI DSS uyumluluğunu sağladı."
+      },
+      "en": {
+        "definition": "Payment Card Industry Data Security Standard; security standards required for organizations that handle credit card data.",
+        "example": "The e-commerce platform achieved PCI DSS compliance to accept credit card payments."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "compliance"
+    ],
+    "relatedTerms": [
+      "cyber-018",
+      "cyber-088"
+    ],
+    "order": 89
+  },
+  {
+    "id": "cyber-090",
+    "term": "CIS Benchmarks",
+    "translations": {
+      "tr": {
+        "definition": "Center for Internet Security tarafından yayınlanan, sistemlerin güvenli yapılandırılması için en iyi uygulamaları içeren kılavuzlardır.",
+        "example": "Sunucular, CIS Benchmarks kılavuzuna uygun olarak yapılandırıldı ve sıkılaştırıldı."
+      },
+      "en": {
+        "definition": "Configuration best-practice guides published by the Center for Internet Security for securing systems and platforms.",
+        "example": "The servers were configured and hardened according to CIS Benchmarks guidelines."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "hardening"
+    ],
+    "relatedTerms": [
+      "cyber-020",
+      "cyber-086"
+    ],
+    "order": 90
+  },
+  {
+    "id": "cyber-091",
+    "term": "Kill Chain",
+    "translations": {
+      "tr": {
+        "definition": "Bir siber saldırının keşiften hedefe ulaşmaya kadar geçen aşamalarını tanımlayan modeldir. Lockheed Martin tarafından geliştirilmiştir.",
+        "example": "Güvenlik ekibi, saldırıyı kill chain modelinin hangi aşamasında durdurabileceklerini analiz etti."
+      },
+      "en": {
+        "definition": "A model describing the stages of a cyberattack from reconnaissance to objective completion, developed by Lockheed Martin.",
+        "example": "The security team analyzed at which stage of the kill chain they could disrupt the attack."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "threat-modeling"
+    ],
+    "relatedTerms": [
+      "cyber-085",
+      "cyber-092"
+    ],
+    "order": 91
+  },
+  {
+    "id": "cyber-092",
+    "term": "Diamond Model",
+    "translations": {
+      "tr": {
+        "definition": "Siber saldırıları saldırgan, altyapı, yetenek ve kurban olmak üzere dört temel bileşenle analiz eden tehdit analiz modelidir.",
+        "example": "Analistler, APT grubunun faaliyetlerini diamond model kullanarak analiz etti."
+      },
+      "en": {
+        "definition": "A threat analysis model that analyzes cyberattacks through four core components: adversary, infrastructure, capability, and victim.",
+        "example": "Analysts used the diamond model to analyze the APT group's activities and infrastructure."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "threat-modeling"
+    ],
+    "relatedTerms": [
+      "cyber-091",
+      "cyber-085"
+    ],
+    "order": 92
+  },
+  {
+    "id": "cyber-093",
+    "term": "STRIDE",
+    "translations": {
+      "tr": {
+        "definition": "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege kategorilerinden oluşan tehdit modelleme çerçevesidir.",
+        "example": "Uygulama tasarım aşamasında STRIDE modeli kullanılarak olası tehditler belirlendi."
+      },
+      "en": {
+        "definition": "A threat modeling framework comprising six categories: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege.",
+        "example": "During the application design phase, the STRIDE model was used to identify potential threats."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "standards-frameworks",
+      "threat-modeling"
+    ],
+    "relatedTerms": [
+      "cyber-091",
+      "cyber-085"
+    ],
+    "order": 93
+  },
+  {
+    "id": "cyber-094",
+    "term": "Dark Web",
+    "translations": {
+      "tr": {
+        "definition": "Standart arama motorlarıyla erişilemeyen, özel yazılımlar (Tor gibi) gerektiren ve genellikle anonim faaliyetlerin yürütüldüğü internet katmanıdır.",
+        "example": "Güvenlik ekibi, çalınan şirket verilerinin dark web'de satışa çıkarılıp çıkarılmadığını izliyor."
+      },
+      "en": {
+        "definition": "A layer of the internet inaccessible through standard search engines, requiring specialized software like Tor, often used for anonymous activities.",
+        "example": "The security team monitors the dark web for any stolen company data being offered for sale."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "threat-intelligence",
+      "dark-web"
+    ],
+    "relatedTerms": [
+      "cyber-036",
+      "cyber-005"
+    ],
+    "order": 94
+  },
+  {
+    "id": "cyber-095",
+    "term": "Bug Bounty",
+    "translations": {
+      "tr": {
+        "definition": "Kuruluşların güvenlik araştırmacılarına, buldukları güvenlik açıkları karşılığında ödül verdikleri programdır.",
+        "example": "Şirket, bug bounty programı aracılığıyla kritik bir güvenlik açığını bulan araştırmacıya 10.000 dolar ödül verdi."
+      },
+      "en": {
+        "definition": "A program where organizations reward security researchers for discovering and responsibly reporting security vulnerabilities.",
+        "example": "The company paid a $10,000 reward through its bug bounty program to the researcher who found a critical vulnerability."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "vulnerability-management",
+      "offensive-security"
+    ],
+    "relatedTerms": [
+      "cyber-011",
+      "cyber-021"
+    ],
+    "order": 95
+  },
+  {
+    "id": "cyber-096",
+    "term": "Red Team",
+    "translations": {
+      "tr": {
+        "definition": "Bir kuruluşun güvenliğini test etmek amacıyla gerçek saldırganları taklit eden, saldırı simülasyonu yapan uzman ekiptir.",
+        "example": "Red team operasyonu sırasında ekip, fiziksel güvenliği aşarak sunucu odasına erişmeyi başardı."
+      },
+      "en": {
+        "definition": "A team of security experts that simulates real-world attacks to test an organization's security defenses.",
+        "example": "During the red team operation, the team bypassed physical security and gained access to the server room."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "red-team",
+      "offensive-security"
+    ],
+    "relatedTerms": [
+      "cyber-097",
+      "cyber-098"
+    ],
+    "order": 96
+  },
+  {
+    "id": "cyber-097",
+    "term": "Blue Team",
+    "translations": {
+      "tr": {
+        "definition": "Bir kuruluşun bilgi sistemlerini korumak, tehditleri tespit etmek ve saldırılara müdahale etmekten sorumlu savunma ekibidir.",
+        "example": "Blue team, saldırı simülasyonu sırasında şüpheli ağ trafiğini 15 dakikada tespit etti."
+      },
+      "en": {
+        "definition": "The defensive security team responsible for protecting an organization's information systems, detecting threats, and responding to attacks.",
+        "example": "The blue team detected the suspicious network traffic within 15 minutes during the attack simulation."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "blue-team",
+      "defense"
+    ],
+    "relatedTerms": [
+      "cyber-096",
+      "cyber-098"
+    ],
+    "order": 97
+  },
+  {
+    "id": "cyber-098",
+    "term": "Purple Team",
+    "translations": {
+      "tr": {
+        "definition": "Red team ve blue team'in birlikte çalışarak saldırı ve savunma stratejilerini karşılıklı iyileştirmesini sağlayan işbirlikçi güvenlik yaklaşımıdır.",
+        "example": "Purple team çalışması sonucunda hem saldırı tespit kapasitesi hem de savunma mekanizmaları geliştirildi."
+      },
+      "en": {
+        "definition": "A collaborative security approach where red and blue teams work together to improve both attack detection and defense strategies.",
+        "example": "The purple team exercise improved both attack detection capabilities and defensive mechanisms."
+      }
+    },
+    "difficulty": 2,
+    "tags": [
+      "cybersecurity",
+      "purple-team",
+      "collaboration"
+    ],
+    "relatedTerms": [
+      "cyber-096",
+      "cyber-097"
+    ],
+    "order": 98
+  },
+  {
+    "id": "cyber-099",
+    "term": "CTF",
+    "translations": {
+      "tr": {
+        "definition": "Capture The Flag; siber güvenlik becerilerini geliştirmek ve test etmek amacıyla düzenlenen yarışma formatındaki güvenlik egzersizleridir.",
+        "example": "Üniversite siber güvenlik kulübü, ulusal CTF yarışmasında birinci oldu."
+      },
+      "en": {
+        "definition": "Capture The Flag; competition-style security exercises designed to develop and test cybersecurity skills.",
+        "example": "The university cybersecurity club won first place in the national CTF competition."
+      }
+    },
+    "difficulty": 1,
+    "tags": [
+      "cybersecurity",
+      "training",
+      "competition"
+    ],
+    "relatedTerms": [
+      "cyber-096",
+      "cyber-021"
+    ],
+    "order": 99
+  },
+  {
+    "id": "cyber-100",
+    "term": "Zero Trust",
+    "translations": {
+      "tr": {
+        "definition": "Ağ içi veya dışı fark etmeksizin hiçbir kullanıcıya veya cihaza otomatik olarak güvenmemeyi esas alan güvenlik modelidir.",
+        "example": "Zero trust mimarisinde her erişim talebi, ağ konumundan bağımsız olarak doğrulanıyor."
+      },
+      "en": {
+        "definition": "A security model that assumes no user or device should be automatically trusted, regardless of whether they are inside or outside the network.",
+        "example": "In a zero trust architecture, every access request is verified regardless of network location."
+      }
+    },
+    "difficulty": 3,
+    "tags": [
+      "cybersecurity",
+      "architecture",
+      "zero-trust"
+    ],
+    "relatedTerms": [
+      "cyber-006",
+      "cyber-022",
+      "cyber-046"
+    ],
+    "order": 100
+  }
+]
