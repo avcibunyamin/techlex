@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check } from 'lucide-react-native';
@@ -8,12 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
-import { categories, Category, getAllTags } from '@/data/categories';
-import { Term, Language } from '@/types';
+import { categories, Category, getAllTags, findCategoryById, getDescendantIds, findParentCategory } from '@/data/categories';
+import { Term, Language, getTermLanguage } from '@/types';
 
 function getCategoryLabel(category: Category, language: Language): string {
-  const primary = category.name[language];
-  const secondary = category.name[language === 'tr' ? 'en' : 'tr'];
+  const tl = getTermLanguage(language);
+  const other = tl === 'tr' ? 'en' : 'tr';
+  const primary = category.name[tl];
+  const secondary = category.name[other];
   if (primary === secondary) return primary;
   const primaryBase = primary.split('(')[0].trim();
   const secondaryBase = secondary.split('(')[0].trim();
@@ -105,12 +107,43 @@ export default function ExploreScreen() {
 
   const selectedSet = useMemo(() => new Set(selectedTags), [selectedTags]);
 
+  const handleSmartToggle = useCallback((id: string) => {
+    const category = findCategoryById(id);
+    if (!category) return;
+
+    const current = new Set(selectedTags);
+    const isSelected = current.has(id);
+    const descendants = getDescendantIds(category);
+
+    if (isSelected) {
+      current.delete(id);
+      descendants.forEach(d => current.delete(d));
+    } else {
+      current.add(id);
+      descendants.forEach(d => current.add(d));
+    }
+
+    let parent = findParentCategory(id);
+    while (parent) {
+      const siblings = parent.subcategories ?? [];
+      const allSiblingsSelected = siblings.every(s => current.has(s.id));
+      if (allSiblingsSelected) {
+        current.add(parent.id);
+      } else {
+        current.delete(parent.id);
+      }
+      parent = findParentCategory(parent.id);
+    }
+
+    setSelectedTags(Array.from(current));
+  }, [selectedTags, setSelectedTags]);
+
   const results = useMemo(() => {
     if (query.length < 2) return [];
     const q = query.toLowerCase();
     return terms.filter(term =>
       term.term.toLowerCase().includes(q) ||
-      term.translations[language].definition.toLowerCase().includes(q)
+      term.translations[getTermLanguage(language)].definition.toLowerCase().includes(q)
     ).slice(0, 20);
   }, [query, terms, language]);
 
@@ -166,7 +199,7 @@ export default function ExploreScreen() {
                   style={[typography.callout, { color: t.textSecondary, marginTop: spacing.sm }]}
                   numberOfLines={2}
                 >
-                  {item.translations[language].definition}
+                  {item.translations[getTermLanguage(language)].definition}
                 </Text>
               </View>
               <ArrowUpRight size={16} color={t.textTertiary} strokeWidth={1.5} />
@@ -206,7 +239,7 @@ export default function ExploreScreen() {
                 depth={0}
                 language={language}
                 selectedIds={selectedSet}
-                onToggle={toggleTag}
+                onToggle={handleSmartToggle}
                 t={t}
                 accent={accent}
               />

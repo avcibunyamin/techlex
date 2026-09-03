@@ -1,6 +1,29 @@
 import { getSupabase, isSupabaseConfigured } from './supabase';
 import { UserProgress } from '@/types';
 
+export interface BatchProgressItem {
+  term_id: string;
+  box: number;
+  last_seen: string;
+  next_review: string;
+  times_correct: number;
+  times_seen: number;
+}
+
+export async function pushBatchSwipes(
+  progressItems: BatchProgressItem[],
+  swipeCount: number,
+  energyConsumed: number
+): Promise<{ error: any }> {
+  if (!isSupabaseConfigured || progressItems.length === 0) return { error: null };
+  const { error } = await getSupabase().rpc('process_batch_swipes', {
+    p_progress: progressItems,
+    p_swipe_count: swipeCount,
+    p_energy_consumed: energyConsumed,
+  });
+  return { error };
+}
+
 export async function pushProgress(
   userId: string,
   progress: Record<string, UserProgress>,

@@ -10,6 +10,7 @@ import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { getStats } from '@/lib/spaced-repetition';
 import { categories } from '@/data/categories';
+import { getTermLanguage } from '@/types';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -150,7 +151,7 @@ export default function HomeScreen() {
               >
                 <View style={[styles.exploreDot, { backgroundColor: cat.color }]} />
                 <Text style={[typography.subhead, { color: t.text }]}>
-                  {cat.name[language]}
+                  {cat.name[getTermLanguage(language)]}
                 </Text>
               </Pressable>
             ))}

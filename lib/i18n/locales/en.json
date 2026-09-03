@@ -32,7 +32,8 @@
     "restart": "Restart",
     "swipeRight": "Known",
     "swipeLeft": "Learning",
-    "tapFlip": "Tap to flip"
+    "tapFlip": "Tap to flip",
+    "swipeSave": "Save"
   },
   "explore": {
     "title": "Explore",
@@ -54,7 +55,8 @@
     "mastered": "Mastered",
     "beginner": "Beginner",
     "intermediate": "Intermediate",
-    "advanced": "Advanced"
+    "advanced": "Advanced",
+    "showMore": "+{{count}} more"
   },
   "profile": {
     "title": "Profile",

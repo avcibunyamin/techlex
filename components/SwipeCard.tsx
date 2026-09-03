@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { StyleSheet, Text, View, Dimensions, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -8,19 +8,25 @@ import Animated, {
   runOnJS,
   interpolate,
   Extrapolation,
+  SharedValue,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Bookmark, BookmarkCheck } from 'lucide-react-native';
-import { Term, Language } from '@/types';
+import { Term, Language, getTermLanguage } from '@/types';
 import { colors as palette, spacing, radius, typography } from '@/constants/theme';
 import { useTheme } from '@/lib/useTheme';
 import { getCategoryByTag } from '@/data/categories';
+import { useAppStore } from '@/lib/store';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_X_THRESHOLD = SCREEN_WIDTH * 0.28;
 const SWIPE_Y_THRESHOLD = 120;
 const VELOCITY_THRESHOLD = 800;
 const CARD_WIDTH = SCREEN_WIDTH - 48;
+
+export interface SwipeCardRef {
+  triggerSwipe: (direction: 'right' | 'left' | 'up') => void;
+}
 
 interface SwipeCardProps {
   term: Term;
@@ -33,21 +39,29 @@ interface SwipeCardProps {
   isSaved?: boolean;
   onRelatedTermPress?: (term: string) => void;
   stackIndex: number;
+  dragX?: SharedValue<number>;
+  dragY?: SharedValue<number>;
 }
 
-export default function SwipeCard({
-  term,
-  language,
-  onSwipeRight,
-  onSwipeLeft,
-  onSwipeUp,
-  onSwipeBlocked,
-  canSwipe = true,
-  isSaved = false,
-  onRelatedTermPress,
-  stackIndex,
-}: SwipeCardProps) {
+const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
+  {
+    term,
+    language,
+    onSwipeRight,
+    onSwipeLeft,
+    onSwipeUp,
+    onSwipeBlocked,
+    canSwipe = true,
+    isSaved = false,
+    onRelatedTermPress,
+    stackIndex,
+    dragX,
+    dragY,
+  },
+  ref
+) {
   const { colors: t, accent } = useTheme();
+  const allTerms = useAppStore(s => s.terms);
   const flipped = useRef(false);
 
   const translateX = useSharedValue(0);
@@ -59,6 +73,20 @@ export default function SwipeCard({
   useEffect(() => {
     canSwipeShared.value = canSwipe ? 1 : 0;
   }, [canSwipe, canSwipeShared]);
+
+  useImperativeHandle(ref, () => ({
+    triggerSwipe(direction: 'right' | 'left' | 'up') {
+      if (direction === 'right') {
+        translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 280 });
+        rotation.value = withTiming(20, { duration: 280 });
+      } else if (direction === 'left') {
+        translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 280 });
+        rotation.value = withTiming(-20, { duration: 280 });
+      } else {
+        translateY.value = withTiming(-SCREEN_HEIGHT, { duration: 350 });
+      }
+    },
+  }), [translateX, translateY, rotation]);
 
   const toggleFlip = useCallback(() => {
     flipped.current = !flipped.current;
@@ -82,8 +110,13 @@ export default function SwipeCard({
         [-12, 0, 12],
         Extrapolation.CLAMP
       );
+      if (dragX) dragX.value = e.translationX;
+      if (dragY) dragY.value = e.translationY;
     })
     .onEnd((e) => {
+      if (dragX) dragX.value = withTiming(0, { duration: 200 });
+      if (dragY) dragY.value = withTiming(0, { duration: 200 });
+
       const swipedUp =
         e.translationY < -SWIPE_Y_THRESHOLD ||
         (e.velocityY < -VELOCITY_THRESHOLD && e.translationY < -40);
@@ -180,10 +213,11 @@ export default function SwipeCard({
     ),
   }));
 
-  const translation = term.translations[language];
+  const tl = getTermLanguage(language);
+  const translation = term.translations[tl];
   const primaryTag = term.tags[0];
   const cat = primaryTag ? getCategoryByTag(primaryTag) : undefined;
-  const categoryLabel = cat?.name[language] ?? primaryTag?.replace(/-/g, ' ') ?? '';
+  const categoryLabel = cat?.name[tl] ?? primaryTag?.replace(/-/g, ' ') ?? '';
 
   return (
     <GestureDetector gesture={gesture}>
@@ -266,17 +300,21 @@ export default function SwipeCard({
 
             {term.relatedTerms.length > 0 ? (
               <View style={styles.chips}>
-                {term.relatedTerms.slice(0, 4).map((rt) => (
-                  <Pressable
-                    key={rt}
-                    style={[styles.chip, { borderColor: t.border }]}
-                    onPress={() => onRelatedTermPress?.(rt)}
-                  >
-                    <Text style={[styles.chipText, { color: t.textTertiary }]}>
-                      {rt}
-                    </Text>
-                  </Pressable>
-                ))}
+                {term.relatedTerms.slice(0, 4).map((rt) => {
+                  const related = allTerms.find(t => t.id === rt);
+                  if (!related) return null;
+                  return (
+                    <Pressable
+                      key={rt}
+                      style={[styles.chip, { borderColor: t.border }]}
+                      onPress={() => onRelatedTermPress?.(rt)}
+                    >
+                      <Text style={[styles.chipText, { color: t.textTertiary }]}>
+                        {related.term}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
               </View>
             ) : null}
           </View>
@@ -297,7 +335,9 @@ export default function SwipeCard({
       </Animated.View>
     </GestureDetector>
   );
-}
+});
+
+export default SwipeCard;
 
 const styles = StyleSheet.create({
   container: {

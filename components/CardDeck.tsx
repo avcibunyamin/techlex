@@ -1,16 +1,29 @@
-import React, { useState, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { StyleSheet, Text, View, Pressable, Platform } from 'react-native';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useSharedValue,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolation,
+} from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { RefreshCw, CheckCircle, AlertCircle } from 'lucide-react-native';
+import {
+  RefreshCw, CheckCircle, AlertCircle,
+  Check, Bookmark, ArrowLeft, ArrowRight, ArrowUp,
+} from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Term, Language } from '@/types';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
-import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
-import SwipeCard from './SwipeCard';
+import SwipeCard, { SwipeCardRef } from './SwipeCard';
 import PaywallModal from './PaywallModal';
+
+const isWeb = Platform.OS === 'web';
+const SWIPE_X_THRESHOLD = 90;
+const SWIPE_Y_THRESHOLD = 120;
 
 interface CardDeckProps {
   terms: Term[];
@@ -21,43 +34,30 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { swipeRight, swipeLeft, toggleSave, savedTerms, progress, consumeEnergy, energyLevel, hasActivePremium } = useAppStore();
+  const { swipeRight, swipeLeft, toggleSave, savedTerms, consumeEnergy, energyLevel, hasActivePremium, flushSwipeQueue } = useAppStore();
 
   const [showPaywall, setShowPaywall] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const cardRef = useRef<SwipeCardRef>(null);
+
+  const dragX = useSharedValue(0);
+  const dragY = useSharedValue(0);
 
   const isPremium = hasActivePremium();
   const hasEnergy = isPremium || energyLevel > 0;
+
+  useEffect(() => {
+    return () => {
+      flushSwipeQueue();
+    };
+  }, []);
 
   const showToast = useCallback((msg: string) => {
     clearTimeout(toastTimer.current);
     setToast(msg);
     toastTimer.current = setTimeout(() => setToast(null), 3000);
   }, []);
-
-  const syncSwipeToCloud = useCallback(async (direction: 'right' | 'left', termId: string) => {
-    if (!isPremium || !isSupabaseConfigured) return;
-    const rpc = direction === 'right' ? 'swipe_right' : 'swipe_left';
-    const { error } = await getSupabase().rpc(rpc, { p_term_id: termId });
-    if (error) {
-      if (direction === 'right') {
-        useAppStore.setState((s) => ({ energyLevel: Math.min(s.energyLevel + 1, 30) }));
-      }
-      showToast(tr('energyModal.connectionError'));
-    }
-  }, [isPremium, showToast, tr]);
-
-  const consumeWithRollback = useCallback(async () => {
-    if (isPremium) return;
-    if (isSupabaseConfigured) {
-      const { error } = await getSupabase().rpc('consume_energy');
-      if (error) {
-        useAppStore.setState((s) => ({ energyLevel: Math.min(s.energyLevel + 1, 30) }));
-        showToast(tr('energyModal.connectionError'));
-      }
-    }
-  }, [isPremium, showToast, tr]);
 
   const handleSwipeRight = useCallback(() => {
     if (currentIndex >= terms.length) return;
@@ -66,9 +66,7 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
     const termId = terms[currentIndex].id;
     swipeRight(termId);
     setCurrentIndex((i) => i + 1);
-    syncSwipeToCloud('right', termId);
-    consumeWithRollback();
-  }, [currentIndex, terms, swipeRight, consumeEnergy, syncSwipeToCloud, consumeWithRollback]);
+  }, [currentIndex, terms, swipeRight, consumeEnergy]);
 
   const handleSwipeLeft = useCallback(() => {
     if (currentIndex >= terms.length) return;
@@ -77,20 +75,94 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
     const termId = terms[currentIndex].id;
     swipeLeft(termId);
     setCurrentIndex((i) => i + 1);
-    syncSwipeToCloud('left', termId);
-    consumeWithRollback();
-  }, [currentIndex, terms, swipeLeft, consumeEnergy, syncSwipeToCloud, consumeWithRollback]);
+  }, [currentIndex, terms, swipeLeft, consumeEnergy]);
 
   const handleSwipeUp = useCallback(() => {
     if (currentIndex >= terms.length) return;
-    toggleSave(terms[currentIndex].id);
-  }, [currentIndex, terms, toggleSave]);
+    const ok = consumeEnergy();
+    if (!ok) { setShowPaywall(true); return; }
+    const termId = terms[currentIndex].id;
+    toggleSave(termId);
+    swipeRight(termId);
+    setCurrentIndex((i) => i + 1);
+  }, [currentIndex, terms, toggleSave, swipeRight, consumeEnergy]);
 
   const handleSwipeBlocked = useCallback(() => {
     setShowPaywall(true);
   }, []);
 
+  const handleWebSwipe = useCallback((direction: 'right' | 'left' | 'up') => {
+    if (currentIndex >= terms.length) return;
+    const ok = consumeEnergy();
+    if (!ok) { setShowPaywall(true); return; }
+
+    cardRef.current?.triggerSwipe(direction);
+
+    const termId = terms[currentIndex].id;
+    if (direction === 'up') {
+      toggleSave(termId);
+      swipeRight(termId);
+    } else if (direction === 'right') {
+      swipeRight(termId);
+    } else {
+      swipeLeft(termId);
+    }
+    setCurrentIndex((i) => i + 1);
+  }, [currentIndex, terms, consumeEnergy, swipeRight, swipeLeft, toggleSave]);
+
   const handleRestart = () => setCurrentIndex(0);
+
+  // Mobile hint animated styles
+  const leftHintStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      dragX.value,
+      [-SWIPE_X_THRESHOLD, -20, 0],
+      [1, 0.4, 0.15],
+      Extrapolation.CLAMP
+    ),
+    transform: [{
+      scale: interpolate(
+        dragX.value,
+        [-SWIPE_X_THRESHOLD, 0],
+        [1.1, 1],
+        Extrapolation.CLAMP
+      ),
+    }],
+  }));
+
+  const rightHintStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      dragX.value,
+      [0, 20, SWIPE_X_THRESHOLD],
+      [0.15, 0.4, 1],
+      Extrapolation.CLAMP
+    ),
+    transform: [{
+      scale: interpolate(
+        dragX.value,
+        [0, SWIPE_X_THRESHOLD],
+        [1, 1.1],
+        Extrapolation.CLAMP
+      ),
+    }],
+  }));
+
+  const upHintStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      dragY.value,
+      [-SWIPE_Y_THRESHOLD, -20, 0],
+      [1, 0.4, 0.15],
+      Extrapolation.CLAMP
+    ),
+    transform: [{
+      scale: interpolate(
+        dragY.value,
+        [-SWIPE_Y_THRESHOLD, 0],
+        [1.1, 1],
+        Extrapolation.CLAMP
+      ),
+    }],
+  }));
 
   if (terms.length === 0) {
     return (
@@ -130,9 +202,36 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
   return (
     <GestureHandlerRootView style={styles.root}>
       <View style={styles.deck}>
+        {/* Mobile swipe hints */}
+        {!isWeb && (
+          <>
+            <Animated.View style={[styles.hintLeft, leftHintStyle]} pointerEvents="none">
+              <ArrowLeft size={14} color={colors.danger} strokeWidth={1.5} />
+              <Text style={[styles.hintText, { color: colors.danger }]}>
+                {tr('learn.swipeLeft')}
+              </Text>
+            </Animated.View>
+
+            <Animated.View style={[styles.hintRight, rightHintStyle]} pointerEvents="none">
+              <Text style={[styles.hintText, { color: colors.success }]}>
+                {tr('learn.swipeRight')}
+              </Text>
+              <ArrowRight size={14} color={colors.success} strokeWidth={1.5} />
+            </Animated.View>
+
+            <Animated.View style={[styles.hintUp, upHintStyle]} pointerEvents="none">
+              <ArrowUp size={14} color={accent} strokeWidth={1.5} />
+              <Text style={[styles.hintText, { color: accent }]}>
+                {tr('learn.swipeSave')}
+              </Text>
+            </Animated.View>
+          </>
+        )}
+
         {visible
           .map((term, i) => (
             <SwipeCard
+              ref={i === 0 ? cardRef : undefined}
               key={term.id}
               term={term}
               language={language}
@@ -143,10 +242,47 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
               canSwipe={i === 0 ? hasEnergy : false}
               isSaved={savedTerms.includes(term.id)}
               stackIndex={i}
+              dragX={i === 0 ? dragX : undefined}
+              dragY={i === 0 ? dragY : undefined}
             />
           ))
           .reverse()}
       </View>
+
+      {/* Web action buttons */}
+      {isWeb && (
+        <View style={styles.webActions}>
+          <Pressable
+            style={[styles.webBtn, styles.webBtnLeft, { borderColor: colors.danger + '40' }]}
+            onPress={() => handleWebSwipe('left')}
+          >
+            <RefreshCw size={20} color={colors.danger} strokeWidth={2} />
+            <Text style={[styles.webBtnLabel, { color: colors.danger }]}>
+              {tr('learn.swipeLeft')}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.webBtn, styles.webBtnUp, { borderColor: accent + '40' }]}
+            onPress={() => handleWebSwipe('up')}
+          >
+            <Bookmark size={20} color={accent} strokeWidth={2} />
+            <Text style={[styles.webBtnLabel, { color: accent }]}>
+              {tr('learn.swipeSave')}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={[styles.webBtn, styles.webBtnRight, { borderColor: colors.success + '40' }]}
+            onPress={() => handleWebSwipe('right')}
+          >
+            <Check size={20} color={colors.success} strokeWidth={2} />
+            <Text style={[styles.webBtnLabel, { color: colors.success }]}>
+              {tr('learn.swipeRight')}
+            </Text>
+          </Pressable>
+        </View>
+      )}
 
       {toast && (
         <Animated.View
@@ -185,6 +321,65 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: radius.sm,
   },
+
+  // Mobile hints
+  hintLeft: {
+    position: 'absolute',
+    left: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    zIndex: -1,
+  },
+  hintRight: {
+    position: 'absolute',
+    right: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    zIndex: -1,
+  },
+  hintUp: {
+    position: 'absolute',
+    top: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    zIndex: -1,
+  },
+  hintText: {
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+
+  // Web buttons
+  webActions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: spacing.lg,
+    paddingVertical: spacing.xl,
+    paddingBottom: spacing['2xl'],
+  },
+  webBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 1.5,
+  },
+  webBtnLeft: {},
+  webBtnUp: {},
+  webBtnRight: {},
+  webBtnLabel: {
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.3,
+  },
+
   toast: {
     position: 'absolute',
     bottom: spacing['3xl'],

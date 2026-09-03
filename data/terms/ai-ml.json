@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "ai-001",
+    "term": "Neural Network",
+    "translations": {
+      "tr": {
+        "definition": "Biyolojik sinir sisteminden esinlenerek tasarlanmış, birbirine bağlı düğümlerden (nöronlardan) oluşan bir hesaplama modelidir.",
+        "example": "Görüntü sınıflandırma projemizde üç katmanlı bir neural network kullandık."
+      },
+      "en": {
+        "definition": "A computing model inspired by biological nervous systems, composed of interconnected nodes (neurons) organized in layers that process information.",
+        "example": "We trained a neural network with three hidden layers to classify medical images."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-002", "ai-010", "ai-019"],
+    "order": 1
+  },
+  {
+    "id": "ai-002",
+    "term": "Gradient Descent",
+    "translations": {
+      "tr": {
+        "definition": "Bir modelin hata fonksiyonunu minimize etmek için parametreleri iteratif olarak güncelleyen optimizasyon algoritmasıdır.",
+        "example": "Model, gradient descent kullanarak her iterasyonda loss değerini düşürmeye çalışıyor."
+      },
+      "en": {
+        "definition": "An optimization algorithm that iteratively adjusts model parameters to minimize the loss function by following the negative gradient.",
+        "example": "Gradient descent converged after 500 iterations, reducing the training loss to 0.01."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-003", "ai-008", "ai-009"],
+    "order": 2
+  },
+  {
+    "id": "ai-003",
+    "term": "Backpropagation",
+    "translations": {
+      "tr": {
+        "definition": "Sinir ağlarında hata sinyalini çıkış katmanından giriş katmanına doğru geri yayarak ağırlıkları güncelleyen algoritmadır.",
+        "example": "Backpropagation sayesinde ağ, her katmandaki ağırlıkları hataya göre ayarlayabiliyor."
+      },
+      "en": {
+        "definition": "An algorithm that propagates the error signal backward through the network layers to compute gradients and update weights.",
+        "example": "Backpropagation computes gradients layer by layer, enabling efficient training of deep networks."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-002", "ai-009"],
+    "order": 3
+  },
+  {
+    "id": "ai-004",
+    "term": "Overfitting",
+    "translations": {
+      "tr": {
+        "definition": "Modelin eğitim verisini ezberleyerek yeni verilere genelleme yapma kapasitesini kaybetmesi durumudur.",
+        "example": "Eğitim doğruluğu %99 ama test doğruluğu %60; bu açık bir overfitting işareti."
+      },
+      "en": {
+        "definition": "A condition where a model learns the training data too well, including noise and outliers, resulting in poor generalization to unseen data.",
+        "example": "The model showed signs of overfitting when training accuracy was 99% but test accuracy dropped to 60%."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-005", "ai-013", "ai-014"],
+    "order": 4
+  },
+  {
+    "id": "ai-005",
+    "term": "Underfitting",
+    "translations": {
+      "tr": {
+        "definition": "Modelin eğitim verisindeki örüntüleri bile yeterince öğrenemeyecek kadar basit kalması durumudur.",
+        "example": "Lineer model karmaşık veriyi yakalayamadı, underfitting sorunu yaşıyoruz."
+      },
+      "en": {
+        "definition": "A condition where a model is too simple to capture the underlying patterns in the training data, resulting in poor performance on both training and test data.",
+        "example": "Using a linear model for non-linear data resulted in underfitting with high bias."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-004", "ai-015", "ai-009"],
+    "order": 5
+  },
+  {
+    "id": "ai-006",
+    "term": "Epoch",
+    "translations": {
+      "tr": {
+        "definition": "Tüm eğitim veri setinin model tarafından bir kez tam olarak işlenmesini ifade eden eğitim döngüsüdür.",
+        "example": "Modeli 50 epoch boyunca eğittik ve 30. epoch'tan sonra iyileşme durdu."
+      },
+      "en": {
+        "definition": "One complete pass through the entire training dataset during model training.",
+        "example": "After 50 epochs of training, the model's validation loss plateaued around epoch 30."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-007", "ai-008"],
+    "order": 6
+  },
+  {
+    "id": "ai-007",
+    "term": "Batch Size",
+    "translations": {
+      "tr": {
+        "definition": "Her eğitim adımında modele verilen örnek sayısıdır; bellek kullanımını ve eğitim hızını doğrudan etkiler.",
+        "example": "GPU belleğine sığması için batch size'ı 32'den 16'ya düşürdük."
+      },
+      "en": {
+        "definition": "The number of training samples processed before the model's parameters are updated in one training step.",
+        "example": "We reduced the batch size from 64 to 16 to fit the model into GPU memory."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-006", "ai-008", "ai-082"],
+    "order": 7
+  },
+  {
+    "id": "ai-008",
+    "term": "Learning Rate",
+    "translations": {
+      "tr": {
+        "definition": "Model parametrelerinin her güncelleme adımında ne kadar değiştirileceğini belirleyen hiperparametredir.",
+        "example": "Learning rate çok yüksek olduğunda model optimuma yakınsayamadı."
+      },
+      "en": {
+        "definition": "A hyperparameter that controls the step size at which the model's weights are updated during training.",
+        "example": "Setting the learning rate to 0.001 helped the model converge smoothly without oscillation."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-002", "ai-099"],
+    "order": 8
+  },
+  {
+    "id": "ai-009",
+    "term": "Loss Function",
+    "translations": {
+      "tr": {
+        "definition": "Modelin tahminleri ile gerçek değerler arasındaki farkı ölçen ve optimizasyon sürecine rehberlik eden matematiksel fonksiyondur.",
+        "example": "Sınıflandırma problemi için cross-entropy loss function kullandık."
+      },
+      "en": {
+        "definition": "A mathematical function that measures the difference between predicted and actual values, guiding the optimization process.",
+        "example": "We used cross-entropy as our loss function for the multi-class classification task."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-002", "ai-008", "ai-010"],
+    "order": 9
+  },
+  {
+    "id": "ai-010",
+    "term": "Activation Function",
+    "translations": {
+      "tr": {
+        "definition": "Sinir ağında bir nöronun çıkışını belirleyen ve modele doğrusal olmayan özellikler kazandıran fonksiyondur.",
+        "example": "Gizli katmanlarda ReLU activation function tercih ettik çünkü gradyan kaybını azaltıyor."
+      },
+      "en": {
+        "definition": "A function applied to a neuron's output that introduces non-linearity into the network, enabling it to learn complex patterns.",
+        "example": "We used ReLU as the activation function in hidden layers to avoid the vanishing gradient problem."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-003"],
+    "order": 10
+  },
+  {
+    "id": "ai-011",
+    "term": "Feature Engineering",
+    "translations": {
+      "tr": {
+        "definition": "Ham veriden modelin performansını artıracak anlamlı özellikler (feature) çıkarma ve oluşturma sürecidir.",
+        "example": "Tarih verisinden gün, ay ve haftanın günü gibi yeni feature'lar türettik."
+      },
+      "en": {
+        "definition": "The process of selecting, transforming, and creating meaningful input features from raw data to improve model performance.",
+        "example": "Feature engineering on the date column extracted day of week and month, boosting model accuracy by 5%."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-068", "ai-071"],
+    "order": 11
+  },
+  {
+    "id": "ai-012",
+    "term": "Cross-Validation",
+    "translations": {
+      "tr": {
+        "definition": "Veri setini birden fazla alt kümeye bölerek modelin genelleme yeteneğini daha güvenilir değerlendiren istatistiksel yöntemdir.",
+        "example": "5-fold cross-validation ile modelin ortalama doğruluğunu %87 olarak hesapladık."
+      },
+      "en": {
+        "definition": "A statistical technique that splits data into multiple subsets to evaluate a model's generalization ability more reliably.",
+        "example": "Using 5-fold cross-validation, we estimated the model's average accuracy at 87%."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-004", "ai-088"],
+    "order": 12
+  },
+  {
+    "id": "ai-013",
+    "term": "Regularization",
+    "translations": {
+      "tr": {
+        "definition": "Modelin aşırı öğrenmesini önlemek için kayıp fonksiyonuna ceza terimi ekleyen tekniktir.",
+        "example": "L2 regularization ekledikten sonra overfitting problemi büyük ölçüde azaldı."
+      },
+      "en": {
+        "definition": "A technique that adds a penalty term to the loss function to prevent overfitting by discouraging overly complex models.",
+        "example": "Adding L2 regularization reduced overfitting and improved test accuracy from 72% to 85%."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-004", "ai-014", "ai-015"],
+    "order": 13
+  },
+  {
+    "id": "ai-014",
+    "term": "Dropout",
+    "translations": {
+      "tr": {
+        "definition": "Eğitim sırasında rastgele nöronları devre dışı bırakarak aşırı öğrenmeyi önleyen düzenlileştirme tekniğidir.",
+        "example": "Her tam bağlı katmandan sonra %30 dropout uygulayarak genelleme performansını artırdık."
+      },
+      "en": {
+        "definition": "A regularization technique that randomly disables a fraction of neurons during training to prevent overfitting.",
+        "example": "Applying 30% dropout after each dense layer significantly improved the model's generalization."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-004", "ai-013", "ai-001"],
+    "order": 14
+  },
+  {
+    "id": "ai-015",
+    "term": "Bias-Variance Tradeoff",
+    "translations": {
+      "tr": {
+        "definition": "Modelin basitliği (yüksek bias) ile karmaşıklığı (yüksek varyans) arasındaki dengeyi ifade eden temel makine öğrenmesi kavramıdır.",
+        "example": "Bias-variance tradeoff'u dengelemek için model karmaşıklığını kademeli olarak artırdık."
+      },
+      "en": {
+        "definition": "The fundamental tradeoff between a model's ability to minimize bias (error from wrong assumptions) and variance (error from sensitivity to training data fluctuations).",
+        "example": "Understanding the bias-variance tradeoff helped us choose the right model complexity for our dataset."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-004", "ai-005", "ai-013"],
+    "order": 15
+  },
+  {
+    "id": "ai-016",
+    "term": "CNN (Convolutional Neural Network)",
+    "translations": {
+      "tr": {
+        "definition": "Özellikle görüntü işleme için tasarlanmış, evrişim katmanları kullanarak özellik çıkarımı yapan derin öğrenme mimarisidir.",
+        "example": "Röntgen görüntülerini analiz etmek için bir CNN modeli eğittik."
+      },
+      "en": {
+        "definition": "A deep learning architecture that uses convolutional layers to automatically extract spatial features, primarily designed for image processing tasks.",
+        "example": "We built a CNN to detect pneumonia from chest X-ray images with 95% accuracy."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning", "computer-vision"],
+    "relatedTerms": ["ai-001", "ai-093", "ai-094"],
+    "order": 16
+  },
+  {
+    "id": "ai-017",
+    "term": "RNN (Recurrent Neural Network)",
+    "translations": {
+      "tr": {
+        "definition": "Sıralı verileri işlemek için tasarlanmış, önceki adımların bilgisini dahili bellekte tutan sinir ağı mimarisidir.",
+        "example": "Zaman serisi tahmini için bir RNN modeli kullandık."
+      },
+      "en": {
+        "definition": "A neural network architecture designed for sequential data that maintains an internal memory of previous time steps.",
+        "example": "We used an RNN to predict stock prices based on historical time series data."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-018", "ai-001", "ai-035"],
+    "order": 17
+  },
+  {
+    "id": "ai-018",
+    "term": "LSTM (Long Short-Term Memory)",
+    "translations": {
+      "tr": {
+        "definition": "Uzun süreli bağımlılıkları öğrenebilen, unutma kapısı mekanizmasına sahip gelişmiş bir RNN türüdür.",
+        "example": "Uzun metin dizilerindeki bağlamı yakalamak için LSTM tabanlı bir model tercih ettik."
+      },
+      "en": {
+        "definition": "An advanced RNN variant with gate mechanisms that can learn long-term dependencies by selectively remembering and forgetting information.",
+        "example": "The LSTM model captured long-range dependencies in text that a vanilla RNN could not."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-017", "ai-001"],
+    "order": 18
+  },
+  {
+    "id": "ai-019",
+    "term": "GAN (Generative Adversarial Network)",
+    "translations": {
+      "tr": {
+        "definition": "Bir üretici ve bir ayırt edici ağın birbirine karşı eğitildiği, gerçekçi veri üretebilen derin öğrenme modelidir.",
+        "example": "GAN kullanarak var olmayan insan yüzleri üreten bir sistem geliştirdik."
+      },
+      "en": {
+        "definition": "A deep learning framework where a generator network and a discriminator network compete against each other to produce realistic synthetic data.",
+        "example": "We used a GAN to generate photorealistic synthetic faces for our data augmentation pipeline."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-020", "ai-087"],
+    "order": 19
+  },
+  {
+    "id": "ai-020",
+    "term": "Autoencoder",
+    "translations": {
+      "tr": {
+        "definition": "Veriyi sıkıştırılmış bir temsile kodlayıp tekrar çözen, boyut indirgeme ve özellik öğrenme için kullanılan sinir ağıdır.",
+        "example": "Anomali tespiti için bir autoencoder eğitip yeniden yapılandırma hatasını eşik değer olarak kullandık."
+      },
+      "en": {
+        "definition": "A neural network that learns to compress data into a lower-dimensional representation and then reconstruct it, used for dimensionality reduction and feature learning.",
+        "example": "We trained an autoencoder for anomaly detection by flagging inputs with high reconstruction error."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-019"],
+    "order": 20
+  },
+  {
+    "id": "ai-021",
+    "term": "Transfer Learning",
+    "translations": {
+      "tr": {
+        "definition": "Önceden eğitilmiş bir modelin bilgisini yeni bir göreve aktararak daha az veriyle daha iyi sonuç elde etme tekniğidir.",
+        "example": "ImageNet üzerinde eğitilmiş ResNet modelini transfer learning ile kendi veri setimize uyarladık."
+      },
+      "en": {
+        "definition": "A technique where a pre-trained model's knowledge is reused as a starting point for a new task, reducing the need for large datasets.",
+        "example": "Using transfer learning from a pre-trained ResNet, we achieved 92% accuracy with only 500 training images."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-042", "ai-080"],
+    "order": 21
+  },
+  {
+    "id": "ai-022",
+    "term": "Attention Mechanism",
+    "translations": {
+      "tr": {
+        "definition": "Modelin girdinin farklı bölümlerine farklı ağırlıklar atayarak en ilgili kısımlara odaklanmasını sağlayan mekanizmadır.",
+        "example": "Attention mechanism sayesinde model, çeviri yaparken kaynak cümledeki ilgili kelimelere odaklanabiliyor."
+      },
+      "en": {
+        "definition": "A mechanism that allows models to focus on the most relevant parts of the input by assigning different weights to different positions.",
+        "example": "The attention mechanism enables the translation model to focus on relevant source words for each target word."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning", "llm-nlp"],
+    "relatedTerms": ["ai-036", "ai-035", "ai-017"],
+    "order": 22
+  },
+  {
+    "id": "ai-023",
+    "term": "Residual Network (ResNet)",
+    "translations": {
+      "tr": {
+        "definition": "Atlama bağlantıları kullanarak çok derin ağların eğitilebilmesini sağlayan ve gradyan kaybı sorununu çözen mimaridir.",
+        "example": "152 katmanlı ResNet modeli, skip connection'lar sayesinde başarıyla eğitilebildi."
+      },
+      "en": {
+        "definition": "A deep learning architecture that uses skip connections to enable training of very deep networks by addressing the vanishing gradient problem.",
+        "example": "ResNet-152 uses skip connections that allow gradients to flow through 152 layers without degradation."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning", "computer-vision"],
+    "relatedTerms": ["ai-016", "ai-001", "ai-025"],
+    "order": 23
+  },
+  {
+    "id": "ai-024",
+    "term": "Batch Normalization",
+    "translations": {
+      "tr": {
+        "definition": "Her katmanın girişini normalize ederek eğitimi hızlandıran ve daha kararlı hale getiren tekniktir.",
+        "example": "Batch normalization ekledikten sonra modelin yakınsama hızı iki kat arttı."
+      },
+      "en": {
+        "definition": "A technique that normalizes the input of each layer during training, accelerating convergence and stabilizing the learning process.",
+        "example": "Adding batch normalization layers reduced training time by half and improved model stability."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-014"],
+    "order": 24
+  },
+  {
+    "id": "ai-025",
+    "term": "Vision Transformer (ViT)",
+    "translations": {
+      "tr": {
+        "definition": "Görüntüleri yamalara bölerek transformer mimarisini bilgisayarlı görü görevlerine uygulayan modeldir.",
+        "example": "ViT modeli, geleneksel CNN'leri geride bırakarak görüntü sınıflandırmada yeni standartlar belirledi."
+      },
+      "en": {
+        "definition": "A model that applies the transformer architecture to computer vision tasks by splitting images into patches and processing them as sequences.",
+        "example": "Vision Transformer outperformed traditional CNNs on ImageNet classification when trained on large datasets."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning", "computer-vision"],
+    "relatedTerms": ["ai-035", "ai-016", "ai-022"],
+    "order": 25
+  },
+  {
+    "id": "ai-026",
+    "term": "Mixture of Experts (MoE)",
+    "translations": {
+      "tr": {
+        "definition": "Girdiye göre yalnızca uzman alt ağların bir kısmını aktive ederek verimli ölçekleme sağlayan mimari yaklaşımdır.",
+        "example": "MoE mimarisi sayesinde model toplam parametre sayısını artırırken hesaplama maliyetini sabit tutabiliyor."
+      },
+      "en": {
+        "definition": "An architecture that routes inputs to a subset of specialized sub-networks (experts), enabling efficient scaling by activating only relevant experts.",
+        "example": "The MoE architecture scales to trillions of parameters while keeping compute costs manageable per token."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning", "llm-nlp"],
+    "relatedTerms": ["ai-035", "ai-085"],
+    "order": 26
+  },
+  {
+    "id": "ai-027",
+    "term": "Token",
+    "translations": {
+      "tr": {
+        "definition": "Bir metnin dil modeli tarafından işlenebilen en küçük birimidir; bir kelime, alt kelime veya karakter olabilir.",
+        "example": "GPT-4 bir istek için maksimum 128K token'lık bağlam penceresini destekliyor."
+      },
+      "en": {
+        "definition": "The smallest unit of text that a language model processes, which can be a word, subword, or character depending on the tokenization scheme.",
+        "example": "The prompt used 1,200 tokens, leaving 2,800 tokens available for the model's response."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-028", "ai-029", "ai-041"],
+    "order": 27
+  },
+  {
+    "id": "ai-028",
+    "term": "Tokenizer",
+    "translations": {
+      "tr": {
+        "definition": "Metni modelin işleyeceği token'lara ayıran bileşendir; BPE, WordPiece gibi algoritmalar kullanır.",
+        "example": "Farklı tokenizer'lar aynı cümleyi farklı sayıda token'a bölebilir."
+      },
+      "en": {
+        "definition": "A component that splits raw text into tokens using algorithms like BPE or WordPiece, forming the input representation for language models.",
+        "example": "The tokenizer split 'unbelievable' into three subword tokens: 'un', 'believ', and 'able'."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-027", "ai-029"],
+    "order": 28
+  },
+  {
+    "id": "ai-029",
+    "term": "Embedding",
+    "translations": {
+      "tr": {
+        "definition": "Kelimelerin veya token'ların anlamsal ilişkilerini koruyan yoğun sayısal vektör temsilidir.",
+        "example": "Word embedding uzayında 'kral' ve 'kraliçe' vektörleri birbirine yakın konumlanıyor."
+      },
+      "en": {
+        "definition": "A dense numerical vector representation that captures semantic relationships between words, tokens, or other data in a continuous vector space.",
+        "example": "In the embedding space, 'king' and 'queen' vectors are close together, reflecting their semantic similarity."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-027", "ai-035", "ai-086"],
+    "order": 29
+  },
+  {
+    "id": "ai-030",
+    "term": "Transformer",
+    "translations": {
+      "tr": {
+        "definition": "Self-attention mekanizmasına dayanan ve modern dil modellerinin temelini oluşturan devrimsel sinir ağı mimarisidir.",
+        "example": "Transformer mimarisi, NLP alanında CNN ve RNN tabanlı modellerin yerini büyük ölçüde aldı."
+      },
+      "en": {
+        "definition": "A neural network architecture based on self-attention mechanisms that processes all input positions in parallel, forming the foundation of modern language models.",
+        "example": "The Transformer architecture revolutionized NLP by enabling parallel processing of sequences."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning", "llm-nlp"],
+    "relatedTerms": ["ai-022", "ai-036", "ai-085"],
+    "order": 30
+  },
+  {
+    "id": "ai-031",
+    "term": "Self-Attention",
+    "translations": {
+      "tr": {
+        "definition": "Bir dizideki her elemanın aynı dizideki diğer elemanlara ne kadar dikkat etmesi gerektiğini hesaplayan mekanizmadır.",
+        "example": "Self-attention sayesinde model, bir cümledeki her kelimenin diğer kelimelerle ilişkisini öğrenebiliyor."
+      },
+      "en": {
+        "definition": "A mechanism where each element in a sequence computes attention weights over all other elements in the same sequence to capture contextual relationships.",
+        "example": "Self-attention allows the model to understand that 'it' in 'The cat sat because it was tired' refers to 'cat'."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning", "llm-nlp"],
+    "relatedTerms": ["ai-022", "ai-030", "ai-035"],
+    "order": 31
+  },
+  {
+    "id": "ai-032",
+    "term": "Fine-tuning",
+    "translations": {
+      "tr": {
+        "definition": "Önceden eğitilmiş bir modeli belirli bir görev veya alan için ek veriyle yeniden eğiterek uyarlama sürecidir.",
+        "example": "GPT modelini müşteri destek verileriyle fine-tuning yaparak sektöre özel yanıtlar üretmesini sağladık."
+      },
+      "en": {
+        "definition": "The process of further training a pre-trained model on task-specific or domain-specific data to adapt it for a particular use case.",
+        "example": "We fine-tuned the base model on customer support data to generate domain-specific responses."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-021", "ai-080", "ai-081"],
+    "order": 32
+  },
+  {
+    "id": "ai-033",
+    "term": "Prompt Engineering",
+    "translations": {
+      "tr": {
+        "definition": "Dil modellerinden istenen çıktıyı almak için girdi istemlerini (prompt) stratejik olarak tasarlama ve optimize etme sürecidir.",
+        "example": "Prompt engineering ile modelin daha yapılandırılmış ve doğru yanıtlar vermesini sağladık."
+      },
+      "en": {
+        "definition": "The practice of strategically designing and optimizing input prompts to elicit desired outputs from language models.",
+        "example": "Through prompt engineering, we improved the model's output quality by adding clear instructions and examples."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-039", "ai-046", "ai-047"],
+    "order": 33
+  },
+  {
+    "id": "ai-034",
+    "term": "RAG (Retrieval-Augmented Generation)",
+    "translations": {
+      "tr": {
+        "definition": "Dil modelinin yanıt üretirken harici bilgi kaynaklarından ilgili belgeleri getirip kullanmasını sağlayan yaklaşımdır.",
+        "example": "RAG sistemi sayesinde chatbot, şirket dokümanlarından güncel bilgileri alıp doğru yanıtlar üretebiliyor."
+      },
+      "en": {
+        "definition": "An approach that enhances language model responses by retrieving relevant documents from external knowledge sources before generating an answer.",
+        "example": "Our RAG pipeline retrieves relevant docs from the knowledge base, reducing hallucinations by 60%."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-040", "ai-029", "ai-033"],
+    "order": 34
+  },
+  {
+    "id": "ai-035",
+    "term": "Hallucination",
+    "translations": {
+      "tr": {
+        "definition": "Dil modelinin gerçek olmayan, uydurma bilgileri sanki doğruymuş gibi güvenle sunması durumudur.",
+        "example": "Model, var olmayan bir araştırma makalesine atıf yaptı; bu tipik bir hallucination örneği."
+      },
+      "en": {
+        "definition": "A phenomenon where a language model generates factually incorrect or fabricated information while presenting it with high confidence.",
+        "example": "The model cited a research paper that doesn't exist — a classic example of hallucination."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-034", "ai-041", "ai-097"],
+    "order": 35
+  },
+  {
+    "id": "ai-036",
+    "term": "Context Window",
+    "translations": {
+      "tr": {
+        "definition": "Bir dil modelinin tek seferde işleyebildiği maksimum token sayısını ifade eden sınırdır.",
+        "example": "128K token'lık context window sayesinde uzun dokümanların tamamını modele verebiliyoruz."
+      },
+      "en": {
+        "definition": "The maximum number of tokens a language model can process in a single input-output interaction.",
+        "example": "With a 128K context window, the model can process entire books in a single prompt."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-027", "ai-037"],
+    "order": 36
+  },
+  {
+    "id": "ai-037",
+    "term": "Temperature",
+    "translations": {
+      "tr": {
+        "definition": "Dil modelinin yanıtlarındaki rastgelelik derecesini kontrol eden parametredir; düşük değer daha belirleyici, yüksek değer daha yaratıcı çıktılar üretir.",
+        "example": "Kod üretimi için temperature'ı 0.2'ye düşürdük; yaratıcı metin için 0.8'e çıkardık."
+      },
+      "en": {
+        "definition": "A parameter that controls the randomness of a language model's output; lower values produce more deterministic results while higher values increase creativity.",
+        "example": "We set temperature to 0.2 for code generation and 0.8 for creative writing tasks."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-038", "ai-039"],
+    "order": 37
+  },
+  {
+    "id": "ai-038",
+    "term": "Top-p (Nucleus Sampling)",
+    "translations": {
+      "tr": {
+        "definition": "Modelin yalnızca kümülatif olasılığı belirli bir eşiği (p) aşan en olası token'lar arasından seçim yapmasını sağlayan örnekleme yöntemidir.",
+        "example": "Top-p değerini 0.9 yaparak modelin düşük olasılıklı saçma token'ları elemesini sağladık."
+      },
+      "en": {
+        "definition": "A sampling method where the model selects only from the smallest set of tokens whose cumulative probability exceeds a threshold p.",
+        "example": "Setting top-p to 0.9 filters out low-probability tokens while maintaining output diversity."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-037", "ai-039"],
+    "order": 38
+  },
+  {
+    "id": "ai-039",
+    "term": "Top-k Sampling",
+    "translations": {
+      "tr": {
+        "definition": "Her adımda modelin yalnızca en yüksek olasılıklı k adet token arasından seçim yapmasını sağlayan örnekleme yöntemidir.",
+        "example": "Top-k değerini 40'a ayarlayarak çıktı çeşitliliğini kontrol altında tuttuk."
+      },
+      "en": {
+        "definition": "A sampling method that restricts the model to selecting from only the k most probable tokens at each generation step.",
+        "example": "With top-k set to 40, the model generates diverse but coherent text without sampling rare tokens."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-037", "ai-038"],
+    "order": 39
+  },
+  {
+    "id": "ai-040",
+    "term": "System Prompt",
+    "translations": {
+      "tr": {
+        "definition": "Dil modelinin davranışını, rolünü ve kısıtlamalarını tanımlayan, kullanıcıya görünmeyen özel talimat metnidir.",
+        "example": "System prompt'ta modele bir müşteri destek asistanı rolü verdik ve yanıt kurallarını belirledik."
+      },
+      "en": {
+        "definition": "A hidden instruction text that defines the language model's behavior, role, and constraints without being visible to the end user.",
+        "example": "The system prompt instructed the model to act as a customer support agent and never discuss competitors."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-033", "ai-041"],
+    "order": 40
+  },
+  {
+    "id": "ai-041",
+    "term": "Chain-of-Thought (CoT)",
+    "translations": {
+      "tr": {
+        "definition": "Modelin karmaşık problemleri adım adım düşünerek çözmesini sağlayan, ara muhakeme adımlarını açıkça gösteren prompting tekniğidir.",
+        "example": "Chain-of-thought prompting ile matematik problemlerindeki doğruluk oranı %40'tan %85'e çıktı."
+      },
+      "en": {
+        "definition": "A prompting technique that encourages the model to break down complex problems into intermediate reasoning steps before arriving at an answer.",
+        "example": "Chain-of-thought prompting improved math problem accuracy from 40% to 85% by showing reasoning steps."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-033", "ai-042", "ai-043"],
+    "order": 41
+  },
+  {
+    "id": "ai-042",
+    "term": "Few-shot Learning",
+    "translations": {
+      "tr": {
+        "definition": "Modele yalnızca birkaç örnek vererek yeni bir görevi öğrenmesini sağlayan yaklaşımdır.",
+        "example": "Prompt'a 3 örnek ekleyerek few-shot learning ile sınıflandırma doğruluğunu önemli ölçüde artırdık."
+      },
+      "en": {
+        "definition": "An approach where a model learns to perform a new task from only a few demonstration examples provided in the prompt.",
+        "example": "With just 3 examples in the prompt, few-shot learning achieved 80% accuracy on the classification task."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-043", "ai-033", "ai-041"],
+    "order": 42
+  },
+  {
+    "id": "ai-043",
+    "term": "Zero-shot Learning",
+    "translations": {
+      "tr": {
+        "definition": "Modelin hiç örnek verilmeden, yalnızca görev tanımıyla yeni bir görevi gerçekleştirebilmesi yeteneğidir.",
+        "example": "Model, zero-shot olarak duygu analizi yapabildi; hiç örnek vermemize gerek kalmadı."
+      },
+      "en": {
+        "definition": "The ability of a model to perform a new task without any demonstration examples, relying solely on the task description.",
+        "example": "The model performed sentiment analysis zero-shot without any labeled examples, achieving 70% accuracy."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-042", "ai-033"],
+    "order": 43
+  },
+  {
+    "id": "ai-044",
+    "term": "RLHF (Reinforcement Learning from Human Feedback)",
+    "translations": {
+      "tr": {
+        "definition": "İnsan geri bildirimlerini ödül sinyali olarak kullanarak dil modelini hizalayan ve iyileştiren eğitim yöntemidir.",
+        "example": "ChatGPT, RLHF ile eğitilerek insan tercihlerine daha uygun yanıtlar üretmeyi öğrendi."
+      },
+      "en": {
+        "definition": "A training method that uses human feedback as a reward signal to align and improve language model outputs with human preferences.",
+        "example": "RLHF training helped the model produce more helpful, harmless, and honest responses."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-076", "ai-032"],
+    "order": 44
+  },
+  {
+    "id": "ai-045",
+    "term": "Ollama",
+    "translations": {
+      "tr": {
+        "definition": "Büyük dil modellerini yerel bilgisayarda kolayca çalıştırmayı sağlayan açık kaynaklı araçtır.",
+        "example": "Ollama ile Llama 3 modelini kendi bilgisayarımda çalıştırarak internet bağlantısı olmadan da kullanabiliyorum."
+      },
+      "en": {
+        "definition": "An open-source tool that enables easy local deployment and running of large language models on personal computers.",
+        "example": "Using Ollama, we ran Llama 3 locally on a laptop without any cloud dependency."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-046", "ai-047", "ai-079"],
+    "order": 45
+  },
+  {
+    "id": "ai-046",
+    "term": "GGUF",
+    "translations": {
+      "tr": {
+        "definition": "Kuantize edilmiş dil modellerini depolamak ve çalıştırmak için kullanılan, llama.cpp tarafından geliştirilen dosya formatıdır.",
+        "example": "Modeli GGUF formatına çevirerek dosya boyutunu yarıya indirdik ve CPU'da çalıştırabildik."
+      },
+      "en": {
+        "definition": "A file format developed by llama.cpp for storing and running quantized language models efficiently on consumer hardware.",
+        "example": "We converted the model to GGUF format, reducing its size from 14GB to 4GB for local inference."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-045", "ai-047", "ai-048"],
+    "order": 46
+  },
+  {
+    "id": "ai-047",
+    "term": "Quantization",
+    "translations": {
+      "tr": {
+        "definition": "Model ağırlıklarının hassasiyetini düşürerek (örneğin 32-bit'ten 4-bit'e) model boyutunu ve bellek gereksinimini azaltan tekniktir.",
+        "example": "4-bit quantization ile 70B parametreli modeli 16GB VRAM'e sığdırabildik."
+      },
+      "en": {
+        "definition": "A technique that reduces model size and memory requirements by lowering the precision of weights, such as from 32-bit to 4-bit.",
+        "example": "4-bit quantization reduced the 70B model's VRAM requirement from 140GB to 16GB with minimal quality loss."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-046", "ai-048", "ai-081"],
+    "order": 47
+  },
+  {
+    "id": "ai-048",
+    "term": "VRAM",
+    "translations": {
+      "tr": {
+        "definition": "Grafik kartı üzerindeki video belleğidir; derin öğrenme modellerinin çalıştırılması için gereken GPU belleğini ifade eder.",
+        "example": "Bu model minimum 24GB VRAM gerektiriyor; RTX 4090 ile rahatça çalıştırılabilir."
+      },
+      "en": {
+        "definition": "Video Random Access Memory on a GPU, which determines how large a model can be loaded and run for deep learning tasks.",
+        "example": "The model requires 24GB of VRAM, making it runnable on an RTX 4090 GPU."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-047", "ai-049", "ai-007"],
+    "order": 48
+  },
+  {
+    "id": "ai-049",
+    "term": "Inference",
+    "translations": {
+      "tr": {
+        "definition": "Eğitilmiş bir modelin yeni veriler üzerinde tahmin yapma sürecidir; eğitimden farklı olarak ağırlıklar güncellenmez.",
+        "example": "Inference süresi kritik olduğu için modeli ONNX formatına çevirerek hızlandırdık."
+      },
+      "en": {
+        "definition": "The process of using a trained model to make predictions on new data, where no weight updates occur unlike during training.",
+        "example": "We optimized inference time from 500ms to 50ms by converting the model to ONNX format."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-050", "ai-048"],
+    "order": 49
+  },
+  {
+    "id": "ai-050",
+    "term": "Model Serving",
+    "translations": {
+      "tr": {
+        "definition": "Eğitilmiş bir makine öğrenmesi modelini üretim ortamında API olarak sunma ve yönetme sürecidir.",
+        "example": "TensorFlow Serving kullanarak modeli REST API üzerinden canlı ortamda sunmaya başladık."
+      },
+      "en": {
+        "definition": "The process of deploying and managing a trained model in production to serve predictions via APIs.",
+        "example": "We used TensorFlow Serving to deploy the model as a REST API with auto-scaling."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-049", "ai-096", "ai-098"],
+    "order": 50
+  },
+  {
+    "id": "ai-051",
+    "term": "LoRA (Low-Rank Adaptation)",
+    "translations": {
+      "tr": {
+        "definition": "Büyük modellerin tüm parametrelerini değiştirmek yerine düşük boyutlu matrisler ekleyerek verimli ince ayar yapma tekniğidir.",
+        "example": "LoRA ile 7B parametreli modeli tek bir GPU üzerinde özelleştirebildik."
+      },
+      "en": {
+        "definition": "A parameter-efficient fine-tuning technique that adds small low-rank matrices to existing model weights instead of modifying all parameters.",
+        "example": "LoRA enabled fine-tuning the 7B model on a single GPU by training only 0.1% of the total parameters."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-052", "ai-032", "ai-047"],
+    "order": 51
+  },
+  {
+    "id": "ai-052",
+    "term": "QLoRA",
+    "translations": {
+      "tr": {
+        "definition": "Kuantize edilmiş model üzerinde LoRA uygulayarak çok daha az bellekle ince ayar yapmayı mümkün kılan tekniktir.",
+        "example": "QLoRA sayesinde 65B parametreli modeli 48GB VRAM'li tek bir GPU'da fine-tune edebildik."
+      },
+      "en": {
+        "definition": "A technique that combines quantization with LoRA, enabling fine-tuning of large models with significantly reduced memory requirements.",
+        "example": "QLoRA made it possible to fine-tune the 65B model on a single 48GB GPU using 4-bit quantization."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-051", "ai-047", "ai-032"],
+    "order": 52
+  },
+  {
+    "id": "ai-053",
+    "term": "Distillation",
+    "translations": {
+      "tr": {
+        "definition": "Büyük ve karmaşık bir 'öğretmen' modelin bilgisini daha küçük bir 'öğrenci' modele aktararak sıkıştırma tekniğidir.",
+        "example": "Distillation ile BERT-large'ın bilgisini 6 katmanlı küçük bir modele aktardık."
+      },
+      "en": {
+        "definition": "A model compression technique where a smaller 'student' model is trained to mimic the behavior of a larger 'teacher' model.",
+        "example": "Knowledge distillation compressed the BERT-large model into a 6-layer student with 95% of the original accuracy."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-047", "ai-086"],
+    "order": 53
+  },
+  {
+    "id": "ai-054",
+    "term": "GPT (Generative Pre-trained Transformer)",
+    "translations": {
+      "tr": {
+        "definition": "OpenAI tarafından geliştirilen, büyük metin külliyatı üzerinde ön eğitim görmüş otoregresif dil modeli ailesidir.",
+        "example": "GPT-4, çok modlu yetenekleriyle metin ve görüntü girdilerini birlikte işleyebiliyor."
+      },
+      "en": {
+        "definition": "A family of autoregressive language models developed by OpenAI, pre-trained on large text corpora to generate human-like text.",
+        "example": "GPT-4 can process both text and image inputs, demonstrating advanced multimodal capabilities."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-030", "ai-085", "ai-086"],
+    "order": 54
+  },
+  {
+    "id": "ai-055",
+    "term": "BERT (Bidirectional Encoder Representations from Transformers)",
+    "translations": {
+      "tr": {
+        "definition": "Google tarafından geliştirilen, metni her iki yönden de anlayan ve NLP görevlerinde çığır açan transformer tabanlı modeldir.",
+        "example": "BERT modelini Türkçe duygu analizi görevi için fine-tune ettik."
+      },
+      "en": {
+        "definition": "A transformer-based model developed by Google that understands text bidirectionally, achieving breakthroughs across various NLP tasks.",
+        "example": "We fine-tuned BERT for sentiment analysis and achieved state-of-the-art results on the benchmark."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-030", "ai-054", "ai-029"],
+    "order": 55
+  },
+  {
+    "id": "ai-056",
+    "term": "Diffusion Model",
+    "translations": {
+      "tr": {
+        "definition": "Veriye kademeli olarak gürültü ekleyip ardından bu gürültüyü geri alarak yeni veri üreten üretici model türüdür.",
+        "example": "Stable Diffusion gibi diffusion model'lar metin açıklamalarından fotogerçekçi görüntüler üretebiliyor."
+      },
+      "en": {
+        "definition": "A generative model that learns to produce data by gradually adding noise and then learning to reverse the process to generate new samples.",
+        "example": "Diffusion models like Stable Diffusion generate photorealistic images from text descriptions."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-019", "ai-057"],
+    "order": 56
+  },
+  {
+    "id": "ai-057",
+    "term": "Multimodal Model",
+    "translations": {
+      "tr": {
+        "definition": "Metin, görüntü, ses gibi birden fazla veri türünü aynı anda işleyebilen ve anlayabilen yapay zeka modelidir.",
+        "example": "Multimodal model, bir fotoğrafı analiz edip metin olarak açıklayabiliyor."
+      },
+      "en": {
+        "definition": "An AI model capable of processing and understanding multiple data types simultaneously, such as text, images, and audio.",
+        "example": "The multimodal model analyzed the chart image and generated a detailed textual summary of the data trends."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-054", "ai-025", "ai-056"],
+    "order": 57
+  },
+  {
+    "id": "ai-058",
+    "term": "Dataset",
+    "translations": {
+      "tr": {
+        "definition": "Makine öğrenmesi modellerini eğitmek, doğrulamak ve test etmek için kullanılan yapılandırılmış veri koleksiyonudur.",
+        "example": "Model eğitimi için 100.000 etiketlenmiş görüntüden oluşan bir dataset hazırladık."
+      },
+      "en": {
+        "definition": "A structured collection of data used to train, validate, and test machine learning models.",
+        "example": "We curated a dataset of 100,000 labeled images for training the object detection model."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-059", "ai-060", "ai-061"],
+    "order": 58
+  },
+  {
+    "id": "ai-059",
+    "term": "Data Augmentation",
+    "translations": {
+      "tr": {
+        "definition": "Mevcut eğitim verilerini döndürme, kırpma, renk değiştirme gibi dönüşümlerle çoğaltarak veri setini zenginleştirme tekniğidir.",
+        "example": "Data augmentation ile eğitim görüntülerini döndürüp aynalayarak veri setini 5 kat büyüttük."
+      },
+      "en": {
+        "definition": "A technique to artificially expand training data by applying transformations like rotation, cropping, and color adjustment to existing samples.",
+        "example": "Data augmentation increased our training set 5x through random rotations, flips, and color jittering."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-058", "ai-060"],
+    "order": 59
+  },
+  {
+    "id": "ai-060",
+    "term": "Annotation",
+    "translations": {
+      "tr": {
+        "definition": "Eğitim verilerine etiket, sınır kutusu veya kategori gibi meta bilgiler ekleme sürecidir.",
+        "example": "10.000 röntgen görüntüsünün annotation işlemini uzman radyologlar gerçekleştirdi."
+      },
+      "en": {
+        "definition": "The process of adding metadata such as labels, bounding boxes, or categories to training data for supervised learning.",
+        "example": "Medical experts completed the annotation of 10,000 X-ray images with disease labels."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-061", "ai-058", "ai-072"],
+    "order": 60
+  },
+  {
+    "id": "ai-061",
+    "term": "Label",
+    "translations": {
+      "tr": {
+        "definition": "Eğitim verisindeki her örneğe atanan, modelin öğrenmesi gereken doğru çıktıyı gösteren etikettir.",
+        "example": "Her e-posta örneğine 'spam' veya 'spam değil' şeklinde label atadık."
+      },
+      "en": {
+        "definition": "The correct output or category assigned to each training example that the model learns to predict.",
+        "example": "Each email in the dataset was assigned a label of either 'spam' or 'not spam' for training."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-060", "ai-072"],
+    "order": 61
+  },
+  {
+    "id": "ai-062",
+    "term": "Supervised Learning",
+    "translations": {
+      "tr": {
+        "definition": "Modelin etiketlenmiş verilerden girdi-çıktı ilişkisini öğrendiği makine öğrenmesi paradigmasıdır.",
+        "example": "E-posta sınıflandırması için supervised learning kullanarak spam filtresi geliştirdik."
+      },
+      "en": {
+        "definition": "A machine learning paradigm where the model learns input-output mappings from labeled training data.",
+        "example": "We used supervised learning with labeled email data to build a spam classification model."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-063", "ai-064", "ai-061"],
+    "order": 62
+  },
+  {
+    "id": "ai-063",
+    "term": "Unsupervised Learning",
+    "translations": {
+      "tr": {
+        "definition": "Modelin etiketlenmemiş verideki gizli örüntüleri ve yapıları kendi kendine keşfettiği makine öğrenmesi paradigmasıdır.",
+        "example": "Müşteri segmentasyonu için unsupervised learning ile kümeleme algoritması uyguladık."
+      },
+      "en": {
+        "definition": "A machine learning paradigm where the model discovers hidden patterns and structures in unlabeled data without explicit guidance.",
+        "example": "We applied unsupervised learning clustering to segment customers into distinct groups based on behavior."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-062", "ai-064", "ai-020"],
+    "order": 63
+  },
+  {
+    "id": "ai-064",
+    "term": "Reinforcement Learning",
+    "translations": {
+      "tr": {
+        "definition": "Bir ajanın çevresiyle etkileşerek deneme-yanılma yoluyla ödülleri maksimize edecek şekilde öğrendiği makine öğrenmesi paradigmasıdır.",
+        "example": "Oyun oynayan yapay zeka, reinforcement learning ile milyonlarca deneme sonucunda insan seviyesine ulaştı."
+      },
+      "en": {
+        "definition": "A machine learning paradigm where an agent learns to maximize cumulative rewards through trial-and-error interactions with an environment.",
+        "example": "The game-playing AI used reinforcement learning to surpass human-level performance after millions of episodes."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-062", "ai-063", "ai-044"],
+    "order": 64
+  },
+  {
+    "id": "ai-065",
+    "term": "Semi-supervised Learning",
+    "translations": {
+      "tr": {
+        "definition": "Az miktarda etiketli veri ile büyük miktarda etiketlenmemiş veriyi birlikte kullanarak öğrenme yaklaşımıdır.",
+        "example": "500 etiketli ve 50.000 etiketlenmemiş görüntüyü semi-supervised learning ile birlikte değerlendirdik."
+      },
+      "en": {
+        "definition": "A learning approach that combines a small amount of labeled data with a large amount of unlabeled data during training.",
+        "example": "Semi-supervised learning leveraged 500 labeled and 50,000 unlabeled images to achieve competitive accuracy."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-062", "ai-063"],
+    "order": 65
+  },
+  {
+    "id": "ai-066",
+    "term": "Accuracy",
+    "translations": {
+      "tr": {
+        "definition": "Modelin tüm tahminleri arasında doğru tahminlerin oranını gösteren temel performans metriğidir.",
+        "example": "Model %94 accuracy elde etti ancak dengesiz veri setinde bu metrik yanıltıcı olabiliyor."
+      },
+      "en": {
+        "definition": "A basic performance metric that measures the proportion of correct predictions among all predictions made by the model.",
+        "example": "The model achieved 94% accuracy, but on the imbalanced dataset this metric was misleading."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-067", "ai-068", "ai-069"],
+    "order": 66
+  },
+  {
+    "id": "ai-067",
+    "term": "Precision",
+    "translations": {
+      "tr": {
+        "definition": "Modelin pozitif olarak tahmin ettiği örnekler arasında gerçekten pozitif olanların oranıdır.",
+        "example": "Spam filtresinin precision'ı %98; yani spam dediğinin neredeyse tamamı gerçekten spam."
+      },
+      "en": {
+        "definition": "The ratio of true positive predictions to all positive predictions, measuring how many predicted positives are actually correct.",
+        "example": "The spam filter achieved 98% precision, meaning almost all flagged emails were truly spam."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-066", "ai-068", "ai-069"],
+    "order": 67
+  },
+  {
+    "id": "ai-068",
+    "term": "Recall",
+    "translations": {
+      "tr": {
+        "definition": "Gerçekten pozitif olan örnekler arasında modelin doğru yakalayabildiği pozitif örneklerin oranıdır.",
+        "example": "Kanser teşhis modelinde recall %99 olmalı; hiçbir vakayı kaçırmamak kritik."
+      },
+      "en": {
+        "definition": "The ratio of true positive predictions to all actual positive cases, measuring how many real positives the model successfully identifies.",
+        "example": "For the cancer detection model, recall must be 99% — missing a positive case is unacceptable."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-066", "ai-067", "ai-069"],
+    "order": 68
+  },
+  {
+    "id": "ai-069",
+    "term": "F1 Score",
+    "translations": {
+      "tr": {
+        "definition": "Precision ve recall'un harmonik ortalaması olan ve her iki metriği dengeli şekilde değerlendiren bileşik performans metriğidir.",
+        "example": "Dengesiz veri setinde accuracy yerine F1 score'u temel değerlendirme metriği olarak kullandık."
+      },
+      "en": {
+        "definition": "The harmonic mean of precision and recall that provides a balanced evaluation metric, especially useful for imbalanced datasets.",
+        "example": "We used F1 score instead of accuracy as the primary metric because the dataset was highly imbalanced."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-067", "ai-068", "ai-066"],
+    "order": 69
+  },
+  {
+    "id": "ai-070",
+    "term": "AUC-ROC",
+    "translations": {
+      "tr": {
+        "definition": "Sınıflandırma modelinin farklı eşik değerlerinde doğru pozitif ve yanlış pozitif oranları arasındaki dengeyi gösteren performans eğrisidir.",
+        "example": "Modelimizin AUC-ROC değeri 0.95 olup, rastgele sınıflandırıcıdan çok daha iyi performans gösteriyor."
+      },
+      "en": {
+        "definition": "A performance curve that plots the true positive rate against the false positive rate at various thresholds, with the area under it summarizing model quality.",
+        "example": "Our model achieved an AUC-ROC of 0.95, indicating excellent discrimination between classes."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-071", "ai-066", "ai-067"],
+    "order": 70
+  },
+  {
+    "id": "ai-071",
+    "term": "Confusion Matrix",
+    "translations": {
+      "tr": {
+        "definition": "Sınıflandırma modelinin doğru ve yanlış tahminlerini kategorilere göre gösteren tablo formatında bir değerlendirme aracıdır.",
+        "example": "Confusion matrix incelendiğinde modelin 'kedi' ve 'köpek' sınıflarını sık sık karıştırdığı görüldü."
+      },
+      "en": {
+        "definition": "A table-format evaluation tool that displays the counts of true positives, true negatives, false positives, and false negatives for classification results.",
+        "example": "The confusion matrix revealed that the model frequently confused 'cat' and 'dog' classes."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-066", "ai-067", "ai-068"],
+    "order": 71
+  },
+  {
+    "id": "ai-072",
+    "term": "Perplexity",
+    "translations": {
+      "tr": {
+        "definition": "Bir dil modelinin metin üzerindeki belirsizlik derecesini ölçen metrik; düşük değer daha iyi tahmin yeteneğini gösterir.",
+        "example": "Fine-tuning sonrasında modelin perplexity değeri 25'ten 12'ye düştü."
+      },
+      "en": {
+        "definition": "A metric that measures how uncertain a language model is when predicting the next token; lower values indicate better prediction ability.",
+        "example": "After fine-tuning, the model's perplexity dropped from 25 to 12, showing significant improvement."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-009", "ai-066"],
+    "order": 72
+  },
+  {
+    "id": "ai-073",
+    "term": "Object Detection",
+    "translations": {
+      "tr": {
+        "definition": "Bir görüntüdeki nesneleri tespit edip konumlarını sınırlayıcı kutularla belirleyen ve sınıflandıran bilgisayarlı görü görevidir.",
+        "example": "Otonom araç sistemi, object detection ile yayaları ve diğer araçları gerçek zamanlı algılıyor."
+      },
+      "en": {
+        "definition": "A computer vision task that identifies and locates objects within an image by predicting bounding boxes and class labels.",
+        "example": "The autonomous driving system uses object detection to identify pedestrians and vehicles in real time."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "computer-vision"],
+    "relatedTerms": ["ai-074", "ai-075", "ai-076"],
+    "order": 73
+  },
+  {
+    "id": "ai-074",
+    "term": "Image Segmentation",
+    "translations": {
+      "tr": {
+        "definition": "Bir görüntüdeki her pikseli bir sınıfa atayarak görüntüyü anlamlı bölgelere ayıran bilgisayarlı görü görevidir.",
+        "example": "Tıbbi image segmentation ile MR görüntülerindeki tümör bölgelerini piksel düzeyinde işaretledik."
+      },
+      "en": {
+        "definition": "A computer vision task that assigns a class label to every pixel in an image, dividing it into meaningful regions.",
+        "example": "Semantic segmentation of medical MRI images outlined tumor regions at the pixel level."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "computer-vision"],
+    "relatedTerms": ["ai-073", "ai-016"],
+    "order": 74
+  },
+  {
+    "id": "ai-075",
+    "term": "YOLO (You Only Look Once)",
+    "translations": {
+      "tr": {
+        "definition": "Görüntüyü tek bir geçişte işleyerek gerçek zamanlı nesne tespiti yapabilen hızlı ve verimli derin öğrenme modelidir.",
+        "example": "YOLO modeli saniyede 60 kare işleyerek canlı video akışında nesne tespiti yapabiliyor."
+      },
+      "en": {
+        "definition": "A fast and efficient object detection model that processes the entire image in a single pass, enabling real-time detection.",
+        "example": "YOLOv8 processes 60 frames per second, making it ideal for real-time surveillance applications."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "computer-vision"],
+    "relatedTerms": ["ai-073", "ai-076"],
+    "order": 75
+  },
+  {
+    "id": "ai-076",
+    "term": "Bounding Box",
+    "translations": {
+      "tr": {
+        "definition": "Nesne tespitinde algılanan nesnenin konumunu dikdörtgen bir çerçeveyle belirten koordinat kümesidir.",
+        "example": "Model her araç için bir bounding box çizerek konumunu ve boyutunu belirledi."
+      },
+      "en": {
+        "definition": "A rectangular frame defined by coordinates that indicates the location and size of a detected object in an image.",
+        "example": "The model drew bounding boxes around each detected vehicle with confidence scores above 90%."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "computer-vision"],
+    "relatedTerms": ["ai-073", "ai-075", "ai-060"],
+    "order": 76
+  },
+  {
+    "id": "ai-077",
+    "term": "Feature Map",
+    "translations": {
+      "tr": {
+        "definition": "CNN'deki evrişim katmanının çıktısı olup görüntüdeki kenar, doku gibi belirli özellikleri temsil eden matristir.",
+        "example": "İlk katmanın feature map'leri kenarları, derin katmanlar ise daha karmaşık şekilleri yakalıyor."
+      },
+      "en": {
+        "definition": "The output of a convolutional layer in a CNN that represents specific features like edges, textures, or patterns detected in the input.",
+        "example": "Early layer feature maps capture edges and textures, while deeper layers detect complex shapes and objects."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "computer-vision", "deep-learning"],
+    "relatedTerms": ["ai-016", "ai-023"],
+    "order": 77
+  },
+  {
+    "id": "ai-078",
+    "term": "AI Ethics",
+    "translations": {
+      "tr": {
+        "definition": "Yapay zeka sistemlerinin adil, şeffaf, hesap verebilir ve insan haklarına saygılı şekilde geliştirilmesini ele alan ilkeler bütünüdür.",
+        "example": "AI ethics kapsamında modelimizin farklı demografik gruplar arasında adil sonuçlar ürettiğini doğruladık."
+      },
+      "en": {
+        "definition": "A set of principles addressing fairness, transparency, accountability, and respect for human rights in the development and deployment of AI systems.",
+        "example": "Our AI ethics review confirmed that the model produces equitable outcomes across different demographic groups."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-079", "ai-035", "ai-097"],
+    "order": 78
+  },
+  {
+    "id": "ai-079",
+    "term": "Explainable AI (XAI)",
+    "translations": {
+      "tr": {
+        "definition": "Yapay zeka modellerinin kararlarını insanların anlayabileceği şekilde açıklayabilmesini sağlayan teknikler ve yaklaşımlardır.",
+        "example": "XAI yöntemleri ile modelin kredi başvurusunu neden reddettiğini müşteriye açıklayabildik."
+      },
+      "en": {
+        "definition": "Techniques and approaches that make AI model decisions interpretable and understandable by humans.",
+        "example": "Using XAI methods like SHAP values, we explained why the model rejected the loan application."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-078", "ai-097"],
+    "order": 79
+  },
+  {
+    "id": "ai-080",
+    "term": "Edge AI",
+    "translations": {
+      "tr": {
+        "definition": "Yapay zeka modellerinin bulut yerine cihaz üzerinde (telefon, IoT sensörü vb.) çalıştırılmasını sağlayan yaklaşımdır.",
+        "example": "Edge AI sayesinde güvenlik kamerası, nesne tespitini buluta veri göndermeden yerel olarak yapıyor."
+      },
+      "en": {
+        "definition": "An approach that runs AI models directly on edge devices (phones, IoT sensors, etc.) rather than in the cloud, reducing latency and bandwidth.",
+        "example": "Edge AI enables the security camera to perform object detection locally without sending data to the cloud."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-049", "ai-047", "ai-053"],
+    "order": 80
+  },
+  {
+    "id": "ai-081",
+    "term": "MLOps",
+    "translations": {
+      "tr": {
+        "definition": "Makine öğrenmesi modellerinin geliştirme, dağıtım ve bakım süreçlerini otomatikleştiren DevOps benzeri uygulamalar bütünüdür.",
+        "example": "MLOps pipeline'ımız model eğitiminden üretime alınmaya kadar tüm süreçleri otomatikleştiriyor."
+      },
+      "en": {
+        "definition": "A set of practices that combines machine learning, DevOps, and data engineering to automate the lifecycle of ML models from development to production.",
+        "example": "Our MLOps pipeline automates model training, evaluation, deployment, and monitoring in production."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-082", "ai-050", "ai-100"],
+    "order": 81
+  },
+  {
+    "id": "ai-082",
+    "term": "Model Registry",
+    "translations": {
+      "tr": {
+        "definition": "Eğitilmiş modellerin versiyonlarını, meta verilerini ve durumlarını merkezi olarak yöneten depolama sistemidir.",
+        "example": "Model registry'de her modelin versiyonu, performans metrikleri ve eğitim parametreleri kaydediliyor."
+      },
+      "en": {
+        "definition": "A centralized repository that manages trained model versions, metadata, lineage, and deployment status.",
+        "example": "The model registry tracks every model version along with its metrics, parameters, and deployment status."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-081", "ai-050"],
+    "order": 82
+  },
+  {
+    "id": "ai-083",
+    "term": "A/B Testing (ML)",
+    "translations": {
+      "tr": {
+        "definition": "Farklı model versiyonlarını gerçek kullanıcı trafiğiyle karşılaştırarak hangisinin daha iyi performans gösterdiğini ölçen deneysel yöntemdir.",
+        "example": "Yeni öneri modelini A/B testing ile mevcut modelle kıyaslayarak tıklama oranındaki artışı ölçtük."
+      },
+      "en": {
+        "definition": "An experimental method that compares different model versions using real user traffic to determine which performs better on key metrics.",
+        "example": "A/B testing showed the new recommendation model increased click-through rate by 12% over the baseline."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-081", "ai-082"],
+    "order": 83
+  },
+  {
+    "id": "ai-084",
+    "term": "Hyperparameter Tuning",
+    "translations": {
+      "tr": {
+        "definition": "Model performansını optimize etmek için öğrenme oranı, katman sayısı gibi eğitim dışı parametrelerin en iyi kombinasyonunu arama sürecidir.",
+        "example": "Grid search ile hyperparameter tuning yaparak en iyi learning rate ve batch size kombinasyonunu bulduk."
+      },
+      "en": {
+        "definition": "The process of searching for the optimal combination of non-trainable parameters like learning rate and layer count to maximize model performance.",
+        "example": "Bayesian hyperparameter tuning found the optimal learning rate and dropout combination in 50 trials."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-008", "ai-007", "ai-012"],
+    "order": 84
+  },
+  {
+    "id": "ai-085",
+    "term": "Large Language Model (LLM)",
+    "translations": {
+      "tr": {
+        "definition": "Milyarlarca parametre ile devasa metin külliyatları üzerinde eğitilmiş, doğal dili anlayan ve üreten büyük ölçekli dil modelidir.",
+        "example": "Şirket içi bilgi tabanımızı LLM ile entegre ederek akıllı bir soru-cevap sistemi kurduk."
+      },
+      "en": {
+        "definition": "A large-scale neural language model trained on massive text corpora with billions of parameters, capable of understanding and generating natural language.",
+        "example": "We integrated an LLM with our internal knowledge base to build an intelligent Q&A system."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-054", "ai-030", "ai-027"],
+    "order": 85
+  },
+  {
+    "id": "ai-086",
+    "term": "Pre-training",
+    "translations": {
+      "tr": {
+        "definition": "Modelin büyük ve genel bir veri seti üzerinde temel dil veya görsel bilgiyi öğrendiği ilk eğitim aşamasıdır.",
+        "example": "Model, pre-training aşamasında internet üzerindeki trilyonlarca token ile genel dil bilgisi edindi."
+      },
+      "en": {
+        "definition": "The initial training phase where a model learns fundamental language or visual knowledge from a large, general-purpose dataset.",
+        "example": "During pre-training, the model processed trillions of tokens from the internet to learn general language patterns."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp", "deep-learning"],
+    "relatedTerms": ["ai-032", "ai-021", "ai-085"],
+    "order": 86
+  },
+  {
+    "id": "ai-087",
+    "term": "Generative AI",
+    "translations": {
+      "tr": {
+        "definition": "Metin, görüntü, müzik gibi yeni ve özgün içerikler üretebilen yapay zeka sistemlerinin genel adıdır.",
+        "example": "Generative AI araçları ile pazarlama içeriklerinin taslak oluşturma süresini %70 kısalttık."
+      },
+      "en": {
+        "definition": "A broad category of AI systems capable of creating new, original content such as text, images, music, and code.",
+        "example": "Generative AI tools reduced our marketing content drafting time by 70%."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-085", "ai-056", "ai-019"],
+    "order": 87
+  },
+  {
+    "id": "ai-088",
+    "term": "Training Set / Test Set / Validation Set",
+    "translations": {
+      "tr": {
+        "definition": "Veri setinin model eğitimi, hiperparametre ayarı ve nihai performans değerlendirmesi için ayrılan üç alt kümesidir.",
+        "example": "Veriyi %70 training, %15 validation ve %15 test set olarak böldük."
+      },
+      "en": {
+        "definition": "Three subsets of data used respectively for model training, hyperparameter tuning, and final performance evaluation.",
+        "example": "We split the data into 70% training, 15% validation, and 15% test sets for proper evaluation."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-058", "ai-012", "ai-004"],
+    "order": 88
+  },
+  {
+    "id": "ai-089",
+    "term": "Natural Language Processing (NLP)",
+    "translations": {
+      "tr": {
+        "definition": "Bilgisayarların insan dilini anlama, yorumlama ve üretme yeteneğini geliştirmeye odaklanan yapay zeka alt alanıdır.",
+        "example": "NLP teknikleri kullanarak müşteri yorumlarından otomatik duygu analizi yapan bir sistem geliştirdik."
+      },
+      "en": {
+        "definition": "A subfield of AI focused on enabling computers to understand, interpret, and generate human language.",
+        "example": "We built an NLP pipeline for automatic sentiment analysis of customer reviews across multiple languages."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-085", "ai-029", "ai-030"],
+    "order": 89
+  },
+  {
+    "id": "ai-090",
+    "term": "Computer Vision",
+    "translations": {
+      "tr": {
+        "definition": "Bilgisayarların dijital görüntü ve videoları anlama ve yorumlama yeteneğini geliştirmeye odaklanan yapay zeka alt alanıdır.",
+        "example": "Computer vision ile üretim hattındaki kusurlu ürünleri otomatik olarak tespit ediyoruz."
+      },
+      "en": {
+        "definition": "A subfield of AI focused on enabling computers to interpret and understand visual information from digital images and videos.",
+        "example": "Our computer vision system automatically detects defective products on the manufacturing line."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "computer-vision"],
+    "relatedTerms": ["ai-016", "ai-073", "ai-074"],
+    "order": 90
+  },
+  {
+    "id": "ai-091",
+    "term": "Gradient Vanishing / Exploding",
+    "translations": {
+      "tr": {
+        "definition": "Derin ağlarda gradyanların katmanlar boyunca ilerlerken çok küçülmesi veya çok büyümesi sonucu eğitimin durması veya kararsızlaşması sorunudur.",
+        "example": "Gradient vanishing problemi nedeniyle 50 katmanlı ağ hiç öğrenemedi; ResNet mimarisine geçtik."
+      },
+      "en": {
+        "definition": "A training problem in deep networks where gradients become extremely small (vanishing) or large (exploding) as they propagate through layers.",
+        "example": "The 50-layer network failed to learn due to vanishing gradients, so we switched to a ResNet architecture."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-002", "ai-003", "ai-023"],
+    "order": 91
+  },
+  {
+    "id": "ai-092",
+    "term": "Optimizer",
+    "translations": {
+      "tr": {
+        "definition": "Model ağırlıklarını güncellemek için kullanılan algoritmalardır; Adam, SGD, RMSprop gibi varyantları vardır.",
+        "example": "Adam optimizer, momentum ve adaptif learning rate kombinasyonu sayesinde en sık tercih edilen optimizerdir."
+      },
+      "en": {
+        "definition": "Algorithms used to update model weights during training, with variants like Adam, SGD, and RMSprop offering different convergence strategies.",
+        "example": "We switched from SGD to Adam optimizer and observed faster convergence during training."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-002", "ai-008"],
+    "order": 92
+  },
+  {
+    "id": "ai-093",
+    "term": "Pooling Layer",
+    "translations": {
+      "tr": {
+        "definition": "CNN'lerde feature map boyutlarını küçülterek hesaplama maliyetini düşüren ve önemli özellikleri koruyan katmandır.",
+        "example": "Max pooling katmanı ile feature map boyutunu yarıya indirerek modelin daha hızlı çalışmasını sağladık."
+      },
+      "en": {
+        "definition": "A layer in CNNs that reduces the spatial dimensions of feature maps to lower computation cost while retaining the most important features.",
+        "example": "Max pooling reduced the feature map dimensions by half, making the model faster without losing key features."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning", "computer-vision"],
+    "relatedTerms": ["ai-016", "ai-077"],
+    "order": 93
+  },
+  {
+    "id": "ai-094",
+    "term": "Softmax Function",
+    "translations": {
+      "tr": {
+        "definition": "Bir vektördeki ham skorları toplamları 1 olan olasılık dağılımına dönüştüren fonksiyondur; sınıflandırma çıkışlarında kullanılır.",
+        "example": "Çıkış katmanında softmax function uygulayarak her sınıf için olasılık değeri elde ettik."
+      },
+      "en": {
+        "definition": "A function that converts raw scores into a probability distribution summing to 1, commonly used in the output layer of classification models.",
+        "example": "The softmax function in the output layer produced probability scores for each of the 10 classes."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-010", "ai-009"],
+    "order": 94
+  },
+  {
+    "id": "ai-095",
+    "term": "Word2Vec",
+    "translations": {
+      "tr": {
+        "definition": "Kelimeleri yoğun vektör temsillerine dönüştüren ve anlamsal ilişkileri yakalayan öncü kelime gömme tekniğidir.",
+        "example": "Word2Vec modelinde 'kral - erkek + kadın = kraliçe' gibi anlamsal aritmetik işlemler yapılabiliyor."
+      },
+      "en": {
+        "definition": "A pioneering word embedding technique that maps words to dense vector representations capturing semantic relationships.",
+        "example": "Word2Vec famously demonstrated that 'king - man + woman = queen' in the embedding space."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "llm-nlp"],
+    "relatedTerms": ["ai-029", "ai-089"],
+    "order": 95
+  },
+  {
+    "id": "ai-096",
+    "term": "Tensor",
+    "translations": {
+      "tr": {
+        "definition": "Derin öğrenme çerçevelerinde veriyi temsil eden çok boyutlu sayısal dizi yapısıdır; skaler, vektör ve matrislerin genelleştirilmiş halidir.",
+        "example": "Giriş görüntüsü 3 boyutlu bir tensor olarak (yükseklik, genişlik, kanal) modele aktarıldı."
+      },
+      "en": {
+        "definition": "A multi-dimensional numerical array used in deep learning frameworks to represent data; a generalization of scalars, vectors, and matrices.",
+        "example": "The input image was represented as a 3D tensor with dimensions (height, width, channels)."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-001", "ai-048"],
+    "order": 96
+  },
+  {
+    "id": "ai-097",
+    "term": "Bias (AI Bias)",
+    "translations": {
+      "tr": {
+        "definition": "AI modellerinin eğitim verilerindeki ön yargıları öğrenerek belirli gruplara karşı sistematik ayrımcılık yapması sorunudur.",
+        "example": "İşe alım modelinde cinsiyet bias'ı tespit edildi ve eğitim verileri yeniden dengelendi."
+      },
+      "en": {
+        "definition": "Systematic discrimination by AI models that learn and perpetuate prejudices present in their training data, leading to unfair outcomes.",
+        "example": "A bias audit revealed the hiring model systematically disadvantaged certain demographic groups."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-078", "ai-079"],
+    "order": 97
+  },
+  {
+    "id": "ai-098",
+    "term": "Model Deployment",
+    "translations": {
+      "tr": {
+        "definition": "Eğitilmiş bir modelin gerçek kullanıcıların erişimine açıldığı üretim ortamına taşınma sürecidir.",
+        "example": "Model deployment sürecinde Docker container'ı ve Kubernetes ile ölçeklenebilir bir altyapı kurduk."
+      },
+      "en": {
+        "definition": "The process of moving a trained model into a production environment where it can serve real users and make live predictions.",
+        "example": "We used Docker and Kubernetes for model deployment, enabling auto-scaling under high traffic."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "machine-learning"],
+    "relatedTerms": ["ai-050", "ai-081", "ai-082"],
+    "order": 98
+  },
+  {
+    "id": "ai-099",
+    "term": "Learning Rate Scheduler",
+    "translations": {
+      "tr": {
+        "definition": "Eğitim boyunca learning rate'i otomatik olarak ayarlayan, genellikle kademeli olarak azaltan stratejidir.",
+        "example": "Cosine annealing scheduler kullanarak learning rate'i eğitim boyunca kademeli olarak sıfıra yaklaştırdık."
+      },
+      "en": {
+        "definition": "A strategy that automatically adjusts the learning rate during training, typically reducing it gradually to improve convergence.",
+        "example": "The cosine annealing scheduler gradually reduced the learning rate, helping the model converge to a better minimum."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["ai-ml", "deep-learning"],
+    "relatedTerms": ["ai-008", "ai-092"],
+    "order": 99
+  },
+  {
+    "id": "ai-100",
+    "term": "Data Pipeline",
+    "translations": {
+      "tr": {
+        "definition": "Ham verinin toplanması, temizlenmesi, dönüştürülmesi ve model eğitimine hazır hale getirilmesi sürecini otomatikleştiren iş akışıdır.",
+        "example": "ETL tabanlı data pipeline'ımız her gece yeni verileri işleyerek modelin eğitim setini güncelliyor."
+      },
+      "en": {
+        "definition": "An automated workflow that handles the collection, cleaning, transformation, and preparation of raw data for model training.",
+        "example": "Our data pipeline processes millions of records nightly, feeding clean data into the retraining workflow."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["ai-ml", "big-data"],
+    "relatedTerms": ["ai-058", "ai-081"],
+    "order": 100
+  }
+]

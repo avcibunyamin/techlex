@@ -2,15 +2,30 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Term, UserProgress, Language } from '@/types';
 import { createProgress, markKnown, markUnknown } from './spaced-repetition';
-import { pushProgress, pullProgress } from './sync';
+import { pushProgress, pullProgress, pushBatchSwipes, BatchProgressItem } from './sync';
 import { ThemeMode } from './useTheme';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
+import aiMlTerms from '@/data/terms/ai-ml.json';
+import networkingTerms from '@/data/terms/networking.json';
+import designUxTerms from '@/data/terms/design-ux.json';
 
-const ALL_TERMS: Term[] = [...cybersecurityTerms, ...softwareDevTerms] as Term[];
+const ALL_TERMS: Term[] = [
+  ...cybersecurityTerms,
+  ...softwareDevTerms,
+  ...aiMlTerms,
+  ...networkingTerms,
+  ...designUxTerms,
+] as Term[];
 
 type SubscriptionTier = 'free' | 'individual' | 'duo' | 'family';
+
+export interface SwipeQueueItem {
+  termId: string;
+  action: 'right' | 'left' | 'up';
+  timestamp: number;
+}
 
 interface AppState {
   terms: Term[];
@@ -31,9 +46,11 @@ interface AppState {
   currentPeriodEnd: number | null;
   energyLevel: number;
   lastEnergyRefill: number;
+  swipeQueue: SwipeQueueItem[];
 
   loadData: () => Promise<void>;
   saveData: () => Promise<void>;
+  scheduleSave: () => void;
   setSelectedTags: (tags: string[]) => void;
   toggleTag: (tag: string) => void;
   setLanguage: (lang: Language) => void;
@@ -45,6 +62,7 @@ interface AppState {
   toggleSave: (termId: string) => void;
   consumeEnergy: () => boolean;
   refillEnergy: () => void;
+  flushSwipeQueue: () => Promise<void>;
   syncToCloud: (userId: string) => Promise<void>;
   loadFromCloud: (userId: string) => Promise<void>;
   getFilteredTerms: () => Term[];
@@ -57,7 +75,11 @@ interface AppState {
 
 const STORAGE_KEY = '@pratik_kelime_data';
 const MAX_ENERGY = 30;
-const ENERGY_REFILL_MS = 5 * 60 * 1000; // 5 minutes
+const ENERGY_REFILL_MS = 5 * 60 * 1000;
+const BATCH_FLUSH_SIZE = 10;
+
+let _saveTimer: ReturnType<typeof setTimeout> | undefined;
+let _flushing = false;
 
 function getTodayString(): string {
   return new Date().toISOString().split('T')[0];
@@ -82,6 +104,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   currentPeriodEnd: null,
   energyLevel: MAX_ENERGY,
   lastEnergyRefill: Date.now(),
+  swipeQueue: [],
+
+  scheduleSave: () => {
+    clearTimeout(_saveTimer);
+    _saveTimer = setTimeout(() => {
+      useAppStore.getState().saveData();
+    }, 500);
+  },
 
   loadData: async () => {
     try {
@@ -153,6 +183,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           currentPeriodEnd: data.currentPeriodEnd || null,
           energyLevel: energy,
           lastEnergyRefill: newLastRefill,
+          swipeQueue: data.swipeQueue || [],
         });
       } else {
         set({ isLoaded: true });
@@ -184,6 +215,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           currentPeriodEnd: s.currentPeriodEnd,
           energyLevel: s.energyLevel,
           lastEnergyRefill: s.lastEnergyRefill,
+          swipeQueue: s.swipeQueue,
         })
       );
     } catch {}
@@ -224,7 +256,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   swipeRight: (termId) => {
-    const { progress } = get();
+    const { progress, swipeQueue } = get();
     const existing = progress[termId] || createProgress(termId);
     const updated = markKnown(existing);
     const today = getTodayString();
@@ -232,18 +264,25 @@ export const useAppStore = create<AppState>((set, get) => ({
     let newStreak = state.streak;
     if (state.lastActiveDate !== today) newStreak = state.streak + 1;
 
+    const newQueue = [...swipeQueue, { termId, action: 'right' as const, timestamp: Date.now() }];
+
     set({
       progress: { ...progress, [termId]: updated },
       todayCount: state.todayCount + 1,
       totalSwipes: state.totalSwipes + 1,
       streak: newStreak,
       lastActiveDate: today,
+      swipeQueue: newQueue,
     });
-    get().saveData();
+    get().scheduleSave();
+
+    if (newQueue.length >= BATCH_FLUSH_SIZE) {
+      get().flushSwipeQueue();
+    }
   },
 
   swipeLeft: (termId) => {
-    const { progress } = get();
+    const { progress, swipeQueue } = get();
     const existing = progress[termId] || createProgress(termId);
     const updated = markUnknown(existing);
     const today = getTodayString();
@@ -251,14 +290,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     let newStreak = state.streak;
     if (state.lastActiveDate !== today) newStreak = state.streak + 1;
 
+    const newQueue = [...swipeQueue, { termId, action: 'left' as const, timestamp: Date.now() }];
+
     set({
       progress: { ...progress, [termId]: updated },
       todayCount: state.todayCount + 1,
       totalSwipes: state.totalSwipes + 1,
       streak: newStreak,
       lastActiveDate: today,
+      swipeQueue: newQueue,
     });
-    get().saveData();
+    get().scheduleSave();
+
+    if (newQueue.length >= BATCH_FLUSH_SIZE) {
+      get().flushSwipeQueue();
+    }
   },
 
   toggleSave: (termId) => {
@@ -275,7 +321,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (get().hasActivePremium()) return true;
     if (s.energyLevel <= 0) return false;
     set({ energyLevel: s.energyLevel - 1 });
-    get().saveData();
+    get().scheduleSave();
     return true;
   },
 
@@ -296,7 +342,45 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
+  flushSwipeQueue: async () => {
+    if (_flushing) return;
+    const state = get();
+    if (state.swipeQueue.length === 0) return;
+
+    _flushing = true;
+    const queue = [...state.swipeQueue];
+    set({ swipeQueue: [] });
+
+    const termIds = [...new Set(queue.map(q => q.termId))];
+    const progressToSync: BatchProgressItem[] = termIds
+      .filter(id => state.progress[id])
+      .map(id => ({
+        term_id: id,
+        box: state.progress[id].box,
+        last_seen: new Date(state.progress[id].lastSeen).toISOString(),
+        next_review: new Date(state.progress[id].nextReview).toISOString(),
+        times_correct: state.progress[id].timesCorrect,
+        times_seen: state.progress[id].timesSeen,
+      }));
+
+    const isPremium = get().hasActivePremium();
+
+    const { error } = await pushBatchSwipes(
+      progressToSync,
+      queue.length,
+      isPremium ? 0 : queue.length,
+    );
+
+    if (error) {
+      set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
+    }
+
+    get().saveData();
+    _flushing = false;
+  },
+
   syncToCloud: async (userId) => {
+    await get().flushSwipeQueue();
     const s = get();
     try {
       await pushProgress(userId, s.progress, {

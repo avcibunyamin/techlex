@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
+import { StyleSheet, View, Text, Pressable, AppState, AppStateStatus } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Settings2, Zap, Infinity } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
@@ -13,9 +13,20 @@ export default function LearnScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const { language, getTermsForReview, selectedTags, todayCount, energyLevel, hasActivePremium } = useAppStore();
-  const terms = getTermsForReview();
+  const { language, getTermsForReview, selectedTags, todayCount, energyLevel, hasActivePremium, progress, flushSwipeQueue } = useAppStore();
+
+  const terms = useMemo(() => getTermsForReview(), [selectedTags, progress]);
   const isPremium = hasActivePremium();
+
+  useEffect(() => {
+    const handler = (state: AppStateStatus) => {
+      if (state === 'background' || state === 'inactive') {
+        useAppStore.getState().flushSwipeQueue();
+      }
+    };
+    const sub = AppState.addEventListener('change', handler);
+    return () => sub.remove();
+  }, []);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>

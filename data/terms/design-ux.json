@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "design-001",
+    "term": "User Experience (UX)",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcının bir ürün, sistem veya hizmetle etkileşiminde yaşadığı genel deneyim ve memnuniyet düzeyidir.",
+        "example": "Uygulamanın UX tasarımı iyileştirildiğinde kullanıcı memnuniyeti %40 arttı."
+      },
+      "en": {
+        "definition": "The overall experience and satisfaction a user has when interacting with a product, system, or service.",
+        "example": "After improving the app's UX design, user satisfaction increased by 40%."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-002", "design-003", "design-014"],
+    "order": 1
+  },
+  {
+    "id": "design-002",
+    "term": "User Interface (UI)",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının bir yazılım veya donanım sistemiyle etkileşim kurduğu görsel ve etkileşimli öğelerin tamamıdır.",
+        "example": "UI tasarımında butonlar, menüler ve ikonlar kullanıcıya yol gösterecek şekilde düzenlendi."
+      },
+      "en": {
+        "definition": "The complete set of visual and interactive elements through which a user interacts with a software or hardware system.",
+        "example": "The UI design arranged buttons, menus, and icons to guide users through the app."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design", "ux-fundamentals"],
+    "relatedTerms": ["design-001", "design-029", "design-030"],
+    "order": 2
+  },
+  {
+    "id": "design-003",
+    "term": "Usability",
+    "translations": {
+      "tr": {
+        "definition": "Bir ürünün belirli kullanıcılar tarafından belirli hedeflere ulaşmak için ne kadar etkili, verimli ve memnuniyet verici kullanılabildiğinin ölçüsüdür.",
+        "example": "Usability testleri sayesinde formun tamamlanma süresini yarıya indirdik."
+      },
+      "en": {
+        "definition": "A measure of how effectively, efficiently, and satisfactorily a product can be used by specific users to achieve specific goals.",
+        "example": "Usability tests helped us cut the form completion time in half."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-fundamentals", "ux-research"],
+    "relatedTerms": ["design-001", "design-011", "design-036"],
+    "order": 3
+  },
+  {
+    "id": "design-004",
+    "term": "Accessibility (a11y)",
+    "translations": {
+      "tr": {
+        "definition": "Ürün ve hizmetlerin engelli bireyler dahil herkes tarafından kullanılabilir olmasını sağlayan tasarım ilkeleri ve uygulamalarıdır.",
+        "example": "Ekran okuyucu desteği eklenerek uygulamanın erişilebilirliği WCAG AA standartlarına uygun hale getirildi."
+      },
+      "en": {
+        "definition": "Design principles and practices that ensure products and services are usable by everyone, including people with disabilities.",
+        "example": "Screen reader support was added to make the application compliant with WCAG AA standards."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals", "inclusive-design"],
+    "relatedTerms": ["design-014", "design-048", "design-003"],
+    "order": 4
+  },
+  {
+    "id": "design-005",
+    "term": "Information Architecture",
+    "translations": {
+      "tr": {
+        "definition": "İçeriğin ve bilginin kullanıcılar tarafından kolayca bulunup anlaşılabilmesi için yapılandırılması ve düzenlenmesi disiplinidir.",
+        "example": "Bilgi mimarisi yeniden düzenlendiğinde kullanıcılar aradıkları sayfaya %60 daha hızlı ulaştı."
+      },
+      "en": {
+        "definition": "The discipline of structuring and organizing content and information so users can easily find and understand it.",
+        "example": "Restructuring the information architecture helped users find their target page 60% faster."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-006", "design-007", "design-037"],
+    "order": 5
+  },
+  {
+    "id": "design-006",
+    "term": "User Flow",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının bir görevi tamamlamak için üründe izlediği adım adım yolu gösteren diyagramdır.",
+        "example": "Ödeme sürecinin user flow diyagramı çıkarılarak terk oranının yüksek olduğu adımlar tespit edildi."
+      },
+      "en": {
+        "definition": "A diagram showing the step-by-step path a user follows through a product to complete a specific task.",
+        "example": "Mapping the checkout user flow revealed the steps with the highest drop-off rates."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-007", "design-005", "design-039"],
+    "order": 6
+  },
+  {
+    "id": "design-007",
+    "term": "User Journey",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının bir ürün veya hizmetle ilk temastan hedefe ulaşana kadar yaşadığı tüm deneyimlerin haritasıdır.",
+        "example": "User journey haritası, müşterilerin destek talebinden önce üç farklı kanal denediğini ortaya koydu."
+      },
+      "en": {
+        "definition": "A map of all the experiences a user has with a product or service from first contact to achieving their goal.",
+        "example": "The user journey map revealed that customers tried three different channels before submitting a support request."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals", "ux-research"],
+    "relatedTerms": ["design-006", "design-033", "design-001"],
+    "order": 7
+  },
+  {
+    "id": "design-008",
+    "term": "Mental Model",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcının bir sistemin nasıl çalıştığına dair zihninde oluşturduğu içsel temsil ve beklentilerdir.",
+        "example": "Kullanıcıların mental modeli, çöp kutusundaki dosyaların geri alınabileceği yönündeydi; bu yüzden kalıcı silme uyarısı eklendi."
+      },
+      "en": {
+        "definition": "The internal representation and expectations a user forms in their mind about how a system works.",
+        "example": "Users' mental model expected deleted files to be recoverable, so a permanent deletion warning was added."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-009", "design-010", "design-001"],
+    "order": 8
+  },
+  {
+    "id": "design-009",
+    "term": "Affordance",
+    "translations": {
+      "tr": {
+        "definition": "Bir nesnenin veya arayüz öğesinin nasıl kullanılabileceğini kullanıcıya görsel veya fiziksel olarak sezdiren özelliğidir.",
+        "example": "Butonun gölge efekti, kullanıcıya tıklanabilir olduğunu sezdiren bir affordance örneğidir."
+      },
+      "en": {
+        "definition": "A property of an object or UI element that visually or physically suggests how it can be used.",
+        "example": "The button's shadow effect is an affordance that suggests it can be clicked."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals", "interaction-design"],
+    "relatedTerms": ["design-008", "design-010", "design-044"],
+    "order": 9
+  },
+  {
+    "id": "design-010",
+    "term": "Cognitive Load",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcının bir görevi tamamlarken zihinsel olarak harcaması gereken çaba miktarıdır.",
+        "example": "Formdaki alan sayısı azaltılarak kullanıcının bilişsel yükü hafifletildi ve dönüşüm oranı arttı."
+      },
+      "en": {
+        "definition": "The amount of mental effort a user must expend to complete a task.",
+        "example": "Reducing the number of form fields lowered cognitive load and increased the conversion rate."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-008", "design-003", "design-009"],
+    "order": 10
+  },
+  {
+    "id": "design-011",
+    "term": "Heuristic Evaluation",
+    "translations": {
+      "tr": {
+        "definition": "Uzmanların önceden belirlenmiş kullanılabilirlik ilkelerine (sezgisel kurallara) göre bir arayüzü değerlendirdiği inceleme yöntemidir.",
+        "example": "Nielsen'in 10 sezgisel kuralına göre yapılan değerlendirmede navigasyonda tutarsızlıklar tespit edildi."
+      },
+      "en": {
+        "definition": "An inspection method where experts evaluate an interface against a set of predefined usability principles (heuristics).",
+        "example": "A heuristic evaluation based on Nielsen's 10 heuristics revealed navigation inconsistencies."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "ux-fundamentals", "ux-research"],
+    "relatedTerms": ["design-003", "design-036", "design-012"],
+    "order": 11
+  },
+  {
+    "id": "design-012",
+    "term": "Design Thinking",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcı ihtiyaçlarını merkeze alan, empati, tanımlama, fikir üretme, prototipleme ve test etme aşamalarından oluşan problem çözme yaklaşımıdır.",
+        "example": "Design thinking süreciyle hastane giriş prosedürü yeniden tasarlanarak bekleme süresi %50 azaltıldı."
+      },
+      "en": {
+        "definition": "A problem-solving approach centered on user needs, consisting of empathize, define, ideate, prototype, and test phases.",
+        "example": "Using design thinking, the hospital check-in process was redesigned, reducing wait times by 50%."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-013", "design-014", "design-001"],
+    "order": 12
+  },
+  {
+    "id": "design-013",
+    "term": "Human-Centered Design",
+    "translations": {
+      "tr": {
+        "definition": "Tasarım sürecinin her aşamasında gerçek kullanıcıların ihtiyaçlarını, davranışlarını ve geri bildirimlerini ön plana alan tasarım felsefesidir.",
+        "example": "İnsan merkezli tasarım yaklaşımıyla geliştirilen ATM arayüzü, yaşlı kullanıcılar tarafından kolayca kullanılabilir hale geldi."
+      },
+      "en": {
+        "definition": "A design philosophy that prioritizes real users' needs, behaviors, and feedback at every stage of the design process.",
+        "example": "The ATM interface developed with human-centered design became easily usable by elderly users."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals"],
+    "relatedTerms": ["design-012", "design-014", "design-001"],
+    "order": 13
+  },
+  {
+    "id": "design-014",
+    "term": "Inclusive Design",
+    "translations": {
+      "tr": {
+        "definition": "Farklı yetenek, yaş, kültür ve bağlamlardaki tüm kullanıcıları kapsayacak şekilde ürün tasarlama yaklaşımıdır.",
+        "example": "Kapsayıcı tasarım ilkeleri uygulanarak uygulama hem tek elle hem de sesli komutlarla kullanılabilir hale getirildi."
+      },
+      "en": {
+        "definition": "An approach to designing products that accommodate users of all abilities, ages, cultures, and contexts.",
+        "example": "Applying inclusive design principles made the app usable with one hand and voice commands."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-fundamentals", "inclusive-design"],
+    "relatedTerms": ["design-004", "design-013", "design-001"],
+    "order": 14
+  },
+  {
+    "id": "design-015",
+    "term": "User Research",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların ihtiyaçlarını, davranışlarını ve motivasyonlarını anlamak için sistematik olarak veri toplama ve analiz etme sürecidir.",
+        "example": "Kullanıcı araştırması sonucunda hedef kitlenin %70'inin mobil cihazdan eriştiği ortaya çıktı."
+      },
+      "en": {
+        "definition": "The systematic process of collecting and analyzing data to understand users' needs, behaviors, and motivations.",
+        "example": "User research revealed that 70% of the target audience accessed the product from mobile devices."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-016", "design-035", "design-036"],
+    "order": 15
+  },
+  {
+    "id": "design-016",
+    "term": "Persona",
+    "translations": {
+      "tr": {
+        "definition": "Hedef kullanıcı kitlesini temsil eden, araştırma verilerine dayalı oluşturulmuş kurgusal kullanıcı profilidir.",
+        "example": "E-ticaret projesi için 'Teknoloji meraklısı Ahmet' ve 'Pratik çözüm arayan Ayşe' adlı iki persona oluşturuldu."
+      },
+      "en": {
+        "definition": "A fictional user profile based on research data that represents a segment of the target audience.",
+        "example": "Two personas were created for the e-commerce project: 'Tech-savvy Ahmed' and 'Practical Ayse.'"
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-015", "design-017", "design-007"],
+    "order": 16
+  },
+  {
+    "id": "design-017",
+    "term": "User Story",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcının bakış açısından yazılan, belirli bir özelliğin amacını ve değerini ifade eden kısa gereksinim tanımıdır.",
+        "example": "'Bir müşteri olarak, siparişlerimi takip edebilmek istiyorum, böylece teslimat süresini görebilirim' şeklinde bir user story yazıldı."
+      },
+      "en": {
+        "definition": "A short requirement description written from a user's perspective that expresses the purpose and value of a specific feature.",
+        "example": "'As a customer, I want to track my orders so that I can see the delivery time' was written as a user story."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-research", "project-management"],
+    "relatedTerms": ["design-016", "design-097", "design-100"],
+    "order": 17
+  },
+  {
+    "id": "design-018",
+    "term": "A/B Testing",
+    "translations": {
+      "tr": {
+        "definition": "Bir tasarımın iki farklı versiyonunu gerçek kullanıcılarla karşılaştırarak hangisinin daha iyi performans gösterdiğini ölçen test yöntemidir.",
+        "example": "A/B testi sonucunda yeşil renkli 'Satın Al' butonunun kırmızıya göre %15 daha fazla tıklanma aldığı belirlendi."
+      },
+      "en": {
+        "definition": "A testing method that compares two versions of a design with real users to measure which performs better.",
+        "example": "A/B testing showed that the green 'Buy Now' button received 15% more clicks than the red one."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-036", "design-015", "design-003"],
+    "order": 18
+  },
+  {
+    "id": "design-019",
+    "term": "Usability Testing",
+    "translations": {
+      "tr": {
+        "definition": "Gerçek kullanıcıların belirli görevleri tamamlarken gözlemlenerek ürünün kullanılabilirlik sorunlarının tespit edildiği test yöntemidir.",
+        "example": "Usability testinde katılımcıların %60'ı arama çubuğunu bulamadığı için navigasyon yeniden düzenlendi."
+      },
+      "en": {
+        "definition": "A testing method where real users are observed completing specific tasks to identify usability issues in a product.",
+        "example": "Usability testing revealed that 60% of participants couldn't find the search bar, prompting a navigation redesign."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-003", "design-018", "design-015"],
+    "order": 19
+  },
+  {
+    "id": "design-020",
+    "term": "Card Sorting",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların içerik öğelerini mantıklı gruplara ayırmasını isteyerek bilgi mimarisini şekillendirmeye yardımcı olan araştırma tekniğidir.",
+        "example": "Açık kart sıralama çalışmasıyla kullanıcıların menü kategorilerini nasıl grupladığı analiz edildi."
+      },
+      "en": {
+        "definition": "A research technique where users organize content items into logical groups to help shape information architecture.",
+        "example": "An open card sorting exercise analyzed how users grouped menu categories."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-021", "design-005", "design-015"],
+    "order": 20
+  },
+  {
+    "id": "design-021",
+    "term": "Tree Testing",
+    "translations": {
+      "tr": {
+        "definition": "Mevcut bir site haritası veya navigasyon yapısının kullanıcılar tarafından ne kadar kolay anlaşılıp kullanıldığını ölçen test tekniğidir.",
+        "example": "Tree testing ile mevcut menü yapısında kullanıcıların 'İade Politikası' sayfasını bulamadığı belirlendi."
+      },
+      "en": {
+        "definition": "A testing technique that measures how easily users can find items within an existing site map or navigation structure.",
+        "example": "Tree testing revealed that users couldn't locate the 'Return Policy' page in the current menu structure."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-020", "design-005", "design-015"],
+    "order": 21
+  },
+  {
+    "id": "design-022",
+    "term": "Eye Tracking",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların bir ekranda veya sayfada nereye baktığını özel donanımlarla izleyerek görsel dikkat kalıplarını analiz eden araştırma yöntemidir.",
+        "example": "Eye tracking çalışması, kullanıcıların banner reklamları neredeyse hiç görmediğini (banner körlüğü) ortaya koydu."
+      },
+      "en": {
+        "definition": "A research method that analyzes visual attention patterns by tracking where users look on a screen using specialized hardware.",
+        "example": "Eye tracking revealed that users almost never looked at banner ads, confirming banner blindness."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-023", "design-015", "design-010"],
+    "order": 22
+  },
+  {
+    "id": "design-023",
+    "term": "Heatmap",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların bir sayfada en çok tıkladığı, kaydırdığı veya baktığı alanları renk yoğunluğuyla gösteren görsel veri haritasıdır.",
+        "example": "Heatmap analizi, kullanıcıların sayfanın alt kısmındaki önemli CTA butonunu görmediğini gösterdi."
+      },
+      "en": {
+        "definition": "A visual data map that uses color intensity to show where users click, scroll, or look most on a page.",
+        "example": "Heatmap analysis showed that users weren't seeing the important CTA button at the bottom of the page."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-022", "design-018", "design-015"],
+    "order": 23
+  },
+  {
+    "id": "design-024",
+    "term": "Survey",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların görüş, tercih ve deneyimlerini toplamak için yapılandırılmış sorular içeren nicel araştırma aracıdır.",
+        "example": "Uygulama içi anket ile 5.000 kullanıcıdan karanlık mod tercihi hakkında veri toplandı."
+      },
+      "en": {
+        "definition": "A quantitative research tool containing structured questions to collect users' opinions, preferences, and experiences.",
+        "example": "An in-app survey collected data from 5,000 users about their dark mode preferences."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-025", "design-015", "design-026"],
+    "order": 24
+  },
+  {
+    "id": "design-025",
+    "term": "Interview",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcılarla birebir yapılan, derinlemesine bilgi edinmeyi amaçlayan nitel araştırma yöntemidir.",
+        "example": "Beş kullanıcıyla yapılan derinlemesine mülakatlar, ödeme sürecindeki güven sorunlarını ortaya çıkardı."
+      },
+      "en": {
+        "definition": "A qualitative research method involving one-on-one conversations with users to gain in-depth insights.",
+        "example": "In-depth interviews with five users uncovered trust issues in the payment process."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-024", "design-026", "design-015"],
+    "order": 25
+  },
+  {
+    "id": "design-026",
+    "term": "Contextual Inquiry",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların kendi doğal ortamlarında gözlemlenerek iş akışlarının ve ihtiyaçlarının anlaşıldığı saha araştırma yöntemidir.",
+        "example": "Contextual inquiry ile hemşirelerin hasta kayıt sistemini kullanırken yaşadığı zorluklar yerinde gözlemlendi."
+      },
+      "en": {
+        "definition": "A field research method where users are observed in their natural environment to understand their workflows and needs.",
+        "example": "Contextual inquiry revealed the difficulties nurses face while using the patient record system on-site."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-025", "design-027", "design-015"],
+    "order": 26
+  },
+  {
+    "id": "design-027",
+    "term": "Task Analysis",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıların bir görevi tamamlamak için gerçekleştirdiği adımları, kararları ve bilgi ihtiyaçlarını detaylı olarak inceleyen analiz yöntemidir.",
+        "example": "Görev analizi, kullanıcıların sipariş verme sürecinde gereksiz yere 7 adım geçtiğini ortaya koydu."
+      },
+      "en": {
+        "definition": "An analysis method that examines in detail the steps, decisions, and information needs users go through to complete a task.",
+        "example": "Task analysis revealed that users went through 7 unnecessary steps during the ordering process."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ux-research"],
+    "relatedTerms": ["design-006", "design-026", "design-015"],
+    "order": 27
+  },
+  {
+    "id": "design-028",
+    "term": "Wireframe",
+    "translations": {
+      "tr": {
+        "definition": "Bir sayfanın veya ekranın düzenini, içerik yerleşimini ve temel işlevselliğini gösteren düşük detaylı iskelet çizimdir.",
+        "example": "Wireframe aşamasında ana sayfanın üç farklı yerleşim alternatifi oluşturuldu ve ekiple tartışıldı."
+      },
+      "en": {
+        "definition": "A low-detail skeletal drawing that shows the layout, content placement, and basic functionality of a page or screen.",
+        "example": "Three different layout alternatives for the homepage were created at the wireframe stage and discussed with the team."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-029", "design-030", "design-032"],
+    "order": 28
+  },
+  {
+    "id": "design-029",
+    "term": "Mockup",
+    "translations": {
+      "tr": {
+        "definition": "Nihai ürünün görsel tasarımını renkler, tipografi ve görseller dahil yüksek detayla gösteren statik tasarım çıktısıdır.",
+        "example": "Onaylanan wireframe'ler üzerinden yüksek kaliteli mockup'lar hazırlandı ve müşteriye sunuldu."
+      },
+      "en": {
+        "definition": "A static design output that shows the final product's visual design in high detail, including colors, typography, and images.",
+        "example": "High-quality mockups were prepared from the approved wireframes and presented to the client."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-028", "design-030", "design-031"],
+    "order": 29
+  },
+  {
+    "id": "design-030",
+    "term": "Prototype",
+    "translations": {
+      "tr": {
+        "definition": "Ürünün etkileşimlerini ve akışlarını simüle eden, tıklanabilir ve test edilebilir çalışma modelidir.",
+        "example": "Figma'da hazırlanan interaktif prototip, kullanıcı testlerinde gerçek uygulama gibi deneyimlendi."
+      },
+      "en": {
+        "definition": "A working model that simulates the product's interactions and flows, allowing it to be clicked through and tested.",
+        "example": "The interactive prototype built in Figma was experienced like a real app during user testing."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design", "figma"],
+    "relatedTerms": ["design-028", "design-029", "design-063"],
+    "order": 30
+  },
+  {
+    "id": "design-031",
+    "term": "High-Fidelity",
+    "translations": {
+      "tr": {
+        "definition": "Nihai ürüne çok yakın görünüm ve detay seviyesinde hazırlanmış tasarım veya prototiptir.",
+        "example": "Geliştirme ekibine teslim edilmeden önce tüm ekranlar high-fidelity tasarıma dönüştürüldü."
+      },
+      "en": {
+        "definition": "A design or prototype prepared at a level of detail and appearance very close to the final product.",
+        "example": "All screens were converted to high-fidelity designs before handoff to the development team."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-032", "design-029", "design-030"],
+    "order": 31
+  },
+  {
+    "id": "design-032",
+    "term": "Low-Fidelity",
+    "translations": {
+      "tr": {
+        "definition": "Hızlı fikir üretme ve erken geri bildirim almak amacıyla minimum detayla hazırlanan basit tasarım veya çizimdir.",
+        "example": "Toplantıda beyaz tahta üzerinde çizilen low-fidelity eskizlerle üç farklı konsept değerlendirildi."
+      },
+      "en": {
+        "definition": "A simple design or sketch prepared with minimal detail for rapid ideation and early feedback.",
+        "example": "Three different concepts were evaluated using low-fidelity sketches drawn on a whiteboard during the meeting."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-031", "design-028", "design-030"],
+    "order": 32
+  },
+  {
+    "id": "design-033",
+    "term": "Responsive Design",
+    "translations": {
+      "tr": {
+        "definition": "Web sayfalarının farklı ekran boyutlarına ve cihazlara otomatik olarak uyum sağlayacak şekilde tasarlanması yaklaşımıdır.",
+        "example": "Responsive tasarım sayesinde site masaüstü, tablet ve mobilde sorunsuz görüntüleniyor."
+      },
+      "en": {
+        "definition": "An approach to designing web pages that automatically adapt to different screen sizes and devices.",
+        "example": "Thanks to responsive design, the site displays seamlessly on desktop, tablet, and mobile."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design", "web-design"],
+    "relatedTerms": ["design-034", "design-035", "design-002"],
+    "order": 33
+  },
+  {
+    "id": "design-034",
+    "term": "Adaptive Design",
+    "translations": {
+      "tr": {
+        "definition": "Belirli ekran boyutları için özel olarak optimize edilmiş sabit düzenlerin sunulduğu tasarım yaklaşımıdır.",
+        "example": "Adaptive tasarımda 320px, 768px ve 1200px genişlikleri için ayrı ayrı düzenler hazırlandı."
+      },
+      "en": {
+        "definition": "A design approach that serves fixed layouts specifically optimized for certain screen sizes.",
+        "example": "In adaptive design, separate layouts were prepared for 320px, 768px, and 1200px widths."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "web-design"],
+    "relatedTerms": ["design-033", "design-035"],
+    "order": 34
+  },
+  {
+    "id": "design-035",
+    "term": "Breakpoint",
+    "translations": {
+      "tr": {
+        "definition": "Responsive tasarımda düzenin değiştiği belirli ekran genişliği noktalarıdır.",
+        "example": "768px breakpoint'inde yan menü hamburger menüye dönüşecek şekilde ayarlandı."
+      },
+      "en": {
+        "definition": "Specific screen width points at which the layout changes in responsive design.",
+        "example": "At the 768px breakpoint, the sidebar was set to collapse into a hamburger menu."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "web-design"],
+    "relatedTerms": ["design-033", "design-034", "design-055"],
+    "order": 35
+  },
+  {
+    "id": "design-036",
+    "term": "Grid System",
+    "translations": {
+      "tr": {
+        "definition": "İçeriğin düzenli ve tutarlı biçimde hizalanmasını sağlayan satır ve sütunlardan oluşan yapısal çerçevedir.",
+        "example": "12 sütunlu grid sistemi kullanılarak tüm sayfalarda tutarlı bir düzen sağlandı."
+      },
+      "en": {
+        "definition": "A structural framework of rows and columns that ensures content is aligned consistently and orderly.",
+        "example": "A 12-column grid system was used to achieve a consistent layout across all pages."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-033", "design-035", "design-088"],
+    "order": 36
+  },
+  {
+    "id": "design-037",
+    "term": "Design Token",
+    "translations": {
+      "tr": {
+        "definition": "Renk, yazı tipi, boşluk gibi tasarım kararlarını platform bağımsız, yeniden kullanılabilir değişkenler olarak saklayan yapı taşıdır.",
+        "example": "Primary-color design token'ı değiştirilerek tüm uygulamadaki marka rengi tek seferde güncellendi."
+      },
+      "en": {
+        "definition": "A building block that stores design decisions like color, font, and spacing as platform-agnostic, reusable variables.",
+        "example": "Changing the primary-color design token updated the brand color across the entire app at once."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems", "ui-design"],
+    "relatedTerms": ["design-085", "design-088", "design-067"],
+    "order": 37
+  },
+  {
+    "id": "design-038",
+    "term": "Color Palette",
+    "translations": {
+      "tr": {
+        "definition": "Bir tasarım projesinde kullanılacak birincil, ikincil ve nötr renkleri içeren önceden tanımlanmış renk setidir.",
+        "example": "Marka rehberine uygun bir renk paleti oluşturularak tüm tasarımlarda tutarlılık sağlandı."
+      },
+      "en": {
+        "definition": "A predefined set of primary, secondary, and neutral colors to be used in a design project.",
+        "example": "A color palette aligned with the brand guidelines ensured consistency across all designs."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-039", "design-037", "design-067"],
+    "order": 38
+  },
+  {
+    "id": "design-039",
+    "term": "Contrast Ratio",
+    "translations": {
+      "tr": {
+        "definition": "Ön plan (metin/ikon) ile arka plan rengi arasındaki parlaklık farkının oranıdır; erişilebilirlik için kritik öneme sahiptir.",
+        "example": "WCAG standartlarına göre normal metin için en az 4.5:1 kontrast oranı sağlanmalıdır."
+      },
+      "en": {
+        "definition": "The ratio of luminance difference between foreground (text/icon) and background colors, critical for accessibility.",
+        "example": "WCAG standards require a minimum contrast ratio of 4.5:1 for normal-sized text."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "inclusive-design"],
+    "relatedTerms": ["design-004", "design-038", "design-040"],
+    "order": 39
+  },
+  {
+    "id": "design-040",
+    "term": "Dark Mode",
+    "translations": {
+      "tr": {
+        "definition": "Arayüzde koyu arka plan ve açık renkli metin kullanan, göz yorgunluğunu azaltmayı ve pil tasarrufu sağlamayı hedefleyen renk şemasıdır.",
+        "example": "Dark mode desteği eklendikten sonra kullanıcıların %65'i karanlık temayı varsayılan olarak tercih etti."
+      },
+      "en": {
+        "definition": "A color scheme using a dark background with light-colored text, aimed at reducing eye strain and saving battery life.",
+        "example": "After adding dark mode support, 65% of users preferred the dark theme as their default."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "ui-design"],
+    "relatedTerms": ["design-038", "design-039", "design-037"],
+    "order": 40
+  },
+  {
+    "id": "design-041",
+    "term": "Glassmorphism",
+    "translations": {
+      "tr": {
+        "definition": "Yarı saydam, bulanıklaştırılmış cam efekti kullanan, derinlik ve katman hissi veren modern UI tasarım tarzıdır.",
+        "example": "Bildirim panelinde glassmorphism efekti kullanılarak arka planın hafifçe görünmesi sağlandı."
+      },
+      "en": {
+        "definition": "A modern UI design style using semi-transparent, frosted glass effects that create a sense of depth and layering.",
+        "example": "Glassmorphism was applied to the notification panel, allowing the background to show through subtly."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "visual-design"],
+    "relatedTerms": ["design-042", "design-043"],
+    "order": 41
+  },
+  {
+    "id": "design-042",
+    "term": "Neumorphism",
+    "translations": {
+      "tr": {
+        "definition": "Yumuşak gölgeler ve kabartma efektleriyle öğelerin yüzeyden çıkıyor veya gömülü görünmesini sağlayan UI tasarım tarzıdır.",
+        "example": "Neumorphism tarzıyla tasarlanan butonlar yumuşak gölgeler sayesinde plastik bir dokunma hissi veriyor."
+      },
+      "en": {
+        "definition": "A UI design style using soft shadows and emboss effects to make elements appear raised from or recessed into the surface.",
+        "example": "Buttons designed in neumorphism style give a tactile, plastic feel through soft shadows."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "visual-design"],
+    "relatedTerms": ["design-041", "design-043"],
+    "order": 42
+  },
+  {
+    "id": "design-043",
+    "term": "Skeuomorphism",
+    "translations": {
+      "tr": {
+        "definition": "Dijital arayüz öğelerinin gerçek dünyadaki fiziksel nesnelere benzeyecek şekilde tasarlandığı tasarım yaklaşımıdır.",
+        "example": "iOS'un ilk versiyonlarında not defteri uygulaması, gerçek sarı çizgili kağıt görünümünde tasarlanmıştı."
+      },
+      "en": {
+        "definition": "A design approach where digital interface elements are designed to resemble real-world physical objects.",
+        "example": "In early iOS versions, the Notes app was designed to look like a real yellow-lined notepad."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "ui-design", "visual-design"],
+    "relatedTerms": ["design-041", "design-042"],
+    "order": 43
+  },
+  {
+    "id": "design-044",
+    "term": "Micro-interaction",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıya geri bildirim vermek veya bir eylemi vurgulamak için kullanılan küçük, odaklanmış animasyon veya tasarım yanıtıdır.",
+        "example": "Beğeni butonuna tıklandığında kalp ikonunun büyüyüp küçülmesi bir micro-interaction örneğidir."
+      },
+      "en": {
+        "definition": "A small, focused animation or design response used to provide user feedback or emphasize an action.",
+        "example": "The heart icon growing and shrinking when the like button is tapped is an example of a micro-interaction."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "interaction-design"],
+    "relatedTerms": ["design-045", "design-046", "design-009"],
+    "order": 44
+  },
+  {
+    "id": "design-045",
+    "term": "Animation",
+    "translations": {
+      "tr": {
+        "definition": "Arayüz öğelerinin hareket, dönüşüm veya geçiş yoluyla görsel değişim göstermesini sağlayan tasarım tekniğidir.",
+        "example": "Sayfa geçişlerinde fade-in animasyonu kullanılarak daha akıcı bir kullanıcı deneyimi sağlandı."
+      },
+      "en": {
+        "definition": "A design technique that creates visual change in interface elements through movement, transformation, or transition.",
+        "example": "Fade-in animations were used during page transitions to create a smoother user experience."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design"],
+    "relatedTerms": ["design-044", "design-046", "design-064"],
+    "order": 45
+  },
+  {
+    "id": "design-046",
+    "term": "Transition",
+    "translations": {
+      "tr": {
+        "definition": "Bir UI öğesinin bir durumdan diğerine geçerken gösterdiği yumuşak ve kademeli görsel değişimdir.",
+        "example": "Butonun hover durumunda 0.3 saniyelik bir renk geçişi (transition) uygulandı."
+      },
+      "en": {
+        "definition": "A smooth, gradual visual change that a UI element shows when moving from one state to another.",
+        "example": "A 0.3-second color transition was applied to the button's hover state."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design"],
+    "relatedTerms": ["design-045", "design-044", "design-064"],
+    "order": 46
+  },
+  {
+    "id": "design-047",
+    "term": "Gesture",
+    "translations": {
+      "tr": {
+        "definition": "Dokunmatik ekranlarda kaydırma, sıkıştırma, çekme gibi parmak hareketleriyle gerçekleştirilen etkileşim biçimidir.",
+        "example": "Swipe gesture ile fotoğraf galerisinde sola kaydırarak bir sonraki görsele geçilebiliyor."
+      },
+      "en": {
+        "definition": "A form of interaction performed through finger movements on touchscreens, such as swiping, pinching, or pulling.",
+        "example": "A swipe gesture allows users to move to the next image in the photo gallery by swiping left."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "mobile-design"],
+    "relatedTerms": ["design-048", "design-044"],
+    "order": 47
+  },
+  {
+    "id": "design-048",
+    "term": "Haptic Feedback",
+    "translations": {
+      "tr": {
+        "definition": "Kullanıcıya dokunma duyusu aracılığıyla geri bildirim sağlayan titreşim veya fiziksel tepki mekanizmasıdır.",
+        "example": "Yanlış şifre girildiğinde telefonun hafif titremesi, haptik geri bildirim ile kullanıcıyı uyarıyor."
+      },
+      "en": {
+        "definition": "A mechanism that provides feedback to the user through the sense of touch via vibration or physical response.",
+        "example": "A slight phone vibration when an incorrect password is entered alerts the user through haptic feedback."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "interaction-design", "mobile-design"],
+    "relatedTerms": ["design-047", "design-044"],
+    "order": 48
+  },
+  {
+    "id": "design-049",
+    "term": "Skeleton Screen",
+    "translations": {
+      "tr": {
+        "definition": "İçerik yüklenirken sayfanın düzenini gri yer tutucu bloklarla gösteren yükleme durumu tasarımıdır.",
+        "example": "API yanıtı gelene kadar skeleton screen gösterilmesi, kullanıcıya içeriğin yüklendiği hissini veriyor."
+      },
+      "en": {
+        "definition": "A loading state design that displays the page layout with gray placeholder blocks while content is loading.",
+        "example": "Showing a skeleton screen while waiting for the API response gives users the feeling that content is loading."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-050", "design-051"],
+    "order": 49
+  },
+  {
+    "id": "design-050",
+    "term": "Loading State",
+    "translations": {
+      "tr": {
+        "definition": "Bir işlem devam ederken kullanıcıya sürecin aktif olduğunu bildiren görsel geri bildirim durumudur.",
+        "example": "Dosya yüklenirken ilerleme çubuğu ve yüzde göstergesi ile loading state tasarlandı."
+      },
+      "en": {
+        "definition": "A visual feedback state that informs the user that a process is actively in progress.",
+        "example": "The loading state was designed with a progress bar and percentage indicator while the file uploads."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-049", "design-051"],
+    "order": 50
+  },
+  {
+    "id": "design-051",
+    "term": "Empty State",
+    "translations": {
+      "tr": {
+        "definition": "Henüz içerik bulunmayan bir ekranda kullanıcıya ne yapması gerektiğini yönlendiren tasarım durumudur.",
+        "example": "Boş sepet sayfasında 'Henüz ürün eklemediniz' mesajı ve 'Alışverişe Başla' butonu gösterildi."
+      },
+      "en": {
+        "definition": "A design state that guides users on what to do when a screen has no content yet.",
+        "example": "The empty cart page showed a 'No items added yet' message and a 'Start Shopping' button."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-050", "design-049"],
+    "order": 51
+  },
+  {
+    "id": "design-052",
+    "term": "Toast Notification",
+    "translations": {
+      "tr": {
+        "definition": "Ekranın kenarında kısa süreliğine beliren ve otomatik olarak kaybolan hafif bilgi mesajıdır.",
+        "example": "Dosya başarıyla kaydedildiğinde ekranın alt kısmında 'Kaydedildi' yazılı bir toast bildirimi gösterildi."
+      },
+      "en": {
+        "definition": "A lightweight informational message that briefly appears at the edge of the screen and disappears automatically.",
+        "example": "A toast notification reading 'Saved' appeared at the bottom of the screen when the file was saved successfully."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-053", "design-054"],
+    "order": 52
+  },
+  {
+    "id": "design-053",
+    "term": "Modal",
+    "translations": {
+      "tr": {
+        "definition": "Ana içeriğin üzerine açılarak kullanıcının dikkatini belirli bir işleme veya bilgiye yönlendiren açılır penceredir.",
+        "example": "Hesap silme işlemi onay modalı ile kullanıcıdan tekrar doğrulama istendi."
+      },
+      "en": {
+        "definition": "A popup window that opens over the main content to direct the user's attention to a specific action or information.",
+        "example": "A confirmation modal was used to ask the user for re-verification before deleting their account."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-052", "design-054", "design-055"],
+    "order": 53
+  },
+  {
+    "id": "design-054",
+    "term": "Tooltip",
+    "translations": {
+      "tr": {
+        "definition": "Fare imleci bir öğenin üzerine geldiğinde beliren kısa açıklayıcı metin kutucuğudur.",
+        "example": "Karmaşık ikon butonlarına tooltip eklenerek kullanıcıların butonların işlevini anlaması kolaylaştırıldı."
+      },
+      "en": {
+        "definition": "A short descriptive text box that appears when the mouse cursor hovers over an element.",
+        "example": "Tooltips were added to complex icon buttons to help users understand their functions."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-055", "design-053"],
+    "order": 54
+  },
+  {
+    "id": "design-055",
+    "term": "Popover",
+    "translations": {
+      "tr": {
+        "definition": "Bir öğeye tıklandığında veya üzerine gelindiğinde beliren, tooltip'ten daha zengin içerik barındırabilen açılır bilgi kutusudir.",
+        "example": "Kullanıcı profil fotoğrafına tıkladığında hesap bilgilerini gösteren bir popover açılıyor."
+      },
+      "en": {
+        "definition": "A floating info box that appears on click or hover, capable of containing richer content than a tooltip.",
+        "example": "Clicking the user's profile photo opens a popover showing account details."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "interaction-design", "ui-design"],
+    "relatedTerms": ["design-054", "design-053"],
+    "order": 55
+  },
+  {
+    "id": "design-056",
+    "term": "Auto Layout",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da öğelerin içeriğe göre otomatik olarak boyutlandırılmasını ve hizalanmasını sağlayan düzen özelliğidir.",
+        "example": "Auto Layout ile buton genişliği metin uzunluğuna göre otomatik olarak ayarlanıyor."
+      },
+      "en": {
+        "definition": "A layout feature in Figma that automatically sizes and aligns elements based on their content.",
+        "example": "With Auto Layout, the button width automatically adjusts based on the text length."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-059", "design-060", "design-057"],
+    "order": 56
+  },
+  {
+    "id": "design-057",
+    "term": "Component",
+    "translations": {
+      "tr": {
+        "definition": "Birden fazla yerde kullanılabilen, merkezi olarak yönetilen yeniden kullanılabilir tasarım öğesidir.",
+        "example": "Navigasyon çubuğu bir component olarak oluşturuldu; güncelleme yapıldığında tüm sayfalara otomatik yansıyor."
+      },
+      "en": {
+        "definition": "A reusable design element that can be used in multiple places and is managed centrally.",
+        "example": "The navigation bar was created as a component; updates automatically reflect across all pages."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "figma", "design-systems"],
+    "relatedTerms": ["design-058", "design-059", "design-085"],
+    "order": 57
+  },
+  {
+    "id": "design-058",
+    "term": "Variant",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da bir component'in farklı durumlarını veya görünümlerini tek bir bileşen altında gruplandıran yapıdır.",
+        "example": "Buton component'inin primary, secondary ve disabled variant'ları oluşturularak tüm durumlar tek yerde yönetildi."
+      },
+      "en": {
+        "definition": "A structure in Figma that groups different states or appearances of a component under a single element.",
+        "example": "Primary, secondary, and disabled variants of the button component were created to manage all states in one place."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-057", "design-059"],
+    "order": 58
+  },
+  {
+    "id": "design-059",
+    "term": "Instance",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da bir ana component'ten türetilmiş, bağımsız olarak özelleştirilebilen ancak ana bileşene bağlı kopyasıdır.",
+        "example": "Ana buton component'i güncellendiğinde sayfadaki tüm instance'lar otomatik olarak güncellendi."
+      },
+      "en": {
+        "definition": "A copy derived from a main component in Figma that can be customized independently but remains linked to the main component.",
+        "example": "When the main button component was updated, all instances on the page updated automatically."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-057", "design-058"],
+    "order": 59
+  },
+  {
+    "id": "design-060",
+    "term": "Frame",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da tasarım öğelerini gruplamak, düzenlemek ve sınırlandırmak için kullanılan temel kapsayıcı yapıdır.",
+        "example": "Her ekran tasarımı ayrı bir frame içinde oluşturularak düzenli bir çalışma alanı sağlandı."
+      },
+      "en": {
+        "definition": "The fundamental container structure in Figma used to group, organize, and constrain design elements.",
+        "example": "Each screen design was created in a separate frame to maintain an organized workspace."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-056", "design-061"],
+    "order": 60
+  },
+  {
+    "id": "design-061",
+    "term": "Constraint",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da bir öğenin üst frame boyutu değiştiğinde nasıl konumlanacağını ve boyutlanacağını belirleyen kurallardır.",
+        "example": "Logo'ya 'left and top' constraint uygulanarak frame büyütüldüğünde sol üst köşede sabit kalması sağlandı."
+      },
+      "en": {
+        "definition": "Rules in Figma that determine how an element positions and sizes itself when its parent frame changes size.",
+        "example": "A 'left and top' constraint was applied to the logo so it stays fixed in the top-left corner when the frame resizes."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-060", "design-056"],
+    "order": 61
+  },
+  {
+    "id": "design-062",
+    "term": "Design System (Figma)",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da paylaşılan bileşenler, stiller ve kurallardan oluşan, ekipler arası tutarlılık sağlayan merkezi tasarım kütüphanesidir.",
+        "example": "Şirketin Figma design system'ı tüm ürün ekiplerine paylaşılarak tutarlı bir marka deneyimi sağlandı."
+      },
+      "en": {
+        "definition": "A centralized design library in Figma consisting of shared components, styles, and guidelines that ensure consistency across teams.",
+        "example": "The company's Figma design system was shared with all product teams to ensure a consistent brand experience."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma", "design-systems"],
+    "relatedTerms": ["design-085", "design-057", "design-067"],
+    "order": 62
+  },
+  {
+    "id": "design-063",
+    "term": "Boolean Operations",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da birden fazla şekli birleştirme, çıkarma, kesişim ve hariç tutma işlemleriyle yeni şekiller oluşturma araçlarıdır.",
+        "example": "İki daireden boolean union işlemiyle birleştirilerek özel bir logo şekli oluşturuldu."
+      },
+      "en": {
+        "definition": "Tools in Figma for creating new shapes by combining multiple shapes through union, subtract, intersect, and exclude operations.",
+        "example": "A custom logo shape was created by combining two circles using a boolean union operation."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-064", "design-060"],
+    "order": 63
+  },
+  {
+    "id": "design-064",
+    "term": "Smart Animate",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da prototip geçişlerinde eşleşen katmanlar arasında otomatik olarak akıcı animasyonlar oluşturan özelliktir.",
+        "example": "Smart Animate ile bir butonun tıklanınca genişleyerek kart haline dönüşmesi animasyonu oluşturuldu."
+      },
+      "en": {
+        "definition": "A Figma feature that automatically creates smooth animations between matching layers in prototype transitions.",
+        "example": "Smart Animate was used to create an animation where a button expands into a card on click."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma", "interaction-design"],
+    "relatedTerms": ["design-030", "design-045", "design-046"],
+    "order": 64
+  },
+  {
+    "id": "design-065",
+    "term": "Dev Mode",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da geliştiricilerin tasarım dosyalarından CSS, boyut, renk ve aralık bilgilerini kolayca almasını sağlayan moddur.",
+        "example": "Geliştirici, Dev Mode'da butona tıklayarak CSS kodunu ve spacing değerlerini doğrudan kopyaladı."
+      },
+      "en": {
+        "definition": "A mode in Figma that allows developers to easily extract CSS, dimensions, colors, and spacing information from design files.",
+        "example": "The developer clicked the button in Dev Mode to directly copy the CSS code and spacing values."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-062", "design-037"],
+    "order": 65
+  },
+  {
+    "id": "design-066",
+    "term": "Variables (Figma)",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da renk, sayı, metin ve boolean gibi değerleri merkezi olarak tanımlayıp yönetmeyi sağlayan dinamik değişken sistemidir.",
+        "example": "Tema değişikliği için light ve dark modda farklı değerler döndüren color variable'ları tanımlandı."
+      },
+      "en": {
+        "definition": "A dynamic variable system in Figma for centrally defining and managing values like colors, numbers, text, and booleans.",
+        "example": "Color variables returning different values for light and dark modes were defined for theme switching."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-067", "design-037", "design-062"],
+    "order": 66
+  },
+  {
+    "id": "design-067",
+    "term": "Styles (Figma)",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da renk, metin, efekt ve grid gibi tasarım özelliklerini yeniden kullanılabilir şekilde kaydeden yapılardır.",
+        "example": "Heading/H1 text style'ı oluşturularak tüm başlıklarda tutarlı tipografi sağlandı."
+      },
+      "en": {
+        "definition": "Structures in Figma that save design properties like color, text, effects, and grids in a reusable way.",
+        "example": "A Heading/H1 text style was created to ensure consistent typography across all headings."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-066", "design-062", "design-057"],
+    "order": 67
+  },
+  {
+    "id": "design-068",
+    "term": "Plugin (Figma)",
+    "translations": {
+      "tr": {
+        "definition": "Figma'nın işlevselliğini genişleten, topluluk tarafından veya özel olarak geliştirilen ek yazılım modülüdür.",
+        "example": "Unsplash plugin'i ile tasarımlara doğrudan stok fotoğraf eklenebiliyor."
+      },
+      "en": {
+        "definition": "An add-on software module developed by the community or privately that extends Figma's functionality.",
+        "example": "The Unsplash plugin allows stock photos to be added directly into designs."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-062", "design-069"],
+    "order": 68
+  },
+  {
+    "id": "design-069",
+    "term": "Vector Network",
+    "translations": {
+      "tr": {
+        "definition": "Figma'nın geleneksel yol (path) kavramından farklı olarak noktaların birden fazla segmentle bağlanabildiği vektör düzenleme sistemidir.",
+        "example": "Vector network sayesinde tek bir noktadan üç farklı yöne çizgi çekmek mümkün oluyor."
+      },
+      "en": {
+        "definition": "Figma's vector editing system where points can connect to multiple segments, unlike traditional path concepts.",
+        "example": "Thanks to vector networks, it's possible to draw lines in three different directions from a single point."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "figma"],
+    "relatedTerms": ["design-063", "design-060"],
+    "order": 69
+  },
+  {
+    "id": "design-070",
+    "term": "Font Family",
+    "translations": {
+      "tr": {
+        "definition": "Aynı tasarım özelliklerini paylaşan farklı kalınlık ve stillerdeki yazı tiplerinin oluşturduğu gruptur.",
+        "example": "Projede başlıklar için Montserrat, gövde metni için Open Sans font ailesi tercih edildi."
+      },
+      "en": {
+        "definition": "A group of typefaces that share the same design characteristics but come in different weights and styles.",
+        "example": "Montserrat was chosen for headings and Open Sans for body text as the project's font families."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-071", "design-078", "design-079"],
+    "order": 70
+  },
+  {
+    "id": "design-071",
+    "term": "Font Weight",
+    "translations": {
+      "tr": {
+        "definition": "Bir yazı tipinin kalınlık derecesini belirleyen özellik olup 100 (ince) ile 900 (çok kalın) arasında değer alır.",
+        "example": "Başlıklar için font-weight: 700 (bold), paragraflar için 400 (regular) kullanıldı."
+      },
+      "en": {
+        "definition": "A property that determines the thickness of a typeface, ranging from 100 (thin) to 900 (black/heavy).",
+        "example": "Font-weight: 700 (bold) was used for headings and 400 (regular) for paragraphs."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-070", "design-077"],
+    "order": 71
+  },
+  {
+    "id": "design-072",
+    "term": "Line Height",
+    "translations": {
+      "tr": {
+        "definition": "Bir metin satırının üst kenarından bir sonraki satırın üst kenarına olan dikey mesafedir.",
+        "example": "Gövde metninde okunabilirlik için line-height değeri font boyutunun 1.6 katı olarak ayarlandı."
+      },
+      "en": {
+        "definition": "The vertical distance from the top edge of one line of text to the top edge of the next.",
+        "example": "The line-height for body text was set to 1.6 times the font size for readability."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-073", "design-074"],
+    "order": 72
+  },
+  {
+    "id": "design-073",
+    "term": "Letter Spacing",
+    "translations": {
+      "tr": {
+        "definition": "Metin içindeki harfler arasındaki yatay boşluk miktarını ayarlayan tipografi özelliğidir.",
+        "example": "Büyük harf başlıklarda letter-spacing: 0.05em eklenerek harfler arasında nefes alma alanı bırakıldı."
+      },
+      "en": {
+        "definition": "A typography property that adjusts the horizontal spacing between letters in text.",
+        "example": "Letter-spacing: 0.05em was added to uppercase headings to create breathing room between letters."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-074", "design-072"],
+    "order": 73
+  },
+  {
+    "id": "design-074",
+    "term": "Kerning",
+    "translations": {
+      "tr": {
+        "definition": "Belirli harf çiftleri arasındaki boşluğun optik olarak dengeli görünmesi için yapılan bireysel ayarlamadır.",
+        "example": "AV ve To gibi harf çiftlerinde kerning ayarı yapılarak görsel denge sağlandı."
+      },
+      "en": {
+        "definition": "Individual adjustments to the spacing between specific letter pairs to achieve optically balanced appearance.",
+        "example": "Kerning adjustments were made for letter pairs like AV and To to achieve visual balance."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-073", "design-075"],
+    "order": 74
+  },
+  {
+    "id": "design-075",
+    "term": "Leading",
+    "translations": {
+      "tr": {
+        "definition": "Basım terminolojisinden gelen, metin satırları arasındaki dikey boşluk miktarını ifade eden tipografi terimidir.",
+        "example": "Magazin düzeninde leading değeri artırılarak metin bloklarının daha havadar görünmesi sağlandı."
+      },
+      "en": {
+        "definition": "A typography term originating from print terminology that refers to the vertical spacing between lines of text.",
+        "example": "Increasing the leading in the magazine layout made the text blocks appear more airy."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-072", "design-074"],
+    "order": 75
+  },
+  {
+    "id": "design-076",
+    "term": "Hierarchy (Typography)",
+    "translations": {
+      "tr": {
+        "definition": "Başlık, alt başlık ve gövde metni gibi metin öğeleri arasında boyut, kalınlık ve renk farklılıklarıyla oluşturulan görsel önem sıralamasıdır.",
+        "example": "H1'den H6'ya kadar net bir tipografik hiyerarşi kurularak kullanıcıların içeriği taraması kolaylaştırıldı."
+      },
+      "en": {
+        "definition": "A visual ranking of importance created through size, weight, and color differences among text elements like headings, subheadings, and body text.",
+        "example": "A clear typographic hierarchy from H1 to H6 was established to help users scan content easily."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "typography"],
+    "relatedTerms": ["design-070", "design-071", "design-072"],
+    "order": 76
+  },
+  {
+    "id": "design-077",
+    "term": "Web Font",
+    "translations": {
+      "tr": {
+        "definition": "Web sayfalarında kullanılmak üzere sunucudan veya CDN'den yüklenen, tarayıcıda render edilen yazı tipidir.",
+        "example": "Google Fonts'tan yüklenen Roboto web fontu, farklı cihazlarda tutarlı tipografi sağlıyor."
+      },
+      "en": {
+        "definition": "A typeface loaded from a server or CDN and rendered in the browser for use on web pages.",
+        "example": "The Roboto web font loaded from Google Fonts provides consistent typography across different devices."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "typography", "web-design"],
+    "relatedTerms": ["design-070", "design-078"],
+    "order": 77
+  },
+  {
+    "id": "design-078",
+    "term": "Variable Font",
+    "translations": {
+      "tr": {
+        "definition": "Kalınlık, genişlik ve eğim gibi birden fazla stil eksenini tek bir font dosyasında barındıran gelişmiş yazı tipi teknolojisidir.",
+        "example": "Variable font kullanılarak tek bir dosyayla 100'den 900'e kadar tüm kalınlık değerleri elde edildi."
+      },
+      "en": {
+        "definition": "An advanced font technology that contains multiple style axes like weight, width, and slant in a single font file.",
+        "example": "Using a variable font, all weight values from 100 to 900 were achieved with a single file."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "typography", "web-design"],
+    "relatedTerms": ["design-077", "design-070", "design-071"],
+    "order": 78
+  },
+  {
+    "id": "design-079",
+    "term": "Design System",
+    "translations": {
+      "tr": {
+        "definition": "Tutarlı ürün deneyimi oluşturmak için bileşenler, kurallar, stiller ve dokümantasyondan oluşan kapsamlı tasarım çerçevesidir.",
+        "example": "Şirketin design system'ı sayesinde yeni özellikler mevcut bileşenler kullanılarak hızla tasarlanıyor."
+      },
+      "en": {
+        "definition": "A comprehensive design framework consisting of components, guidelines, styles, and documentation for building consistent product experiences.",
+        "example": "The company's design system enables new features to be designed quickly using existing components."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-080", "design-081", "design-085"],
+    "order": 79
+  },
+  {
+    "id": "design-080",
+    "term": "Style Guide",
+    "translations": {
+      "tr": {
+        "definition": "Marka renkleri, tipografi, ikonografi ve ton gibi görsel ve dilsel standartları belgeleyen referans dokümanıdır.",
+        "example": "Style guide'a göre tüm başlıklarda koyu mavi (#1A237E) renk ve Montserrat fontu kullanılmalıdır."
+      },
+      "en": {
+        "definition": "A reference document that records visual and linguistic standards such as brand colors, typography, iconography, and tone.",
+        "example": "According to the style guide, all headings must use dark blue (#1A237E) and the Montserrat font."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-079", "design-081", "design-038"],
+    "order": 80
+  },
+  {
+    "id": "design-081",
+    "term": "Pattern Library",
+    "translations": {
+      "tr": {
+        "definition": "Tekrar eden tasarım sorunlarına çözüm sunan, belgelenmiş ve yeniden kullanılabilir UI kalıplarının koleksiyonudur.",
+        "example": "Pattern library'deki arama kalıbı, filtre ve sonuç listesi bileşenlerini standart bir düzende sunuyor."
+      },
+      "en": {
+        "definition": "A collection of documented, reusable UI patterns that provide solutions to recurring design problems.",
+        "example": "The search pattern in the pattern library presents filter and result list components in a standard layout."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-079", "design-082", "design-085"],
+    "order": 81
+  },
+  {
+    "id": "design-082",
+    "term": "Atomic Design",
+    "translations": {
+      "tr": {
+        "definition": "Tasarım bileşenlerini atom, molekül, organizma, şablon ve sayfa olmak üzere beş katmanda organize eden metodolojdir.",
+        "example": "Atomic design yaklaşımıyla buton (atom), arama çubuğu (molekül) ve header (organizma) şeklinde bileşen yapısı kuruldu."
+      },
+      "en": {
+        "definition": "A methodology that organizes design components into five layers: atoms, molecules, organisms, templates, and pages.",
+        "example": "Using atomic design, the component structure was built as button (atom), search bar (molecule), and header (organism)."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-079", "design-085", "design-057"],
+    "order": 82
+  },
+  {
+    "id": "design-083",
+    "term": "Component Library",
+    "translations": {
+      "tr": {
+        "definition": "Hazır, test edilmiş ve belgelenmiş UI bileşenlerinin geliştiriciler ve tasarımcılar tarafından kullanılmak üzere toplandığı kütüphanedir.",
+        "example": "React component library'si sayesinde yeni sayfalar mevcut buton, kart ve form bileşenleriyle hızla oluşturuldu."
+      },
+      "en": {
+        "definition": "A library of ready-made, tested, and documented UI components collected for use by developers and designers.",
+        "example": "New pages were quickly built using existing button, card, and form components from the React component library."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-079", "design-082", "design-057"],
+    "order": 83
+  },
+  {
+    "id": "design-084",
+    "term": "Token",
+    "translations": {
+      "tr": {
+        "definition": "Tasarım kararlarını (renk, boşluk, boyut vb.) platform bağımsız, anlamsal isimlerle saklayan en küçük tasarım birimidir.",
+        "example": "spacing-md token'ı 16px olarak tanımlandı ve tüm bileşenlerde orta boşluk değeri için kullanıldı."
+      },
+      "en": {
+        "definition": "The smallest design unit that stores design decisions (color, spacing, size, etc.) with semantic names in a platform-agnostic way.",
+        "example": "The spacing-md token was defined as 16px and used as the medium spacing value across all components."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-037", "design-088", "design-079"],
+    "order": 84
+  },
+  {
+    "id": "design-085",
+    "term": "Spacing System",
+    "translations": {
+      "tr": {
+        "definition": "Tutarlı boşluk değerleri sağlamak için belirli bir matematiksel ölçeğe dayalı boşluk kuralları setidir.",
+        "example": "4px tabanlı spacing system ile tüm padding ve margin değerleri 4'ün katları olarak uygulandı (4, 8, 12, 16, 24, 32px)."
+      },
+      "en": {
+        "definition": "A set of spacing rules based on a specific mathematical scale to ensure consistent spacing values.",
+        "example": "With a 4px-based spacing system, all padding and margin values were applied as multiples of 4 (4, 8, 12, 16, 24, 32px)."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "design-systems"],
+    "relatedTerms": ["design-084", "design-036", "design-079"],
+    "order": 85
+  },
+  {
+    "id": "design-086",
+    "term": "Agile",
+    "translations": {
+      "tr": {
+        "definition": "Yazılım geliştirme ve proje yönetiminde esnek, yinelemeli ve iş birliğine dayalı çalışma metodolojisidir.",
+        "example": "Agile metodolojisiyle iki haftalık sprint'ler halinde çalışarak müşteriye düzenli olarak çalışan ürün teslim edildi."
+      },
+      "en": {
+        "definition": "A flexible, iterative, and collaborative working methodology in software development and project management.",
+        "example": "Using Agile methodology, working product increments were delivered to the client regularly in two-week sprints."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-087", "design-088", "design-089"],
+    "order": 86
+  },
+  {
+    "id": "design-087",
+    "term": "Sprint",
+    "translations": {
+      "tr": {
+        "definition": "Agile metodolojisinde belirli işlerin tamamlanması için ayrılan sabit süreli (genellikle 1-4 haftalık) çalışma dönemidir.",
+        "example": "İki haftalık sprint sonunda kullanıcı profili sayfası tasarımı ve geliştirmesi tamamlandı."
+      },
+      "en": {
+        "definition": "A fixed time period (typically 1-4 weeks) in Agile methodology dedicated to completing specific work items.",
+        "example": "The user profile page design and development were completed at the end of the two-week sprint."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-086", "design-089", "design-099"],
+    "order": 87
+  },
+  {
+    "id": "design-088",
+    "term": "Kanban",
+    "translations": {
+      "tr": {
+        "definition": "İş akışını görsel bir tahta üzerinde sütunlar halinde (Yapılacak, Devam Eden, Tamamlanan) yöneten proje yönetim yöntemidir.",
+        "example": "Tasarım ekibi Kanban tahtasıyla iş yükünü görselleştirerek aynı anda en fazla üç görev üzerinde çalışıyor."
+      },
+      "en": {
+        "definition": "A project management method that manages workflow visually on a board with columns (To Do, In Progress, Done).",
+        "example": "The design team visualizes workload using a Kanban board, working on a maximum of three tasks simultaneously."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-086", "design-089"],
+    "order": 88
+  },
+  {
+    "id": "design-089",
+    "term": "Scrum",
+    "translations": {
+      "tr": {
+        "definition": "Sprint'ler, günlük toplantılar ve retrospektifler gibi belirli rol ve seremoni yapılarına sahip Agile çerçevesidir.",
+        "example": "Scrum çerçevesinde Product Owner, Scrum Master ve geliştirme ekibi rolleri tanımlandı."
+      },
+      "en": {
+        "definition": "An Agile framework with defined roles and ceremonies such as sprints, daily stand-ups, and retrospectives.",
+        "example": "In the Scrum framework, the roles of Product Owner, Scrum Master, and development team were defined."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-086", "design-087", "design-090"],
+    "order": 89
+  },
+  {
+    "id": "design-090",
+    "term": "Stand-up",
+    "translations": {
+      "tr": {
+        "definition": "Ekip üyelerinin dün ne yaptığını, bugün ne yapacağını ve karşılaştığı engelleri paylaştığı kısa günlük toplantıdır.",
+        "example": "Her sabah 15 dakikalık stand-up toplantısında ekip üyeleri ilerlemelerini ve blocker'larını paylaşıyor."
+      },
+      "en": {
+        "definition": "A short daily meeting where team members share what they did yesterday, what they'll do today, and any blockers they face.",
+        "example": "In the 15-minute morning stand-up, team members share their progress and blockers."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-089", "design-091"],
+    "order": 90
+  },
+  {
+    "id": "design-091",
+    "term": "Retrospective",
+    "translations": {
+      "tr": {
+        "definition": "Sprint sonunda ekibin neyin iyi gittiğini, neyin iyileştirilebileceğini değerlendirdiği geriye dönük analiz toplantısıdır.",
+        "example": "Retrospektif toplantısında tasarım-geliştirme iletişiminin güçlendirilmesi gerektiği kararına varıldı."
+      },
+      "en": {
+        "definition": "A post-sprint meeting where the team evaluates what went well and what can be improved.",
+        "example": "The retrospective meeting concluded that design-development communication needs to be strengthened."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-087", "design-089", "design-090"],
+    "order": 91
+  },
+  {
+    "id": "design-092",
+    "term": "Backlog",
+    "translations": {
+      "tr": {
+        "definition": "Yapılması planlanan ancak henüz başlanmamış tüm iş öğelerinin öncelik sırasına göre listelendiği havuzdur.",
+        "example": "Product backlog'a eklenen 50 kullanıcı hikayesi, Product Owner tarafından önceliklendirilerek sprint'lere dağıtıldı."
+      },
+      "en": {
+        "definition": "A pool where all planned but not yet started work items are listed in order of priority.",
+        "example": "The 50 user stories added to the product backlog were prioritized by the Product Owner and distributed across sprints."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-087", "design-017", "design-098"],
+    "order": 92
+  },
+  {
+    "id": "design-093",
+    "term": "User Story Points",
+    "translations": {
+      "tr": {
+        "definition": "Bir kullanıcı hikayesinin karmaşıklığını ve gerekli çabayı göreli olarak tahmin etmek için kullanılan soyut ölçü birimidir.",
+        "example": "Login sayfası tasarımı 3 puan, dashboard tasarımı 8 puan olarak tahmin edildi."
+      },
+      "en": {
+        "definition": "An abstract unit of measurement used to relatively estimate the complexity and effort required for a user story.",
+        "example": "The login page design was estimated at 3 points, while the dashboard design was estimated at 8 points."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-017", "design-092", "design-087"],
+    "order": 93
+  },
+  {
+    "id": "design-094",
+    "term": "MVP (Minimum Viable Product)",
+    "translations": {
+      "tr": {
+        "definition": "Bir ürünün pazara sunulabilmesi için gereken en az özellik setini içeren, öğrenme odaklı ilk sürümüdür.",
+        "example": "MVP'de sadece kayıt, giriş ve temel listeleme özellikleri sunularak kullanıcı geri bildirimi toplandı."
+      },
+      "en": {
+        "definition": "The initial version of a product containing the minimum feature set needed to launch, focused on learning.",
+        "example": "The MVP included only registration, login, and basic listing features to collect user feedback."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-099", "design-086", "design-012"],
+    "order": 94
+  },
+  {
+    "id": "design-095",
+    "term": "Iteration",
+    "translations": {
+      "tr": {
+        "definition": "Tasarım veya geliştirme sürecinde geri bildirime dayalı olarak ürünün tekrar tekrar iyileştirildiği döngüsel çalışma dönemidir.",
+        "example": "Üçüncü iterasyon sonunda onboarding akışının tamamlanma oranı %45'ten %85'e yükseldi."
+      },
+      "en": {
+        "definition": "A cyclical work period in the design or development process where the product is repeatedly improved based on feedback.",
+        "example": "By the third iteration, the onboarding flow completion rate increased from 45% to 85%."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-087", "design-094", "design-086"],
+    "order": 95
+  },
+  {
+    "id": "design-096",
+    "term": "Stakeholder",
+    "translations": {
+      "tr": {
+        "definition": "Projenin sonucundan etkilenen veya projede karar yetkisi bulunan iç ve dış paydaşlardır.",
+        "example": "Stakeholder toplantısında pazarlama, mühendislik ve müşteri hizmetleri ekiplerinin geri bildirimleri alındı."
+      },
+      "en": {
+        "definition": "Internal and external parties who are affected by the project's outcome or have decision-making authority in the project.",
+        "example": "Feedback from marketing, engineering, and customer service teams was gathered in the stakeholder meeting."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-091", "design-092"],
+    "order": 96
+  },
+  {
+    "id": "design-097",
+    "term": "Prototype (Figma)",
+    "translations": {
+      "tr": {
+        "definition": "Figma'da ekranlar arası bağlantılar, geçişler ve etkileşimler tanımlanarak oluşturulan tıklanabilir simülasyondur.",
+        "example": "Figma prototype'ında ekranlar arası geçişlere smart animate efekti eklenerek gerçekçi bir deneyim sunuldu."
+      },
+      "en": {
+        "definition": "A clickable simulation created in Figma by defining connections, transitions, and interactions between screens.",
+        "example": "Smart animate effects were added to screen transitions in the Figma prototype for a realistic experience."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "figma", "interaction-design"],
+    "relatedTerms": ["design-030", "design-064", "design-060"],
+    "order": 97
+  },
+  {
+    "id": "design-098",
+    "term": "Design Handoff",
+    "translations": {
+      "tr": {
+        "definition": "Tamamlanan tasarım dosyalarının, spesifikasyonların ve asset'lerin geliştirme ekibine aktarılması sürecidir.",
+        "example": "Design handoff sırasında tüm bileşenlerin CSS değerleri, ikonlar ve görseller geliştirici ekiple paylaşıldı."
+      },
+      "en": {
+        "definition": "The process of transferring completed design files, specifications, and assets to the development team.",
+        "example": "During design handoff, all component CSS values, icons, and images were shared with the developer team."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "project-management", "figma"],
+    "relatedTerms": ["design-065", "design-079", "design-037"],
+    "order": 98
+  },
+  {
+    "id": "design-099",
+    "term": "Design Sprint",
+    "translations": {
+      "tr": {
+        "definition": "Beş günlük yoğun çalışma sürecinde bir tasarım problemini anlama, çözüm üretme, prototipleme ve test etme metodolojisidir.",
+        "example": "Google Ventures'ın design sprint yöntemiyle bir haftada yeni ödeme akışı prototipi test edildi."
+      },
+      "en": {
+        "definition": "A five-day intensive methodology for understanding a design problem, generating solutions, prototyping, and testing.",
+        "example": "Using Google Ventures' design sprint method, a new payment flow prototype was tested within one week."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-087", "design-012", "design-030"],
+    "order": 99
+  },
+  {
+    "id": "design-100",
+    "term": "Design Critique",
+    "translations": {
+      "tr": {
+        "definition": "Tasarım çalışmalarının ekip tarafından yapıcı geri bildirimlerle değerlendirildiği yapılandırılmış inceleme oturumudur.",
+        "example": "Haftalık design critique oturumunda yeni landing page tasarımı hakkında 12 iyileştirme önerisi toplandı."
+      },
+      "en": {
+        "definition": "A structured review session where design work is evaluated by the team through constructive feedback.",
+        "example": "In the weekly design critique session, 12 improvement suggestions were collected for the new landing page design."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["design-ux", "project-management"],
+    "relatedTerms": ["design-091", "design-096", "design-079"],
+    "order": 100
+  }
+]

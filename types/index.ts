@@ -34,4 +34,9 @@ export interface Category {
 
 export type SwipeDirection = 'left' | 'right' | 'up';
 export type Difficulty = 1 | 2 | 3;
-export type Language = 'tr' | 'en';
+export type Language = 'tr' | 'en' | 'de' | 'fr' | 'es' | 'ar' | 'ja' | 'ko' | 'ru' | 'pt';
+export type TermLanguage = 'tr' | 'en';
+
+export function getTermLanguage(lang: Language): TermLanguage {
+  return lang === 'tr' ? 'tr' : 'en';
+}

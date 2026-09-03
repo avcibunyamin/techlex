@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { X, Bookmark, BookmarkCheck, ArrowUpRight } from 'lucide-react-native';
+import { X, Bookmark, BookmarkCheck, ArrowUpRight, ChevronDown } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
+import { getTermLanguage } from '@/types';
 
 export default function TermDetail() {
   const { colors: t, accent } = useTheme();
@@ -20,12 +21,21 @@ export default function TermDetail() {
 
   const isSaved = savedTerms.includes(term.id);
   const p = progress[term.id];
-  const translation = term.translations[language];
+  const tl = getTermLanguage(language);
+  const translation = term.translations[tl];
 
-  const relatedTermObjects = term.relatedTerms
+  const [showAllRelated, setShowAllRelated] = useState(false);
+  const INITIAL_RELATED = 3;
+
+  const allRelated = term.relatedTerms
     .map(rid => terms.find(t => t.id === rid))
-    .filter(Boolean)
-    .slice(0, 5);
+    .filter(Boolean);
+
+  const relatedTermObjects = showAllRelated
+    ? allRelated
+    : allRelated.slice(0, INITIAL_RELATED);
+
+  const hasMoreRelated = allRelated.length > INITIAL_RELATED;
 
   const difficultyKey = { 1: 'beginner', 2: 'intermediate', 3: 'advanced' }[term.difficulty] as string;
 
@@ -95,16 +105,6 @@ export default function TermDetail() {
           </Text>
         </View>
 
-        <View style={styles.tagsRow}>
-          {term.tags.map(tag => (
-            <View key={tag} style={[styles.tagChip, { backgroundColor: t.bgSubtle }]}>
-              <Text style={[typography.footnote, { color: t.textSecondary }]}>
-                {tag.replace(/-/g, ' ')}
-              </Text>
-            </View>
-          ))}
-        </View>
-
         {relatedTermObjects.length > 0 && (
           <View style={[styles.section, { borderColor: t.border }]}>
             <Text style={[typography.caption, { color: t.textTertiary, marginBottom: spacing.lg }]}>
@@ -122,12 +122,23 @@ export default function TermDetail() {
                     style={[typography.footnote, { color: t.textTertiary }]}
                     numberOfLines={1}
                   >
-                    {rel!.translations[language].definition}
+                    {rel!.translations[tl].definition}
                   </Text>
                 </View>
                 <ArrowUpRight size={14} color={t.textTertiary} strokeWidth={1.5} />
               </Pressable>
             ))}
+            {hasMoreRelated && !showAllRelated && (
+              <Pressable
+                style={styles.showMoreBtn}
+                onPress={() => setShowAllRelated(true)}
+              >
+                <Text style={[typography.subhead, { color: accent }]}>
+                  {tr('term.showMore', { count: allRelated.length - INITIAL_RELATED })}
+                </Text>
+                <ChevronDown size={14} color={accent} strokeWidth={1.8} />
+              </Pressable>
+            )}
           </View>
         )}
       </ScrollView>
@@ -169,16 +180,12 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 0.5,
   },
-  tagsRow: {
+  showMoreBtn: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-    marginTop: spacing['2xl'],
-  },
-  tagChip: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-    borderRadius: radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    paddingVertical: spacing.lg,
   },
   relatedItem: {
     flexDirection: 'row',

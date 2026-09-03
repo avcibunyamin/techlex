@@ -32,7 +32,8 @@
     "restart": "Yeniden başla",
     "swipeRight": "Biliyorum",
     "swipeLeft": "Öğreniyorum",
-    "tapFlip": "Çevirmek için dokun"
+    "tapFlip": "Çevirmek için dokun",
+    "swipeSave": "Kaydet"
   },
   "explore": {
     "title": "Keşfet",
@@ -54,7 +55,8 @@
     "mastered": "Öğrenildi",
     "beginner": "Başlangıç",
     "intermediate": "Orta",
-    "advanced": "İleri"
+    "advanced": "İleri",
+    "showMore": "+{{count}} daha fazla"
   },
   "profile": {
     "title": "Profil",

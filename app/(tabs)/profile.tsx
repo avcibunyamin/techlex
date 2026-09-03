@@ -20,6 +20,7 @@ import { getStats } from '@/lib/spaced-repetition';
 import { categories } from '@/data/categories';
 import { changeLanguage } from '@/lib/i18n';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
+import { Language, getTermLanguage } from '@/types';
 
 export default function ProfileScreen() {
   const { colors: t, accent, themeMode } = useTheme();
@@ -41,8 +42,13 @@ export default function ProfileScreen() {
   const nextLevelSwipes = level * 100;
   const levelProgress = (totalSwipes % 100) / 100;
 
+  const localeMap: Record<string, string> = {
+    tr: 'tr-TR', en: 'en-US', de: 'de-DE', fr: 'fr-FR',
+    es: 'es-ES', pt: 'pt-BR', ru: 'ru-RU', ar: 'ar-SA',
+    ja: 'ja-JP', ko: 'ko-KR',
+  };
   const periodEndDate = currentPeriodEnd
-    ? new Date(currentPeriodEnd).toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', {
+    ? new Date(currentPeriodEnd).toLocaleDateString(localeMap[language] || 'en-US', {
         day: 'numeric', month: 'long', year: 'numeric',
       })
     : '';
@@ -134,17 +140,37 @@ export default function ProfileScreen() {
     setCancelLoading(false);
   };
 
-  const handleLanguageToggle = async () => {
-    const next = i18n.language === 'tr' ? 'en' : 'tr';
-    await changeLanguage(next);
-    setLanguage(next as 'tr' | 'en');
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const [showThemePicker, setShowThemePicker] = useState(false);
+
+  const languageOptions: { code: Language; label: string; flag: string }[] = [
+    { code: 'tr', label: 'Türkçe', flag: 'TR' },
+    { code: 'en', label: 'English', flag: 'EN' },
+    { code: 'de', label: 'Deutsch', flag: 'DE' },
+    { code: 'fr', label: 'Français', flag: 'FR' },
+    { code: 'es', label: 'Español', flag: 'ES' },
+    { code: 'pt', label: 'Português', flag: 'PT' },
+    { code: 'ru', label: 'Русский', flag: 'RU' },
+    { code: 'ar', label: 'العربية', flag: 'AR' },
+    { code: 'ja', label: '日本語', flag: 'JA' },
+    { code: 'ko', label: '한국어', flag: 'KO' },
+  ];
+
+  const handleLanguageSelect = async (code: Language) => {
+    await changeLanguage(code);
+    setLanguage(code);
   };
 
-  const themeCycle: ThemeMode[] = ['system', 'light', 'dark'];
-  const handleThemeCycle = () => {
-    const idx = themeCycle.indexOf(themeMode);
-    setThemeMode(themeCycle[(idx + 1) % themeCycle.length]);
+  const themeOptions: { mode: ThemeMode; label: string; Icon: typeof Sun }[] = [
+    { mode: 'system', label: tr('profile.themeSystem'), Icon: Monitor },
+    { mode: 'light', label: tr('profile.themeLight'), Icon: Sun },
+    { mode: 'dark', label: tr('profile.themeDark'), Icon: Moon },
+  ];
+
+  const handleThemeSelect = (mode: ThemeMode) => {
+    setThemeMode(mode);
   };
+
   const ThemeIcon = themeMode === 'light' ? Sun : themeMode === 'dark' ? Moon : Monitor;
 
   const categoryProgress = categories.map(cat => {
@@ -238,7 +264,7 @@ export default function ProfileScreen() {
             <View style={[styles.catDot, { backgroundColor: cat.color }]} />
             <View style={{ flex: 1 }}>
               <View style={styles.catHeader}>
-                <Text style={[typography.subhead, { color: t.text }]}>{cat.name[language]}</Text>
+                <Text style={[typography.subhead, { color: t.text }]}>{cat.name[getTermLanguage(language)]}</Text>
                 <Text style={[typography.footnote, { color: t.textTertiary }]}>
                   {cat.mastered} / {cat.total}
                 </Text>
@@ -423,7 +449,7 @@ export default function ProfileScreen() {
         <View style={[styles.settingsGroup, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
           <Pressable
             style={[styles.settingRow, { borderColor: t.border }]}
-            onPress={handleLanguageToggle}
+            onPress={() => { setShowLangPicker(!showLangPicker); setShowThemePicker(false); }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
               <Globe size={14} color={accent} strokeWidth={1.5} />
@@ -431,15 +457,38 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.settingValue}>
               <Text style={[typography.subhead, { color: t.textSecondary }]}>
-                {i18n.language === 'tr' ? 'Türkçe' : 'English'}
+                {languageOptions.find(l => l.code === i18n.language)?.label ?? i18n.language}
               </Text>
-              <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
+              <ChevronRight
+                size={14}
+                color={t.textTertiary}
+                strokeWidth={1.5}
+                style={{ transform: [{ rotate: showLangPicker ? '90deg' : '0deg' }] }}
+              />
             </View>
           </Pressable>
+          {showLangPicker && (
+            <View style={[styles.pickerList, { borderColor: t.border }]}>
+              {languageOptions.map(opt => {
+                const active = i18n.language === opt.code;
+                return (
+                  <Pressable
+                    key={opt.code}
+                    style={[styles.pickerItem, { backgroundColor: active ? accent + '12' : 'transparent' }]}
+                    onPress={() => handleLanguageSelect(opt.code)}
+                  >
+                    <Text style={[typography.subhead, { color: t.textTertiary, width: 28 }]}>{opt.flag}</Text>
+                    <Text style={[typography.body, { color: t.text, flex: 1, textAlign: 'left' }]}>{opt.label}</Text>
+                    {active && <Check size={14} color={accent} strokeWidth={2.5} />}
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
 
           <Pressable
             style={[styles.settingRow, { borderColor: t.border }]}
-            onPress={handleThemeCycle}
+            onPress={() => { setShowThemePicker(!showThemePicker); setShowLangPicker(false); }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
               <ThemeIcon size={14} color={accent} strokeWidth={1.5} />
@@ -449,9 +498,32 @@ export default function ProfileScreen() {
               <Text style={[typography.subhead, { color: t.textSecondary }]}>
                 {tr(`profile.theme${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)}`)}
               </Text>
-              <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
+              <ChevronRight
+                size={14}
+                color={t.textTertiary}
+                strokeWidth={1.5}
+                style={{ transform: [{ rotate: showThemePicker ? '90deg' : '0deg' }] }}
+              />
             </View>
           </Pressable>
+          {showThemePicker && (
+            <View style={[styles.pickerList, { borderColor: t.border }]}>
+              {themeOptions.map(opt => {
+                const active = themeMode === opt.mode;
+                return (
+                  <Pressable
+                    key={opt.mode}
+                    style={[styles.pickerItem, { backgroundColor: active ? accent + '12' : 'transparent' }]}
+                    onPress={() => handleThemeSelect(opt.mode)}
+                  >
+                    <opt.Icon size={16} color={active ? accent : t.textTertiary} strokeWidth={1.5} />
+                    <Text style={[typography.body, { color: t.text, flex: 1 }]}>{opt.label}</Text>
+                    {active && <Check size={14} color={accent} strokeWidth={2.5} />}
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
 
           <View style={styles.settingRow}>
             <Text style={[typography.body, { color: t.text }]}>{tr('profile.version')}</Text>
@@ -568,4 +640,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  pickerList: {
+    borderBottomWidth: 0.5,
+    paddingVertical: spacing.xs,
+  },
+  pickerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    borderRadius: radius.sm,
+    marginHorizontal: spacing.sm,
+    writingDirection: 'ltr',
+  } as any,
 });

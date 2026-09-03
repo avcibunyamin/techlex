@@ -1,0 +1,1802 @@
+[
+  {
+    "id": "net-001",
+    "term": "TCP/IP",
+    "translations": {
+      "tr": {
+        "definition": "İnternet ve ağ iletişiminin temelini oluşturan protokol paketidir. TCP veri iletiminin güvenilirliğini sağlarken, IP paketlerin doğru adrese yönlendirilmesinden sorumludur.",
+        "example": "Tüm internet trafiği TCP/IP protokol paketi üzerinden yönetilir."
+      },
+      "en": {
+        "definition": "The foundational protocol suite for internet and network communication. TCP ensures reliable data delivery while IP handles packet addressing and routing.",
+        "example": "All internet traffic is managed through the TCP/IP protocol suite."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-002", "net-003", "net-022"],
+    "order": 1
+  },
+  {
+    "id": "net-002",
+    "term": "UDP",
+    "translations": {
+      "tr": {
+        "definition": "Bağlantısız, hafif bir iletim protokolüdür. TCP'ye göre daha hızlıdır ancak veri teslim garantisi sunmaz.",
+        "example": "Canlı video yayınları ve online oyunlar düşük gecikme süresi için UDP kullanır."
+      },
+      "en": {
+        "definition": "A connectionless, lightweight transport protocol. Faster than TCP but does not guarantee data delivery or ordering.",
+        "example": "Live video streams and online games use UDP for low-latency communication."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-001", "net-019", "net-008"],
+    "order": 2
+  },
+  {
+    "id": "net-003",
+    "term": "HTTP",
+    "translations": {
+      "tr": {
+        "definition": "Web tarayıcıları ile sunucular arasında veri iletimini sağlayan uygulama katmanı protokolüdür.",
+        "example": "Bir web sitesini ziyaret ettiğinizde tarayıcınız HTTP istekleri göndererek sayfayı yükler."
+      },
+      "en": {
+        "definition": "An application-layer protocol that enables data transfer between web browsers and servers.",
+        "example": "When you visit a website, your browser sends HTTP requests to load the page."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols", "web"],
+    "relatedTerms": ["net-004", "net-020", "net-001"],
+    "order": 3
+  },
+  {
+    "id": "net-004",
+    "term": "HTTPS",
+    "translations": {
+      "tr": {
+        "definition": "HTTP protokolünün TLS/SSL şifrelemesiyle güvenli hale getirilmiş versiyonudur. Verilerin şifreli olarak iletilmesini sağlar.",
+        "example": "Bankacılık sitelerine erişirken adres çubuğundaki kilit simgesi HTTPS bağlantısını gösterir."
+      },
+      "en": {
+        "definition": "The secure version of HTTP, encrypted using TLS/SSL to ensure data is transmitted securely between client and server.",
+        "example": "The padlock icon in the address bar indicates an HTTPS connection when accessing banking sites."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols", "security"],
+    "relatedTerms": ["net-003", "net-012", "net-077"],
+    "order": 4
+  },
+  {
+    "id": "net-005",
+    "term": "FTP",
+    "translations": {
+      "tr": {
+        "definition": "Ağ üzerinden dosya aktarımı için kullanılan standart protokoldür. İstemci ile sunucu arasında dosya yükleme ve indirme işlemlerini yönetir.",
+        "example": "Web sitesinin dosyalarını sunucuya yüklemek için FTP istemcisi kullandık."
+      },
+      "en": {
+        "definition": "A standard protocol for transferring files over a network between a client and a server.",
+        "example": "We used an FTP client to upload the website files to the server."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols", "file-transfer"],
+    "relatedTerms": ["net-006", "net-001"],
+    "order": 5
+  },
+  {
+    "id": "net-006",
+    "term": "SSH",
+    "translations": {
+      "tr": {
+        "definition": "Uzak sunuculara şifreli ve güvenli bağlantı kurmayı sağlayan ağ protokolüdür.",
+        "example": "Sunucu yönetimi için SSH ile uzak makineye güvenli bir şekilde bağlandık."
+      },
+      "en": {
+        "definition": "A cryptographic network protocol for secure remote access to servers and encrypted data communication.",
+        "example": "We connected securely to the remote machine via SSH for server administration."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols", "security"],
+    "relatedTerms": ["net-005", "net-012"],
+    "order": 6
+  },
+  {
+    "id": "net-007",
+    "term": "SMTP",
+    "translations": {
+      "tr": {
+        "definition": "E-posta gönderimi için kullanılan standart iletişim protokolüdür. Mail sunucuları arasında mesaj iletimini yönetir.",
+        "example": "Uygulamamız kullanıcılara bildirim e-postalarını SMTP sunucusu üzerinden gönderiyor."
+      },
+      "en": {
+        "definition": "The standard protocol for sending email messages between mail servers.",
+        "example": "Our application sends notification emails to users through the SMTP server."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "email"],
+    "relatedTerms": ["net-008", "net-087"],
+    "order": 7
+  },
+  {
+    "id": "net-008",
+    "term": "DNS",
+    "translations": {
+      "tr": {
+        "definition": "Alan adlarını IP adreslerine çeviren dağıtık isimlendirme sistemidir. İnternetin telefon rehberi olarak bilinir.",
+        "example": "DNS sunucusu google.com adresini 142.250.185.14 IP adresine çevirdi."
+      },
+      "en": {
+        "definition": "A distributed naming system that translates domain names into IP addresses. Often called the phonebook of the internet.",
+        "example": "The DNS server resolved google.com to the IP address 142.250.185.14."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols", "dns"],
+    "relatedTerms": ["net-009", "net-084", "net-085"],
+    "order": 8
+  },
+  {
+    "id": "net-009",
+    "term": "DHCP",
+    "translations": {
+      "tr": {
+        "definition": "Ağa bağlanan cihazlara otomatik olarak IP adresi ve ağ yapılandırma bilgilerini atayan protokoldür.",
+        "example": "Yeni bir cihaz ağa bağlandığında DHCP sunucusu ona otomatik bir IP adresi atadı."
+      },
+      "en": {
+        "definition": "A protocol that automatically assigns IP addresses and network configuration parameters to devices on a network.",
+        "example": "When a new device joined the network, the DHCP server automatically assigned it an IP address."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-008", "net-021", "net-034"],
+    "order": 9
+  },
+  {
+    "id": "net-010",
+    "term": "ARP",
+    "translations": {
+      "tr": {
+        "definition": "IP adreslerini yerel ağdaki fiziksel MAC adreslerine eşleyen protokoldür.",
+        "example": "ARP tablosu, ağdaki her cihazın IP adresi ile MAC adresi eşlemesini tutar."
+      },
+      "en": {
+        "definition": "A protocol that maps IP addresses to physical MAC addresses on a local network.",
+        "example": "The ARP table stores the mapping between IP addresses and MAC addresses for each device on the network."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-026", "net-021"],
+    "order": 10
+  },
+  {
+    "id": "net-011",
+    "term": "ICMP",
+    "translations": {
+      "tr": {
+        "definition": "Ağ cihazları arasında hata mesajları ve operasyonel bilgi göndermek için kullanılan protokoldür.",
+        "example": "Ping komutu, hedef cihaza ulaşılıp ulaşılamadığını test etmek için ICMP paketleri gönderir."
+      },
+      "en": {
+        "definition": "A protocol used to send error messages and operational information between network devices.",
+        "example": "The ping command sends ICMP packets to test whether a target device is reachable."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-096", "net-097"],
+    "order": 11
+  },
+  {
+    "id": "net-012",
+    "term": "TLS/SSL",
+    "translations": {
+      "tr": {
+        "definition": "Ağ üzerindeki iletişimi şifreleyerek güvenli hale getiren kriptografik protokollerdir. SSL, TLS'nin öncülüdür.",
+        "example": "Web sunucumuz tüm bağlantılar için TLS 1.3 kullanarak verileri şifreliyor."
+      },
+      "en": {
+        "definition": "Cryptographic protocols that secure communication over a network by encrypting data. SSL is the predecessor of TLS.",
+        "example": "Our web server encrypts all connections using TLS 1.3 to protect data in transit."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "security"],
+    "relatedTerms": ["net-004", "net-077", "net-083"],
+    "order": 12
+  },
+  {
+    "id": "net-013",
+    "term": "BGP",
+    "translations": {
+      "tr": {
+        "definition": "İnternet üzerindeki otonom sistemler arasında yönlendirme bilgisi paylaşan protokoldür. İnternetin omurgası olarak kabul edilir.",
+        "example": "ISP'ler arasındaki trafik yönlendirmesi BGP protokolü ile gerçekleştirilir."
+      },
+      "en": {
+        "definition": "A protocol that exchanges routing information between autonomous systems on the internet. Considered the backbone of the internet.",
+        "example": "Traffic routing between ISPs is managed through the BGP protocol."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "protocols", "routing"],
+    "relatedTerms": ["net-014", "net-035", "net-039"],
+    "order": 13
+  },
+  {
+    "id": "net-014",
+    "term": "OSPF",
+    "translations": {
+      "tr": {
+        "definition": "Bir otonom sistem içinde en kısa yolu hesaplayarak paketleri yönlendiren bağlantı durumu yönlendirme protokolüdür.",
+        "example": "Kurumsal ağımızda iç yönlendirme için OSPF protokolünü yapılandırdık."
+      },
+      "en": {
+        "definition": "A link-state routing protocol that calculates the shortest path for routing packets within an autonomous system.",
+        "example": "We configured OSPF for internal routing in our enterprise network."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "protocols", "routing"],
+    "relatedTerms": ["net-013", "net-035", "net-039"],
+    "order": 14
+  },
+  {
+    "id": "net-015",
+    "term": "SNMP",
+    "translations": {
+      "tr": {
+        "definition": "Ağ cihazlarını izlemek ve yönetmek için kullanılan standart protokoldür.",
+        "example": "SNMP ile router ve switch'lerin CPU kullanımını ve bant genişliğini merkezi olarak izliyoruz."
+      },
+      "en": {
+        "definition": "A standard protocol for monitoring and managing network devices such as routers, switches, and servers.",
+        "example": "We use SNMP to centrally monitor CPU usage and bandwidth on routers and switches."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "monitoring"],
+    "relatedTerms": ["net-016", "net-099"],
+    "order": 15
+  },
+  {
+    "id": "net-016",
+    "term": "NTP",
+    "translations": {
+      "tr": {
+        "definition": "Ağdaki cihazların saatlerini senkronize etmek için kullanılan protokoldür.",
+        "example": "Tüm sunucularımız NTP ile senkronize edilerek log kayıtlarında tutarlı zaman damgası sağlanıyor."
+      },
+      "en": {
+        "definition": "A protocol used to synchronize the clocks of devices on a network to a reference time source.",
+        "example": "All our servers are synchronized via NTP to ensure consistent timestamps in log records."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols"],
+    "relatedTerms": ["net-015"],
+    "order": 16
+  },
+  {
+    "id": "net-017",
+    "term": "LDAP",
+    "translations": {
+      "tr": {
+        "definition": "Dizin hizmetlerine erişmek ve yönetmek için kullanılan uygulama katmanı protokolüdür. Kullanıcı kimlik doğrulama ve yetkilendirme için yaygın olarak kullanılır.",
+        "example": "Şirket çalışanlarının kimlik doğrulaması LDAP sunucusu üzerinden Active Directory ile yapılıyor."
+      },
+      "en": {
+        "definition": "An application-layer protocol for accessing and managing directory services. Widely used for user authentication and authorization.",
+        "example": "Employee authentication is handled through the LDAP server connected to Active Directory."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "authentication"],
+    "relatedTerms": ["net-008"],
+    "order": 17
+  },
+  {
+    "id": "net-018",
+    "term": "SIP",
+    "translations": {
+      "tr": {
+        "definition": "Ses ve video gibi gerçek zamanlı iletişim oturumlarını başlatmak, sürdürmek ve sonlandırmak için kullanılan sinyal protokolüdür.",
+        "example": "VoIP telefon sistemimiz aramaları yönetmek için SIP protokolünü kullanıyor."
+      },
+      "en": {
+        "definition": "A signaling protocol used to initiate, maintain, and terminate real-time communication sessions such as voice and video calls.",
+        "example": "Our VoIP phone system uses the SIP protocol to manage calls."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "protocols", "voip"],
+    "relatedTerms": ["net-002", "net-001"],
+    "order": 18
+  },
+  {
+    "id": "net-019",
+    "term": "MQTT",
+    "translations": {
+      "tr": {
+        "definition": "IoT cihazları için tasarlanmış hafif bir yayın-abone mesajlaşma protokolüdür. Düşük bant genişliği ve güç tüketimi gerektiren ortamlarda idealdir.",
+        "example": "Akıllı ev sensörlerimiz sıcaklık verilerini MQTT protokolü ile merkezi sunucuya iletiyor."
+      },
+      "en": {
+        "definition": "A lightweight publish-subscribe messaging protocol designed for IoT devices. Ideal for environments with low bandwidth and power constraints.",
+        "example": "Our smart home sensors transmit temperature data to the central server via MQTT."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "iot"],
+    "relatedTerms": ["net-020", "net-002"],
+    "order": 19
+  },
+  {
+    "id": "net-020",
+    "term": "WebSocket",
+    "translations": {
+      "tr": {
+        "definition": "İstemci ile sunucu arasında tek bir TCP bağlantısı üzerinden çift yönlü, gerçek zamanlı iletişim sağlayan protokoldür.",
+        "example": "Sohbet uygulamamız anlık mesajlaşma için WebSocket bağlantısı kullanıyor."
+      },
+      "en": {
+        "definition": "A protocol that provides full-duplex, real-time communication between client and server over a single TCP connection.",
+        "example": "Our chat application uses WebSocket connections for instant messaging."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "protocols", "web"],
+    "relatedTerms": ["net-003", "net-019"],
+    "order": 20
+  },
+  {
+    "id": "net-021",
+    "term": "IP Address",
+    "translations": {
+      "tr": {
+        "definition": "Ağ üzerindeki her cihaza atanan benzersiz sayısal tanımlayıcıdır. Cihazların birbirini bulmasını ve iletişim kurmasını sağlar.",
+        "example": "Sunucunun IP adresi 192.168.1.100 olarak yapılandırıldı."
+      },
+      "en": {
+        "definition": "A unique numerical identifier assigned to each device on a network, enabling devices to locate and communicate with each other.",
+        "example": "The server's IP address was configured as 192.168.1.100."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-022", "net-023", "net-024"],
+    "order": 21
+  },
+  {
+    "id": "net-022",
+    "term": "IPv4",
+    "translations": {
+      "tr": {
+        "definition": "32 bitlik adres yapısı kullanan dördüncü nesil İnternet Protokolüdür. Yaklaşık 4.3 milyar benzersiz adres sağlar.",
+        "example": "IPv4 adres tükenmesi nedeniyle birçok kuruluş IPv6'ya geçiş planları yapıyor."
+      },
+      "en": {
+        "definition": "The fourth version of the Internet Protocol using a 32-bit address scheme, providing approximately 4.3 billion unique addresses.",
+        "example": "Due to IPv4 address exhaustion, many organizations are planning their transition to IPv6."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-023", "net-021", "net-025"],
+    "order": 22
+  },
+  {
+    "id": "net-023",
+    "term": "IPv6",
+    "translations": {
+      "tr": {
+        "definition": "128 bitlik adres yapısı kullanan altıncı nesil İnternet Protokolüdür. IPv4'teki adres tükenmesi sorununu çözmek için geliştirilmiştir.",
+        "example": "Yeni veri merkezimiz tüm altyapıda IPv6 desteğiyle kuruldu."
+      },
+      "en": {
+        "definition": "The sixth version of the Internet Protocol using a 128-bit address scheme, developed to solve the address exhaustion problem of IPv4.",
+        "example": "Our new data center was built with full IPv6 support across all infrastructure."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-022", "net-021"],
+    "order": 23
+  },
+  {
+    "id": "net-024",
+    "term": "Subnet Mask",
+    "translations": {
+      "tr": {
+        "definition": "Bir IP adresinin ağ kısmını ve cihaz kısmını ayırt etmek için kullanılan 32 bitlik sayıdır.",
+        "example": "255.255.255.0 subnet mask'ı ile ağımızda 254 cihaz adreslenebilir."
+      },
+      "en": {
+        "definition": "A 32-bit number used to distinguish the network portion and host portion of an IP address.",
+        "example": "With a 255.255.255.0 subnet mask, our network can address up to 254 devices."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-025", "net-021"],
+    "order": 24
+  },
+  {
+    "id": "net-025",
+    "term": "CIDR",
+    "translations": {
+      "tr": {
+        "definition": "IP adreslerini ve yönlendirme tablolarını daha verimli yönetmek için kullanılan esnek alt ağ adresleme yöntemidir.",
+        "example": "192.168.1.0/24 CIDR gösterimi, 256 IP adreslik bir alt ağ bloğunu tanımlar."
+      },
+      "en": {
+        "definition": "A flexible method of IP address allocation and routing that replaces the older classful addressing system.",
+        "example": "The CIDR notation 192.168.1.0/24 defines a subnet block of 256 IP addresses."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-024", "net-022"],
+    "order": 25
+  },
+  {
+    "id": "net-026",
+    "term": "MAC Address",
+    "translations": {
+      "tr": {
+        "definition": "Her ağ arayüz kartına üretici tarafından atanan benzersiz fiziksel donanım adresidir.",
+        "example": "Switch, gelen çerçeveleri hedef MAC adresine göre doğru porta yönlendirir."
+      },
+      "en": {
+        "definition": "A unique physical hardware address assigned by the manufacturer to each network interface card.",
+        "example": "The switch forwards incoming frames to the correct port based on the destination MAC address."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-010", "net-030"],
+    "order": 26
+  },
+  {
+    "id": "net-027",
+    "term": "Port",
+    "translations": {
+      "tr": {
+        "definition": "Bir cihaz üzerinde çalışan farklı ağ hizmetlerini tanımlamak için kullanılan 0-65535 arası sayısal tanımlayıcıdır.",
+        "example": "HTTP servisi varsayılan olarak 80 numaralı portu, HTTPS ise 443 numaralı portu kullanır."
+      },
+      "en": {
+        "definition": "A numerical identifier (0-65535) used to distinguish different network services running on a device.",
+        "example": "HTTP uses port 80 by default, while HTTPS uses port 443."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-028", "net-078", "net-080"],
+    "order": 27
+  },
+  {
+    "id": "net-028",
+    "term": "Socket",
+    "translations": {
+      "tr": {
+        "definition": "Bir IP adresi ile port numarasının birleşiminden oluşan, ağ iletişiminde uç noktayı temsil eden yapıdır.",
+        "example": "Sunucu, 192.168.1.10:8080 soket adresinde gelen bağlantıları dinliyor."
+      },
+      "en": {
+        "definition": "An endpoint for network communication, defined by the combination of an IP address and a port number.",
+        "example": "The server listens for incoming connections on the socket address 192.168.1.10:8080."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-027", "net-020", "net-001"],
+    "order": 28
+  },
+  {
+    "id": "net-029",
+    "term": "Packet",
+    "translations": {
+      "tr": {
+        "definition": "Ağ üzerinden iletilen verinin küçük parçalara bölünmüş birimidir. Kaynak, hedef ve kontrol bilgilerini içerir.",
+        "example": "Büyük bir dosya aktarımı sırasında veri binlerce pakete bölünerek gönderilir."
+      },
+      "en": {
+        "definition": "A unit of data transmitted over a network, containing source, destination, and control information along with the payload.",
+        "example": "During a large file transfer, data is broken into thousands of packets for transmission."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-030", "net-031"],
+    "order": 29
+  },
+  {
+    "id": "net-030",
+    "term": "Frame",
+    "translations": {
+      "tr": {
+        "definition": "Veri bağlantı katmanında iletilen veri birimidir. MAC adresleri ve hata kontrol bilgilerini içerir.",
+        "example": "Ethernet çerçevesi kaynak ve hedef MAC adreslerini başlık bilgisinde taşır."
+      },
+      "en": {
+        "definition": "A data unit transmitted at the data link layer, containing MAC addresses and error-checking information.",
+        "example": "An Ethernet frame carries the source and destination MAC addresses in its header."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-029", "net-026"],
+    "order": 30
+  },
+  {
+    "id": "net-031",
+    "term": "MTU",
+    "translations": {
+      "tr": {
+        "definition": "Bir ağ bağlantısından tek seferde gönderilebilecek maksimum veri paketi boyutudur. Ethernet için varsayılan değer 1500 bayttır.",
+        "example": "VPN tünelinde paket fragmentasyonunu önlemek için MTU değerini 1400 bayta düşürdük."
+      },
+      "en": {
+        "definition": "The maximum size of a data packet that can be sent over a network link in a single transmission. Default for Ethernet is 1500 bytes.",
+        "example": "We lowered the MTU to 1400 bytes to prevent packet fragmentation in the VPN tunnel."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-029", "net-030"],
+    "order": 31
+  },
+  {
+    "id": "net-032",
+    "term": "TTL",
+    "translations": {
+      "tr": {
+        "definition": "Bir paketin ağda dolaşabileceği maksimum atlama sayısını belirleyen değerdir. Her yönlendirici geçişinde bir azaltılır ve sıfıra ulaşınca paket düşürülür.",
+        "example": "TTL değeri 64 olan bir paket, 64 router geçişinden sonra otomatik olarak düşürülür."
+      },
+      "en": {
+        "definition": "A value that specifies the maximum number of hops a packet can traverse. Decremented at each router, and the packet is discarded when it reaches zero.",
+        "example": "A packet with a TTL of 64 is automatically dropped after passing through 64 routers."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-096", "net-097", "net-011"],
+    "order": 32
+  },
+  {
+    "id": "net-033",
+    "term": "NAT",
+    "translations": {
+      "tr": {
+        "definition": "Özel ağdaki iç IP adreslerini tek bir genel IP adresine dönüştürerek internete çıkışı sağlayan teknolojidir.",
+        "example": "Ev ağımızdaki tüm cihazlar NAT sayesinde tek bir genel IP adresiyle internete erişiyor."
+      },
+      "en": {
+        "definition": "A technology that translates private internal IP addresses to a single public IP address for internet access.",
+        "example": "All devices on our home network access the internet through a single public IP address thanks to NAT."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-034", "net-021", "net-042"],
+    "order": 33
+  },
+  {
+    "id": "net-034",
+    "term": "Gateway",
+    "translations": {
+      "tr": {
+        "definition": "Farklı ağlar arasında geçiş noktası olarak görev yapan ağ düğümüdür. Genellikle yerel ağdan internete çıkış kapısıdır.",
+        "example": "Ağdaki cihazların varsayılan gateway adresi router'ın IP adresi olan 192.168.1.1 olarak ayarlandı."
+      },
+      "en": {
+        "definition": "A network node that serves as an entry and exit point between different networks, typically the access point from a local network to the internet.",
+        "example": "The default gateway for devices on the network was set to the router's IP address, 192.168.1.1."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-033", "net-039", "net-009"],
+    "order": 34
+  },
+  {
+    "id": "net-035",
+    "term": "Routing Table",
+    "translations": {
+      "tr": {
+        "definition": "Yönlendiricinin ağ paketlerini hangi yollardan ileteceğini belirleyen kurallar tablosudur.",
+        "example": "Yeni alt ağ eklendikten sonra routing table'a ilgili statik rota girişi yapıldı."
+      },
+      "en": {
+        "definition": "A table of rules in a router that determines the paths along which network packets should be forwarded.",
+        "example": "After adding the new subnet, a static route entry was added to the routing table."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals", "routing"],
+    "relatedTerms": ["net-013", "net-014", "net-039"],
+    "order": 35
+  },
+  {
+    "id": "net-036",
+    "term": "VLAN",
+    "translations": {
+      "tr": {
+        "definition": "Fiziksel konumdan bağımsız olarak ağ cihazlarını mantıksal gruplara ayıran sanal yerel alan ağıdır.",
+        "example": "IT departmanı ve muhasebe birimi farklı VLAN'lara ayrılarak ağ güvenliği artırıldı."
+      },
+      "en": {
+        "definition": "A virtual local area network that logically groups network devices independently of their physical location.",
+        "example": "The IT department and accounting unit were separated into different VLANs to improve network security."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-040", "net-081"],
+    "order": 36
+  },
+  {
+    "id": "net-037",
+    "term": "VPN",
+    "translations": {
+      "tr": {
+        "definition": "İnternet üzerinden şifreli bir tünel oluşturarak güvenli özel ağ bağlantısı sağlayan teknolojidir.",
+        "example": "Uzaktan çalışan personel, şirket ağına VPN ile güvenli bir şekilde erişiyor."
+      },
+      "en": {
+        "definition": "A technology that creates an encrypted tunnel over the internet to provide a secure private network connection.",
+        "example": "Remote employees securely access the corporate network through a VPN connection."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals", "security"],
+    "relatedTerms": ["net-012", "net-038", "net-033"],
+    "order": 37
+  },
+  {
+    "id": "net-038",
+    "term": "Proxy",
+    "translations": {
+      "tr": {
+        "definition": "İstemci ile hedef sunucu arasında aracı olarak çalışan sunucudur. İstekleri istemci adına iletir ve yanıtları geri döndürür.",
+        "example": "Şirket proxy sunucusu üzerinden internete çıkarak web trafiğini filtreliyor ve logluyor."
+      },
+      "en": {
+        "definition": "A server that acts as an intermediary between a client and a target server, forwarding requests on behalf of the client.",
+        "example": "The company accesses the internet through a proxy server that filters and logs web traffic."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-fundamentals"],
+    "relatedTerms": ["net-044", "net-037", "net-033"],
+    "order": 38
+  },
+  {
+    "id": "net-039",
+    "term": "Router",
+    "translations": {
+      "tr": {
+        "definition": "Farklı ağlar arasında veri paketlerini yönlendiren ağ cihazıdır. En uygun yolu belirleyerek paketleri hedefe iletir.",
+        "example": "Yeni kurulan router, iki farklı ofis ağını birbirine bağlayarak iletişimi sağladı."
+      },
+      "en": {
+        "definition": "A network device that forwards data packets between different networks, determining the optimal path to the destination.",
+        "example": "The newly installed router connected two separate office networks, enabling communication between them."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-devices"],
+    "relatedTerms": ["net-040", "net-034", "net-035"],
+    "order": 39
+  },
+  {
+    "id": "net-040",
+    "term": "Switch",
+    "translations": {
+      "tr": {
+        "definition": "Yerel ağdaki cihazları birbirine bağlayan ve MAC adreslerine göre veri çerçevelerini yönlendiren ağ cihazıdır.",
+        "example": "48 portlu yönetilebilir switch, ofisteki tüm bilgisayarları yerel ağa bağlıyor."
+      },
+      "en": {
+        "definition": "A network device that connects devices on a local network and forwards data frames based on MAC addresses.",
+        "example": "The 48-port managed switch connects all computers in the office to the local network."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-devices"],
+    "relatedTerms": ["net-039", "net-036", "net-047"],
+    "order": 40
+  },
+  {
+    "id": "net-041",
+    "term": "Access Point",
+    "translations": {
+      "tr": {
+        "definition": "Kablosuz cihazların kablolu ağa bağlanmasını sağlayan ağ cihazıdır.",
+        "example": "Ofise yeni access point'ler eklenerek kablosuz ağ kapsama alanı genişletildi."
+      },
+      "en": {
+        "definition": "A network device that allows wireless devices to connect to a wired network.",
+        "example": "New access points were added to the office to extend the wireless network coverage area."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-devices", "wireless"],
+    "relatedTerms": ["net-072", "net-039"],
+    "order": 41
+  },
+  {
+    "id": "net-042",
+    "term": "Firewall",
+    "translations": {
+      "tr": {
+        "definition": "Gelen ve giden ağ trafiğini önceden tanımlanmış güvenlik kurallarına göre izleyen ve filtreleyen ağ güvenlik sistemidir.",
+        "example": "Firewall, dış kaynaklı şüpheli bağlantıları engelleyerek iç ağı koruyor."
+      },
+      "en": {
+        "definition": "A network security system that monitors and filters incoming and outgoing network traffic based on predefined security rules.",
+        "example": "The firewall protects the internal network by blocking suspicious connections from external sources."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "network-devices", "security"],
+    "relatedTerms": ["net-078", "net-046", "net-045"],
+    "order": 42
+  },
+  {
+    "id": "net-043",
+    "term": "Load Balancer",
+    "translations": {
+      "tr": {
+        "definition": "Gelen ağ trafiğini birden fazla sunucuya dağıtarak yükü dengeleyen ve yüksek erişilebilirlik sağlayan sistemdir.",
+        "example": "Load balancer, web trafiğini üç sunucu arasında eşit olarak dağıtarak hiçbirinin aşırı yüklenmesini önlüyor."
+      },
+      "en": {
+        "definition": "A system that distributes incoming network traffic across multiple servers to balance the load and ensure high availability.",
+        "example": "The load balancer distributes web traffic evenly across three servers, preventing any single one from being overloaded."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-devices", "cloud-computing"],
+    "relatedTerms": ["net-044", "net-062", "net-055"],
+    "order": 43
+  },
+  {
+    "id": "net-044",
+    "term": "Reverse Proxy",
+    "translations": {
+      "tr": {
+        "definition": "İstemci isteklerini arka plandaki sunuculara yönlendiren ve yanıtları istemciye döndüren ara sunucudur. Güvenlik, önbellekleme ve yük dengeleme sağlar.",
+        "example": "Nginx reverse proxy olarak yapılandırılarak gelen istekler arka plandaki uygulama sunucularına yönlendirildi."
+      },
+      "en": {
+        "definition": "An intermediary server that forwards client requests to backend servers and returns the responses. Provides security, caching, and load balancing.",
+        "example": "Nginx was configured as a reverse proxy to route incoming requests to the backend application servers."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-devices", "web"],
+    "relatedTerms": ["net-043", "net-038", "net-055"],
+    "order": 44
+  },
+  {
+    "id": "net-045",
+    "term": "WAF",
+    "translations": {
+      "tr": {
+        "definition": "Web uygulamalarını HTTP trafiğini filtreleyerek SQL injection, XSS gibi saldırılardan koruyan güvenlik duvarıdır.",
+        "example": "WAF, gelen HTTP isteklerini analiz ederek SQL injection saldırı girişimini tespit edip engelledi."
+      },
+      "en": {
+        "definition": "A Web Application Firewall that protects web applications by filtering HTTP traffic against attacks such as SQL injection and XSS.",
+        "example": "The WAF detected and blocked an SQL injection attack attempt by analyzing incoming HTTP requests."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-devices", "security"],
+    "relatedTerms": ["net-042", "net-079", "net-046"],
+    "order": 45
+  },
+  {
+    "id": "net-046",
+    "term": "IDS/IPS",
+    "translations": {
+      "tr": {
+        "definition": "IDS ağdaki şüpheli etkinlikleri tespit eden, IPS ise tespit edilen tehditleri otomatik olarak engelleyen güvenlik sistemleridir.",
+        "example": "IDS/IPS sistemi ağda anormal bir trafik paterni algılayarak olası bir saldırıyı engelledi."
+      },
+      "en": {
+        "definition": "IDS detects suspicious network activity while IPS automatically blocks detected threats. Together they provide active network defense.",
+        "example": "The IDS/IPS system detected an abnormal traffic pattern on the network and blocked a potential attack."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-devices", "security"],
+    "relatedTerms": ["net-042", "net-045", "net-080"],
+    "order": 46
+  },
+  {
+    "id": "net-047",
+    "term": "Network Bridge",
+    "translations": {
+      "tr": {
+        "definition": "İki veya daha fazla ağ segmentini birbirine bağlayarak tek bir ağ gibi çalışmalarını sağlayan cihazdır.",
+        "example": "Network bridge kullanarak iki ayrı Ethernet segmentini tek bir yayın alanında birleştirdik."
+      },
+      "en": {
+        "definition": "A device that connects two or more network segments, making them function as a single network.",
+        "example": "We used a network bridge to merge two separate Ethernet segments into a single broadcast domain."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "network-devices"],
+    "relatedTerms": ["net-040", "net-036"],
+    "order": 47
+  },
+  {
+    "id": "net-048",
+    "term": "AWS",
+    "translations": {
+      "tr": {
+        "definition": "Amazon'un sunduğu, bilgi işlem, depolama, veri tabanı gibi geniş kapsamlı bulut hizmetleri platformudur. Dünyanın en büyük bulut sağlayıcısıdır.",
+        "example": "Uygulamamızın altyapısını AWS üzerinde EC2 ve S3 servislerini kullanarak oluşturduk."
+      },
+      "en": {
+        "definition": "Amazon's comprehensive cloud services platform offering computing, storage, database, and many other services. The world's largest cloud provider.",
+        "example": "We built our application's infrastructure on AWS using EC2 and S3 services."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-049", "net-050", "net-053"],
+    "order": 48
+  },
+  {
+    "id": "net-049",
+    "term": "Azure",
+    "translations": {
+      "tr": {
+        "definition": "Microsoft'un sunduğu kurumsal düzeyde bulut bilişim platformudur. Bilgi işlem, analiz, depolama ve ağ hizmetleri sunar.",
+        "example": "Şirketimiz Active Directory entegrasyonu sayesinde Azure bulut platformunu tercih etti."
+      },
+      "en": {
+        "definition": "Microsoft's enterprise-grade cloud computing platform offering computing, analytics, storage, and networking services.",
+        "example": "Our company chose the Azure cloud platform thanks to its seamless Active Directory integration."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-048", "net-050"],
+    "order": 49
+  },
+  {
+    "id": "net-050",
+    "term": "GCP",
+    "translations": {
+      "tr": {
+        "definition": "Google'ın sunduğu bulut bilişim platformudur. Google'ın kendi altyapısında çalışan bilgi işlem, veri analizi ve makine öğrenmesi hizmetleri sunar.",
+        "example": "Makine öğrenmesi projemiz için GCP üzerindeki BigQuery ve Vertex AI servislerini kullanıyoruz."
+      },
+      "en": {
+        "definition": "Google's cloud computing platform offering computing, data analytics, and machine learning services running on Google's own infrastructure.",
+        "example": "We use BigQuery and Vertex AI services on GCP for our machine learning project."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-048", "net-049"],
+    "order": 50
+  },
+  {
+    "id": "net-051",
+    "term": "Serverless",
+    "translations": {
+      "tr": {
+        "definition": "Geliştiricilerin sunucu yönetimiyle uğraşmadan kod çalıştırabildiği bulut bilişim modelidir. Kaynaklar talebe göre otomatik ölçeklenir.",
+        "example": "Serverless mimari sayesinde sunucu bakımı yapmadan sadece uygulama koduna odaklanabiliyoruz."
+      },
+      "en": {
+        "definition": "A cloud computing model where developers run code without managing servers. Resources automatically scale based on demand.",
+        "example": "Thanks to serverless architecture, we can focus solely on application code without worrying about server maintenance."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-052", "net-060"],
+    "order": 51
+  },
+  {
+    "id": "net-052",
+    "term": "Lambda",
+    "translations": {
+      "tr": {
+        "definition": "AWS'nin sunucusuz bilgi işlem hizmetidir. Kod, yalnızca tetiklendiğinde çalışır ve kullanılan işlem süresi kadar ücretlendirilir.",
+        "example": "S3'e yeni bir dosya yüklendiğinde Lambda fonksiyonu otomatik olarak tetiklenerek resmi işliyor."
+      },
+      "en": {
+        "definition": "AWS's serverless compute service. Code runs only when triggered, and billing is based on actual compute time used.",
+        "example": "When a new file is uploaded to S3, a Lambda function is automatically triggered to process the image."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing", "serverless"],
+    "relatedTerms": ["net-051", "net-053", "net-048"],
+    "order": 52
+  },
+  {
+    "id": "net-053",
+    "term": "EC2",
+    "translations": {
+      "tr": {
+        "definition": "AWS'nin bulutta ölçeklenebilir sanal sunucu sağlayan hizmetidir. İhtiyaca göre sanal makine kapasitesi artırılıp azaltılabilir.",
+        "example": "Web uygulamamızı barındırmak için iki adet EC2 instance oluşturduk."
+      },
+      "en": {
+        "definition": "AWS's service that provides scalable virtual servers in the cloud. Virtual machine capacity can be increased or decreased as needed.",
+        "example": "We created two EC2 instances to host our web application."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-052", "net-048", "net-062"],
+    "order": 53
+  },
+  {
+    "id": "net-054",
+    "term": "S3",
+    "translations": {
+      "tr": {
+        "definition": "AWS'nin sunduğu yüksek dayanıklılığa sahip nesne depolama hizmetidir. Dosyalar, yedekler ve statik içerikler için kullanılır.",
+        "example": "Kullanıcıların yüklediği profil fotoğrafları S3 bucket'ında depolanıyor."
+      },
+      "en": {
+        "definition": "AWS's highly durable object storage service used for files, backups, and static content.",
+        "example": "User-uploaded profile photos are stored in an S3 bucket."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing", "storage"],
+    "relatedTerms": ["net-048", "net-055"],
+    "order": 54
+  },
+  {
+    "id": "net-055",
+    "term": "CDN",
+    "translations": {
+      "tr": {
+        "definition": "İçeriği coğrafi olarak dağıtılmış sunucularda önbelleğe alarak kullanıcılara en yakın noktadan hızlı erişim sağlayan ağ sistemidir.",
+        "example": "CDN kullanarak web sitemizin statik içeriklerini dünya genelinde hızlı bir şekilde sunuyoruz."
+      },
+      "en": {
+        "definition": "A network of geographically distributed servers that cache content and deliver it from the nearest location to users for faster access.",
+        "example": "We use a CDN to serve our website's static content quickly across the globe."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "cloud-computing", "performance"],
+    "relatedTerms": ["net-056", "net-054", "net-044"],
+    "order": 55
+  },
+  {
+    "id": "net-056",
+    "term": "Edge Computing",
+    "translations": {
+      "tr": {
+        "definition": "Veri işlemenin merkezi veri merkezleri yerine verinin üretildiği yere yakın noktalarda yapılmasını sağlayan dağıtık bilgi işlem modelidir.",
+        "example": "IoT sensör verilerini edge computing ile yerel olarak işleyerek buluta aktarım gecikmesini azalttık."
+      },
+      "en": {
+        "definition": "A distributed computing model where data processing occurs closer to where data is generated rather than in centralized data centers.",
+        "example": "We reduced cloud transfer latency by processing IoT sensor data locally with edge computing."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-055", "net-074"],
+    "order": 56
+  },
+  {
+    "id": "net-057",
+    "term": "Multi-Cloud",
+    "translations": {
+      "tr": {
+        "definition": "Birden fazla bulut sağlayıcısının hizmetlerini aynı anda kullanarak bağımlılığı azaltan ve esnekliği artıran stratejidir.",
+        "example": "Multi-cloud stratejisiyle bilgi işlem için AWS, yapay zeka için GCP kullanıyoruz."
+      },
+      "en": {
+        "definition": "A strategy of using services from multiple cloud providers simultaneously to reduce vendor lock-in and increase flexibility.",
+        "example": "With our multi-cloud strategy, we use AWS for computing and GCP for artificial intelligence."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-058", "net-048", "net-049"],
+    "order": 57
+  },
+  {
+    "id": "net-058",
+    "term": "Hybrid Cloud",
+    "translations": {
+      "tr": {
+        "definition": "Özel bulut (on-premise) altyapısı ile genel bulut hizmetlerinin birlikte kullanıldığı karma bulut bilişim modelidir.",
+        "example": "Hassas verileri özel bulutta tutarken, web uygulamalarını genel bulutta çalıştıran hybrid cloud yapısı kuruldu."
+      },
+      "en": {
+        "definition": "A cloud computing model that combines private cloud (on-premise) infrastructure with public cloud services.",
+        "example": "A hybrid cloud setup was established to keep sensitive data on the private cloud while running web applications on the public cloud."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-057", "net-059"],
+    "order": 58
+  },
+  {
+    "id": "net-059",
+    "term": "IaaS",
+    "translations": {
+      "tr": {
+        "definition": "Sunucu, depolama ve ağ gibi temel bilişim altyapısının bulut üzerinden hizmet olarak sunulduğu modeldir.",
+        "example": "IaaS modeli sayesinde fiziksel sunucu satın almak yerine ihtiyaç kadar sanal altyapı kiralıyoruz."
+      },
+      "en": {
+        "definition": "A cloud service model that provides fundamental computing infrastructure such as servers, storage, and networking as a service.",
+        "example": "With the IaaS model, we rent virtual infrastructure as needed instead of purchasing physical servers."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-060", "net-061", "net-048"],
+    "order": 59
+  },
+  {
+    "id": "net-060",
+    "term": "PaaS",
+    "translations": {
+      "tr": {
+        "definition": "Uygulama geliştirme ve dağıtım için gerekli platformun bulut üzerinden hizmet olarak sunulduğu modeldir.",
+        "example": "PaaS platformu üzerinde veritabanı ve sunucu yönetimiyle uğraşmadan uygulama geliştiriyoruz."
+      },
+      "en": {
+        "definition": "A cloud service model that provides a platform for developing and deploying applications as a service.",
+        "example": "We develop applications on the PaaS platform without worrying about database and server management."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-059", "net-061", "net-051"],
+    "order": 60
+  },
+  {
+    "id": "net-061",
+    "term": "SaaS",
+    "translations": {
+      "tr": {
+        "definition": "Yazılımın internet üzerinden abonelik modeliyle hizmet olarak sunulduğu bulut bilişim modelidir. Kullanıcılar kurulum yapmadan yazılımı kullanır.",
+        "example": "Gmail, Slack ve Zoom gibi uygulamalar SaaS modeline örnek gösterilebilir."
+      },
+      "en": {
+        "definition": "A cloud computing model where software is delivered over the internet on a subscription basis without the need for local installation.",
+        "example": "Gmail, Slack, and Zoom are examples of applications delivered through the SaaS model."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-059", "net-060"],
+    "order": 61
+  },
+  {
+    "id": "net-062",
+    "term": "Auto Scaling",
+    "translations": {
+      "tr": {
+        "definition": "Uygulama talebine göre sunucu kaynaklarını otomatik olarak artırıp azaltan bulut bilişim özelliğidir.",
+        "example": "Kampanya döneminde artan trafik karşısında auto scaling devreye girerek sunucu sayısını 3'ten 10'a çıkardı."
+      },
+      "en": {
+        "definition": "A cloud computing feature that automatically increases or decreases server resources based on application demand.",
+        "example": "During the campaign period, auto scaling kicked in and increased the server count from 3 to 10 to handle the traffic surge."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-043", "net-053", "net-063"],
+    "order": 62
+  },
+  {
+    "id": "net-063",
+    "term": "Availability Zone",
+    "translations": {
+      "tr": {
+        "definition": "Bir bulut bölgesi içinde fiziksel olarak ayrı, bağımsız altyapıya sahip veri merkezi konumudur. Yüksek erişilebilirlik ve hata toleransı sağlar.",
+        "example": "Uygulamayı üç farklı availability zone'a dağıtarak tek nokta arıza riskini ortadan kaldırdık."
+      },
+      "en": {
+        "definition": "A physically separate data center location within a cloud region with independent infrastructure, providing high availability and fault tolerance.",
+        "example": "We eliminated the single point of failure risk by deploying the application across three different availability zones."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "cloud-computing"],
+    "relatedTerms": ["net-062", "net-057"],
+    "order": 63
+  },
+  {
+    "id": "net-064",
+    "term": "Docker",
+    "translations": {
+      "tr": {
+        "definition": "Uygulamaları ve bağımlılıklarını taşınabilir konteynerler içinde paketlemeyi ve çalıştırmayı sağlayan platformdur.",
+        "example": "Docker ile uygulamayı ve tüm bağımlılıklarını bir konteyner imajına paketleyerek her ortamda aynı şekilde çalışmasını sağladık."
+      },
+      "en": {
+        "definition": "A platform for packaging and running applications and their dependencies in portable containers.",
+        "example": "With Docker, we packaged the application and all its dependencies into a container image, ensuring it runs the same way in every environment."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "containers"],
+    "relatedTerms": ["net-065", "net-066", "net-071"],
+    "order": 64
+  },
+  {
+    "id": "net-065",
+    "term": "Kubernetes",
+    "translations": {
+      "tr": {
+        "definition": "Konteyner uygulamalarının dağıtımını, ölçeklenmesini ve yönetimini otomatikleştiren açık kaynaklı orkestrasyon platformudur.",
+        "example": "Kubernetes ile yüzlerce konteyneri yönetiyor, otomatik ölçekleme ve kendini iyileştirme özelliklerinden yararlanıyoruz."
+      },
+      "en": {
+        "definition": "An open-source orchestration platform that automates the deployment, scaling, and management of containerized applications.",
+        "example": "With Kubernetes, we manage hundreds of containers, leveraging auto-scaling and self-healing capabilities."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "containers", "orchestration"],
+    "relatedTerms": ["net-064", "net-067", "net-068"],
+    "order": 65
+  },
+  {
+    "id": "net-066",
+    "term": "Container",
+    "translations": {
+      "tr": {
+        "definition": "Bir uygulamayı ve tüm bağımlılıklarını izole bir ortamda çalıştırmak için paketleyen hafif sanallaştırma birimidir.",
+        "example": "Her mikro servis ayrı bir container içinde çalışarak birbirinden izole ediliyor."
+      },
+      "en": {
+        "definition": "A lightweight virtualization unit that packages an application and all its dependencies to run in an isolated environment.",
+        "example": "Each microservice runs in a separate container, isolated from one another."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "containers"],
+    "relatedTerms": ["net-064", "net-067", "net-071"],
+    "order": 66
+  },
+  {
+    "id": "net-067",
+    "term": "Pod",
+    "translations": {
+      "tr": {
+        "definition": "Kubernetes'te bir veya daha fazla konteyneri bir arada çalıştıran en küçük dağıtım birimidir. Pod içindeki konteynerler aynı ağ ve depolama alanını paylaşır.",
+        "example": "Web sunucusu ve log toplayıcı konteynerlerini aynı pod içinde çalıştırarak birbirleriyle localhost üzerinden iletişim kurmalarını sağladık."
+      },
+      "en": {
+        "definition": "The smallest deployable unit in Kubernetes that runs one or more containers together, sharing the same network and storage.",
+        "example": "We ran the web server and log collector containers in the same pod, allowing them to communicate via localhost."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "containers", "orchestration"],
+    "relatedTerms": ["net-066", "net-065", "net-068"],
+    "order": 67
+  },
+  {
+    "id": "net-068",
+    "term": "Service Mesh",
+    "translations": {
+      "tr": {
+        "definition": "Mikro servisler arası iletişimi yöneten, gözlemlenebilirlik, güvenlik ve trafik yönetimi sağlayan altyapı katmanıdır.",
+        "example": "Istio service mesh kullanarak servisler arası trafiği şifreledik ve detaylı izleme verisi topladık."
+      },
+      "en": {
+        "definition": "An infrastructure layer that manages communication between microservices, providing observability, security, and traffic management.",
+        "example": "Using Istio service mesh, we encrypted inter-service traffic and collected detailed observability data."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "containers", "orchestration"],
+    "relatedTerms": ["net-067", "net-069", "net-083"],
+    "order": 68
+  },
+  {
+    "id": "net-069",
+    "term": "Ingress",
+    "translations": {
+      "tr": {
+        "definition": "Kubernetes'te dış trafiğin küme içindeki servislere yönlendirilmesini yöneten API nesnesidir. URL tabanlı yönlendirme ve TLS sonlandırma sağlar.",
+        "example": "Ingress kuralları ile api.example.com adresine gelen istekleri API servisine yönlendirdik."
+      },
+      "en": {
+        "definition": "A Kubernetes API object that manages external traffic routing to services within the cluster, providing URL-based routing and TLS termination.",
+        "example": "With Ingress rules, we routed requests to api.example.com to the API service."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "containers", "orchestration"],
+    "relatedTerms": ["net-068", "net-043", "net-065"],
+    "order": 69
+  },
+  {
+    "id": "net-070",
+    "term": "Helm",
+    "translations": {
+      "tr": {
+        "definition": "Kubernetes uygulamalarını paketlemeyi, yapılandırmayı ve dağıtmayı kolaylaştıran paket yöneticisidir.",
+        "example": "Helm chart kullanarak tüm Kubernetes kaynaklarını tek bir komutla dağıtıyoruz."
+      },
+      "en": {
+        "definition": "A package manager for Kubernetes that simplifies packaging, configuring, and deploying applications.",
+        "example": "Using Helm charts, we deploy all Kubernetes resources with a single command."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "containers", "orchestration"],
+    "relatedTerms": ["net-065", "net-064"],
+    "order": 70
+  },
+  {
+    "id": "net-071",
+    "term": "Container Registry",
+    "translations": {
+      "tr": {
+        "definition": "Docker konteyner imajlarını depolamak, yönetmek ve dağıtmak için kullanılan merkezi depodur.",
+        "example": "CI/CD pipeline'ı her başarılı build sonrası yeni imajı container registry'ye otomatik olarak push ediyor."
+      },
+      "en": {
+        "definition": "A centralized repository for storing, managing, and distributing Docker container images.",
+        "example": "The CI/CD pipeline automatically pushes the new image to the container registry after each successful build."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "containers"],
+    "relatedTerms": ["net-064", "net-066", "net-070"],
+    "order": 71
+  },
+  {
+    "id": "net-072",
+    "term": "Wi-Fi",
+    "translations": {
+      "tr": {
+        "definition": "Cihazların kablosuz olarak yerel ağa ve internete bağlanmasını sağlayan radyo frekansı tabanlı kablosuz ağ teknolojisidir.",
+        "example": "Yeni Wi-Fi 6 standardı sayesinde ofiste daha yüksek hız ve daha fazla eş zamanlı cihaz desteği sağlandı."
+      },
+      "en": {
+        "definition": "A radio-frequency-based wireless networking technology that enables devices to connect to local networks and the internet without cables.",
+        "example": "The new Wi-Fi 6 standard provides higher speeds and support for more simultaneous devices in the office."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "wireless"],
+    "relatedTerms": ["net-041", "net-073", "net-074"],
+    "order": 72
+  },
+  {
+    "id": "net-073",
+    "term": "Bluetooth",
+    "translations": {
+      "tr": {
+        "definition": "Kısa mesafeli kablosuz veri iletimi için kullanılan düşük güç tüketimli iletişim teknolojisidir.",
+        "example": "Kablosuz kulaklık, Bluetooth üzerinden telefona bağlanarak müzik aktarımı yapıyor."
+      },
+      "en": {
+        "definition": "A low-power wireless communication technology for short-range data transmission between devices.",
+        "example": "The wireless headphones connect to the phone via Bluetooth for audio streaming."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "wireless"],
+    "relatedTerms": ["net-072", "net-075"],
+    "order": 73
+  },
+  {
+    "id": "net-074",
+    "term": "5G",
+    "translations": {
+      "tr": {
+        "definition": "Beşinci nesil mobil ağ teknolojisidir. Çok yüksek hız, düşük gecikme ve yoğun cihaz bağlantısı sağlar.",
+        "example": "5G altyapısı, otonom araçlar ve uzaktan cerrahi gibi düşük gecikme gerektiren uygulamaları mümkün kılıyor."
+      },
+      "en": {
+        "definition": "Fifth-generation mobile network technology providing ultra-high speeds, low latency, and massive device connectivity.",
+        "example": "5G infrastructure enables low-latency applications such as autonomous vehicles and remote surgery."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "wireless"],
+    "relatedTerms": ["net-072", "net-056"],
+    "order": 74
+  },
+  {
+    "id": "net-075",
+    "term": "NFC",
+    "translations": {
+      "tr": {
+        "definition": "Çok kısa mesafede (birkaç santimetre) kablosuz veri aktarımı sağlayan iletişim teknolojisidir. Temassız ödeme ve veri paylaşımında kullanılır.",
+        "example": "Telefonu POS cihazına yaklaştırarak NFC ile temassız ödeme yaptık."
+      },
+      "en": {
+        "definition": "A wireless communication technology for very short-range (a few centimeters) data transfer, used in contactless payments and data sharing.",
+        "example": "We made a contactless payment via NFC by tapping the phone on the POS terminal."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "wireless"],
+    "relatedTerms": ["net-073"],
+    "order": 75
+  },
+  {
+    "id": "net-076",
+    "term": "Mesh Network",
+    "translations": {
+      "tr": {
+        "definition": "Ağdaki her düğümün diğer düğümlerle doğrudan iletişim kurabildiği, merkezi olmayan ağ topolojisidir. Tek bir noktanın arızalanması ağı çökertmez.",
+        "example": "Büyük ofis alanında mesh network kurarak her köşede kesintisiz Wi-Fi kapsama alanı sağladık."
+      },
+      "en": {
+        "definition": "A decentralized network topology where each node can communicate directly with other nodes. A single point of failure does not bring down the network.",
+        "example": "We deployed a mesh network in the large office to provide seamless Wi-Fi coverage in every corner."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "wireless"],
+    "relatedTerms": ["net-072", "net-041"],
+    "order": 76
+  },
+  {
+    "id": "net-077",
+    "term": "SSL Certificate",
+    "translations": {
+      "tr": {
+        "definition": "Bir web sitesinin kimliğini doğrulayan ve sunucu ile istemci arasındaki iletişimi şifreleyen dijital sertifikadır.",
+        "example": "Web sitemiz için Let's Encrypt'ten ücretsiz bir SSL sertifikası alarak HTTPS bağlantısını etkinleştirdik."
+      },
+      "en": {
+        "definition": "A digital certificate that authenticates a website's identity and encrypts communication between the server and client.",
+        "example": "We obtained a free SSL certificate from Let's Encrypt to enable HTTPS on our website."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-012", "net-004", "net-083"],
+    "order": 77
+  },
+  {
+    "id": "net-078",
+    "term": "Firewall Rules",
+    "translations": {
+      "tr": {
+        "definition": "Firewall üzerinde hangi ağ trafiğine izin verileceğini veya engelleneceğini belirleyen güvenlik kurallarıdır.",
+        "example": "Yeni firewall kuralı eklenerek yalnızca 443 ve 80 portlarından gelen trafik kabul edildi."
+      },
+      "en": {
+        "definition": "Security rules on a firewall that determine which network traffic is allowed or blocked.",
+        "example": "A new firewall rule was added to only accept traffic on ports 443 and 80."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-042", "net-080", "net-081"],
+    "order": 78
+  },
+  {
+    "id": "net-079",
+    "term": "DDoS",
+    "translations": {
+      "tr": {
+        "definition": "Birden fazla kaynaktan eş zamanlı olarak hedefe aşırı trafik göndererek hizmetin kullanılamaz hale getirilmesini amaçlayan saldırı türüdür.",
+        "example": "DDoS saldırısı sırasında sunuculara saniyede milyonlarca istek gönderilerek hizmet kesintisi yaşandı."
+      },
+      "en": {
+        "definition": "A type of attack that aims to make a service unavailable by overwhelming the target with excessive traffic from multiple sources simultaneously.",
+        "example": "During the DDoS attack, millions of requests per second were sent to the servers, causing a service outage."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-045", "net-042", "net-043"],
+    "order": 79
+  },
+  {
+    "id": "net-080",
+    "term": "Port Scanning",
+    "translations": {
+      "tr": {
+        "definition": "Bir hedef sistem üzerindeki açık portları ve çalışan servisleri tespit etmek için kullanılan ağ keşif tekniğidir.",
+        "example": "Güvenlik denetimi kapsamında nmap aracıyla port scanning yaparak sunucudaki açık portları tespit ettik."
+      },
+      "en": {
+        "definition": "A network reconnaissance technique used to discover open ports and running services on a target system.",
+        "example": "As part of the security audit, we performed port scanning with nmap to identify open ports on the server."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-078", "net-046", "net-027"],
+    "order": 80
+  },
+  {
+    "id": "net-081",
+    "term": "Network Segmentation",
+    "translations": {
+      "tr": {
+        "definition": "Ağı daha küçük, izole alt ağlara bölerek güvenliği artırma ve saldırı yüzeyini daraltma yöntemidir.",
+        "example": "Network segmentation uygulayarak IoT cihazlarını kritik sunucu ağından izole ettik."
+      },
+      "en": {
+        "definition": "A method of dividing a network into smaller, isolated sub-networks to improve security and reduce the attack surface.",
+        "example": "By implementing network segmentation, we isolated IoT devices from the critical server network."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-036", "net-078", "net-082"],
+    "order": 81
+  },
+  {
+    "id": "net-082",
+    "term": "Zero Trust",
+    "translations": {
+      "tr": {
+        "definition": "Hiçbir kullanıcı veya cihaza varsayılan olarak güvenilmeyen, her erişim talebinin doğrulanmasını gerektiren güvenlik modelidir.",
+        "example": "Zero trust mimarisiyle iç ağdaki kullanıcılar bile her kaynağa erişimde kimlik doğrulamasından geçiyor."
+      },
+      "en": {
+        "definition": "A security model that trusts no user or device by default and requires verification for every access request.",
+        "example": "With zero trust architecture, even internal network users must authenticate for every resource access."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-081", "net-083"],
+    "order": 82
+  },
+  {
+    "id": "net-083",
+    "term": "mTLS",
+    "translations": {
+      "tr": {
+        "definition": "Hem istemcinin hem de sunucunun dijital sertifika ile birbirini doğruladığı karşılıklı TLS kimlik doğrulama yöntemidir.",
+        "example": "Mikro servisler arası iletişimde mTLS kullanarak her iki tarafın da kimliğini karşılıklı olarak doğruluyoruz."
+      },
+      "en": {
+        "definition": "Mutual TLS authentication where both client and server verify each other's identity using digital certificates.",
+        "example": "We use mTLS for inter-microservice communication, ensuring both parties mutually verify each other's identity."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "security"],
+    "relatedTerms": ["net-012", "net-082", "net-068"],
+    "order": 83
+  },
+  {
+    "id": "net-084",
+    "term": "DNS Record",
+    "translations": {
+      "tr": {
+        "definition": "DNS veritabanında bir alan adı hakkında saklanan bilgi kaydıdır. Farklı kayıt türleri farklı amaçlara hizmet eder.",
+        "example": "Alan adımız için gerekli DNS kayıtlarını yapılandırarak web sitemizi ve e-posta servisimizi aktif hale getirdik."
+      },
+      "en": {
+        "definition": "An information entry stored in the DNS database about a domain name. Different record types serve different purposes.",
+        "example": "We configured the necessary DNS records for our domain to activate our website and email service."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "dns"],
+    "relatedTerms": ["net-085", "net-086", "net-087"],
+    "order": 84
+  },
+  {
+    "id": "net-085",
+    "term": "A Record",
+    "translations": {
+      "tr": {
+        "definition": "Bir alan adını doğrudan bir IPv4 adresine eşleyen DNS kayıt türüdür.",
+        "example": "example.com için 93.184.216.34 IP adresine işaret eden bir A kaydı oluşturduk."
+      },
+      "en": {
+        "definition": "A DNS record type that maps a domain name directly to an IPv4 address.",
+        "example": "We created an A record for example.com pointing to the IP address 93.184.216.34."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "dns"],
+    "relatedTerms": ["net-084", "net-086", "net-008"],
+    "order": 85
+  },
+  {
+    "id": "net-086",
+    "term": "CNAME",
+    "translations": {
+      "tr": {
+        "definition": "Bir alan adını başka bir alan adına yönlendiren DNS kayıt türüdür. Takma ad (alias) oluşturmak için kullanılır.",
+        "example": "www.example.com için example.com'a işaret eden bir CNAME kaydı tanımladık."
+      },
+      "en": {
+        "definition": "A DNS record type that maps one domain name to another, used to create aliases.",
+        "example": "We defined a CNAME record for www.example.com pointing to example.com."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "dns"],
+    "relatedTerms": ["net-085", "net-084"],
+    "order": 86
+  },
+  {
+    "id": "net-087",
+    "term": "MX Record",
+    "translations": {
+      "tr": {
+        "definition": "Bir alan adı için e-posta trafiğinin hangi posta sunucusuna yönlendirileceğini belirleyen DNS kayıt türüdür.",
+        "example": "MX kaydını Google Workspace sunucularına yönlendirerek kurumsal e-posta hizmetini aktif ettik."
+      },
+      "en": {
+        "definition": "A DNS record type that specifies which mail server should handle email traffic for a domain.",
+        "example": "We activated the corporate email service by pointing the MX record to Google Workspace servers."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "dns", "email"],
+    "relatedTerms": ["net-084", "net-007"],
+    "order": 87
+  },
+  {
+    "id": "net-088",
+    "term": "TTL (DNS)",
+    "translations": {
+      "tr": {
+        "definition": "Bir DNS kaydının önbellekte ne kadar süre saklanacağını saniye cinsinden belirleyen değerdir.",
+        "example": "DNS göçü öncesinde TTL değerini 300 saniyeye düşürerek değişikliklerin hızlı yayılmasını sağladık."
+      },
+      "en": {
+        "definition": "A value in seconds that determines how long a DNS record is cached by resolvers before requesting an update.",
+        "example": "Before the DNS migration, we lowered the TTL to 300 seconds to ensure changes propagated quickly."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "dns"],
+    "relatedTerms": ["net-084", "net-008"],
+    "order": 88
+  },
+  {
+    "id": "net-089",
+    "term": "Domain Registrar",
+    "translations": {
+      "tr": {
+        "definition": "İnternet alan adlarının kaydını ve yönetimini sağlayan, ICANN tarafından yetkilendirilmiş kuruluştur.",
+        "example": "Yeni projemiz için domain registrar üzerinden example.com alan adını satın aldık."
+      },
+      "en": {
+        "definition": "An organization accredited by ICANN that manages the registration and administration of internet domain names.",
+        "example": "We purchased the example.com domain name through a domain registrar for our new project."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "dns"],
+    "relatedTerms": ["net-084", "net-085"],
+    "order": 89
+  },
+  {
+    "id": "net-090",
+    "term": "Latency",
+    "translations": {
+      "tr": {
+        "definition": "Bir veri paketinin kaynaktan hedefe ulaşması için geçen süredir. Genellikle milisaniye cinsinden ölçülür.",
+        "example": "Sunucumuza olan gecikme süresi 15ms olup, kullanıcılara hızlı yanıt süresi sağlıyor."
+      },
+      "en": {
+        "definition": "The time it takes for a data packet to travel from source to destination, typically measured in milliseconds.",
+        "example": "The latency to our server is 15ms, providing fast response times for users."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "performance"],
+    "relatedTerms": ["net-091", "net-092", "net-093"],
+    "order": 90
+  },
+  {
+    "id": "net-091",
+    "term": "Bandwidth",
+    "translations": {
+      "tr": {
+        "definition": "Bir ağ bağlantısının belirli bir zaman diliminde taşıyabileceği maksimum veri miktarıdır. Genellikle Mbps veya Gbps olarak ifade edilir.",
+        "example": "Ofis internet bağlantımız 1 Gbps bant genişliğine sahip, ancak gerçek verim daha düşük olabiliyor."
+      },
+      "en": {
+        "definition": "The maximum amount of data that a network connection can transmit in a given time period, typically expressed in Mbps or Gbps.",
+        "example": "Our office internet connection has 1 Gbps bandwidth, but actual throughput can be lower."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "performance"],
+    "relatedTerms": ["net-090", "net-092", "net-094"],
+    "order": 91
+  },
+  {
+    "id": "net-092",
+    "term": "Throughput",
+    "translations": {
+      "tr": {
+        "definition": "Bir ağ bağlantısından belirli bir sürede gerçekte aktarılan veri miktarıdır. Bant genişliğinden farklı olarak gerçek performansı yansıtır.",
+        "example": "Ağ testlerinde throughput değeri 850 Mbps olarak ölçüldü, bu da 1 Gbps bant genişliğinin %85'ine denk geliyor."
+      },
+      "en": {
+        "definition": "The actual amount of data successfully transferred over a network connection in a given period. Unlike bandwidth, it reflects real-world performance.",
+        "example": "Network tests measured throughput at 850 Mbps, which is 85% of the 1 Gbps bandwidth."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "performance"],
+    "relatedTerms": ["net-091", "net-090"],
+    "order": 92
+  },
+  {
+    "id": "net-093",
+    "term": "Jitter",
+    "translations": {
+      "tr": {
+        "definition": "Ağ paketlerinin gecikme süresindeki değişkenlik veya tutarsızlıktır. Özellikle ses ve video iletiminde kaliteyi etkiler.",
+        "example": "Yüksek jitter değeri video konferansta ses ve görüntü kesintilerine neden oluyordu."
+      },
+      "en": {
+        "definition": "The variation or inconsistency in network packet delay times. Particularly affects the quality of voice and video transmission.",
+        "example": "High jitter was causing audio and video interruptions during the video conference."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "performance"],
+    "relatedTerms": ["net-090", "net-094"],
+    "order": 93
+  },
+  {
+    "id": "net-094",
+    "term": "QoS",
+    "translations": {
+      "tr": {
+        "definition": "Ağ trafiğine öncelik atayarak kritik uygulamaların performansını garanti altına alan trafik yönetim mekanizmasıdır.",
+        "example": "QoS politikaları ile VoIP trafiğine en yüksek öncelik verilerek kesintisiz ses kalitesi sağlandı."
+      },
+      "en": {
+        "definition": "A traffic management mechanism that assigns priority to network traffic to guarantee performance for critical applications.",
+        "example": "QoS policies gave highest priority to VoIP traffic, ensuring uninterrupted voice quality."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "performance"],
+    "relatedTerms": ["net-091", "net-093", "net-095"],
+    "order": 94
+  },
+  {
+    "id": "net-095",
+    "term": "TCP Window Size",
+    "translations": {
+      "tr": {
+        "definition": "Onay beklemeden gönderilebilecek maksimum veri miktarını belirleyen TCP akış kontrol parametresidir.",
+        "example": "TCP window size değerini artırarak yüksek gecikmeli bağlantılarda veri aktarım hızını iyileştirdik."
+      },
+      "en": {
+        "definition": "A TCP flow control parameter that determines the maximum amount of data that can be sent before requiring an acknowledgment.",
+        "example": "We improved data transfer speeds on high-latency connections by increasing the TCP window size."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "performance", "protocols"],
+    "relatedTerms": ["net-094", "net-092", "net-001"],
+    "order": 95
+  },
+  {
+    "id": "net-096",
+    "term": "Ping",
+    "translations": {
+      "tr": {
+        "definition": "ICMP paketleri göndererek hedef cihazın erişilebilirliğini ve yanıt süresini test eden temel ağ tanılama aracıdır.",
+        "example": "Sunucu bağlantısını kontrol etmek için ping komutu çalıştırdık ve 12ms yanıt süresi aldık."
+      },
+      "en": {
+        "definition": "A basic network diagnostic tool that tests the reachability and response time of a target device by sending ICMP packets.",
+        "example": "We ran the ping command to check server connectivity and received a 12ms response time."
+      }
+    },
+    "difficulty": 1,
+    "tags": ["networking", "monitoring"],
+    "relatedTerms": ["net-011", "net-097", "net-090"],
+    "order": 96
+  },
+  {
+    "id": "net-097",
+    "term": "Traceroute",
+    "translations": {
+      "tr": {
+        "definition": "Bir paketin kaynaktan hedefe ulaşana kadar geçtiği tüm yönlendiricileri ve her atlamadaki gecikmeyi gösteren ağ tanılama aracıdır.",
+        "example": "Traceroute çalıştırarak paketin hangi noktada gecikmeye uğradığını tespit ettik."
+      },
+      "en": {
+        "definition": "A network diagnostic tool that shows all routers a packet passes through from source to destination, along with the latency at each hop.",
+        "example": "We ran traceroute to identify at which point the packet was experiencing delay."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "monitoring"],
+    "relatedTerms": ["net-096", "net-011", "net-032"],
+    "order": 97
+  },
+  {
+    "id": "net-098",
+    "term": "Wireshark",
+    "translations": {
+      "tr": {
+        "definition": "Ağ trafiğini yakalayıp detaylı olarak analiz etmeye yarayan açık kaynaklı paket analiz aracıdır.",
+        "example": "Wireshark ile ağ trafiğini inceleyerek şüpheli bir cihazın yetkisiz veri gönderdiğini tespit ettik."
+      },
+      "en": {
+        "definition": "An open-source packet analysis tool for capturing and inspecting network traffic in detail.",
+        "example": "Using Wireshark, we analyzed network traffic and discovered a suspicious device sending unauthorized data."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "monitoring"],
+    "relatedTerms": ["net-100", "net-099"],
+    "order": 98
+  },
+  {
+    "id": "net-099",
+    "term": "NetFlow",
+    "translations": {
+      "tr": {
+        "definition": "Ağ trafiğini akış bazında izleyen ve analiz eden Cisco tarafından geliştirilen ağ protokolüdür. Trafik kalıplarını ve bant genişliği kullanımını görselleştirir.",
+        "example": "NetFlow verileri analiz edilerek en çok bant genişliği tüketen uygulamalar belirlendi."
+      },
+      "en": {
+        "definition": "A network protocol developed by Cisco that monitors and analyzes network traffic on a per-flow basis, visualizing traffic patterns and bandwidth usage.",
+        "example": "NetFlow data was analyzed to identify the applications consuming the most bandwidth."
+      }
+    },
+    "difficulty": 3,
+    "tags": ["networking", "monitoring"],
+    "relatedTerms": ["net-098", "net-015", "net-100"],
+    "order": 99
+  },
+  {
+    "id": "net-100",
+    "term": "Packet Capture",
+    "translations": {
+      "tr": {
+        "definition": "Ağ üzerinden geçen veri paketlerini yakalayıp kaydetme işlemidir. Ağ sorunlarını teşhis etmek ve güvenlik analizi yapmak için kullanılır.",
+        "example": "Ağ sorununu çözmek için tcpdump ile packet capture yaparak trafiği detaylı inceledik."
+      },
+      "en": {
+        "definition": "The process of intercepting and recording data packets traversing a network, used for diagnosing network issues and performing security analysis.",
+        "example": "We performed a packet capture with tcpdump to analyze the traffic in detail and troubleshoot the network issue."
+      }
+    },
+    "difficulty": 2,
+    "tags": ["networking", "monitoring"],
+    "relatedTerms": ["net-098", "net-099", "net-029"],
+    "order": 100
+  }
+]
