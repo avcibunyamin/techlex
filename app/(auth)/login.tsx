@@ -16,6 +16,7 @@ import {
   AtSign, User, Calendar, Check, X, CheckCircle,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { useAuth } from '@/lib/useAuth';
@@ -23,37 +24,37 @@ import { useAppStore } from '@/lib/store';
 
 // --- Validation ---
 
-function validateUsername(v: string): string | null {
-  if (!v) return 'Username is required';
-  if (v.length < 3) return 'At least 3 characters';
-  if (v.length > 20) return 'Maximum 20 characters';
-  if (!/^[a-z0-9]+$/.test(v)) return 'Only lowercase letters and numbers';
+function validateUsername(v: string, t: (key: string, opts?: any) => string): string | null {
+  if (!v) return t('auth.validation.usernameRequired');
+  if (v.length < 3) return t('auth.validation.usernameMinLength');
+  if (v.length > 20) return t('auth.validation.usernameMaxLength');
+  if (!/^[a-z0-9]+$/.test(v)) return t('auth.validation.usernamePattern');
   return null;
 }
 
-function validateName(v: string, field: string): string | null {
-  if (!v.trim()) return `${field} is required`;
-  if (v.trim().length < 2) return 'At least 2 characters';
+function validateName(v: string, fieldLabel: string, t: (key: string, opts?: any) => string): string | null {
+  if (!v.trim()) return t('auth.validation.fieldRequired', { field: fieldLabel });
+  if (v.trim().length < 2) return t('auth.validation.minLength2');
   return null;
 }
 
-function validateEmail(v: string): string | null {
-  if (!v.trim()) return 'Email is required';
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Invalid email format';
+function validateEmail(v: string, t: (key: string, opts?: any) => string): string | null {
+  if (!v.trim()) return t('auth.validation.emailRequired');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return t('auth.validation.emailInvalid');
   return null;
 }
 
-function validateDob(v: string): string | null {
-  if (!v) return 'Date of birth is required';
+function validateDob(v: string, t: (key: string, opts?: any) => string): string | null {
+  if (!v) return t('auth.validation.dobRequired');
   const match = v.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (!match) return 'Format: DD/MM/YYYY';
+  if (!match) return t('auth.validation.dobFormat');
   const [, ds, ms, ys] = match;
   const d = +ds, m = +ms, y = +ys;
   const date = new Date(y, m - 1, d);
-  if (date.getDate() !== d || date.getMonth() !== m - 1 || date.getFullYear() !== y) return 'Invalid date';
-  if (date > new Date()) return 'Cannot be in the future';
+  if (date.getDate() !== d || date.getMonth() !== m - 1 || date.getFullYear() !== y) return t('auth.validation.dobInvalid');
+  if (date > new Date()) return t('auth.validation.dobFuture');
   const age = new Date().getFullYear() - y;
-  if (age > 120 || age < 10) return 'Invalid date of birth';
+  if (age > 120 || age < 10) return t('auth.validation.dobRange');
   return null;
 }
 
@@ -76,6 +77,7 @@ function isPasswordStrong(checks: ReturnType<typeof getPasswordChecks>) {
 export default function LoginScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
+  const { t: tr } = useTranslation();
   const { signInWithEmail, signUpWithProfile, checkUsername } = useAuth();
 
   const [mode, setMode] = useState<'login' | 'signup'>('login');
@@ -102,7 +104,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     if (mode !== 'signup') return;
-    const err = validateUsername(username);
+    const err = validateUsername(username, tr);
     if (err) {
       setUsernameStatus('idle');
       return;
@@ -116,11 +118,11 @@ export default function LoginScreen() {
     return () => clearTimeout(usernameTimer.current);
   }, [username, mode]);
 
-  const usernameError = validateUsername(username);
-  const firstNameError = validateName(firstName, 'First name');
-  const lastNameError = validateName(lastName, 'Last name');
-  const dobError = validateDob(dob);
-  const emailError = validateEmail(email);
+  const usernameError = validateUsername(username, tr);
+  const firstNameError = validateName(firstName, tr('auth.firstName'), tr);
+  const lastNameError = validateName(lastName, tr('auth.lastName'), tr);
+  const dobError = validateDob(dob, tr);
+  const emailError = validateEmail(email, tr);
   const pwChecks = getPasswordChecks(password);
   const pwStrong = isPasswordStrong(pwChecks);
 
@@ -142,7 +144,7 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     setTouched({ email: true, password: true });
     if (emailError || !password) {
-      setError('Please fill in all fields');
+      setError(tr('auth.fillFields'));
       return;
     }
     setError('');
@@ -167,7 +169,7 @@ export default function LoginScreen() {
       return;
     }
     if (usernameStatus === 'taken') {
-      setError('This username is already taken');
+      setError(tr('auth.usernameTaken'));
       return;
     }
 
@@ -235,17 +237,17 @@ export default function LoginScreen() {
             <CheckCircle size={32} color={colors.success} strokeWidth={1.5} />
           </View>
           <Text style={[typography.title, { color: t.text, marginTop: spacing['2xl'], textAlign: 'center' }]}>
-            Account created
+            {tr('auth.accountCreated')}
           </Text>
           <Text style={[typography.body, { color: t.textTertiary, marginTop: spacing.md, textAlign: 'center', lineHeight: 22 }]}>
-            We sent a confirmation link to{'\n'}
+            {tr('auth.checkEmail')}{'\n'}
             <Text style={{ color: t.text, fontWeight: '600' }}>{successEmail}</Text>
           </Text>
           <Pressable
             style={[styles.submitBtn, { backgroundColor: accent, marginTop: spacing['3xl'] }]}
             onPress={switchMode}
           >
-            <Text style={[typography.headline, { color: '#fff' }]}>Back to sign in</Text>
+            <Text style={[typography.headline, { color: '#fff' }]}>{tr('auth.backToSignIn')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -270,12 +272,12 @@ export default function LoginScreen() {
           </View>
 
           <Text style={[styles.title, { color: t.text }]}>
-            {mode === 'login' ? 'Welcome back' : 'Create account'}
+            {mode === 'login' ? tr('auth.welcomeBack') : tr('auth.createAccount')}
           </Text>
           <Text style={[typography.body, { color: t.textTertiary, marginTop: spacing.sm }]}>
             {mode === 'login'
-              ? 'Sign in to sync your progress across devices.'
-              : 'Start your learning journey.'}
+              ? tr('auth.signInSubtitle')
+              : tr('auth.signUpSubtitle')}
           </Text>
 
           {/* Error banner */}
@@ -300,7 +302,7 @@ export default function LoginScreen() {
                   <AtSign size={16} color={t.textTertiary} strokeWidth={1.5} />
                   <TextInput
                     style={[typography.body, styles.input, { color: t.text }]}
-                    placeholder="username"
+                    placeholder={tr('auth.username')}
                     placeholderTextColor={t.textMuted}
                     value={username}
                     onChangeText={handleUsernameChange}
@@ -316,7 +318,7 @@ export default function LoginScreen() {
                 {fieldError(usernameError, 'username')}
                 {usernameStatus === 'taken' && (
                   <Text style={[typography.footnote, { color: colors.danger, marginTop: spacing.xs, paddingLeft: spacing.sm }]}>
-                    This username is already taken
+                    {tr('auth.usernameTaken')}
                   </Text>
                 )}
               </View>
@@ -331,7 +333,7 @@ export default function LoginScreen() {
                     <User size={16} color={t.textTertiary} strokeWidth={1.5} />
                     <TextInput
                       style={[typography.body, styles.input, { color: t.text }]}
-                      placeholder="First name"
+                      placeholder={tr('auth.firstName')}
                       placeholderTextColor={t.textMuted}
                       value={firstName}
                       onChangeText={setFirstName}
@@ -349,7 +351,7 @@ export default function LoginScreen() {
                     <User size={16} color={t.textTertiary} strokeWidth={1.5} />
                     <TextInput
                       style={[typography.body, styles.input, { color: t.text }]}
-                      placeholder="Last name"
+                      placeholder={tr('auth.lastName')}
                       placeholderTextColor={t.textMuted}
                       value={lastName}
                       onChangeText={setLastName}
@@ -370,7 +372,7 @@ export default function LoginScreen() {
                   <Calendar size={16} color={t.textTertiary} strokeWidth={1.5} />
                   <TextInput
                     style={[typography.body, styles.input, { color: t.text }]}
-                    placeholder="DD/MM/YYYY"
+                    placeholder={tr('auth.dob')}
                     placeholderTextColor={t.textMuted}
                     value={dob}
                     onChangeText={handleDobChange}
@@ -393,7 +395,7 @@ export default function LoginScreen() {
               <Mail size={16} color={t.textTertiary} strokeWidth={1.5} />
               <TextInput
                 style={[typography.body, styles.input, { color: t.text }]}
-                placeholder="Email"
+                placeholder={tr('auth.email')}
                 placeholderTextColor={t.textMuted}
                 value={email}
                 onChangeText={setEmail}
@@ -415,7 +417,7 @@ export default function LoginScreen() {
               <Lock size={16} color={t.textTertiary} strokeWidth={1.5} />
               <TextInput
                 style={[typography.body, styles.input, { color: t.text }]}
-                placeholder="Password"
+                placeholder={tr('auth.password')}
                 placeholderTextColor={t.textMuted}
                 value={password}
                 onChangeText={setPassword}
@@ -434,11 +436,11 @@ export default function LoginScreen() {
             {mode === 'signup' && password.length > 0 && (
               <View style={styles.pwChecklist}>
                 {([
-                  [pwChecks.minLength, 'At least 8 characters'],
-                  [pwChecks.hasUpper, '1 uppercase letter'],
-                  [pwChecks.hasLower, '1 lowercase letter'],
-                  [pwChecks.hasDigit, '1 number'],
-                  [pwChecks.hasSpecial, '1 special character (!@#$%^&*._-...)'],
+                  [pwChecks.minLength, tr('auth.pwMin')],
+                  [pwChecks.hasUpper, tr('auth.pwUpper')],
+                  [pwChecks.hasLower, tr('auth.pwLower')],
+                  [pwChecks.hasDigit, tr('auth.pwDigit')],
+                  [pwChecks.hasSpecial, tr('auth.pwSpecial')],
                 ] as const).map(([met, label], i) => (
                   <View key={i} style={styles.pwCheckRow}>
                     {met
@@ -465,7 +467,7 @@ export default function LoginScreen() {
                 <Lock size={16} color={t.textTertiary} strokeWidth={1.5} />
                 <TextInput
                   style={[typography.body, styles.input, { color: t.text }]}
-                  placeholder="Confirm password"
+                  placeholder={tr('auth.confirmPassword')}
                   placeholderTextColor={t.textMuted}
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
@@ -482,12 +484,12 @@ export default function LoginScreen() {
               </View>
               {touched.confirmPassword && confirmPassword !== '' && confirmPassword !== password && (
                 <Text style={[typography.footnote, { color: colors.danger, marginTop: spacing.xs, paddingLeft: spacing.sm }]}>
-                  Passwords do not match
+                  {tr('auth.pwNoMatch')}
                 </Text>
               )}
               {confirmPassword !== '' && confirmPassword === password && (
                 <Text style={[typography.footnote, { color: colors.success, marginTop: spacing.xs, paddingLeft: spacing.sm }]}>
-                  Passwords match
+                  {tr('auth.pwMatch')}
                 </Text>
               )}
             </View>
@@ -503,7 +505,7 @@ export default function LoginScreen() {
               <ActivityIndicator color="#fff" size="small" />
             ) : (
               <Text style={[typography.headline, { color: '#fff' }]}>
-                {mode === 'login' ? 'Sign in' : 'Create account'}
+                {mode === 'login' ? tr('auth.signIn') : tr('auth.createAccount')}
               </Text>
             )}
           </Pressable>
@@ -511,11 +513,11 @@ export default function LoginScreen() {
           {/* Toggle mode */}
           <View style={styles.toggleRow}>
             <Text style={[typography.callout, { color: t.textTertiary }]}>
-              {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
+              {mode === 'login' ? tr('auth.noAccount') : tr('auth.hasAccount')}
             </Text>
             <Pressable onPress={switchMode}>
               <Text style={[typography.callout, { color: accent, fontWeight: '600' }]}>
-                {mode === 'login' ? ' Sign up' : ' Sign in'}
+                {mode === 'login' ? ` ${tr('auth.signUp')}` : ` ${tr('auth.signIn')}`}
               </Text>
             </Pressable>
           </View>
@@ -524,7 +526,7 @@ export default function LoginScreen() {
         {/* Skip */}
         <Pressable style={styles.skipBtn} onPress={handleSkip}>
           <Text style={[typography.subhead, { color: t.textTertiary }]}>
-            Continue without account
+            {tr('auth.continueWithout')}
           </Text>
         </Pressable>
       </KeyboardAvoidingView>

@@ -32,7 +32,7 @@ export interface Category {
   termCount?: number;
 }
 
-export type SwipeDirection = 'left' | 'right' | 'up';
+export type SwipeDirection = 'left' | 'right';
 export type Difficulty = 1 | 2 | 3;
 export type Language = 'tr' | 'en' | 'de' | 'fr' | 'es' | 'ar' | 'ja' | 'ko' | 'ru' | 'pt';
 export type TermLanguage = 'tr' | 'en';

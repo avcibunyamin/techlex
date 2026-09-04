@@ -3,8 +3,8 @@
     "home": "Главная",
     "explore": "Обзор",
     "learn": "Учить",
-    "saved": "Сохранённые",
-    "profile": "Профиль"
+    "profile": "Профиль",
+    "quiz": "Тест"
   },
   "home": {
     "greeting_morning": "Доброе утро",
@@ -22,7 +22,11 @@
     "continueLearning": "ПРОДОЛЖИТЬ ОБУЧЕНИЕ",
     "conceptsToReview": "{{count}} терминов на повторение",
     "conceptsMastered": "{{count}} терминов освоено",
-    "noResults": "По запросу «{{query}}» ничего не найдено"
+    "noResults": "По запросу «{{query}}» ничего не найдено",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "ДНЕВНАЯ ЦЕЛЬ",
+    "dailyGoalComplete": "Цель достигнута!",
+    "energyLabel": "Энергия"
   },
   "learn": {
     "title": "Учить",
@@ -32,7 +36,8 @@
     "restart": "Начать заново",
     "swipeRight": "Знаю",
     "swipeLeft": "Учу",
-    "tapFlip": "Нажми, чтобы перевернуть"
+    "tapFlip": "Нажми, чтобы перевернуть",
+    "undo": "Отменить"
   },
   "explore": {
     "title": "Обзор",
@@ -41,11 +46,6 @@
     "search": "Поиск терминов...",
     "shuffle": "Перемешать",
     "shuffleAll": "Перемешать все"
-  },
-  "saved": {
-    "title": "Сохранённые",
-    "empty": "Пока нет сохранённых терминов",
-    "emptySub": "Свайпни вверх во время обучения, чтобы сохранить термин."
   },
   "term": {
     "definition": "ОПРЕДЕЛЕНИЕ",
@@ -96,7 +96,16 @@
     "confirmCancel": "Точно хочешь отменить подписку?",
     "confirmCancelSub": "Премиум-функции будут доступны до конца текущего расчётного периода.",
     "confirm": "Подтвердить",
-    "subscriptionResumed": "Подписка возобновлена"
+    "subscriptionResumed": "Подписка возобновлена",
+    "league": {
+      "bronze": "Бронза",
+      "silver": "Серебро",
+      "gold": "Золото",
+      "platinum": "Платина",
+      "diamond": "Бриллиант"
+    },
+    "tierFree": "Бесплатно",
+    "tierPremium": "Премиум"
   },
   "auth": {
     "welcomeBack": "С возвращением",
@@ -126,7 +135,22 @@
     "pwSpecial": "1 спецсимвол",
     "pwMatch": "Пароли совпадают",
     "pwNoMatch": "Пароли не совпадают",
-    "usernameTaken": "Это имя пользователя уже занято"
+    "usernameTaken": "Это имя пользователя уже занято",
+    "validation": {
+      "usernameRequired": "Имя пользователя обязательно",
+      "usernameMinLength": "Минимум 3 символа",
+      "usernameMaxLength": "Максимум 20 символов",
+      "usernamePattern": "Только строчные буквы и цифры",
+      "fieldRequired": "{{field}} обязательно",
+      "minLength2": "Минимум 2 символа",
+      "emailRequired": "Email обязателен",
+      "emailInvalid": "Неверный формат email",
+      "dobRequired": "Дата рождения обязательна",
+      "dobFormat": "Формат: ДД/ММ/ГГГГ",
+      "dobInvalid": "Недопустимая дата",
+      "dobFuture": "Не может быть в будущем",
+      "dobRange": "Недопустимая дата рождения"
+    }
   },
   "paywall": {
     "title": "Открой полный доступ",
@@ -175,5 +199,99 @@
     "done": "Готово",
     "close": "Закрыть",
     "loading": "Загрузка..."
+  },
+  "onboarding": {
+    "welcome": "Освой технические\nконцепции",
+    "welcomeDesc": "Расширяй технический словарный запас с помощью карточек. От кибербезопасности до разработки ПО.",
+    "howItWorks": "Свайпай и учись",
+    "howItWorksDesc": "Простой и эффективный цикл обучения с интервальным повторением.",
+    "swipeRight": "Свайп вправо",
+    "swipeRightDesc": "Знаю этот концепт",
+    "swipeLeft": "Свайп влево",
+    "swipeLeftDesc": "Ещё учу",
+    "tapFlip": "Нажми на карточку",
+    "tapFlipDesc": "Переверни для определения",
+    "nameTitle": "Как тебя зовут?",
+    "nameSubtitle": "Как к тебе обращаться? (Необязательно)",
+    "namePlaceholder": "Введи своё имя",
+    "themeTitle": "Выбери тему",
+    "themeSubtitle": "Можно изменить в настройках в любое время.",
+    "themeLight": "Светлая",
+    "themeDark": "Тёмная",
+    "themeSystem": "Системная",
+    "interestsTitle": "Что тебе интересно?",
+    "interestsSubtitle": "Выбери одну или несколько областей. Можно изменить позже.",
+    "subcategories": "{{count}} подкатегорий",
+    "paceTitle": "Задай свой темп",
+    "paceSubtitle": "Сколько концепций ты хочешь изучать в день? Начни с малого.",
+    "goalCasual": "Лёгкий",
+    "goalRegular": "Обычный",
+    "goalSerious": "Серьёзный",
+    "goalIntense": "Интенсивный",
+    "conceptsPerDay": "{{count}} концепций / день",
+    "continue": "Далее",
+    "skip": "Пропустить",
+    "startLearning": "Начать обучение"
+  },
+  "categories": {
+    "cybersecurity": "Кибербезопасность",
+    "software-dev": "Разработка ПО",
+    "ai-ml": "ИИ и машинное обучение",
+    "networking": "Сети",
+    "design-ux": "Дизайн и UX",
+    "cybersecurity-general": "Общие термины",
+    "blue-team": "Синяя команда (Защита)",
+    "siem-log-analysis": "SIEM и анализ логов",
+    "incident-response": "Реагирование на инциденты",
+    "threat-intelligence": "Анализ угроз",
+    "red-team": "Красная команда (Атака)",
+    "reconnaissance": "Разведка",
+    "exploitation": "Эксплуатация",
+    "social-engineering": "Социальная инженерия",
+    "cryptography": "Криптография",
+    "malware": "Анализ вредоносного ПО",
+    "owasp-web-security": "OWASP и веб-безопасность",
+    "web-frontend": "Веб-фронтенд",
+    "web-backend": "Веб-бэкенд",
+    "database": "Базы данных и SQL",
+    "devops": "DevOps и CI/CD",
+    "git-version-control": "Git и контроль версий",
+    "testing": "Тестирование и QA",
+    "machine-learning": "Машинное обучение",
+    "deep-learning": "Глубокое обучение",
+    "llm-nlp": "LLM и NLP",
+    "computer-vision": "Компьютерное зрение",
+    "big-data": "Большие данные",
+    "protocols": "Протоколы",
+    "network-fundamentals": "Основы сетей",
+    "network-devices": "Сетевые устройства",
+    "cloud-computing": "Облачные вычисления",
+    "containers": "Контейнеры и оркестрация",
+    "wireless": "Беспроводные сети",
+    "ux-fundamentals": "Основы UX",
+    "ux-research": "UX-исследования",
+    "ui-design": "UI-дизайн",
+    "figma": "Figma",
+    "typography": "Типографика",
+    "design-systems": "Дизайн-системы",
+    "project-management": "Управление проектами"
+  },
+  "quiz": {
+    "title": "Тест",
+    "start": "Начать тест",
+    "empty": "Ещё нет изученных терминов",
+    "emptySub": "Сначала выучите несколько терминов.",
+    "termsReady": "терминов готово",
+    "true": "Верно",
+    "false": "Неверно",
+    "correct": "Верно!",
+    "wrong": "Неверно!",
+    "definitionFrom": "Это определение принадлежит: {{term}}",
+    "results": "Результаты",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "Ещё раз",
+    "perfect": "Идеально!",
+    "great": "Отлично!",
+    "tryAgain": "Продолжайте практику!"
   }
 }

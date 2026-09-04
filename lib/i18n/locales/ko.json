@@ -3,8 +3,8 @@
     "home": "홈",
     "explore": "탐색",
     "learn": "학습",
-    "saved": "저장됨",
-    "profile": "프로필"
+    "profile": "프로필",
+    "quiz": "테스트"
   },
   "home": {
     "greeting_morning": "좋은 아침",
@@ -22,7 +22,11 @@
     "continueLearning": "학습 계속하기",
     "conceptsToReview": "{{count}}개 복습 필요",
     "conceptsMastered": "{{count}}개 습득 완료",
-    "noResults": "\"{{query}}\"에 대한 결과가 없습니다"
+    "noResults": "\"{{query}}\"에 대한 결과가 없습니다",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "일일 목표",
+    "dailyGoalComplete": "목표 달성!",
+    "energyLabel": "에너지"
   },
   "learn": {
     "title": "학습",
@@ -32,7 +36,8 @@
     "restart": "다시 시작",
     "swipeRight": "알고 있음",
     "swipeLeft": "학습 중",
-    "tapFlip": "탭해서 뒤집기"
+    "tapFlip": "탭해서 뒤집기",
+    "undo": "실행 취소"
   },
   "explore": {
     "title": "탐색",
@@ -41,11 +46,6 @@
     "search": "개념 검색...",
     "shuffle": "섞기",
     "shuffleAll": "전체 섞기"
-  },
-  "saved": {
-    "title": "저장됨",
-    "empty": "아직 저장된 개념이 없어요",
-    "emptySub": "학습 중에 위로 스와이프하면 여기에 저장됩니다."
   },
   "term": {
     "definition": "정의",
@@ -96,7 +96,16 @@
     "confirmCancel": "정말 구독을 해지하시겠어요?",
     "confirmCancelSub": "프리미엄 기능은 현재 결제 기간이 끝날 때까지 이용할 수 있습니다.",
     "confirm": "확인",
-    "subscriptionResumed": "구독이 재개되었습니다"
+    "subscriptionResumed": "구독이 재개되었습니다",
+    "league": {
+      "bronze": "브론즈",
+      "silver": "실버",
+      "gold": "골드",
+      "platinum": "플래티넘",
+      "diamond": "다이아몬드"
+    },
+    "tierFree": "무료",
+    "tierPremium": "프리미엄"
   },
   "auth": {
     "welcomeBack": "다시 오셨군요",
@@ -126,7 +135,22 @@
     "pwSpecial": "특수문자 1개",
     "pwMatch": "비밀번호가 일치합니다",
     "pwNoMatch": "비밀번호가 일치하지 않습니다",
-    "usernameTaken": "이미 사용 중인 사용자 이름입니다"
+    "usernameTaken": "이미 사용 중인 사용자 이름입니다",
+    "validation": {
+      "usernameRequired": "사용자 이름이 필요합니다",
+      "usernameMinLength": "최소 3자",
+      "usernameMaxLength": "최대 20자",
+      "usernamePattern": "소문자와 숫자만 가능",
+      "fieldRequired": "{{field}}은(는) 필수입니다",
+      "minLength2": "최소 2자",
+      "emailRequired": "이메일이 필요합니다",
+      "emailInvalid": "잘못된 이메일 형식",
+      "dobRequired": "생년월일이 필요합니다",
+      "dobFormat": "형식: DD/MM/YYYY",
+      "dobInvalid": "잘못된 날짜",
+      "dobFuture": "미래 날짜는 사용할 수 없습니다",
+      "dobRange": "잘못된 생년월일"
+    }
   },
   "paywall": {
     "title": "전체 액세스 잠금 해제",
@@ -175,5 +199,99 @@
     "done": "완료",
     "close": "닫기",
     "loading": "로딩 중..."
+  },
+  "onboarding": {
+    "welcome": "기술 개념을\n마스터하세요",
+    "welcomeDesc": "플래시카드로 기술 용어를 배우세요. 사이버 보안부터 소프트웨어 개발까지.",
+    "howItWorks": "스와이프로 학습",
+    "howItWorksDesc": "간격 반복으로 구동되는 간단하고 효과적인 학습 루프.",
+    "swipeRight": "오른쪽으로 스와이프",
+    "swipeRightDesc": "이 개념을 알고 있어요",
+    "swipeLeft": "왼쪽으로 스와이프",
+    "swipeLeftDesc": "아직 학습 중",
+    "tapFlip": "카드 탭",
+    "tapFlipDesc": "뒤집어서 정의 보기",
+    "nameTitle": "이름이 뭐예요?",
+    "nameSubtitle": "어떻게 불러드릴까요? (선택사항)",
+    "namePlaceholder": "이름을 입력하세요",
+    "themeTitle": "테마를 선택하세요",
+    "themeSubtitle": "설정에서 언제든지 변경할 수 있어요.",
+    "themeLight": "라이트",
+    "themeDark": "다크",
+    "themeSystem": "시스템",
+    "interestsTitle": "무엇에 관심이 있나요?",
+    "interestsSubtitle": "하나 이상의 분야를 선택하세요. 나중에 변경할 수 있어요.",
+    "subcategories": "하위 카테고리 {{count}}개",
+    "paceTitle": "학습 속도 설정",
+    "paceSubtitle": "하루에 몇 개의 개념을 배우고 싶나요? 작게 시작하세요.",
+    "goalCasual": "가벼운",
+    "goalRegular": "보통",
+    "goalSerious": "진지한",
+    "goalIntense": "집중적",
+    "conceptsPerDay": "하루 {{count}}개 개념",
+    "continue": "계속",
+    "skip": "건너뛰기",
+    "startLearning": "학습 시작"
+  },
+  "categories": {
+    "cybersecurity": "사이버 보안",
+    "software-dev": "소프트웨어 개발",
+    "ai-ml": "AI & 머신러닝",
+    "networking": "네트워킹",
+    "design-ux": "디자인 & UX",
+    "cybersecurity-general": "일반 용어",
+    "blue-team": "블루팀 (방어)",
+    "siem-log-analysis": "SIEM & 로그 분석",
+    "incident-response": "인시던트 대응",
+    "threat-intelligence": "위협 인텔리전스",
+    "red-team": "레드팀 (공격)",
+    "reconnaissance": "정찰",
+    "exploitation": "익스플로잇",
+    "social-engineering": "소셜 엔지니어링",
+    "cryptography": "암호학",
+    "malware": "멀웨어 분석",
+    "owasp-web-security": "OWASP & 웹 보안",
+    "web-frontend": "웹 프론트엔드",
+    "web-backend": "웹 백엔드",
+    "database": "데이터베이스 & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git & 버전 관리",
+    "testing": "테스트 & QA",
+    "machine-learning": "머신러닝",
+    "deep-learning": "딥러닝",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "컴퓨터 비전",
+    "big-data": "빅데이터",
+    "protocols": "프로토콜",
+    "network-fundamentals": "네트워크 기초",
+    "network-devices": "네트워크 장비",
+    "cloud-computing": "클라우드 컴퓨팅",
+    "containers": "컨테이너 & 오케스트레이션",
+    "wireless": "무선 네트워크",
+    "ux-fundamentals": "UX 기초",
+    "ux-research": "UX 리서치",
+    "ui-design": "UI 디자인",
+    "figma": "Figma",
+    "typography": "타이포그래피",
+    "design-systems": "디자인 시스템",
+    "project-management": "프로젝트 관리"
+  },
+  "quiz": {
+    "title": "테스트",
+    "start": "퀴즈 시작",
+    "empty": "아직 학습한 용어가 없습니다",
+    "emptySub": "먼저 용어를 학습해 주세요.",
+    "termsReady": "개 용어 준비됨",
+    "true": "맞음",
+    "false": "틀림",
+    "correct": "정답!",
+    "wrong": "오답!",
+    "definitionFrom": "이 정의는 다음 용어에 해당합니다: {{term}}",
+    "results": "결과",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "다시 하기",
+    "perfect": "완벽!",
+    "great": "잘했어요!",
+    "tryAgain": "더 연습하세요!"
   }
 }

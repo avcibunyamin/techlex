@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { StyleSheet, View, Text, Pressable, AppState, AppStateStatus } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Settings2, Zap, Infinity } from 'lucide-react-native';
+import { Settings2, Zap, Infinity, Flame } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
@@ -13,9 +13,10 @@ export default function LearnScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const { language, getTermsForReview, selectedTags, todayCount, energyLevel, hasActivePremium, progress, flushSwipeQueue } = useAppStore();
+  const { language, getTermsForReview, selectedTags, todayCount, energyLevel, hasActivePremium, flushSwipeQueue, streak, xp } = useAppStore();
 
-  const terms = useMemo(() => getTermsForReview(), [selectedTags, progress]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const terms = useMemo(() => getTermsForReview(), [selectedTags]);
   const isPremium = hasActivePremium();
 
   useEffect(() => {
@@ -40,6 +41,15 @@ export default function LearnScreen() {
         </View>
 
         <View style={styles.headerRight}>
+          {streak > 0 && (
+            <View style={[styles.energyChip, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+              <Flame size={14} color={colors.warning} strokeWidth={1.8} />
+              <Text style={[typography.subhead, { color: colors.warning, fontWeight: '600' }]}>
+                {streak}
+              </Text>
+            </View>
+          )}
+
           <View style={[styles.energyChip, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
             {isPremium
               ? <Infinity size={14} color={accent} strokeWidth={1.8} />

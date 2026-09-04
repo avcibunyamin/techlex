@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Platform } from 'react-native';
-import { Home, Compass, BookOpen, Bookmark, User } from 'lucide-react-native';
+import { Home, Compass, BookOpen, Target, User } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/lib/useTheme';
 import { colors } from '@/constants/theme';
@@ -51,10 +51,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="saved"
+        name="quiz"
         options={{
-          title: tr('tabs.saved'),
-          tabBarIcon: ({ color }) => <Bookmark size={20} color={color} strokeWidth={1.8} />,
+          title: tr('tabs.quiz'),
+          tabBarIcon: ({ color }) => <Target size={20} color={color} strokeWidth={1.8} />,
         }}
       />
       <Tabs.Screen

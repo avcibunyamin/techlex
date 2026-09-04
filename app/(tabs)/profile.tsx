@@ -28,19 +28,19 @@ export default function ProfileScreen() {
   const { t: tr, i18n } = useTranslation();
   const { user, signOut } = useAuth();
   const {
-    streak, language, setLanguage, progress, terms,
+    streak, longestStreak, language, setLanguage, progress, terms,
     dailyGoal, todayCount, syncToCloud,
     setThemeMode, subscriptionTier, energyLevel,
-    totalSwipes, getLevel, hasActivePremium,
+    totalSwipes, xp, earnedBadges, getLevel, getLeague, hasActivePremium,
     cancelAtPeriodEnd, currentPeriodEnd, setCancelAtPeriodEnd,
   } = useAppStore();
 
   const progressValues = Object.values(progress);
   const stats = getStats(progressValues);
   const isPremium = hasActivePremium();
-  const level = getLevel();
-  const nextLevelSwipes = level * 100;
-  const levelProgress = (totalSwipes % 100) / 100;
+  const levelInfo = getLevel();
+  const league = getLeague();
+  const levelProgress = levelInfo.currentXp / levelInfo.nextLevelXp;
 
   const localeMap: Record<string, string> = {
     tr: 'tr-TR', en: 'en-US', de: 'de-DE', fr: 'fr-FR',
@@ -58,6 +58,7 @@ export default function ProfileScreen() {
   const [usernameStatus, setUsernameStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
   const [usernameLoading, setUsernameLoading] = useState(false);
   const [usernameMsg, setUsernameMsg] = useState('');
+  const [usernameSuccess, setUsernameSuccess] = useState(false);
   const [cooldownDays, setCooldownDays] = useState<number | null>(null);
   const usernameTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [cancelLoading, setCancelLoading] = useState(false);
@@ -85,15 +86,18 @@ export default function ProfileScreen() {
 
     if (error) {
       setUsernameMsg(error.message);
+      setUsernameSuccess(false);
       return;
     }
     const result = data as { success: boolean; error?: string; days_left?: number };
     if (!result.success) {
       if (result.days_left) setCooldownDays(result.days_left);
       setUsernameMsg(result.error || 'Error');
+      setUsernameSuccess(false);
       return;
     }
     setUsernameMsg(tr('profile.usernameChanged'));
+    setUsernameSuccess(true);
     setShowUsernameEdit(false);
     setNewUsername('');
   };
@@ -187,24 +191,27 @@ export default function ProfileScreen() {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
         <Text style={[typography.largeTitle, { color: t.text }]}>{tr('profile.title')}</Text>
 
-        {/* Level */}
+        {/* Level + XP */}
         <View style={[styles.levelCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
           <View style={styles.levelHeader}>
-            <View style={[styles.levelBadge, { backgroundColor: accent + '20' }]}>
-              <Award size={20} color={accent} strokeWidth={1.8} />
+            <View style={[styles.levelBadge, { backgroundColor: league.color + '20' }]}>
+              <Award size={20} color={league.color} strokeWidth={1.8} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={[typography.headline, { color: t.text }]}>
-                {tr('profile.level')} {level}
+                {tr('profile.level')} {levelInfo.level}
               </Text>
               <Text style={[typography.footnote, { color: t.textTertiary }]}>
-                {totalSwipes} / {nextLevelSwipes} {tr('profile.totalSwipes').toLowerCase()}
+                {xp.toLocaleString()} XP  ·  {tr('profile.league.' + league.id)}
               </Text>
             </View>
           </View>
           <View style={[styles.levelBar, { backgroundColor: t.bgSubtle }]}>
-            <View style={[styles.levelBarFill, { backgroundColor: accent, width: `${levelProgress * 100}%` }]} />
+            <View style={[styles.levelBarFill, { backgroundColor: league.color, width: `${levelProgress * 100}%` }]} />
           </View>
+          <Text style={[typography.footnote, { color: t.textMuted, marginTop: spacing.sm, textAlign: 'right' }]}>
+            {levelInfo.currentXp} / {levelInfo.nextLevelXp} XP
+          </Text>
         </View>
 
         {/* Stats Grid */}
@@ -264,7 +271,7 @@ export default function ProfileScreen() {
             <View style={[styles.catDot, { backgroundColor: cat.color }]} />
             <View style={{ flex: 1 }}>
               <View style={styles.catHeader}>
-                <Text style={[typography.subhead, { color: t.text }]}>{cat.name[getTermLanguage(language)]}</Text>
+                <Text style={[typography.subhead, { color: t.text }]}>{tr('categories.' + cat.id)}</Text>
                 <Text style={[typography.footnote, { color: t.textTertiary }]}>
                   {cat.mastered} / {cat.total}
                 </Text>
@@ -295,9 +302,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.settingValue}>
               <Text style={[typography.subhead, { color: isPremium ? accent : t.textSecondary, fontWeight: isPremium ? '600' : '500' }]}>
-                {subscriptionTier !== 'free'
-                  ? subscriptionTier.charAt(0).toUpperCase() + subscriptionTier.slice(1)
-                  : 'Free'}
+                {subscriptionTier === 'free' ? tr('profile.tierFree') : tr('profile.tierPremium')}
               </Text>
               <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
             </View>
@@ -397,8 +402,7 @@ export default function ProfileScreen() {
                   </View>
                   {usernameMsg ? (
                     <Text style={[typography.footnote, {
-                      color: usernameMsg.includes('updated') || usernameMsg.includes('güncellendi')
-                        ? colors.success : colors.danger,
+                      color: usernameSuccess ? colors.success : colors.danger,
                       marginTop: spacing.xs,
                     }]}>
                       {usernameMsg}

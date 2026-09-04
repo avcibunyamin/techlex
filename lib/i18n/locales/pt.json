@@ -3,8 +3,8 @@
     "home": "Início",
     "explore": "Explorar",
     "learn": "Aprender",
-    "saved": "Salvos",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "quiz": "Teste"
   },
   "home": {
     "greeting_morning": "Bom dia",
@@ -22,7 +22,11 @@
     "continueLearning": "CONTINUAR APRENDENDO",
     "conceptsToReview": "{{count}} conceitos para revisar",
     "conceptsMastered": "{{count}} conceitos dominados",
-    "noResults": "Nenhum conceito encontrado para \"{{query}}\""
+    "noResults": "Nenhum conceito encontrado para \"{{query}}\"",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "META DIARIA",
+    "dailyGoalComplete": "Meta concluida!",
+    "energyLabel": "Energia"
   },
   "learn": {
     "title": "Aprender",
@@ -32,7 +36,8 @@
     "restart": "Recomeçar",
     "swipeRight": "Sei",
     "swipeLeft": "Aprendendo",
-    "tapFlip": "Toque para virar"
+    "tapFlip": "Toque para virar",
+    "undo": "Desfazer"
   },
   "explore": {
     "title": "Explorar",
@@ -41,11 +46,6 @@
     "search": "Buscar conceitos...",
     "shuffle": "Embaralhar",
     "shuffleAll": "Embaralhar tudo"
-  },
-  "saved": {
-    "title": "Salvos",
-    "empty": "Nenhum conceito salvo ainda",
-    "emptySub": "Deslize para cima em um conceito durante o aprendizado para salvá-lo aqui."
   },
   "term": {
     "definition": "DEFINIÇÃO",
@@ -96,7 +96,16 @@
     "confirmCancel": "Tem certeza de que deseja cancelar sua assinatura?",
     "confirmCancelSub": "Seus recursos Premium continuarão ativos até o final do período de cobrança atual.",
     "confirm": "Confirmar",
-    "subscriptionResumed": "Sua assinatura foi retomada"
+    "subscriptionResumed": "Sua assinatura foi retomada",
+    "league": {
+      "bronze": "Bronze",
+      "silver": "Prata",
+      "gold": "Ouro",
+      "platinum": "Platina",
+      "diamond": "Diamante"
+    },
+    "tierFree": "Gratis",
+    "tierPremium": "Premium"
   },
   "auth": {
     "welcomeBack": "Bem-vindo de volta",
@@ -126,7 +135,22 @@
     "pwSpecial": "1 caractere especial",
     "pwMatch": "As senhas coincidem",
     "pwNoMatch": "As senhas não coincidem",
-    "usernameTaken": "Este nome de usuário já está em uso"
+    "usernameTaken": "Este nome de usuário já está em uso",
+    "validation": {
+      "usernameRequired": "Nome de usuario obrigatorio",
+      "usernameMinLength": "Pelo menos 3 caracteres",
+      "usernameMaxLength": "Maximo 20 caracteres",
+      "usernamePattern": "Apenas letras minusculas e numeros",
+      "fieldRequired": "{{field}} e obrigatorio",
+      "minLength2": "Pelo menos 2 caracteres",
+      "emailRequired": "E-mail obrigatorio",
+      "emailInvalid": "Formato de e-mail invalido",
+      "dobRequired": "Data de nascimento obrigatoria",
+      "dobFormat": "Formato: DD/MM/AAAA",
+      "dobInvalid": "Data invalida",
+      "dobFuture": "Nao pode ser no futuro",
+      "dobRange": "Data de nascimento invalida"
+    }
   },
   "paywall": {
     "title": "Desbloquear acesso completo",
@@ -175,5 +199,99 @@
     "done": "Concluído",
     "close": "Fechar",
     "loading": "Carregando..."
+  },
+  "onboarding": {
+    "welcome": "Domine os conceitos\ntecnologicos",
+    "welcomeDesc": "Amplie seu vocabulario tecnico com flashcards. De ciberseguranca a desenvolvimento de software.",
+    "howItWorks": "Deslize para aprender",
+    "howItWorksDesc": "Um ciclo de aprendizado simples e eficaz com repeticao espacada.",
+    "swipeRight": "Deslize para a direita",
+    "swipeRightDesc": "Conheco este conceito",
+    "swipeLeft": "Deslize para a esquerda",
+    "swipeLeftDesc": "Ainda aprendendo",
+    "tapFlip": "Toque no cartao",
+    "tapFlipDesc": "Vire para ver a definicao",
+    "nameTitle": "Qual e o seu nome?",
+    "nameSubtitle": "Como devemos chama-lo? (Opcional)",
+    "namePlaceholder": "Digite seu nome",
+    "themeTitle": "Escolha seu tema",
+    "themeSubtitle": "Voce pode mudar a qualquer momento nas configuracoes.",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "themeSystem": "Sistema",
+    "interestsTitle": "O que te interessa?",
+    "interestsSubtitle": "Escolha uma ou mais areas. Voce pode mudar depois.",
+    "subcategories": "{{count}} subcategorias",
+    "paceTitle": "Defina seu ritmo",
+    "paceSubtitle": "Quantos conceitos quer aprender por dia? Comece devagar.",
+    "goalCasual": "Casual",
+    "goalRegular": "Regular",
+    "goalSerious": "Serio",
+    "goalIntense": "Intenso",
+    "conceptsPerDay": "{{count}} conceitos / dia",
+    "continue": "Continuar",
+    "skip": "Pular",
+    "startLearning": "Comecar"
+  },
+  "categories": {
+    "cybersecurity": "Ciberseguranca",
+    "software-dev": "Desenvolvimento de software",
+    "ai-ml": "IA & Machine Learning",
+    "networking": "Redes",
+    "design-ux": "Design & UX",
+    "cybersecurity-general": "Termos gerais",
+    "blue-team": "Blue Team (Defesa)",
+    "siem-log-analysis": "SIEM & Analise de logs",
+    "incident-response": "Resposta a incidentes",
+    "threat-intelligence": "Inteligencia de ameacas",
+    "red-team": "Red Team (Ofensiva)",
+    "reconnaissance": "Reconhecimento",
+    "exploitation": "Exploracao",
+    "social-engineering": "Engenharia social",
+    "cryptography": "Criptografia",
+    "malware": "Analise de malware",
+    "owasp-web-security": "OWASP & Seguranca web",
+    "web-frontend": "Frontend Web",
+    "web-backend": "Backend Web",
+    "database": "Banco de dados & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git & Controle de versao",
+    "testing": "Testes & QA",
+    "machine-learning": "Machine Learning",
+    "deep-learning": "Deep Learning",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "Visao computacional",
+    "big-data": "Big Data",
+    "protocols": "Protocolos",
+    "network-fundamentals": "Fundamentos de redes",
+    "network-devices": "Dispositivos de rede",
+    "cloud-computing": "Computacao em nuvem",
+    "containers": "Conteineres & Orquestracao",
+    "wireless": "Redes sem fio",
+    "ux-fundamentals": "Fundamentos de UX",
+    "ux-research": "Pesquisa UX",
+    "ui-design": "Design UI",
+    "figma": "Figma",
+    "typography": "Tipografia",
+    "design-systems": "Sistemas de design",
+    "project-management": "Gestao de projetos"
+  },
+  "quiz": {
+    "title": "Teste",
+    "start": "Iniciar quiz",
+    "empty": "Nenhum conceito aprendido ainda",
+    "emptySub": "Comece aprendendo conceitos primeiro.",
+    "termsReady": "termos prontos",
+    "true": "Verdadeiro",
+    "false": "Falso",
+    "correct": "Correto!",
+    "wrong": "Errado!",
+    "definitionFrom": "Esta definição pertence a: {{term}}",
+    "results": "Resultados",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "Tentar novamente",
+    "perfect": "Perfeito!",
+    "great": "Ótimo trabalho!",
+    "tryAgain": "Continue praticando!"
   }
 }

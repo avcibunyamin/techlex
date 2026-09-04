@@ -3,8 +3,8 @@
     "home": "Home",
     "explore": "Explore",
     "learn": "Learn",
-    "saved": "Saved",
-    "profile": "Profile"
+    "profile": "Profile",
+    "quiz": "Test"
   },
   "home": {
     "greeting_morning": "Good morning",
@@ -19,6 +19,10 @@
     "learning": "Learning",
     "streak": "{{count}} day streak",
     "today": "{{done}}/{{goal}} today",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "DAILY GOAL",
+    "dailyGoalComplete": "Goal complete!",
+    "energyLabel": "Energy",
     "continueLearning": "CONTINUE LEARNING",
     "conceptsToReview": "{{count}} concepts to review",
     "conceptsMastered": "{{count}} concepts mastered",
@@ -33,7 +37,7 @@
     "swipeRight": "Known",
     "swipeLeft": "Learning",
     "tapFlip": "Tap to flip",
-    "swipeSave": "Save"
+    "undo": "Undo"
   },
   "explore": {
     "title": "Explore",
@@ -42,11 +46,6 @@
     "search": "Search concepts...",
     "shuffle": "Shuffle",
     "shuffleAll": "Shuffle all"
-  },
-  "saved": {
-    "title": "Saved",
-    "empty": "No saved concepts yet",
-    "emptySub": "Swipe up on concepts while learning to save them here."
   },
   "term": {
     "definition": "DEFINITION",
@@ -97,7 +96,16 @@
     "confirmCancel": "Are you sure you want to cancel your subscription?",
     "confirmCancelSub": "Your premium features will continue until the end of the current billing period.",
     "confirm": "Confirm",
-    "subscriptionResumed": "Your subscription has been resumed"
+    "subscriptionResumed": "Your subscription has been resumed",
+    "league": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum",
+      "diamond": "Diamond"
+    },
+    "tierFree": "Free",
+    "tierPremium": "Premium"
   },
   "auth": {
     "welcomeBack": "Welcome back",
@@ -127,7 +135,22 @@
     "pwSpecial": "1 special character",
     "pwMatch": "Passwords match",
     "pwNoMatch": "Passwords do not match",
-    "usernameTaken": "This username is already taken"
+    "usernameTaken": "This username is already taken",
+    "validation": {
+      "usernameRequired": "Username is required",
+      "usernameMinLength": "At least 3 characters",
+      "usernameMaxLength": "Maximum 20 characters",
+      "usernamePattern": "Only lowercase letters and numbers",
+      "fieldRequired": "{{field}} is required",
+      "minLength2": "At least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email format",
+      "dobRequired": "Date of birth is required",
+      "dobFormat": "Format: DD/MM/YYYY",
+      "dobInvalid": "Invalid date",
+      "dobFuture": "Cannot be in the future",
+      "dobRange": "Invalid date of birth"
+    }
   },
   "paywall": {
     "title": "Unlock Full Access",
@@ -170,11 +193,105 @@
     "maybeLater": "Maybe later",
     "connectionError": "Connection error. Please try again."
   },
+  "onboarding": {
+    "welcome": "Master technology\nconcepts",
+    "welcomeDesc": "Build your technical vocabulary with bite-sized flashcards. From cybersecurity to software development, learn the terms that matter.",
+    "howItWorks": "Swipe to learn",
+    "howItWorksDesc": "A simple, effective learning loop powered by spaced repetition.",
+    "swipeRight": "Swipe right",
+    "swipeRightDesc": "I know this concept",
+    "swipeLeft": "Swipe left",
+    "swipeLeftDesc": "Still learning",
+    "tapFlip": "Tap card",
+    "tapFlipDesc": "Flip to see definition",
+    "nameTitle": "What's your name?",
+    "nameSubtitle": "How should we address you? (Optional)",
+    "namePlaceholder": "Enter your name",
+    "themeTitle": "Choose your theme",
+    "themeSubtitle": "You can change this anytime in settings.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "interestsTitle": "What interests you?",
+    "interestsSubtitle": "Choose one or more areas. You can always change this later.",
+    "subcategories": "{{count}} subcategories",
+    "paceTitle": "Set your pace",
+    "paceSubtitle": "How many concepts do you want to learn each day? Start small and build up.",
+    "goalCasual": "Casual",
+    "goalRegular": "Regular",
+    "goalSerious": "Serious",
+    "goalIntense": "Intense",
+    "conceptsPerDay": "{{count}} concepts / day",
+    "continue": "Continue",
+    "skip": "Skip",
+    "startLearning": "Start learning"
+  },
   "common": {
     "cancel": "Cancel",
     "save": "Save",
     "done": "Done",
     "close": "Close",
     "loading": "Loading..."
+  },
+  "categories": {
+    "cybersecurity": "Cybersecurity",
+    "software-dev": "Software Development",
+    "ai-ml": "AI & Machine Learning",
+    "networking": "Networking",
+    "design-ux": "Design & UX",
+    "cybersecurity-general": "General Terms",
+    "blue-team": "Blue Team (Defense)",
+    "siem-log-analysis": "SIEM & Log Analysis",
+    "incident-response": "Incident Response",
+    "threat-intelligence": "Threat Intelligence",
+    "red-team": "Red Team (Offense)",
+    "reconnaissance": "Reconnaissance",
+    "exploitation": "Exploitation",
+    "social-engineering": "Social Engineering",
+    "cryptography": "Cryptography",
+    "malware": "Malware Analysis",
+    "owasp-web-security": "OWASP & Web Security",
+    "web-frontend": "Web Frontend",
+    "web-backend": "Web Backend",
+    "database": "Database & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git & Version Control",
+    "testing": "Testing & QA",
+    "machine-learning": "Machine Learning",
+    "deep-learning": "Deep Learning",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "Computer Vision",
+    "big-data": "Big Data",
+    "protocols": "Protocols",
+    "network-fundamentals": "Network Fundamentals",
+    "network-devices": "Network Devices",
+    "cloud-computing": "Cloud Computing",
+    "containers": "Containers & Orchestration",
+    "wireless": "Wireless Networks",
+    "ux-fundamentals": "UX Fundamentals",
+    "ux-research": "UX Research",
+    "ui-design": "UI Design",
+    "figma": "Figma",
+    "typography": "Typography",
+    "design-systems": "Design Systems",
+    "project-management": "Project Management"
+  },
+  "quiz": {
+    "title": "Test",
+    "start": "Start Quiz",
+    "empty": "No learned concepts yet",
+    "emptySub": "Start learning concepts first.",
+    "termsReady": "terms ready",
+    "true": "True",
+    "false": "False",
+    "correct": "Correct!",
+    "wrong": "Wrong!",
+    "definitionFrom": "This definition belongs to: {{term}}",
+    "results": "Results",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "Try Again",
+    "perfect": "Perfect!",
+    "great": "Great job!",
+    "tryAgain": "Keep practicing!"
   }
 }

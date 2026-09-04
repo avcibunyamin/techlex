@@ -11,7 +11,6 @@ import Animated, {
   SharedValue,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { Bookmark, BookmarkCheck } from 'lucide-react-native';
 import { Term, Language, getTermLanguage } from '@/types';
 import { colors as palette, spacing, radius, typography } from '@/constants/theme';
 import { useTheme } from '@/lib/useTheme';
@@ -25,7 +24,7 @@ const VELOCITY_THRESHOLD = 800;
 const CARD_WIDTH = SCREEN_WIDTH - 48;
 
 export interface SwipeCardRef {
-  triggerSwipe: (direction: 'right' | 'left' | 'up') => void;
+  triggerSwipe: (direction: 'right' | 'left') => void;
 }
 
 interface SwipeCardProps {
@@ -33,10 +32,8 @@ interface SwipeCardProps {
   language: Language;
   onSwipeRight: () => void;
   onSwipeLeft: () => void;
-  onSwipeUp: () => void;
   onSwipeBlocked?: () => void;
   canSwipe?: boolean;
-  isSaved?: boolean;
   onRelatedTermPress?: (term: string) => void;
   stackIndex: number;
   dragX?: SharedValue<number>;
@@ -49,10 +46,8 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
     language,
     onSwipeRight,
     onSwipeLeft,
-    onSwipeUp,
     onSwipeBlocked,
     canSwipe = true,
-    isSaved = false,
     onRelatedTermPress,
     stackIndex,
     dragX,
@@ -68,6 +63,8 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const translateY = useSharedValue(0);
   const rotation = useSharedValue(0);
   const flipProgress = useSharedValue(0);
+  const cardScale = useSharedValue(1);
+  const cardOpacity = useSharedValue(1);
   const canSwipeShared = useSharedValue(canSwipe ? 1 : 0);
 
   useEffect(() => {
@@ -75,18 +72,19 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   }, [canSwipe, canSwipeShared]);
 
   useImperativeHandle(ref, () => ({
-    triggerSwipe(direction: 'right' | 'left' | 'up') {
+    triggerSwipe(direction: 'right' | 'left') {
       if (direction === 'right') {
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 280 });
         rotation.value = withTiming(20, { duration: 280 });
-      } else if (direction === 'left') {
-        translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 280 });
-        rotation.value = withTiming(-20, { duration: 280 });
       } else {
-        translateY.value = withTiming(-SCREEN_HEIGHT, { duration: 350 });
+        translateX.value = withTiming(-160, { duration: 380 });
+        translateY.value = withTiming(180, { duration: 380 });
+        rotation.value = withTiming(-10, { duration: 380 });
+        cardScale.value = withTiming(0.55, { duration: 380 });
+        cardOpacity.value = withTiming(0, { duration: 440 });
       }
     },
-  }), [translateX, translateY, rotation]);
+  }), [translateX, translateY, rotation, cardScale, cardOpacity]);
 
   const toggleFlip = useCallback(() => {
     flipped.current = !flipped.current;
@@ -117,9 +115,6 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
       if (dragX) dragX.value = withTiming(0, { duration: 200 });
       if (dragY) dragY.value = withTiming(0, { duration: 200 });
 
-      const swipedUp =
-        e.translationY < -SWIPE_Y_THRESHOLD ||
-        (e.velocityY < -VELOCITY_THRESHOLD && e.translationY < -40);
       const swipedRight =
         e.translationX > SWIPE_X_THRESHOLD || e.velocityX > VELOCITY_THRESHOLD;
       const swipedLeft =
@@ -132,21 +127,23 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
         translateY.value = withSpring(0, { damping: 18, stiffness: 200 });
         rotation.value = withSpring(0, { damping: 18, stiffness: 200 });
         if (onSwipeBlocked) runOnJS(onSwipeBlocked)();
-      } else if (swipedUp) {
-        translateY.value = withTiming(-SCREEN_HEIGHT, { duration: 350 });
-        runOnJS(onSwipeUp)();
       } else if (swipedRight) {
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 280 });
         rotation.value = withTiming(20, { duration: 280 });
         runOnJS(onSwipeRight)();
       } else if (swipedLeft) {
-        translateX.value = withTiming(-SCREEN_WIDTH * 1.5, { duration: 280 });
-        rotation.value = withTiming(-20, { duration: 280 });
+        translateX.value = withTiming(-160, { duration: 380 });
+        translateY.value = withTiming(180, { duration: 380 });
+        rotation.value = withTiming(-10, { duration: 380 });
+        cardScale.value = withTiming(0.55, { duration: 380 });
+        cardOpacity.value = withTiming(0, { duration: 440 });
         runOnJS(onSwipeLeft)();
       } else {
         translateX.value = withSpring(0, { damping: 14, stiffness: 120 });
         translateY.value = withSpring(0, { damping: 14, stiffness: 120 });
         rotation.value = withSpring(0, { damping: 14, stiffness: 120 });
+        cardScale.value = withSpring(1, { damping: 14, stiffness: 120 });
+        cardOpacity.value = withSpring(1, { damping: 14, stiffness: 120 });
       }
     });
 
@@ -166,8 +163,9 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
       { translateX: translateX.value },
       { translateY: translateY.value + stackOffset },
       { rotate: `${rotation.value}deg` },
-      { scale: stackScale },
+      { scale: stackScale * cardScale.value },
     ],
+    opacity: cardOpacity.value,
   }));
 
   const frontStyle = useAnimatedStyle(() => {
@@ -204,15 +202,6 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
     ),
   }));
 
-  const upTint = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      translateY.value,
-      [-SWIPE_Y_THRESHOLD, 0],
-      [0.12, 0],
-      Extrapolation.CLAMP
-    ),
-  }));
-
   const tl = getTermLanguage(language);
   const translation = term.translations[tl];
   const primaryTag = term.tags[0];
@@ -233,11 +222,6 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
             <Text style={[styles.categoryLabel, { color: t.textTertiary }]}>
               {categoryLabel.toUpperCase()}
             </Text>
-            {isSaved ? (
-              <BookmarkCheck size={18} color={accent} strokeWidth={1.5} />
-            ) : (
-              <Bookmark size={18} color={t.textMuted} strokeWidth={1.5} />
-            )}
           </View>
 
           <View style={styles.frontCenter}>
@@ -290,7 +274,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
                 ]}
               >
                 <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
-                  {language === 'tr' ? 'ÖRNEK' : 'EXAMPLE'}
+                  {language === 'tr' ? 'ORNEK' : 'EXAMPLE'}
                 </Text>
                 <Text style={[styles.codeText, { color: t.textSecondary }]}>
                   {translation.example}
@@ -325,11 +309,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
           pointerEvents="none"
         />
         <Animated.View
-          style={[styles.tint, { backgroundColor: palette.danger }, leftTint]}
-          pointerEvents="none"
-        />
-        <Animated.View
-          style={[styles.tint, { backgroundColor: accent }, upTint]}
+          style={[styles.tint, { backgroundColor: palette.warning }, leftTint]}
           pointerEvents="none"
         />
       </Animated.View>

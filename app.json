@@ -7,13 +7,18 @@
     "icon": "./assets/images/icon.png",
     "scheme": "pratikkelime",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pratikkelime.app"
+      "bundleIdentifier": "com.pratikkelime.app",
+      "infoPlist": {
+        "CFBundleDisplayName": "TechLex",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#6C5CE7",
+        "backgroundColor": "#0A0A0F",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -33,7 +38,7 @@
         {
           "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#6C5CE7"
+          "backgroundColor": "#0A0A0F"
         }
       ],
       "expo-localization"
@@ -41,6 +46,12 @@
     "experiments": {
       "typedRoutes": true,
       "baseUrl": "/techlex"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d13fba37-f085-4236-a233-63d2735597e7"
+      }
     }
   }
 }

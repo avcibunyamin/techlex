@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { X, Bookmark, BookmarkCheck, ArrowUpRight, ChevronDown } from 'lucide-react-native';
+import { X, ArrowUpRight, ChevronDown } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
@@ -14,12 +14,11 @@ export default function TermDetail() {
   const router = useRouter();
   const { t: tr } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { terms, language, progress, toggleSave, savedTerms } = useAppStore();
+  const { terms, language, progress } = useAppStore();
 
   const term = terms.find(t => t.id === id);
   if (!term) return null;
 
-  const isSaved = savedTerms.includes(term.id);
   const p = progress[term.id];
   const tl = getTermLanguage(language);
   const translation = term.translations[tl];
@@ -44,12 +43,6 @@ export default function TermDetail() {
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} hitSlop={12}>
           <X size={20} color={t.textSecondary} strokeWidth={1.5} />
-        </Pressable>
-        <Pressable onPress={() => toggleSave(term.id)} hitSlop={12}>
-          {isSaved
-            ? <BookmarkCheck size={20} color={accent} strokeWidth={1.8} />
-            : <Bookmark size={20} color={t.textTertiary} strokeWidth={1.5} />
-          }
         </Pressable>
       </View>
 

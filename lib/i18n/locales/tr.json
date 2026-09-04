@@ -3,8 +3,8 @@
     "home": "Ana Sayfa",
     "explore": "Keşif",
     "learn": "Öğren",
-    "saved": "Kaydedilenler",
-    "profile": "Profil"
+    "profile": "Profil",
+    "quiz": "Test"
   },
   "home": {
     "greeting_morning": "Günaydın",
@@ -19,6 +19,10 @@
     "learning": "Öğreniyor",
     "streak": "{{count}} günlük seri",
     "today": "{{done}}/{{goal}} bugün",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "GÜNLÜK HEDEF",
+    "dailyGoalComplete": "Hedef tamamlandı!",
+    "energyLabel": "Enerji",
     "continueLearning": "ÖĞRENMEYE DEVAM",
     "conceptsToReview": "{{count}} kavram tekrar bekliyor",
     "conceptsMastered": "{{count}} kavram öğrenildi",
@@ -33,7 +37,7 @@
     "swipeRight": "Biliyorum",
     "swipeLeft": "Öğreniyorum",
     "tapFlip": "Çevirmek için dokun",
-    "swipeSave": "Kaydet"
+    "undo": "Geri al"
   },
   "explore": {
     "title": "Keşfet",
@@ -42,11 +46,6 @@
     "search": "Kavram ara...",
     "shuffle": "Karıştır",
     "shuffleAll": "Hepsini karıştır"
-  },
-  "saved": {
-    "title": "Kaydedilenler",
-    "empty": "Henüz kaydedilen kavram yok",
-    "emptySub": "Öğrenirken kavramları yukarı kaydırarak buraya kaydedin."
   },
   "term": {
     "definition": "TANIM",
@@ -97,7 +96,16 @@
     "confirmCancel": "Aboneliğinizi iptal etmek istediğinize emin misiniz?",
     "confirmCancelSub": "Mevcut dönem sonuna kadar premium özellikleriniz devam edecektir.",
     "confirm": "Onayla",
-    "subscriptionResumed": "Aboneliğiniz yeniden başlatıldı"
+    "subscriptionResumed": "Aboneliğiniz yeniden başlatıldı",
+    "league": {
+      "bronze": "Bronz",
+      "silver": "Gumus",
+      "gold": "Altin",
+      "platinum": "Platin",
+      "diamond": "Elmas"
+    },
+    "tierFree": "Ucretsiz",
+    "tierPremium": "Premium"
   },
   "auth": {
     "welcomeBack": "Tekrar hoş geldin",
@@ -127,7 +135,22 @@
     "pwSpecial": "1 özel karakter",
     "pwMatch": "Şifreler eşleşiyor",
     "pwNoMatch": "Şifreler eşleşmiyor",
-    "usernameTaken": "Bu kullanıcı adı alınmış"
+    "usernameTaken": "Bu kullanıcı adı alınmış",
+    "validation": {
+      "usernameRequired": "Kullanici adi gerekli",
+      "usernameMinLength": "En az 3 karakter",
+      "usernameMaxLength": "En fazla 20 karakter",
+      "usernamePattern": "Sadece kucuk harf ve rakam",
+      "fieldRequired": "{{field}} gerekli",
+      "minLength2": "En az 2 karakter",
+      "emailRequired": "E-posta gerekli",
+      "emailInvalid": "Gecersiz e-posta",
+      "dobRequired": "Dogum tarihi gerekli",
+      "dobFormat": "Format: GG/AA/YYYY",
+      "dobInvalid": "Gecersiz tarih",
+      "dobFuture": "Gelecekte olamaz",
+      "dobRange": "Gecersiz dogum tarihi"
+    }
   },
   "paywall": {
     "title": "Tam Erişimi Aç",
@@ -170,11 +193,105 @@
     "maybeLater": "Belki daha sonra",
     "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin."
   },
+  "onboarding": {
+    "welcome": "Teknoloji kavramlarını\nöğren",
+    "welcomeDesc": "Kısa kartlarla teknik kelime hazneni geliştir. Siber güvenlikten yazılım geliştirmeye, önemli terimleri öğren.",
+    "howItWorks": "Kaydırarak öğren",
+    "howItWorksDesc": "Aralıklı tekrar ile desteklenen basit ve etkili bir öğrenme döngüsü.",
+    "swipeRight": "Sağa kaydır",
+    "swipeRightDesc": "Bu kavramı biliyorum",
+    "swipeLeft": "Sola kaydır",
+    "swipeLeftDesc": "Hala öğreniyorum",
+    "tapFlip": "Karta dokun",
+    "tapFlipDesc": "Tanımı görmek için çevir",
+    "nameTitle": "Adın ne?",
+    "nameSubtitle": "Sana nasıl hitap edelim? (İsteğe bağlı)",
+    "namePlaceholder": "Adınızı girin",
+    "themeTitle": "Temayı seç",
+    "themeSubtitle": "İstediğin zaman ayarlardan değiştirebilirsin.",
+    "themeLight": "Açık",
+    "themeDark": "Koyu",
+    "themeSystem": "Sistem",
+    "interestsTitle": "Neler ilgini çekiyor?",
+    "interestsSubtitle": "Bir veya birden fazla alan seç. Daha sonra değiştirebilirsin.",
+    "subcategories": "{{count}} alt kategori",
+    "paceTitle": "Hızını belirle",
+    "paceSubtitle": "Her gün kaç kavram öğrenmek istersin? Küçük başla, artır.",
+    "goalCasual": "Yava��",
+    "goalRegular": "Normal",
+    "goalSerious": "Ciddi",
+    "goalIntense": "Yoğun",
+    "conceptsPerDay": "günde {{count}} kavram",
+    "continue": "Devam",
+    "skip": "Atla",
+    "startLearning": "Öğrenmeye başla"
+  },
   "common": {
     "cancel": "İptal",
     "save": "Kaydet",
     "done": "Tamam",
     "close": "Kapat",
     "loading": "Yükleniyor..."
+  },
+  "categories": {
+    "cybersecurity": "Siber Guvenlik",
+    "software-dev": "Yazilim Gelistirme",
+    "ai-ml": "Yapay Zeka & ML",
+    "networking": "Ag Sistemleri",
+    "design-ux": "Tasarim & UX",
+    "cybersecurity-general": "Genel Terimler",
+    "blue-team": "Blue Team (Savunma)",
+    "siem-log-analysis": "SIEM & Log Analizi",
+    "incident-response": "Olay Mudahale",
+    "threat-intelligence": "Tehdit Istihbarati",
+    "red-team": "Red Team (Saldiri)",
+    "reconnaissance": "Kesif",
+    "exploitation": "Istismar",
+    "social-engineering": "Sosyal Muhendislik",
+    "cryptography": "Kriptografi",
+    "malware": "Malware Analizi",
+    "owasp-web-security": "OWASP & Web Guvenligi",
+    "web-frontend": "Web Frontend",
+    "web-backend": "Web Backend",
+    "database": "Veritabani & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git & Versiyon Kontrol",
+    "testing": "Test & QA",
+    "machine-learning": "Makine Ogrenmesi",
+    "deep-learning": "Derin Ogrenme",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "Goruntu Isleme",
+    "big-data": "Buyuk Veri",
+    "protocols": "Protokoller",
+    "network-fundamentals": "Ag Temelleri",
+    "network-devices": "Ag Cihazlari",
+    "cloud-computing": "Bulut Bilisim",
+    "containers": "Konteyner & Orkestrasyon",
+    "wireless": "Kablosuz Aglar",
+    "ux-fundamentals": "UX Temelleri",
+    "ux-research": "UX Arastirma",
+    "ui-design": "UI Tasarim",
+    "figma": "Figma",
+    "typography": "Tipografi",
+    "design-systems": "Tasarim Sistemleri",
+    "project-management": "Proje Yonetimi"
+  },
+  "quiz": {
+    "title": "Test",
+    "start": "Teste Başla",
+    "empty": "Henüz öğrenilmiş kavram yok",
+    "emptySub": "Önce kavramları öğrenerek başlayın.",
+    "termsReady": "kavram hazır",
+    "true": "Doğru",
+    "false": "Yanlış",
+    "correct": "Doğru!",
+    "wrong": "Yanlış!",
+    "definitionFrom": "Bu tanım şu kavrama ait: {{term}}",
+    "results": "Sonuçlar",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "Tekrar Dene",
+    "perfect": "Mükemmel!",
+    "great": "Harika!",
+    "tryAgain": "Biraz daha çalış!"
   }
 }

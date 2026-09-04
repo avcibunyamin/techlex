@@ -11,34 +11,22 @@ import { colors, spacing, radius, typography } from '@/constants/theme';
 import { categories, Category, getAllTags, findCategoryById, getDescendantIds, findParentCategory } from '@/data/categories';
 import { Term, Language, getTermLanguage } from '@/types';
 
-function getCategoryLabel(category: Category, language: Language): string {
-  const tl = getTermLanguage(language);
-  const other = tl === 'tr' ? 'en' : 'tr';
-  const primary = category.name[tl];
-  const secondary = category.name[other];
-  if (primary === secondary) return primary;
-  const primaryBase = primary.split('(')[0].trim();
-  const secondaryBase = secondary.split('(')[0].trim();
-  if (primaryBase === secondaryBase) return primary;
-  return `${primary} (${secondary})`;
-}
-
 function CategoryCheckbox({
   category,
   depth,
-  language,
   selectedIds,
   onToggle,
   t,
   accent,
+  tr,
 }: {
   category: Category;
   depth: number;
-  language: Language;
   selectedIds: Set<string>;
   onToggle: (id: string) => void;
   t: ReturnType<typeof useTheme>['colors'];
   accent: string;
+  tr: (key: string, opts?: any) => string;
 }) {
   const [expanded, setExpanded] = useState(depth === 0);
   const hasSubs = category.subcategories && category.subcategories.length > 0;
@@ -69,7 +57,7 @@ function CategoryCheckbox({
           depth === 0 ? typography.headline : typography.subhead,
           { color: t.text, flex: 1 }
         ]}>
-          {getCategoryLabel(category, language)}
+          {tr('categories.' + category.id)}
         </Text>
         {hasSubs && (
           <Pressable onPress={() => setExpanded(!expanded)} hitSlop={12}>
@@ -87,11 +75,11 @@ function CategoryCheckbox({
           key={sub.id}
           category={sub}
           depth={depth + 1}
-          language={language}
           selectedIds={selectedIds}
           onToggle={onToggle}
           t={t}
           accent={accent}
+          tr={tr}
         />
       ))}
     </View>
@@ -237,11 +225,11 @@ export default function ExploreScreen() {
                 key={cat.id}
                 category={cat}
                 depth={0}
-                language={language}
                 selectedIds={selectedSet}
                 onToggle={handleSmartToggle}
                 t={t}
                 accent={accent}
+                tr={tr}
               />
             ))}
           </ScrollView>

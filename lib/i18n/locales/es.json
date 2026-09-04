@@ -3,8 +3,8 @@
     "home": "Inicio",
     "explore": "Explorar",
     "learn": "Aprender",
-    "saved": "Guardados",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "quiz": "Test"
   },
   "home": {
     "greeting_morning": "Buenos días",
@@ -22,7 +22,11 @@
     "continueLearning": "SEGUIR APRENDIENDO",
     "conceptsToReview": "{{count}} conceptos por repasar",
     "conceptsMastered": "{{count}} conceptos dominados",
-    "noResults": "No se encontraron conceptos para \"{{query}}\""
+    "noResults": "No se encontraron conceptos para \"{{query}}\"",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "META DIARIA",
+    "dailyGoalComplete": "Meta completada!",
+    "energyLabel": "Energia"
   },
   "learn": {
     "title": "Aprender",
@@ -32,7 +36,8 @@
     "restart": "Reiniciar",
     "swipeRight": "Lo sé",
     "swipeLeft": "Aprendiendo",
-    "tapFlip": "Toca para voltear"
+    "tapFlip": "Toca para voltear",
+    "undo": "Deshacer"
   },
   "explore": {
     "title": "Explorar",
@@ -41,11 +46,6 @@
     "search": "Buscar conceptos...",
     "shuffle": "Mezclar",
     "shuffleAll": "Mezclar todo"
-  },
-  "saved": {
-    "title": "Guardados",
-    "empty": "Aún no hay conceptos guardados",
-    "emptySub": "Desliza hacia arriba en un concepto mientras aprendes para guardarlo aquí."
   },
   "term": {
     "definition": "DEFINICIÓN",
@@ -96,7 +96,16 @@
     "confirmCancel": "¿Estás seguro de que quieres cancelar tu suscripción?",
     "confirmCancelSub": "Tus funciones Premium seguirán activas hasta el final del período de facturación actual.",
     "confirm": "Confirmar",
-    "subscriptionResumed": "Tu suscripción ha sido reanudada"
+    "subscriptionResumed": "Tu suscripción ha sido reanudada",
+    "league": {
+      "bronze": "Bronce",
+      "silver": "Plata",
+      "gold": "Oro",
+      "platinum": "Platino",
+      "diamond": "Diamante"
+    },
+    "tierFree": "Gratis",
+    "tierPremium": "Premium"
   },
   "auth": {
     "welcomeBack": "Bienvenido de vuelta",
@@ -126,7 +135,22 @@
     "pwSpecial": "1 carácter especial",
     "pwMatch": "Las contraseñas coinciden",
     "pwNoMatch": "Las contraseñas no coinciden",
-    "usernameTaken": "Este nombre de usuario ya está en uso"
+    "usernameTaken": "Este nombre de usuario ya está en uso",
+    "validation": {
+      "usernameRequired": "Nombre de usuario requerido",
+      "usernameMinLength": "Al menos 3 caracteres",
+      "usernameMaxLength": "Maximo 20 caracteres",
+      "usernamePattern": "Solo letras minusculas y numeros",
+      "fieldRequired": "{{field}} es obligatorio",
+      "minLength2": "Al menos 2 caracteres",
+      "emailRequired": "Correo electronico requerido",
+      "emailInvalid": "Formato de correo invalido",
+      "dobRequired": "Fecha de nacimiento requerida",
+      "dobFormat": "Formato: DD/MM/AAAA",
+      "dobInvalid": "Fecha invalida",
+      "dobFuture": "No puede ser en el futuro",
+      "dobRange": "Fecha de nacimiento invalida"
+    }
   },
   "paywall": {
     "title": "Desbloquear acceso completo",
@@ -175,5 +199,99 @@
     "done": "Listo",
     "close": "Cerrar",
     "loading": "Cargando..."
+  },
+  "onboarding": {
+    "welcome": "Domina los conceptos\ntecnologicos",
+    "welcomeDesc": "Amplia tu vocabulario tecnico con tarjetas. Desde ciberseguridad hasta desarrollo de software.",
+    "howItWorks": "Desliza para aprender",
+    "howItWorksDesc": "Un ciclo de aprendizaje simple y efectivo con repeticion espaciada.",
+    "swipeRight": "Desliza a la derecha",
+    "swipeRightDesc": "Conozco este concepto",
+    "swipeLeft": "Desliza a la izquierda",
+    "swipeLeftDesc": "Aun aprendiendo",
+    "tapFlip": "Toca la tarjeta",
+    "tapFlipDesc": "Voltea para ver la definicion",
+    "nameTitle": "Como te llamas?",
+    "nameSubtitle": "Como debemos llamarte? (Opcional)",
+    "namePlaceholder": "Ingresa tu nombre",
+    "themeTitle": "Elige tu tema",
+    "themeSubtitle": "Puedes cambiarlo en cualquier momento en ajustes.",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeSystem": "Sistema",
+    "interestsTitle": "Que te interesa?",
+    "interestsSubtitle": "Elige una o mas areas. Puedes cambiar despues.",
+    "subcategories": "{{count}} subcategorias",
+    "paceTitle": "Define tu ritmo",
+    "paceSubtitle": "Cuantos conceptos quieres aprender al dia? Empieza poco a poco.",
+    "goalCasual": "Casual",
+    "goalRegular": "Regular",
+    "goalSerious": "Serio",
+    "goalIntense": "Intenso",
+    "conceptsPerDay": "{{count}} conceptos / dia",
+    "continue": "Continuar",
+    "skip": "Omitir",
+    "startLearning": "Empezar"
+  },
+  "categories": {
+    "cybersecurity": "Ciberseguridad",
+    "software-dev": "Desarrollo de software",
+    "ai-ml": "IA & Machine Learning",
+    "networking": "Redes",
+    "design-ux": "Diseno & UX",
+    "cybersecurity-general": "Terminos generales",
+    "blue-team": "Blue Team (Defensa)",
+    "siem-log-analysis": "SIEM y analisis de logs",
+    "incident-response": "Respuesta a incidentes",
+    "threat-intelligence": "Inteligencia de amenazas",
+    "red-team": "Red Team (Ofensiva)",
+    "reconnaissance": "Reconocimiento",
+    "exploitation": "Explotacion",
+    "social-engineering": "Ingenieria social",
+    "cryptography": "Criptografia",
+    "malware": "Analisis de malware",
+    "owasp-web-security": "OWASP y seguridad web",
+    "web-frontend": "Frontend Web",
+    "web-backend": "Backend Web",
+    "database": "Base de datos & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git y control de versiones",
+    "testing": "Pruebas & QA",
+    "machine-learning": "Machine Learning",
+    "deep-learning": "Deep Learning",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "Vision artificial",
+    "big-data": "Big Data",
+    "protocols": "Protocolos",
+    "network-fundamentals": "Fundamentos de redes",
+    "network-devices": "Dispositivos de red",
+    "cloud-computing": "Computacion en la nube",
+    "containers": "Contenedores y orquestacion",
+    "wireless": "Redes inalambricas",
+    "ux-fundamentals": "Fundamentos de UX",
+    "ux-research": "Investigacion UX",
+    "ui-design": "Diseno UI",
+    "figma": "Figma",
+    "typography": "Tipografia",
+    "design-systems": "Sistemas de diseno",
+    "project-management": "Gestion de proyectos"
+  },
+  "quiz": {
+    "title": "Test",
+    "start": "Iniciar quiz",
+    "empty": "Aún no hay conceptos aprendidos",
+    "emptySub": "Empieza aprendiendo conceptos primero.",
+    "termsReady": "términos listos",
+    "true": "Verdadero",
+    "false": "Falso",
+    "correct": "¡Correcto!",
+    "wrong": "¡Incorrecto!",
+    "definitionFrom": "Esta definición pertenece a: {{term}}",
+    "results": "Resultados",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "Reintentar",
+    "perfect": "¡Perfecto!",
+    "great": "¡Excelente!",
+    "tryAgain": "¡Sigue practicando!"
   }
 }

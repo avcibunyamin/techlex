@@ -6,48 +6,51 @@ import {
   Pressable,
   Dimensions,
   ScrollView,
+  TextInput,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import {
   ArrowRight,
   Layers,
   Brain,
   Repeat,
-  Shield,
-  Code,
+  User,
+  Sun,
+  Moon,
+  Monitor,
   ChevronLeft,
   Check,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
+import { ThemeMode } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { categories } from '@/data/categories';
+import { getTermLanguage } from '@/types';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const DAILY_GOAL_OPTIONS = [
-  { value: 5, label: 'Casual', sublabel: '5 concepts / day' },
-  { value: 10, label: 'Regular', sublabel: '10 concepts / day' },
-  { value: 20, label: 'Serious', sublabel: '20 concepts / day' },
-  { value: 30, label: 'Intense', sublabel: '30 concepts / day' },
-];
-
 export default function OnboardingScreen() {
-  const { colors: t, accent } = useTheme();
+  const { colors: t, accent, themeMode: currentTheme } = useTheme();
   const router = useRouter();
+  const { t: tr } = useTranslation();
   const scrollRef = useRef<ScrollView>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedGoal, setSelectedGoal] = useState(10);
+  const [displayName, setDisplayNameLocal] = useState('');
+  const [selectedTheme, setSelectedTheme] = useState<ThemeMode>(currentTheme);
 
-  const { setSelectedTags, setDailyGoal, setLanguage, completeOnboarding } =
+  const { setSelectedTags, setDailyGoal, setDisplayName, setThemeMode, completeOnboarding, language } =
     useAppStore();
 
-  const totalPages = 4;
+  const tl = getTermLanguage(language);
+  const totalPages = 6;
 
   const goNext = () => {
     if (currentPage < totalPages - 1) {
@@ -68,6 +71,9 @@ export default function OnboardingScreen() {
   };
 
   const handleFinish = () => {
+    if (displayName.trim()) {
+      setDisplayName(displayName.trim());
+    }
     if (selectedCategories.length > 0) {
       setSelectedTags(selectedCategories);
     }
@@ -82,6 +88,11 @@ export default function OnboardingScreen() {
     );
   };
 
+  const handleThemeSelect = (mode: ThemeMode) => {
+    setSelectedTheme(mode);
+    setThemeMode(mode);
+  };
+
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const page = Math.round(e.nativeEvent.contentOffset.x / SCREEN_WIDTH);
     setCurrentPage(page);
@@ -89,10 +100,18 @@ export default function OnboardingScreen() {
 
   const isLastPage = currentPage === totalPages - 1;
 
-  const categoryIcons: Record<string, React.ReactNode> = {
-    cybersecurity: <Shield size={20} color="#E17055" strokeWidth={1.5} />,
-    'software-dev': <Code size={20} color="#0984E3" strokeWidth={1.5} />,
-  };
+  const DAILY_GOAL_OPTIONS = [
+    { value: 5, label: tr('onboarding.goalCasual'), sublabel: tr('onboarding.conceptsPerDay', { count: 5 }) },
+    { value: 10, label: tr('onboarding.goalRegular'), sublabel: tr('onboarding.conceptsPerDay', { count: 10 }) },
+    { value: 20, label: tr('onboarding.goalSerious'), sublabel: tr('onboarding.conceptsPerDay', { count: 20 }) },
+    { value: 30, label: tr('onboarding.goalIntense'), sublabel: tr('onboarding.conceptsPerDay', { count: 30 }) },
+  ];
+
+  const THEME_OPTIONS: { mode: ThemeMode; label: string; icon: React.ReactNode }[] = [
+    { mode: 'light', label: tr('onboarding.themeLight'), icon: <Sun size={20} color={selectedTheme === 'light' ? accent : t.textSecondary} strokeWidth={1.5} /> },
+    { mode: 'dark', label: tr('onboarding.themeDark'), icon: <Moon size={20} color={selectedTheme === 'dark' ? accent : t.textSecondary} strokeWidth={1.5} /> },
+    { mode: 'system', label: tr('onboarding.themeSystem'), icon: <Monitor size={20} color={selectedTheme === 'system' ? accent : t.textSecondary} strokeWidth={1.5} /> },
+  ];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]}>
@@ -119,12 +138,9 @@ export default function OnboardingScreen() {
             />
           ))}
         </View>
-        <Pressable
-          onPress={handleFinish}
-          hitSlop={12}
-        >
+        <Pressable onPress={handleFinish} hitSlop={12}>
           <Text style={[typography.subhead, { color: t.textTertiary }]}>
-            Skip
+            {tr('onboarding.skip')}
           </Text>
         </Pressable>
       </View>
@@ -152,15 +168,13 @@ export default function OnboardingScreen() {
               entering={FadeInDown.delay(400).duration(600)}
               style={[styles.pageTitle, { color: t.text }]}
             >
-              Master technology{'\n'}concepts
+              {tr('onboarding.welcome')}
             </Animated.Text>
             <Animated.Text
               entering={FadeInDown.delay(600).duration(600)}
               style={[styles.pageDesc, { color: t.textSecondary }]}
             >
-              Build your technical vocabulary with bite-sized flashcards.
-              From cybersecurity to software development, learn the terms
-              that matter.
+              {tr('onboarding.welcomeDesc')}
             </Animated.Text>
           </View>
         </View>
@@ -175,10 +189,10 @@ export default function OnboardingScreen() {
               <Brain size={32} color={accent} strokeWidth={1.5} />
             </Animated.View>
             <Text style={[styles.pageTitle, { color: t.text }]}>
-              Swipe to learn
+              {tr('onboarding.howItWorks')}
             </Text>
             <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
-              A simple, effective learning loop powered by spaced repetition.
+              {tr('onboarding.howItWorksDesc')}
             </Text>
 
             <View style={styles.mechanicsList}>
@@ -187,8 +201,8 @@ export default function OnboardingScreen() {
                   <ArrowRight size={16} color={colors.success} strokeWidth={2} />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={[typography.headline, { color: t.text }]}>Swipe right</Text>
-                  <Text style={[typography.callout, { color: t.textTertiary }]}>I know this concept</Text>
+                  <Text style={[typography.headline, { color: t.text }]}>{tr('onboarding.swipeRight')}</Text>
+                  <Text style={[typography.callout, { color: t.textTertiary }]}>{tr('onboarding.swipeRightDesc')}</Text>
                 </View>
               </View>
               <View style={[styles.mechanicRow, { borderColor: t.border }]}>
@@ -201,8 +215,8 @@ export default function OnboardingScreen() {
                   />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={[typography.headline, { color: t.text }]}>Swipe left</Text>
-                  <Text style={[typography.callout, { color: t.textTertiary }]}>Still learning</Text>
+                  <Text style={[typography.headline, { color: t.text }]}>{tr('onboarding.swipeLeft')}</Text>
+                  <Text style={[typography.callout, { color: t.textTertiary }]}>{tr('onboarding.swipeLeftDesc')}</Text>
                 </View>
               </View>
               <View style={[styles.mechanicRow, { borderColor: t.border }]}>
@@ -210,22 +224,98 @@ export default function OnboardingScreen() {
                   <Repeat size={16} color={accent} strokeWidth={2} />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={[typography.headline, { color: t.text }]}>Tap card</Text>
-                  <Text style={[typography.callout, { color: t.textTertiary }]}>Flip to see definition</Text>
+                  <Text style={[typography.headline, { color: t.text }]}>{tr('onboarding.tapFlip')}</Text>
+                  <Text style={[typography.callout, { color: t.textTertiary }]}>{tr('onboarding.tapFlipDesc')}</Text>
                 </View>
               </View>
             </View>
           </View>
         </View>
 
-        {/* Page 3: Pick interests */}
+        {/* Page 3: Name input */}
+        <View style={[styles.page, { width: SCREEN_WIDTH }]}>
+          <View style={styles.pageContent}>
+            <View style={[styles.iconCircle, { backgroundColor: colors.accentSubtle }]}>
+              <User size={32} color={accent} strokeWidth={1.5} />
+            </View>
+            <Text style={[styles.pageTitle, { color: t.text }]}>
+              {tr('onboarding.nameTitle')}
+            </Text>
+            <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
+              {tr('onboarding.nameSubtitle')}
+            </Text>
+            <TextInput
+              style={[
+                styles.nameInput,
+                {
+                  color: t.text,
+                  backgroundColor: t.bgElevated,
+                  borderColor: displayName.length > 0 ? accent : t.border,
+                },
+              ]}
+              placeholder={tr('onboarding.namePlaceholder')}
+              placeholderTextColor={t.textMuted}
+              value={displayName}
+              onChangeText={setDisplayNameLocal}
+              autoCapitalize="words"
+              autoCorrect={false}
+              maxLength={30}
+            />
+          </View>
+        </View>
+
+        {/* Page 4: Theme toggle */}
+        <View style={[styles.page, { width: SCREEN_WIDTH }]}>
+          <View style={styles.pageContent}>
+            <View style={[styles.iconCircle, { backgroundColor: colors.accentSubtle }]}>
+              <Sun size={32} color={accent} strokeWidth={1.5} />
+            </View>
+            <Text style={[styles.pageTitle, { color: t.text }]}>
+              {tr('onboarding.themeTitle')}
+            </Text>
+            <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
+              {tr('onboarding.themeSubtitle')}
+            </Text>
+
+            <View style={styles.themeList}>
+              {THEME_OPTIONS.map((opt) => {
+                const active = selectedTheme === opt.mode;
+                return (
+                  <Pressable
+                    key={opt.mode}
+                    style={[
+                      styles.themeRow,
+                      {
+                        backgroundColor: active ? colors.accentMuted : t.bgElevated,
+                        borderColor: active ? accent : t.border,
+                      },
+                    ]}
+                    onPress={() => handleThemeSelect(opt.mode)}
+                  >
+                    {opt.icon}
+                    <Text style={[typography.headline, { color: t.text, flex: 1, marginLeft: spacing.lg }]}>
+                      {opt.label}
+                    </Text>
+                    {active && (
+                      <View style={[styles.checkMark, { backgroundColor: accent }]}>
+                        <Check size={12} color="#fff" strokeWidth={2.5} />
+                      </View>
+                    )}
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        </View>
+
+        {/* Page 5: Pick interests */}
         <View style={[styles.page, { width: SCREEN_WIDTH }]}>
           <View style={styles.pageContent}>
             <Text style={[styles.pageTitle, { color: t.text }]}>
-              What interests you?
+              {tr('onboarding.interestsTitle')}
             </Text>
             <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
-              Choose one or more areas. You can always change this later.
+              {tr('onboarding.interestsSubtitle')}
             </Text>
 
             <View style={styles.categoryList}>
@@ -244,7 +334,7 @@ export default function OnboardingScreen() {
                     onPress={() => toggleCategory(cat.id)}
                   >
                     <View style={styles.categoryCardTop}>
-                      {categoryIcons[cat.id]}
+                      <View style={[styles.catDot, { backgroundColor: cat.color }]} />
                       {selected && (
                         <View style={[styles.checkMark, { backgroundColor: accent }]}>
                           <Check size={12} color="#fff" strokeWidth={2.5} />
@@ -252,10 +342,10 @@ export default function OnboardingScreen() {
                       )}
                     </View>
                     <Text style={[typography.headline, { color: t.text, marginTop: spacing.md }]}>
-                      {cat.name.en}
+                      {tr('categories.' + cat.id)}
                     </Text>
                     <Text style={[typography.footnote, { color: t.textTertiary, marginTop: spacing.xs }]}>
-                      {cat.subcategories?.length ?? 0} subcategories
+                      {tr('onboarding.subcategories', { count: cat.subcategories?.length ?? 0 })}
                     </Text>
                   </Pressable>
                 );
@@ -264,14 +354,14 @@ export default function OnboardingScreen() {
           </View>
         </View>
 
-        {/* Page 4: Daily goal */}
+        {/* Page 6: Daily goal */}
         <View style={[styles.page, { width: SCREEN_WIDTH }]}>
           <View style={styles.pageContent}>
             <Text style={[styles.pageTitle, { color: t.text }]}>
-              Set your pace
+              {tr('onboarding.paceTitle')}
             </Text>
             <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
-              How many concepts do you want to learn each day? Start small and build up.
+              {tr('onboarding.paceSubtitle')}
             </Text>
 
             <View style={styles.goalList}>
@@ -317,7 +407,7 @@ export default function OnboardingScreen() {
           onPress={isLastPage ? handleFinish : goNext}
         >
           <Text style={[typography.headline, { color: '#fff' }]}>
-            {isLastPage ? 'Start learning' : 'Continue'}
+            {isLastPage ? tr('onboarding.startLearning') : tr('onboarding.continue')}
           </Text>
           {!isLastPage && (
             <ArrowRight size={18} color="#fff" strokeWidth={2} style={{ marginLeft: spacing.sm }} />
@@ -391,6 +481,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  nameInput: {
+    marginTop: spacing['3xl'],
+    height: 52,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    paddingHorizontal: spacing.xl,
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  themeList: {
+    marginTop: spacing['3xl'],
+    gap: spacing.md,
+  },
+  themeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.xl,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+  },
   categoryList: {
     marginTop: spacing['2xl'],
     flexDirection: 'row',
@@ -408,6 +518,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  catDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
   checkMark: {
     width: 22,

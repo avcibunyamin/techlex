@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRight, Flame, Zap, Search, Infinity } from 'lucide-react-native';
+import { ArrowRight, Flame, Zap, Infinity, CheckCircle } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
@@ -12,13 +12,11 @@ import { getStats } from '@/lib/spaced-repetition';
 import { categories } from '@/data/categories';
 import { getTermLanguage } from '@/types';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
 export default function HomeScreen() {
   const { colors: t, isDark, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const { isLoaded, loadData, streak, dailyGoal, todayCount, progress, terms, selectedTags, language, energyLevel, hasActivePremium } = useAppStore();
+  const { isLoaded, loadData, streak, dailyGoal, todayCount, progress, terms, selectedTags, language, energyLevel, hasActivePremium, displayName } = useAppStore();
   const isPremium = hasActivePremium();
 
   useEffect(() => {
@@ -36,6 +34,13 @@ export default function HomeScreen() {
     return tr('home.greeting_evening');
   }
 
+  const greetingText = displayName
+    ? tr('home.greeting_name', { greeting: getGreeting(), name: displayName })
+    : getGreeting();
+
+  const goalProgress = dailyGoal > 0 ? Math.min(todayCount / dailyGoal, 1) : 0;
+  const goalComplete = todayCount >= dailyGoal;
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
       <ScrollView
@@ -45,14 +50,14 @@ export default function HomeScreen() {
         {/* Header */}
         <Animated.View entering={FadeInDown.duration(400).delay(0)}>
           <Text style={[typography.callout, { color: t.textTertiary, marginBottom: spacing.xs }]}>
-            {getGreeting()}
+            {greetingText}
           </Text>
           <Text style={[typography.largeTitle, { color: t.text }]}>
             {tr('home.continue')}
           </Text>
         </Animated.View>
 
-        {/* Streak + Daily */}
+        {/* Streak + Energy */}
         <Animated.View
           entering={FadeInDown.duration(400).delay(80)}
           style={[styles.streakRow, { borderColor: t.border }]}
@@ -72,11 +77,40 @@ export default function HomeScreen() {
               {isPremium ? tr('profile.unlimited') : `${energyLevel}/30`}
             </Text>
           </View>
-          <View style={[styles.divider, { backgroundColor: t.border }]} />
-          <View style={styles.streakItem}>
-            <Zap size={14} color={accent} strokeWidth={2} />
-            <Text style={[typography.subhead, { color: t.text, marginLeft: spacing.sm }]}>
-              {tr('home.today', { done: todayCount, goal: dailyGoal })}
+        </Animated.View>
+
+        {/* Daily Goal Progress */}
+        <Animated.View
+          entering={FadeInDown.duration(400).delay(120)}
+          style={[styles.dailyGoalCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}
+        >
+          <View style={styles.dailyGoalHeader}>
+            <Text style={[typography.caption, { color: t.textTertiary }]}>
+              {tr('home.dailyGoalLabel')}
+            </Text>
+            {goalComplete && (
+              <View style={styles.goalCompleteBadge}>
+                <CheckCircle size={12} color={colors.success} strokeWidth={2} />
+                <Text style={[typography.footnote, { color: colors.success, marginLeft: spacing.xs }]}>
+                  {tr('home.dailyGoalComplete')}
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.dailyGoalBarRow}>
+            <View style={[styles.dailyGoalBar, { backgroundColor: t.bgSubtle }]}>
+              <View
+                style={[
+                  styles.dailyGoalFill,
+                  {
+                    backgroundColor: goalComplete ? colors.success : accent,
+                    width: `${goalProgress * 100}%`,
+                  },
+                ]}
+              />
+            </View>
+            <Text style={[typography.subhead, { color: goalComplete ? colors.success : t.text, fontWeight: '600' }]}>
+              {todayCount}/{dailyGoal}
             </Text>
           </View>
         </Animated.View>
@@ -121,21 +155,8 @@ export default function HomeScreen() {
           </Animated.View>
         )}
 
-        {/* Search */}
-        <Animated.View entering={FadeInDown.duration(400).delay(240)}>
-          <Pressable
-            style={[styles.searchBar, { backgroundColor: t.bgElevated, borderColor: t.border }]}
-            onPress={() => router.push('/(tabs)/explore')}
-          >
-            <Search size={16} color={t.textTertiary} strokeWidth={1.8} />
-            <Text style={[typography.body, { color: t.textMuted, marginLeft: spacing.md }]}>
-              {tr('home.search')}
-            </Text>
-          </Pressable>
-        </Animated.View>
-
         {/* Explore */}
-        <Animated.View entering={FadeInDown.duration(400).delay(320)}>
+        <Animated.View entering={FadeInDown.duration(400).delay(240)}>
           <Text style={[typography.caption, { color: t.textTertiary, marginBottom: spacing.lg }]}>
             {tr('home.explore')}
           </Text>
@@ -151,7 +172,7 @@ export default function HomeScreen() {
               >
                 <View style={[styles.exploreDot, { backgroundColor: cat.color }]} />
                 <Text style={[typography.subhead, { color: t.text }]}>
-                  {cat.name[getTermLanguage(language)]}
+                  {tr('categories.' + cat.id)}
                 </Text>
               </Pressable>
             ))}
@@ -159,7 +180,7 @@ export default function HomeScreen() {
         </Animated.View>
 
         {/* Quick Stats */}
-        <Animated.View entering={FadeInDown.duration(400).delay(400)}>
+        <Animated.View entering={FadeInDown.duration(400).delay(320)}>
           <Text style={[typography.caption, { color: t.textTertiary, marginBottom: spacing.lg, marginTop: spacing['2xl'] }]}>
             {tr('home.progress')}
           </Text>
@@ -190,13 +211,44 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: spacing['2xl'],
-    marginBottom: spacing['2xl'],
+    marginBottom: spacing.xl,
     paddingVertical: spacing.lg,
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
   },
   streakItem: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
   divider: { width: 1, height: 20 },
+  dailyGoalCard: {
+    padding: spacing.xl,
+    borderRadius: radius.lg,
+    borderWidth: 0.5,
+    marginBottom: spacing['2xl'],
+  },
+  dailyGoalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+  goalCompleteBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dailyGoalBarRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.lg,
+  },
+  dailyGoalBar: {
+    flex: 1,
+    height: 6,
+    borderRadius: 3,
+    overflow: 'hidden',
+  },
+  dailyGoalFill: {
+    height: '100%',
+    borderRadius: 3,
+  },
   continueCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -214,14 +266,6 @@ const styles = StyleSheet.create({
   },
   progressBar: { flex: 1, height: 3, borderRadius: 2, overflow: 'hidden' },
   progressFill: { height: '100%', borderRadius: 2 },
-  searchBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: radius.md,
-    borderWidth: 0.5,
-    padding: spacing.lg,
-    marginBottom: spacing['3xl'],
-  },
   exploreGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -3,8 +3,8 @@
     "home": "الرئيسية",
     "explore": "استكشاف",
     "learn": "تعلّم",
-    "saved": "المحفوظات",
-    "profile": "الملف الشخصي"
+    "profile": "الملف الشخصي",
+    "quiz": "اختبار"
   },
   "home": {
     "greeting_morning": "صباح الخير",
@@ -22,7 +22,11 @@
     "continueLearning": "تابع التعلّم",
     "conceptsToReview": "{{count}} مفهوم للمراجعة",
     "conceptsMastered": "{{count}} مفهوم تمّ إتقانه",
-    "noResults": "لم يتم العثور على نتائج لـ \"{{query}}\""
+    "noResults": "لم يتم العثور على نتائج لـ \"{{query}}\"",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "الهدف اليومي",
+    "dailyGoalComplete": "!تم تحقيق الهدف",
+    "energyLabel": "الطاقة"
   },
   "learn": {
     "title": "تعلّم",
@@ -32,7 +36,8 @@
     "restart": "إعادة",
     "swipeRight": "أعرفه",
     "swipeLeft": "أتعلّمه",
-    "tapFlip": "انقر للقلب"
+    "tapFlip": "انقر للقلب",
+    "undo": "تراجع"
   },
   "explore": {
     "title": "استكشاف",
@@ -41,11 +46,6 @@
     "search": "ابحث عن مفاهيم...",
     "shuffle": "خلط",
     "shuffleAll": "خلط الكل"
-  },
-  "saved": {
-    "title": "المحفوظات",
-    "empty": "لا توجد مفاهيم محفوظة بعد",
-    "emptySub": "اسحب لأعلى أثناء التعلّم لحفظ المفاهيم هنا."
   },
   "term": {
     "definition": "التعريف",
@@ -96,7 +96,16 @@
     "confirmCancel": "هل أنت متأكد من إلغاء الاشتراك؟",
     "confirmCancelSub": "ستبقى الميزات المميزة متاحة حتى نهاية فترة الفوترة الحالية.",
     "confirm": "تأكيد",
-    "subscriptionResumed": "تمّ استئناف اشتراكك"
+    "subscriptionResumed": "تمّ استئناف اشتراكك",
+    "league": {
+      "bronze": "برونزي",
+      "silver": "فضي",
+      "gold": "ذهبي",
+      "platinum": "بلاتيني",
+      "diamond": "ألماسي"
+    },
+    "tierFree": "مجاني",
+    "tierPremium": "بريميوم"
   },
   "auth": {
     "welcomeBack": "أهلاً بعودتك",
@@ -126,7 +135,22 @@
     "pwSpecial": "رمز خاص واحد",
     "pwMatch": "كلمتا المرور متطابقتان",
     "pwNoMatch": "كلمتا المرور غير متطابقتين",
-    "usernameTaken": "اسم المستخدم هذا مأخوذ بالفعل"
+    "usernameTaken": "اسم المستخدم هذا مأخوذ بالفعل",
+    "validation": {
+      "usernameRequired": "اسم المستخدم مطلوب",
+      "usernameMinLength": "3 أحرف على الأقل",
+      "usernameMaxLength": "20 حرفًا كحد أقصى",
+      "usernamePattern": "أحرف صغيرة وأرقام فقط",
+      "fieldRequired": "{{field}} مطلوب",
+      "minLength2": "حرفان على الأقل",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "تنسيق بريد إلكتروني غير صالح",
+      "dobRequired": "تاريخ الميلاد مطلوب",
+      "dobFormat": "التنسيق: يي/شش/سسسس",
+      "dobInvalid": "تاريخ غير صالح",
+      "dobFuture": "لا يمكن أن يكون في المستقبل",
+      "dobRange": "تاريخ ميلاد غير صالح"
+    }
   },
   "paywall": {
     "title": "افتح الوصول الكامل",
@@ -175,5 +199,99 @@
     "done": "تمّ",
     "close": "إغلاق",
     "loading": "جارٍ التحميل..."
+  },
+  "onboarding": {
+    "welcome": "أتقن المفاهيم\nالتقنية",
+    "welcomeDesc": "طوّر مفرداتك التقنية مع بطاقات تعليمية. من الأمن السيبراني إلى تطوير البرمجيات.",
+    "howItWorks": "اسحب للتعلم",
+    "howItWorksDesc": "حلقة تعلم بسيطة وفعالة مع التكرار المتباعد.",
+    "swipeRight": "اسحب يمينًا",
+    "swipeRightDesc": "أعرف هذا المفهوم",
+    "swipeLeft": "اسحب يسارًا",
+    "swipeLeftDesc": "ما زلت أتعلم",
+    "tapFlip": "انقر على البطاقة",
+    "tapFlipDesc": "اقلب لرؤية التعريف",
+    "nameTitle": "ما اسمك؟",
+    "nameSubtitle": "كيف نناديك؟ (اختياري)",
+    "namePlaceholder": "أدخل اسمك",
+    "themeTitle": "اختر المظهر",
+    "themeSubtitle": "يمكنك تغييره في أي وقت من الإعدادات.",
+    "themeLight": "فاتح",
+    "themeDark": "داكن",
+    "themeSystem": "النظام",
+    "interestsTitle": "ما الذي يهمك؟",
+    "interestsSubtitle": "اختر مجالًا أو أكثر. يمكنك التغيير لاحقًا.",
+    "subcategories": "{{count}} فئات فرعية",
+    "paceTitle": "حدد وتيرتك",
+    "paceSubtitle": "كم مفهومًا تريد تعلمه يوميًا؟ ابدأ ببطء.",
+    "goalCasual": "هادئ",
+    "goalRegular": "عادي",
+    "goalSerious": "جاد",
+    "goalIntense": "مكثف",
+    "conceptsPerDay": "{{count}} مفهوم / يوم",
+    "continue": "متابعة",
+    "skip": "تخطي",
+    "startLearning": "ابدأ التعلم"
+  },
+  "categories": {
+    "cybersecurity": "الأمن السيبراني",
+    "software-dev": "تطوير البرمجيات",
+    "ai-ml": "الذكاء الاصطناعي",
+    "networking": "الشبكات",
+    "design-ux": "التصميم وتجربة المستخدم",
+    "cybersecurity-general": "مصطلحات عامة",
+    "blue-team": "الفريق الأزرق (الدفاع)",
+    "siem-log-analysis": "تحليل السجلات وSIEM",
+    "incident-response": "الاستجابة للحوادث",
+    "threat-intelligence": "استخبارات التهديدات",
+    "red-team": "الفريق الأحمر (الهجوم)",
+    "reconnaissance": "الاستطلاع",
+    "exploitation": "الاستغلال",
+    "social-engineering": "الهندسة الاجتماعية",
+    "cryptography": "التشفير",
+    "malware": "تحليل البرمجيات الخبيثة",
+    "owasp-web-security": "أمان الويب وOWASP",
+    "web-frontend": "واجهة الويب الأمامية",
+    "web-backend": "واجهة الويب الخلفية",
+    "database": "قواعد البيانات وSQL",
+    "devops": "DevOps و CI/CD",
+    "git-version-control": "Git والتحكم بالإصدارات",
+    "testing": "الاختبار وضمان الجودة",
+    "machine-learning": "تعلم الآلة",
+    "deep-learning": "التعلم العميق",
+    "llm-nlp": "LLM و NLP",
+    "computer-vision": "الرؤية الحاسوبية",
+    "big-data": "البيانات الضخمة",
+    "protocols": "البروتوكولات",
+    "network-fundamentals": "أساسيات الشبكات",
+    "network-devices": "أجهزة الشبكة",
+    "cloud-computing": "الحوسبة السحابية",
+    "containers": "الحاويات والتنسيق",
+    "wireless": "الشبكات اللاسلكية",
+    "ux-fundamentals": "أساسيات تجربة المستخدم",
+    "ux-research": "بحث تجربة المستخدم",
+    "ui-design": "تصميم واجهة المستخدم",
+    "figma": "Figma",
+    "typography": "الطباعة",
+    "design-systems": "أنظمة التصميم",
+    "project-management": "إدارة المشاريع"
+  },
+  "quiz": {
+    "title": "اختبار",
+    "start": "ابدأ الاختبار",
+    "empty": "لا توجد مفاهيم متعلمة بعد",
+    "emptySub": "ابدأ بتعلم المفاهيم أولاً.",
+    "termsReady": "مصطلح جاهز",
+    "true": "صحيح",
+    "false": "خطأ",
+    "correct": "صحيح!",
+    "wrong": "خطأ!",
+    "definitionFrom": "هذا التعريف ينتمي إلى: {{term}}",
+    "results": "النتائج",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "حاول مرة أخرى",
+    "perfect": "ممتاز!",
+    "great": "عمل رائع!",
+    "tryAgain": "واصل التدريب!"
   }
 }

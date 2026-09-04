@@ -3,8 +3,8 @@
     "home": "ホーム",
     "explore": "探索",
     "learn": "学習",
-    "saved": "保存済み",
-    "profile": "プロフィール"
+    "profile": "プロフィール",
+    "quiz": "テスト"
   },
   "home": {
     "greeting_morning": "おはよう",
@@ -22,7 +22,11 @@
     "continueLearning": "学習を続ける",
     "conceptsToReview": "{{count}}件の復習が必要",
     "conceptsMastered": "{{count}}件を習得",
-    "noResults": "「{{query}}」に一致する結果はありません"
+    "noResults": "「{{query}}」に一致する結果はありません",
+    "greeting_name": "{{greeting}}, {{name}}",
+    "dailyGoalLabel": "デイリー目標",
+    "dailyGoalComplete": "目標達成！",
+    "energyLabel": "エネルギー"
   },
   "learn": {
     "title": "学習",
@@ -32,7 +36,8 @@
     "restart": "やり直す",
     "swipeRight": "知ってる",
     "swipeLeft": "学習中",
-    "tapFlip": "タップして裏返す"
+    "tapFlip": "タップして裏返す",
+    "undo": "元に戻す"
   },
   "explore": {
     "title": "探索",
@@ -41,11 +46,6 @@
     "search": "コンセプトを検索...",
     "shuffle": "シャッフル",
     "shuffleAll": "すべてシャッフル"
-  },
-  "saved": {
-    "title": "保存済み",
-    "empty": "保存したコンセプトはまだありません",
-    "emptySub": "学習中に上にスワイプすると、ここに保存できます。"
   },
   "term": {
     "definition": "定義",
@@ -96,7 +96,16 @@
     "confirmCancel": "本当にサブスクリプションを解約しますか？",
     "confirmCancelSub": "プレミアム機能は現在の請求期間の終了まで利用できます。",
     "confirm": "確認",
-    "subscriptionResumed": "サブスクリプションが再開されました"
+    "subscriptionResumed": "サブスクリプションが再開されました",
+    "league": {
+      "bronze": "ブロンズ",
+      "silver": "シルバー",
+      "gold": "ゴールド",
+      "platinum": "プラチナ",
+      "diamond": "ダイヤモンド"
+    },
+    "tierFree": "無料",
+    "tierPremium": "プレミアム"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",
@@ -126,7 +135,22 @@
     "pwSpecial": "特殊文字1つ",
     "pwMatch": "パスワードが一致しています",
     "pwNoMatch": "パスワードが一致しません",
-    "usernameTaken": "このユーザー名はすでに使われています"
+    "usernameTaken": "このユーザー名はすでに使われています",
+    "validation": {
+      "usernameRequired": "ユーザー名は必須です",
+      "usernameMinLength": "3文字以上",
+      "usernameMaxLength": "最大20文字",
+      "usernamePattern": "小文字と数字のみ",
+      "fieldRequired": "{{field}}は必須です",
+      "minLength2": "2文字以上",
+      "emailRequired": "メールアドレスは必須です",
+      "emailInvalid": "無効なメール形式",
+      "dobRequired": "生年月日は必須です",
+      "dobFormat": "形式: DD/MM/YYYY",
+      "dobInvalid": "無効な日付",
+      "dobFuture": "未来の日付は使用できません",
+      "dobRange": "無効な生年月日"
+    }
   },
   "paywall": {
     "title": "フルアクセスを解放",
@@ -175,5 +199,99 @@
     "done": "完了",
     "close": "閉じる",
     "loading": "読み込み中..."
+  },
+  "onboarding": {
+    "welcome": "テクノロジーの\n概念をマスター",
+    "welcomeDesc": "フラッシュカードで技術用語を学びましょう。サイバーセキュリティからソフトウェア開発まで。",
+    "howItWorks": "スワイプして学ぶ",
+    "howItWorksDesc": "間隔反復によるシンプルで効果的な学習ループ。",
+    "swipeRight": "右にスワイプ",
+    "swipeRightDesc": "この概念を知っている",
+    "swipeLeft": "左にスワイプ",
+    "swipeLeftDesc": "まだ学習中",
+    "tapFlip": "カードをタップ",
+    "tapFlipDesc": "裏返して定義を見る",
+    "nameTitle": "お名前は？",
+    "nameSubtitle": "どのようにお呼びしますか？（任意）",
+    "namePlaceholder": "名前を入力",
+    "themeTitle": "テーマを選択",
+    "themeSubtitle": "設定からいつでも変更できます。",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "themeSystem": "システム",
+    "interestsTitle": "興味のある分野は？",
+    "interestsSubtitle": "1つ以上の分野を選択。後で変更できます。",
+    "subcategories": "{{count}}個のサブカテゴリ",
+    "paceTitle": "ペースを設定",
+    "paceSubtitle": "1日に何個の概念を学びたいですか？少しずつ始めましょう。",
+    "goalCasual": "カジュアル",
+    "goalRegular": "レギュラー",
+    "goalSerious": "シリアス",
+    "goalIntense": "インテンス",
+    "conceptsPerDay": "1日{{count}}概念",
+    "continue": "続ける",
+    "skip": "スキップ",
+    "startLearning": "学習を開始"
+  },
+  "categories": {
+    "cybersecurity": "サイバーセキュリティ",
+    "software-dev": "ソフトウェア開発",
+    "ai-ml": "AI & 機械学習",
+    "networking": "ネットワーク",
+    "design-ux": "デザイン & UX",
+    "cybersecurity-general": "一般用語",
+    "blue-team": "ブルーチーム（防御）",
+    "siem-log-analysis": "SIEM & ログ分析",
+    "incident-response": "インシデント対応",
+    "threat-intelligence": "脅威インテリジェンス",
+    "red-team": "レッドチーム（攻撃）",
+    "reconnaissance": "偵察",
+    "exploitation": "エクスプロイト",
+    "social-engineering": "ソーシャルエンジニアリング",
+    "cryptography": "暗号技術",
+    "malware": "マルウェア分析",
+    "owasp-web-security": "OWASP & Webセキュリティ",
+    "web-frontend": "Webフロントエンド",
+    "web-backend": "Webバックエンド",
+    "database": "データベース & SQL",
+    "devops": "DevOps & CI/CD",
+    "git-version-control": "Git & バージョン管理",
+    "testing": "テスト & QA",
+    "machine-learning": "機械学習",
+    "deep-learning": "ディープラーニング",
+    "llm-nlp": "LLM & NLP",
+    "computer-vision": "コンピュータビジョン",
+    "big-data": "ビッグデータ",
+    "protocols": "プロトコル",
+    "network-fundamentals": "ネットワーク基礎",
+    "network-devices": "ネットワーク機器",
+    "cloud-computing": "クラウドコンピューティング",
+    "containers": "コンテナ & オーケストレーション",
+    "wireless": "ワイヤレスネットワーク",
+    "ux-fundamentals": "UXの基礎",
+    "ux-research": "UXリサーチ",
+    "ui-design": "UIデザイン",
+    "figma": "Figma",
+    "typography": "タイポグラフィ",
+    "design-systems": "デザインシステム",
+    "project-management": "プロジェクト管理"
+  },
+  "quiz": {
+    "title": "テスト",
+    "start": "クイズ開始",
+    "empty": "学習済みの用語がありません",
+    "emptySub": "まず用語を学習してください。",
+    "termsReady": "用語が準備完了",
+    "true": "正しい",
+    "false": "間違い",
+    "correct": "正解!",
+    "wrong": "不正解!",
+    "definitionFrom": "この定義は次の用語に属します: {{term}}",
+    "results": "結果",
+    "xpEarned": "+{{xp}} XP",
+    "retry": "もう一度",
+    "perfect": "完璧!",
+    "great": "素晴らしい!",
+    "tryAgain": "もっと練習しよう!"
   }
 }

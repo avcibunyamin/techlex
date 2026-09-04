@@ -4,6 +4,7 @@ import { Term, UserProgress, Language } from '@/types';
 import { createProgress, markKnown, markUnknown } from './spaced-repetition';
 import { pushProgress, pullProgress, pushBatchSwipes, BatchProgressItem } from './sync';
 import { ThemeMode } from './useTheme';
+import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel } from '@/constants/badges';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -21,25 +22,35 @@ const ALL_TERMS: Term[] = [
 
 type SubscriptionTier = 'free' | 'individual' | 'duo' | 'family';
 
+export interface QuizQuestion {
+  term: Term;
+  displayedDefinition: string;
+  isCorrect: boolean;
+  sourceTerm?: Term;
+}
+
 export interface SwipeQueueItem {
   termId: string;
-  action: 'right' | 'left' | 'up';
+  action: 'right' | 'left';
   timestamp: number;
 }
 
 interface AppState {
   terms: Term[];
   progress: Record<string, UserProgress>;
-  savedTerms: string[];
   selectedTags: string[];
   language: Language;
   streak: number;
+  longestStreak: number;
   lastActiveDate: string | null;
   dailyGoal: number;
   todayCount: number;
   totalSwipes: number;
+  xp: number;
+  earnedBadges: string[];
   isLoaded: boolean;
   hasCompletedOnboarding: boolean;
+  displayName: string;
   themeMode: ThemeMode;
   subscriptionTier: SubscriptionTier;
   cancelAtPeriodEnd: boolean;
@@ -56,10 +67,10 @@ interface AppState {
   setLanguage: (lang: Language) => void;
   setDailyGoal: (goal: number) => void;
   completeOnboarding: () => void;
+  setDisplayName: (name: string) => void;
   setThemeMode: (mode: ThemeMode) => void;
   swipeRight: (termId: string) => void;
   swipeLeft: (termId: string) => void;
-  toggleSave: (termId: string) => void;
   consumeEnergy: () => boolean;
   refillEnergy: () => void;
   flushSwipeQueue: () => Promise<void>;
@@ -67,10 +78,14 @@ interface AppState {
   loadFromCloud: (userId: string) => Promise<void>;
   getFilteredTerms: () => Term[];
   getTermsForReview: () => Term[];
-  getSavedTerms: () => Term[];
-  getLevel: () => number;
+  getLevel: () => { level: number; currentXp: number; nextLevelXp: number };
+  getLeague: () => { id: string; minXp: number; color: string };
   hasActivePremium: () => boolean;
   setCancelAtPeriodEnd: (cancel: boolean, periodEnd?: number) => void;
+  checkAndAwardBadges: () => string[];
+  undoSwipe: (termId: string, direction: 'right' | 'left', previousProgress: UserProgress | null, wasReview: boolean) => void;
+  generateQuiz: () => QuizQuestion[];
+  submitQuizResults: (correctCount: number, totalCount: number) => void;
 }
 
 const STORAGE_KEY = '@pratik_kelime_data';
@@ -88,16 +103,19 @@ function getTodayString(): string {
 export const useAppStore = create<AppState>((set, get) => ({
   terms: ALL_TERMS,
   progress: {},
-  savedTerms: [],
   selectedTags: [],
   language: 'tr',
   streak: 0,
+  longestStreak: 0,
   lastActiveDate: null,
   dailyGoal: 10,
   todayCount: 0,
   totalSwipes: 0,
+  xp: 0,
+  earnedBadges: [],
   isLoaded: false,
   hasCompletedOnboarding: false,
+  displayName: '',
   themeMode: 'system',
   subscriptionTier: 'free',
   cancelAtPeriodEnd: false,
@@ -147,16 +165,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           energy = 999;
         }
 
-        // Migrate: convert old starred to savedTerms
-        let savedTerms: string[] = data.savedTerms || [];
-        if (savedTerms.length === 0 && data.progress) {
-          const oldStarred = Object.values(data.progress as Record<string, any>)
-            .filter((p: any) => p.starred)
-            .map((p: any) => p.termId);
-          if (oldStarred.length > 0) savedTerms = oldStarred;
-        }
-
-        // Strip starred from progress entries
+        // Strip starred from old progress entries
         const progress: Record<string, UserProgress> = {};
         if (data.progress) {
           for (const [k, v] of Object.entries(data.progress as Record<string, any>)) {
@@ -167,16 +176,19 @@ export const useAppStore = create<AppState>((set, get) => ({
 
         set({
           progress,
-          savedTerms,
           selectedTags: data.selectedTags || [],
           language: data.language || 'tr',
           streak,
+          longestStreak: Math.max(data.longestStreak || 0, streak),
           lastActiveDate: data.lastActiveDate,
           dailyGoal: data.dailyGoal || 10,
           todayCount,
           totalSwipes: data.totalSwipes || 0,
+          xp: data.xp || 0,
+          earnedBadges: data.earnedBadges || [],
           isLoaded: true,
           hasCompletedOnboarding: data.hasCompletedOnboarding ?? false,
+          displayName: data.displayName || '',
           themeMode: data.themeMode || 'system',
           subscriptionTier: tier,
           cancelAtPeriodEnd: data.cancelAtPeriodEnd || false,
@@ -200,15 +212,18 @@ export const useAppStore = create<AppState>((set, get) => ({
         STORAGE_KEY,
         JSON.stringify({
           progress: s.progress,
-          savedTerms: s.savedTerms,
           selectedTags: s.selectedTags,
           language: s.language,
           streak: s.streak,
+          longestStreak: s.longestStreak,
           lastActiveDate: s.lastActiveDate,
           dailyGoal: s.dailyGoal,
           todayCount: s.todayCount,
           totalSwipes: s.totalSwipes,
+          xp: s.xp,
+          earnedBadges: s.earnedBadges,
           hasCompletedOnboarding: s.hasCompletedOnboarding,
+          displayName: s.displayName,
           themeMode: s.themeMode,
           subscriptionTier: s.subscriptionTier,
           cancelAtPeriodEnd: s.cancelAtPeriodEnd,
@@ -237,6 +252,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setLanguage: (lang) => {
     set({ language: lang });
+    import('@/lib/i18n').then(mod => mod.default.changeLanguage(lang));
     get().saveData();
   },
 
@@ -247,6 +263,11 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   completeOnboarding: () => {
     set({ hasCompletedOnboarding: true });
+    get().saveData();
+  },
+
+  setDisplayName: (name) => {
+    set({ displayName: name });
     get().saveData();
   },
 
@@ -263,6 +284,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const state = get();
     let newStreak = state.streak;
     if (state.lastActiveDate !== today) newStreak = state.streak + 1;
+    const newLongest = Math.max(state.longestStreak, newStreak);
 
     const newQueue = [...swipeQueue, { termId, action: 'right' as const, timestamp: Date.now() }];
 
@@ -270,11 +292,14 @@ export const useAppStore = create<AppState>((set, get) => ({
       progress: { ...progress, [termId]: updated },
       todayCount: state.todayCount + 1,
       totalSwipes: state.totalSwipes + 1,
+      xp: state.xp + XP_PER_SWIPE,
       streak: newStreak,
+      longestStreak: newLongest,
       lastActiveDate: today,
       swipeQueue: newQueue,
     });
     get().scheduleSave();
+    get().checkAndAwardBadges();
 
     if (newQueue.length >= BATCH_FLUSH_SIZE) {
       get().flushSwipeQueue();
@@ -289,6 +314,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const state = get();
     let newStreak = state.streak;
     if (state.lastActiveDate !== today) newStreak = state.streak + 1;
+    const newLongest = Math.max(state.longestStreak, newStreak);
 
     const newQueue = [...swipeQueue, { termId, action: 'left' as const, timestamp: Date.now() }];
 
@@ -296,24 +322,18 @@ export const useAppStore = create<AppState>((set, get) => ({
       progress: { ...progress, [termId]: updated },
       todayCount: state.todayCount + 1,
       totalSwipes: state.totalSwipes + 1,
+      xp: state.xp + XP_PER_SWIPE,
       streak: newStreak,
+      longestStreak: newLongest,
       lastActiveDate: today,
       swipeQueue: newQueue,
     });
     get().scheduleSave();
+    get().checkAndAwardBadges();
 
     if (newQueue.length >= BATCH_FLUSH_SIZE) {
       get().flushSwipeQueue();
     }
-  },
-
-  toggleSave: (termId) => {
-    const { savedTerms } = get();
-    const newSaved = savedTerms.includes(termId)
-      ? savedTerms.filter((id) => id !== termId)
-      : [...savedTerms, termId];
-    set({ savedTerms: newSaved });
-    get().saveData();
   },
 
   consumeEnergy: () => {
@@ -457,13 +477,55 @@ export const useAppStore = create<AppState>((set, get) => ({
     return due;
   },
 
-  getSavedTerms: () => {
-    const { terms, savedTerms } = get();
-    return terms.filter((term) => savedTerms.includes(term.id));
+  getLevel: () => {
+    return getLevel(get().xp);
   },
 
-  getLevel: () => {
-    return Math.floor(get().totalSwipes / 100) + 1;
+  getLeague: () => {
+    return getLeague(get().xp);
+  },
+
+  checkAndAwardBadges: () => {
+    const s = get();
+    const tagCounts: Record<string, number> = {};
+    for (const [termId, prog] of Object.entries(s.progress)) {
+      const term = s.terms.find(t => t.id === termId);
+      if (term) {
+        for (const tag of term.tags) {
+          tagCounts[tag] = (tagCounts[tag] || 0) + prog.timesSeen;
+        }
+      }
+    }
+
+    const stats: BadgeCheckStats = {
+      totalSwipes: s.totalSwipes,
+      streak: s.streak,
+      longestStreak: s.longestStreak,
+      xp: s.xp,
+      tagCounts,
+      studyHour: new Date().getHours(),
+    };
+
+    const newBadges: string[] = [];
+    for (const badge of BADGES) {
+      if (!s.earnedBadges.includes(badge.id) && badge.condition(stats)) {
+        newBadges.push(badge.id);
+      }
+    }
+
+    if (newBadges.length > 0) {
+      const xpBonus = newBadges.reduce((sum, id) => {
+        const b = BADGES.find(b => b.id === id);
+        return sum + (b?.xpReward ?? 0);
+      }, 0);
+      set({
+        earnedBadges: [...s.earnedBadges, ...newBadges],
+        xp: s.xp + xpBonus,
+      });
+      get().scheduleSave();
+    }
+
+    return newBadges;
   },
 
   hasActivePremium: () => {
@@ -480,5 +542,105 @@ export const useAppStore = create<AppState>((set, get) => ({
       ...(periodEnd !== undefined ? { currentPeriodEnd: periodEnd } : {}),
     });
     get().saveData();
+  },
+
+  undoSwipe: (termId, direction, previousProgress, wasReview) => {
+    const s = get();
+    const newProgress = { ...s.progress };
+    if (previousProgress) {
+      newProgress[termId] = previousProgress;
+    } else {
+      delete newProgress[termId];
+    }
+
+    let newEnergy = s.energyLevel;
+    if (!wasReview && !get().hasActivePremium()) {
+      newEnergy = Math.min(s.energyLevel + 1, MAX_ENERGY);
+    }
+
+    set({
+      progress: newProgress,
+      todayCount: Math.max(0, s.todayCount - 1),
+      totalSwipes: Math.max(0, s.totalSwipes - 1),
+      xp: Math.max(0, s.xp - XP_PER_SWIPE),
+      energyLevel: newEnergy,
+      swipeQueue: s.swipeQueue.length > 0 && s.swipeQueue[s.swipeQueue.length - 1].termId === termId
+        ? s.swipeQueue.slice(0, -1)
+        : s.swipeQueue,
+    });
+    get().scheduleSave();
+  },
+
+  generateQuiz: () => {
+    const { progress, terms, language } = get();
+    const tl = language === 'tr' ? 'tr' : 'en';
+    const seenIds = Object.keys(progress);
+    const QUIZ_SIZE = 10;
+
+    let selectedTerms: Term[];
+    if (seenIds.length >= QUIZ_SIZE) {
+      const shuffled = [...seenIds].sort(() => Math.random() - 0.5);
+      selectedTerms = shuffled.slice(0, QUIZ_SIZE)
+        .map(id => terms.find(t => t.id === id))
+        .filter(Boolean) as Term[];
+    } else {
+      const seen = seenIds
+        .map(id => terms.find(t => t.id === id))
+        .filter(Boolean) as Term[];
+      const unseen = terms
+        .filter(t => !progress[t.id])
+        .sort(() => Math.random() - 0.5)
+        .slice(0, QUIZ_SIZE - seen.length);
+      selectedTerms = [...seen, ...unseen];
+    }
+
+    const questions: QuizQuestion[] = selectedTerms.map(term => {
+      const showCorrect = Math.random() < 0.5;
+
+      if (showCorrect) {
+        return {
+          term,
+          displayedDefinition: term.translations[tl].definition,
+          isCorrect: true,
+        };
+      }
+
+      const primaryTag = term.tags[0];
+      let candidates = terms.filter(t =>
+        t.id !== term.id && t.tags.some(tag => term.tags.includes(tag))
+      );
+      if (candidates.length === 0) {
+        candidates = terms.filter(t => t.id !== term.id);
+      }
+      const donor = candidates[Math.floor(Math.random() * candidates.length)];
+
+      return {
+        term,
+        displayedDefinition: donor.translations[tl].definition,
+        isCorrect: false,
+        sourceTerm: donor,
+      };
+    });
+
+    return questions.sort(() => Math.random() - 0.5);
+  },
+
+  submitQuizResults: (correctCount, totalCount) => {
+    const today = getTodayString();
+    const s = get();
+    let newStreak = s.streak;
+    if (s.lastActiveDate !== today) newStreak = s.streak + 1;
+    const newLongest = Math.max(s.longestStreak, newStreak);
+
+    set({
+      xp: s.xp + correctCount * XP_PER_QUIZ,
+      todayCount: s.todayCount + correctCount,
+      totalSwipes: s.totalSwipes + totalCount,
+      streak: newStreak,
+      longestStreak: newLongest,
+      lastActiveDate: today,
+    });
+    get().scheduleSave();
+    get().checkAndAwardBadges();
   },
 }));
