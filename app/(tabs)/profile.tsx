@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   StyleSheet, Text, View, ScrollView, Pressable,
   TextInput, ActivityIndicator, Alert,
@@ -6,7 +6,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Flame, Target, BookCheck, Brain, ChevronRight,
-  LogIn, LogOut, Cloud, Globe, Sun, Moon, Monitor,
+  LogIn, LogOut, Globe, Sun, Moon, Monitor,
   Zap, Infinity, Crown, AtSign, Check, X, AlertCircle,
   Award, RotateCcw,
 } from 'lucide-react-native';
@@ -29,7 +29,7 @@ export default function ProfileScreen() {
   const { user, signOut } = useAuth();
   const {
     streak, longestStreak, language, setLanguage, progress, terms,
-    dailyGoal, todayCount, syncToCloud,
+    dailyGoal, todayCount,
     setThemeMode, subscriptionTier, energyLevel,
     totalSwipes, xp, earnedBadges, getLevel, getLeague, hasActivePremium,
     cancelAtPeriodEnd, currentPeriodEnd, setCancelAtPeriodEnd,
@@ -177,14 +177,14 @@ export default function ProfileScreen() {
 
   const ThemeIcon = themeMode === 'light' ? Sun : themeMode === 'dark' ? Moon : Monitor;
 
-  const categoryProgress = categories.map(cat => {
+  const categoryProgress = useMemo(() => categories.map(cat => {
     const catTerms = terms.filter(term => term.tags.includes(cat.id));
     const mastered = catTerms.filter(term => {
       const p = progress[term.id];
       return p && p.box >= 4;
     }).length;
     return { ...cat, total: catTerms.length, mastered };
-  });
+  }).filter(cat => cat.mastered > 0), [terms, progress]);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
@@ -363,6 +363,9 @@ export default function ProfileScreen() {
 
               {showUsernameEdit && (
                 <View style={[styles.usernameEdit, { borderColor: t.border }]}>
+                  <Text style={[typography.footnote, { color: t.textTertiary, marginBottom: spacing.sm }]}>
+                    {tr('profile.usernameLimit')}
+                  </Text>
                   {cooldownDays !== null && cooldownDays > 0 && (
                     <View style={[styles.cooldownBanner, { backgroundColor: colors.warningMuted }]}>
                       <AlertCircle size={12} color={colors.warning} strokeWidth={2} />
@@ -410,17 +413,6 @@ export default function ProfileScreen() {
                   ) : null}
                 </View>
               )}
-
-              <Pressable
-                style={[styles.settingRow, { borderColor: t.border }]}
-                onPress={() => syncToCloud(user.id)}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
-                  <Cloud size={14} color={accent} strokeWidth={1.5} />
-                  <Text style={[typography.body, { color: t.text }]}>{tr('profile.syncNow')}</Text>
-                </View>
-                <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
-              </Pressable>
 
               <Pressable
                 style={styles.settingRow}
@@ -541,7 +533,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { padding: spacing.xl, paddingBottom: spacing['6xl'] },
+  content: { padding: spacing.xl, paddingBottom: spacing['6xl'], maxWidth: 800, alignSelf: 'center' as const, width: '100%' as any },
   levelCard: {
     marginTop: spacing['2xl'],
     padding: spacing.xl,

@@ -26,7 +26,15 @@
     "continueLearning": "ÖĞRENMEYE DEVAM",
     "conceptsToReview": "{{count}} kavram tekrar bekliyor",
     "conceptsMastered": "{{count}} kavram öğrenildi",
-    "noResults": "\"{{query}}\" için sonuç bulunamadı"
+    "noResults": "\"{{query}}\" için sonuç bulunamadı",
+    "continueStudying": "Çalışmaya Devam Et",
+    "needsReview": "TEKRAR GEREKLİ",
+    "chart_daily": "Günlük",
+    "chart_weekly": "Haftalık",
+    "chart_monthly": "Aylık",
+    "chart_swipes": "Kaydırmalar",
+    "chart_quiz": "Test",
+    "reviewCta": "Tekrar Gerekli Kavramları Çalış"
   },
   "learn": {
     "title": "Öğren",
@@ -37,7 +45,12 @@
     "swipeRight": "Biliyorum",
     "swipeLeft": "Öğreniyorum",
     "tapFlip": "Çevirmek için dokun",
-    "undo": "Geri al"
+    "undo": "Geri al",
+    "chooseMode": "Nasıl çalışmak istersin?",
+    "reviewMode": "Tekrar Et",
+    "newTerms": "Yeni Terim Öğren",
+    "newTermsSub": "{{count}} terim hazır",
+    "noReview": "Tekrar edilecek terim yok"
   },
   "explore": {
     "title": "Keşfet",
@@ -55,7 +68,9 @@
     "beginner": "Başlangıç",
     "intermediate": "Orta",
     "advanced": "İleri",
-    "showMore": "+{{count}} daha fazla"
+    "showMore": "+{{count}} daha fazla",
+    "relatedTerms": "İLGİLİ TERİMLER",
+    "premiumOnly": "Premium ile aç"
   },
   "profile": {
     "title": "Profil",
@@ -105,7 +120,9 @@
       "diamond": "Elmas"
     },
     "tierFree": "Ucretsiz",
-    "tierPremium": "Premium"
+    "tierPremium": "Premium",
+    "usernameLimit": "7 gün içinde yalnızca 1 kez isim değiştirebilirsiniz",
+    "thisWeek": "BU HAFTA"
   },
   "auth": {
     "welcomeBack": "Tekrar hoş geldin",
@@ -171,7 +188,9 @@
       "prioritySupport": "Öncelikli destek",
       "shareWith": "{{count}} kişiyle paylaş",
       "familySharing": "Aile paylaşımı (6 kişiye kadar)",
-      "offlineAccess": "Çevrimdışı erişim"
+      "offlineAccess": "Çevrimdışı erişim",
+      "advancedAnalysis": "Gelişmiş hata analizi",
+      "relatedTermsMap": "İlgili terimler haritası"
     },
     "subscribe": "Abone ol",
     "restore": "Satın almayı geri yükle",
@@ -224,57 +243,60 @@
     "conceptsPerDay": "günde {{count}} kavram",
     "continue": "Devam",
     "skip": "Atla",
-    "startLearning": "Öğrenmeye başla"
+    "startLearning": "Öğrenmeye başla",
+    "selectAtLeast": "En az 1 kategori seç"
   },
   "common": {
     "cancel": "İptal",
     "save": "Kaydet",
     "done": "Tamam",
     "close": "Kapat",
-    "loading": "Yükleniyor..."
+    "loading": "Yükleniyor...",
+    "selectAll": "Tümünü Seç",
+    "deselectAll": "Tümünü Kaldır"
   },
   "categories": {
-    "cybersecurity": "Siber Guvenlik",
-    "software-dev": "Yazilim Gelistirme",
-    "ai-ml": "Yapay Zeka & ML",
-    "networking": "Ag Sistemleri",
-    "design-ux": "Tasarim & UX",
-    "cybersecurity-general": "Genel Terimler",
+    "cybersecurity": "Siber Güvenlik (Cybersecurity)",
+    "software-dev": "Yazılım Geliştirme (Software Development)",
+    "ai-ml": "Yapay Zeka & ML (AI & Machine Learning)",
+    "networking": "Ağ Sistemleri (Networking)",
+    "design-ux": "Tasarım & UX (Design & UX)",
+    "cybersecurity-general": "Genel Terimler (General Terms)",
     "blue-team": "Blue Team (Savunma)",
-    "siem-log-analysis": "SIEM & Log Analizi",
-    "incident-response": "Olay Mudahale",
-    "threat-intelligence": "Tehdit Istihbarati",
-    "red-team": "Red Team (Saldiri)",
-    "reconnaissance": "Kesif",
-    "exploitation": "Istismar",
-    "social-engineering": "Sosyal Muhendislik",
-    "cryptography": "Kriptografi",
-    "malware": "Malware Analizi",
-    "owasp-web-security": "OWASP & Web Guvenligi",
+    "siem-log-analysis": "SIEM & Log Analizi (SIEM & Log Analysis)",
+    "incident-response": "Olay Müdahale (Incident Response)",
+    "threat-intelligence": "Tehdit İstihbaratı (Threat Intelligence)",
+    "red-team": "Red Team (Saldırı)",
+    "reconnaissance": "Keşif (Reconnaissance)",
+    "exploitation": "İstismar (Exploitation)",
+    "social-engineering": "Sosyal Mühendislik (Social Engineering)",
+    "cryptography": "Kriptografi (Cryptography)",
+    "malware": "Malware Analizi (Malware Analysis)",
+    "owasp-web-security": "OWASP & Web Güvenliği (OWASP & Web Security)",
     "web-frontend": "Web Frontend",
     "web-backend": "Web Backend",
-    "database": "Veritabani & SQL",
+    "database": "Veritabanı & SQL (Database & SQL)",
     "devops": "DevOps & CI/CD",
-    "git-version-control": "Git & Versiyon Kontrol",
-    "testing": "Test & QA",
-    "machine-learning": "Makine Ogrenmesi",
-    "deep-learning": "Derin Ogrenme",
+    "git-version-control": "Git & Versiyon Kontrol (Git & Version Control)",
+    "testing": "Test & QA (Testing & QA)",
+    "machine-learning": "Makine Öğrenmesi (Machine Learning)",
+    "deep-learning": "Derin Öğrenme (Deep Learning)",
     "llm-nlp": "LLM & NLP",
-    "computer-vision": "Goruntu Isleme",
-    "big-data": "Buyuk Veri",
-    "protocols": "Protokoller",
-    "network-fundamentals": "Ag Temelleri",
-    "network-devices": "Ag Cihazlari",
-    "cloud-computing": "Bulut Bilisim",
-    "containers": "Konteyner & Orkestrasyon",
-    "wireless": "Kablosuz Aglar",
-    "ux-fundamentals": "UX Temelleri",
-    "ux-research": "UX Arastirma",
-    "ui-design": "UI Tasarim",
+    "computer-vision": "Görüntü İşleme (Computer Vision)",
+    "big-data": "Büyük Veri (Big Data)",
+    "protocols": "Protokoller (Protocols)",
+    "network-fundamentals": "Ağ Temelleri (Network Fundamentals)",
+    "network-devices": "Ağ Cihazları (Network Devices)",
+    "cloud-computing": "Bulut Bilişim (Cloud Computing)",
+    "containers": "Konteyner & Orkestrasyon (Containers & Orchestration)",
+    "wireless": "Kablosuz Ağlar (Wireless Networks)",
+    "ux-fundamentals": "UX Temelleri (UX Fundamentals)",
+    "ux-research": "UX Araştırma (UX Research)",
+    "ui-design": "UI Tasarım (UI Design)",
     "figma": "Figma",
-    "typography": "Tipografi",
-    "design-systems": "Tasarim Sistemleri",
-    "project-management": "Proje Yonetimi"
+    "typography": "Tipografi (Typography)",
+    "design-systems": "Tasarım Sistemleri (Design Systems)",
+    "project-management": "Proje Yönetimi (Project Management)"
   },
   "quiz": {
     "title": "Test",
@@ -292,6 +314,18 @@
     "retry": "Tekrar Dene",
     "perfect": "Mükemmel!",
     "great": "Harika!",
-    "tryAgain": "Biraz daha çalış!"
+    "tryAgain": "Biraz daha çalış!",
+    "notEnoughTitle": "Henüz yeterli kavram yok",
+    "notEnoughSub": "Testi başlatmak için en az 10 kelimeyi öğrenmiş olmalısın. (Şu an: {{current}}/10)",
+    "correctDefinitionLabel": "Doğru tanım:",
+    "gotIt": "Anladım",
+    "unlockSource": "Hangi kavrama ait olduğunu gör",
+    "skip": "Bilmiyorum"
+  },
+  "premiumModal": {
+    "title": "Premium Özellik",
+    "subtitle": "Bu özelliğe erişmek için Premium'a geçin.",
+    "subtitleRelated": "İlgili terimleri ve derinlemesine analizleri görmek için Premium'a geçin.",
+    "subtitleQuiz": "Hangi kavrama ait olduğunu görmek ve ek özellikler için Premium'a geçin."
   }
 }

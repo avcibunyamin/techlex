@@ -26,20 +26,20 @@ const plans: Plan[] = [
     id: 'individual',
     icon: Crown,
     price: '₺39,90',
-    popular: true,
-    features: ['unlimitedEnergy', 'allCategories', 'cloudSync', 'offlineAccess'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync'],
   },
   {
     id: 'duo',
     icon: Users,
     price: '₺59,90',
-    features: ['unlimitedEnergy', 'allCategories', 'cloudSync', 'offlineAccess', 'shareWith'],
+    popular: true,
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'shareWith'],
   },
   {
     id: 'family',
     icon: Heart,
     price: '₺99,90',
-    features: ['unlimitedEnergy', 'allCategories', 'cloudSync', 'offlineAccess', 'familySharing', 'prioritySupport'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'familySharing', 'prioritySupport'],
   },
 ];
 
@@ -47,7 +47,7 @@ export default function PaywallScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const [selected, setSelected] = useState<string>('individual');
+  const [selected, setSelected] = useState<string>('duo');
 
   const featureLabel = (key: string) => {
     if (key === 'limitedEnergy') return tr('paywall.features.limitedEnergy', { count: 30 });
@@ -169,7 +169,7 @@ export default function PaywallScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, maxWidth: 800, alignSelf: 'center' as const, width: '100%' as any },
   header: {
     flexDirection: 'row',
     alignItems: 'center',

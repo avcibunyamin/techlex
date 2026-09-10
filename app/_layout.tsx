@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useRouter, useSegments }
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { StatusBar, View, ActivityIndicator } from 'react-native';
+import { StatusBar, View, ActivityIndicator, AppState as RNAppState, AppStateStatus } from 'react-native';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useAppStore } from '@/lib/store';
@@ -62,7 +62,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      loadData();
+      loadData().then(() => {
+        useAppStore.getState().fetchServerTime();
+      });
       loadSavedLanguage();
       SplashScreen.hideAsync();
     }
@@ -94,9 +96,40 @@ function RootLayoutNav() {
 
   useEffect(() => {
     if (user && isLoaded) {
-      useAppStore.getState().loadFromCloud(user.id);
+      const store = useAppStore.getState();
+      store.syncToCloud(user.id).then(() => {
+        if (useAppStore.getState().swipeQueue.length === 0) {
+          store.loadFromCloud(user.id);
+        }
+      });
     }
   }, [user, isLoaded]);
+
+  useEffect(() => {
+    const handler = (state: AppStateStatus) => {
+      const store = useAppStore.getState();
+      if (state === 'background' || state === 'inactive') {
+        if (user) {
+          store.syncToCloud(user.id);
+        } else {
+          store.flushSwipeQueue();
+        }
+      }
+      if (state === 'active') {
+        store.refillEnergy();
+        store.fetchServerTime();
+        if (user) {
+          store.syncToCloud(user.id).then(() => {
+            if (useAppStore.getState().swipeQueue.length === 0) {
+              store.loadFromCloud(user.id);
+            }
+          });
+        }
+      }
+    };
+    const sub = RNAppState.addEventListener('change', handler);
+    return () => sub.remove();
+  }, [user]);
 
   if (!isLoaded) {
     return (

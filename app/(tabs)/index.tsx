@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, Dimensions } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowRight, Flame, Zap, Infinity, CheckCircle } from 'lucide-react-native';
-import Animated, { FadeInDown } from 'react-native-reanimated';
+import { ArrowRight, Flame, Zap, Infinity, CheckCircle, RotateCcw } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { getStats } from '@/lib/spaced-repetition';
-import { categories } from '@/data/categories';
-import { getTermLanguage } from '@/types';
+import { QUOTES, getDailyQuote } from '@/constants/quotes';
+import WeeklyChart, { ChartPeriod } from '@/components/WeeklyChart';
+import type { Language } from '@/types';
 
 export default function HomeScreen() {
   const { colors: t, isDark, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const { isLoaded, loadData, streak, dailyGoal, todayCount, progress, terms, selectedTags, language, energyLevel, hasActivePremium, displayName } = useAppStore();
+  const { isLoaded, loadData, streak, dailyGoal, todayCount, progress, terms, selectedTags, language, energyLevel, hasActivePremium, displayName, getReviewNeededTerms } = useAppStore();
   const isPremium = hasActivePremium();
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function HomeScreen() {
   const progressValues = Object.values(progress);
   const stats = getStats(progressValues);
   const seenCount = progressValues.filter(p => p.timesSeen > 0).length;
+  const reviewTerms = useMemo(() => getReviewNeededTerms(), [progress, terms]);
 
   function getGreeting(): string {
     const hour = new Date().getHours();
@@ -38,6 +39,7 @@ export default function HomeScreen() {
     ? tr('home.greeting_name', { greeting: getGreeting(), name: displayName })
     : getGreeting();
 
+  const [chartPeriod, setChartPeriod] = useState<ChartPeriod>('daily');
   const goalProgress = dailyGoal > 0 ? Math.min(todayCount / dailyGoal, 1) : 0;
   const goalComplete = todayCount >= dailyGoal;
 
@@ -48,18 +50,20 @@ export default function HomeScreen() {
         contentContainerStyle={styles.content}
       >
         {/* Header */}
-        <Animated.View entering={FadeInDown.duration(400).delay(0)}>
+        <View>
           <Text style={[typography.callout, { color: t.textTertiary, marginBottom: spacing.xs }]}>
             {greetingText}
           </Text>
           <Text style={[typography.largeTitle, { color: t.text }]}>
             {tr('home.continue')}
           </Text>
-        </Animated.View>
+          <Text style={[typography.footnote, { color: t.textSecondary, marginTop: spacing.md, fontStyle: 'italic' }]}>
+            {QUOTES[getDailyQuote()][language as keyof typeof QUOTES[0]]}
+          </Text>
+        </View>
 
         {/* Streak + Energy */}
-        <Animated.View
-          entering={FadeInDown.duration(400).delay(80)}
+        <View
           style={[styles.streakRow, { borderColor: t.border }]}
         >
           <View style={styles.streakItem}>
@@ -77,11 +81,10 @@ export default function HomeScreen() {
               {isPremium ? tr('profile.unlimited') : `${energyLevel}/30`}
             </Text>
           </View>
-        </Animated.View>
+        </View>
 
         {/* Daily Goal Progress */}
-        <Animated.View
-          entering={FadeInDown.duration(400).delay(120)}
+        <View
           style={[styles.dailyGoalCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}
         >
           <View style={styles.dailyGoalHeader}>
@@ -113,74 +116,47 @@ export default function HomeScreen() {
               {todayCount}/{dailyGoal}
             </Text>
           </View>
-        </Animated.View>
+        </View>
 
-        {/* Continue Learning */}
-        {seenCount > 0 && (
-          <Animated.View entering={FadeInDown.duration(400).delay(160)}>
+        {/* Continue Studying CTA */}
+        <View>
+          <Pressable
+            style={[styles.continueBtn, { backgroundColor: accent }]}
+            onPress={() => router.push('/(tabs)/learn')}
+          >
+            <Text style={[typography.headline, { color: '#fff' }]}>
+              {tr('home.continueStudying')}
+            </Text>
+            <ArrowRight size={16} color="#fff" strokeWidth={2} />
+          </Pressable>
+        </View>
+
+        {/* Needs Review */}
+        {reviewTerms.length > 0 && (
+          <View>
             <Pressable
-              style={[styles.continueCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}
-              onPress={() => router.push('/(tabs)/learn')}
+              style={[styles.reviewBtn, { backgroundColor: colors.warning + '15', borderColor: colors.warning + '40' }]}
+              onPress={() => {
+                useAppStore.getState().setReviewMode(true);
+                router.push('/(tabs)/learn');
+              }}
             >
-              <View>
-                <Text style={[typography.caption, { color: accent }]}>
-                  {tr('home.continueLearning')}
+              <RotateCcw size={16} color={colors.warning} strokeWidth={2} />
+              <View style={{ flex: 1 }}>
+                <Text style={[typography.headline, { color: colors.warning }]}>
+                  {tr('home.reviewCta')}
                 </Text>
-                <Text style={[typography.headline, { color: t.text, marginTop: spacing.sm }]}>
-                  {stats.dueForReview > 0
-                    ? tr('home.conceptsToReview', { count: stats.dueForReview })
-                    : tr('home.conceptsMastered', { count: stats.mastered })}
+                <Text style={[typography.footnote, { color: t.textTertiary, marginTop: 2 }]}>
+                  {tr('home.conceptsToReview', { count: reviewTerms.length })}
                 </Text>
-                <View style={styles.progressBarContainer}>
-                  <View
-                    style={[styles.progressBar, { backgroundColor: t.bgSubtle }]}
-                  >
-                    <View
-                      style={[
-                        styles.progressFill,
-                        {
-                          backgroundColor: accent,
-                          width: `${terms.length > 0 ? (stats.mastered / terms.length) * 100 : 0}%`,
-                        },
-                      ]}
-                    />
-                  </View>
-                  <Text style={[typography.footnote, { color: t.textTertiary }]}>
-                    {terms.length > 0 ? Math.round((stats.mastered / terms.length) * 100) : 0}%
-                  </Text>
-                </View>
               </View>
-              <ArrowRight size={18} color={t.textTertiary} strokeWidth={1.5} />
+              <ArrowRight size={16} color={colors.warning} strokeWidth={2} />
             </Pressable>
-          </Animated.View>
+          </View>
         )}
 
-        {/* Explore */}
-        <Animated.View entering={FadeInDown.duration(400).delay(240)}>
-          <Text style={[typography.caption, { color: t.textTertiary, marginBottom: spacing.lg }]}>
-            {tr('home.explore')}
-          </Text>
-          <View style={styles.exploreGrid}>
-            {categories.map((cat) => (
-              <Pressable
-                key={cat.id}
-                style={[styles.exploreItem, { backgroundColor: t.bgElevated, borderColor: t.border }]}
-                onPress={() => {
-                  useAppStore.getState().setSelectedTags([cat.id]);
-                  router.push('/(tabs)/learn');
-                }}
-              >
-                <View style={[styles.exploreDot, { backgroundColor: cat.color }]} />
-                <Text style={[typography.subhead, { color: t.text }]}>
-                  {tr('categories.' + cat.id)}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        </Animated.View>
-
         {/* Quick Stats */}
-        <Animated.View entering={FadeInDown.duration(400).delay(320)}>
+        <View>
           <Text style={[typography.caption, { color: t.textTertiary, marginBottom: spacing.lg, marginTop: spacing['2xl'] }]}>
             {tr('home.progress')}
           </Text>
@@ -198,7 +174,30 @@ export default function HomeScreen() {
               <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('home.learning')}</Text>
             </View>
           </View>
-        </Animated.View>
+        </View>
+
+        {/* Analytics Chart */}
+        <View>
+          <View style={styles.analyticsTabs}>
+            {(['daily', 'weekly', 'monthly'] as ChartPeriod[]).map(p => (
+              <Pressable
+                key={p}
+                style={[
+                  styles.analyticsTab,
+                  chartPeriod === p && { backgroundColor: accent + '20' },
+                ]}
+                onPress={() => setChartPeriod(p)}
+              >
+                <Text style={[typography.footnote, { color: chartPeriod === p ? accent : t.textTertiary, fontWeight: chartPeriod === p ? '600' : '400' }]}>
+                  {tr(`home.chart_${p}`)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+          <View style={[styles.chartCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+            <WeeklyChart period={chartPeriod} />
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -206,7 +205,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { padding: spacing.xl, paddingBottom: spacing['6xl'] },
+  content: { padding: spacing.xl, paddingBottom: spacing['6xl'], maxWidth: 800, alignSelf: 'center' as const, width: '100%' as any },
   streakRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -249,38 +248,24 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 3,
   },
-  continueCard: {
+  continueBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.lg,
     borderRadius: radius.lg,
-    borderWidth: 0.5,
-    padding: spacing.xl,
     marginBottom: spacing['2xl'],
   },
-  progressBarContainer: {
+  reviewBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
-    marginTop: spacing.md,
+    gap: spacing.lg,
+    padding: spacing.xl,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    marginBottom: spacing['2xl'],
   },
-  progressBar: { flex: 1, height: 3, borderRadius: 2, overflow: 'hidden' },
-  progressFill: { height: '100%', borderRadius: 2 },
-  exploreGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.sm,
-  },
-  exploreItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    borderRadius: radius.full,
-    borderWidth: 0.5,
-    gap: spacing.sm,
-  },
-  exploreDot: { width: 8, height: 8, borderRadius: 4 },
   statsRow: {
     flexDirection: 'row',
     gap: spacing.sm,
@@ -292,5 +277,21 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     borderWidth: 0.5,
     gap: spacing.xs,
+  },
+  analyticsTabs: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    marginTop: spacing['2xl'],
+    marginBottom: spacing.lg,
+  },
+  analyticsTab: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.full,
+  },
+  chartCard: {
+    padding: spacing.xl,
+    borderRadius: radius.lg,
+    borderWidth: 0.5,
   },
 });

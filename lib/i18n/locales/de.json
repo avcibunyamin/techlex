@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "TAGESZIEL",
     "dailyGoalComplete": "Ziel erreicht!",
-    "energyLabel": "Energie"
+    "energyLabel": "Energie",
+    "continueStudying": "Weiterlernen",
+    "needsReview": "WIEDERHOLUNG NÖTIG",
+    "chart_daily": "Täglich",
+    "chart_weekly": "Wöchentlich",
+    "chart_monthly": "Monatlich",
+    "chart_swipes": "Wischer",
+    "chart_quiz": "Quiz",
+    "reviewCta": "Wiederholungsbedürftige Begriffe lernen"
   },
   "learn": {
     "title": "Lernen",
@@ -37,7 +45,12 @@
     "swipeRight": "Gewusst",
     "swipeLeft": "Lerne noch",
     "tapFlip": "Tippen zum Umdrehen",
-    "undo": "Ruckgangig"
+    "undo": "Ruckgangig",
+    "chooseMode": "Wie möchtest du lernen?",
+    "reviewMode": "Wiederholen",
+    "newTerms": "Neue Begriffe lernen",
+    "newTermsSub": "{{count}} Begriffe bereit",
+    "noReview": "Keine Begriffe zum Wiederholen"
   },
   "explore": {
     "title": "Entdecken",
@@ -55,7 +68,9 @@
     "beginner": "Anfänger",
     "intermediate": "Fortgeschritten",
     "advanced": "Experte",
-    "showMore": "+{{count}} weitere"
+    "showMore": "+{{count}} weitere",
+    "relatedTerms": "VERWANDTE BEGRIFFE",
+    "premiumOnly": "Mit Premium freischalten"
   },
   "profile": {
     "title": "Profil",
@@ -105,7 +120,9 @@
       "diamond": "Diamant"
     },
     "tierFree": "Kostenlos",
-    "tierPremium": "Premium"
+    "tierPremium": "Premium",
+    "usernameLimit": "Sie können Ihren Namen nur einmal alle 7 Tage ändern",
+    "thisWeek": "DIESE WOCHE"
   },
   "auth": {
     "welcomeBack": "Willkommen zurück",
@@ -171,7 +188,9 @@
       "prioritySupport": "Bevorzugter Support",
       "shareWith": "Teilen mit {{count}} Personen",
       "familySharing": "Familienfreigabe (bis zu 6)",
-      "offlineAccess": "Offlinezugriff"
+      "offlineAccess": "Offlinezugriff",
+      "advancedAnalysis": "Erweiterte Fehleranalyse",
+      "relatedTermsMap": "Verwandte Begriffe Karte"
     },
     "subscribe": "Abonnieren",
     "restore": "Kauf wiederherstellen",
@@ -198,7 +217,9 @@
     "save": "Speichern",
     "done": "Fertig",
     "close": "Schließen",
-    "loading": "Laden..."
+    "loading": "Laden...",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen"
   },
   "onboarding": {
     "welcome": "Technologie-Begriffe\nmeistern",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "{{count}} Begriffe / Tag",
     "continue": "Weiter",
     "skip": "Uberspringen",
-    "startLearning": "Lernen starten"
+    "startLearning": "Lernen starten",
+    "selectAtLeast": "Wähle mindestens 1 Kategorie"
   },
   "categories": {
-    "cybersecurity": "Cybersicherheit",
-    "software-dev": "Softwareentwicklung",
-    "ai-ml": "KI & Maschinelles Lernen",
-    "networking": "Netzwerktechnik",
+    "cybersecurity": "Cybersicherheit (Cybersecurity)",
+    "software-dev": "Softwareentwicklung (Software Development)",
+    "ai-ml": "KI & Maschinelles Lernen (AI & Machine Learning)",
+    "networking": "Netzwerktechnik (Networking)",
     "design-ux": "Design & UX",
-    "cybersecurity-general": "Allgemeine Begriffe",
+    "cybersecurity-general": "Allgemeine Begriffe (General Terms)",
     "blue-team": "Blue Team (Verteidigung)",
-    "siem-log-analysis": "SIEM & Log-Analyse",
-    "incident-response": "Vorfallreaktion",
-    "threat-intelligence": "Bedrohungsanalyse",
+    "siem-log-analysis": "SIEM & Log-Analyse (SIEM & Log Analysis)",
+    "incident-response": "Vorfallreaktion (Incident Response)",
+    "threat-intelligence": "Bedrohungsanalyse (Threat Intelligence)",
     "red-team": "Red Team (Angriff)",
-    "reconnaissance": "Aufklarung",
-    "exploitation": "Ausnutzung",
+    "reconnaissance": "Aufklarung (Reconnaissance)",
+    "exploitation": "Ausnutzung (Exploitation)",
     "social-engineering": "Social Engineering",
-    "cryptography": "Kryptografie",
-    "malware": "Malware-Analyse",
-    "owasp-web-security": "OWASP & Websicherheit",
-    "web-frontend": "Web-Frontend",
-    "web-backend": "Web-Backend",
-    "database": "Datenbank & SQL",
+    "cryptography": "Kryptografie (Cryptography)",
+    "malware": "Malware-Analyse (Malware Analysis)",
+    "owasp-web-security": "OWASP & Websicherheit (OWASP & Web Security)",
+    "web-frontend": "Web-Frontend (Web Frontend)",
+    "web-backend": "Web-Backend (Web Backend)",
+    "database": "Datenbank & SQL (Database & SQL)",
     "devops": "DevOps & CI/CD",
-    "git-version-control": "Git & Versionskontrolle",
-    "testing": "Test & QA",
-    "machine-learning": "Maschinelles Lernen",
+    "git-version-control": "Git & Versionskontrolle (Git & Version Control)",
+    "testing": "Test & QA (Testing & QA)",
+    "machine-learning": "Maschinelles Lernen (Machine Learning)",
     "deep-learning": "Deep Learning",
     "llm-nlp": "LLM & NLP",
     "computer-vision": "Computer Vision",
     "big-data": "Big Data",
-    "protocols": "Protokolle",
-    "network-fundamentals": "Netzwerk-Grundlagen",
-    "network-devices": "Netzwerkgerate",
+    "protocols": "Protokolle (Protocols)",
+    "network-fundamentals": "Netzwerk-Grundlagen (Network Fundamentals)",
+    "network-devices": "Netzwerkgerate (Network Devices)",
     "cloud-computing": "Cloud Computing",
-    "containers": "Container & Orchestrierung",
-    "wireless": "Drahtlose Netzwerke",
-    "ux-fundamentals": "UX-Grundlagen",
-    "ux-research": "UX-Forschung",
-    "ui-design": "UI-Design",
+    "containers": "Container & Orchestrierung (Containers & Orchestration)",
+    "wireless": "Drahtlose Netzwerke (Wireless Networks)",
+    "ux-fundamentals": "UX-Grundlagen (UX Fundamentals)",
+    "ux-research": "UX-Forschung (UX Research)",
+    "ui-design": "UI-Design (UI Design)",
     "figma": "Figma",
-    "typography": "Typografie",
-    "design-systems": "Design-Systeme",
-    "project-management": "Projektmanagement"
+    "typography": "Typografie (Typography)",
+    "design-systems": "Design-Systeme (Design Systems)",
+    "project-management": "Projektmanagement (Project Management)"
   },
   "quiz": {
     "title": "Test",
@@ -292,6 +314,18 @@
     "retry": "Nochmal",
     "perfect": "Perfekt!",
     "great": "Toll gemacht!",
-    "tryAgain": "Weiter üben!"
+    "tryAgain": "Weiter üben!",
+    "notEnoughTitle": "Noch nicht genug Begriffe",
+    "notEnoughSub": "Du musst mindestens 10 Begriffe lernen, um das Quiz zu starten. (Aktuell: {{current}}/10)",
+    "correctDefinitionLabel": "Richtige Definition:",
+    "gotIt": "Verstanden",
+    "unlockSource": "Sieh, zu welchem Begriff dies gehört",
+    "skip": "Weiß nicht"
+  },
+  "premiumModal": {
+    "title": "Premium-Funktion",
+    "subtitle": "Upgrade auf Premium, um diese Funktion zu nutzen.",
+    "subtitleRelated": "Upgrade auf Premium, um verwandte Begriffe und tiefere Analysen zu sehen.",
+    "subtitleQuiz": "Upgrade auf Premium, um den Quellbegriff zu sehen und Extras freizuschalten."
   }
 }

@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "ДНЕВНАЯ ЦЕЛЬ",
     "dailyGoalComplete": "Цель достигнута!",
-    "energyLabel": "Энергия"
+    "energyLabel": "Энергия",
+    "continueStudying": "Продолжить обучение",
+    "needsReview": "НУЖНО ПОВТОРИТЬ",
+    "chart_daily": "День",
+    "chart_weekly": "Неделя",
+    "chart_monthly": "Месяц",
+    "chart_swipes": "Свайпы",
+    "chart_quiz": "Тест",
+    "reviewCta": "Повторить нужные термины"
   },
   "learn": {
     "title": "Учить",
@@ -37,7 +45,12 @@
     "swipeRight": "Знаю",
     "swipeLeft": "Учу",
     "tapFlip": "Нажми, чтобы перевернуть",
-    "undo": "Отменить"
+    "undo": "Отменить",
+    "chooseMode": "Как вы хотите учиться?",
+    "reviewMode": "Повторить",
+    "newTerms": "Учить новые термины",
+    "newTermsSub": "{{count}} терминов готово",
+    "noReview": "Нет терминов для повторения"
   },
   "explore": {
     "title": "Обзор",
@@ -55,7 +68,9 @@
     "beginner": "Начальный",
     "intermediate": "Средний",
     "advanced": "Продвинутый",
-    "showMore": "+{{count}} ещё"
+    "showMore": "+{{count}} ещё",
+    "relatedTerms": "СВЯЗАННЫЕ ТЕРМИНЫ",
+    "premiumOnly": "Разблокировать с Premium"
   },
   "profile": {
     "title": "Профиль",
@@ -105,7 +120,9 @@
       "diamond": "Бриллиант"
     },
     "tierFree": "Бесплатно",
-    "tierPremium": "Премиум"
+    "tierPremium": "Премиум",
+    "usernameLimit": "Вы можете менять имя только раз в 7 дней",
+    "thisWeek": "ЭТА НЕДЕЛЯ"
   },
   "auth": {
     "welcomeBack": "С возвращением",
@@ -171,7 +188,9 @@
       "prioritySupport": "Приоритетная поддержка",
       "shareWith": "Делись с {{count}} людьми",
       "familySharing": "Семейный доступ (до 6 чел.)",
-      "offlineAccess": "Офлайн-доступ"
+      "offlineAccess": "Офлайн-доступ",
+      "advancedAnalysis": "Расширенный анализ ошибок",
+      "relatedTermsMap": "Карта связанных терминов"
     },
     "subscribe": "Подписаться",
     "restore": "Восстановить покупку",
@@ -198,7 +217,9 @@
     "save": "Сохранить",
     "done": "Готово",
     "close": "Закрыть",
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "selectAll": "Выбрать все",
+    "deselectAll": "Снять выбор"
   },
   "onboarding": {
     "welcome": "Освой технические\nконцепции",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "{{count}} концепций / день",
     "continue": "Далее",
     "skip": "Пропустить",
-    "startLearning": "Начать обучение"
+    "startLearning": "Начать обучение",
+    "selectAtLeast": "Выберите хотя бы 1 категорию"
   },
   "categories": {
-    "cybersecurity": "Кибербезопасность",
-    "software-dev": "Разработка ПО",
-    "ai-ml": "ИИ и машинное обучение",
-    "networking": "Сети",
-    "design-ux": "Дизайн и UX",
-    "cybersecurity-general": "Общие термины",
-    "blue-team": "Синяя команда (Защита)",
-    "siem-log-analysis": "SIEM и анализ логов",
-    "incident-response": "Реагирование на инциденты",
-    "threat-intelligence": "Анализ угроз",
-    "red-team": "Красная команда (Атака)",
-    "reconnaissance": "Разведка",
-    "exploitation": "Эксплуатация",
-    "social-engineering": "Социальная инженерия",
-    "cryptography": "Криптография",
-    "malware": "Анализ вредоносного ПО",
-    "owasp-web-security": "OWASP и веб-безопасность",
-    "web-frontend": "Веб-фронтенд",
-    "web-backend": "Веб-бэкенд",
-    "database": "Базы данных и SQL",
-    "devops": "DevOps и CI/CD",
-    "git-version-control": "Git и контроль версий",
-    "testing": "Тестирование и QA",
-    "machine-learning": "Машинное обучение",
-    "deep-learning": "Глубокое обучение",
-    "llm-nlp": "LLM и NLP",
-    "computer-vision": "Компьютерное зрение",
-    "big-data": "Большие данные",
-    "protocols": "Протоколы",
-    "network-fundamentals": "Основы сетей",
-    "network-devices": "Сетевые устройства",
-    "cloud-computing": "Облачные вычисления",
-    "containers": "Контейнеры и оркестрация",
-    "wireless": "Беспроводные сети",
-    "ux-fundamentals": "Основы UX",
-    "ux-research": "UX-исследования",
-    "ui-design": "UI-дизайн",
+    "cybersecurity": "Кибербезопасность (Cybersecurity)",
+    "software-dev": "Разработка ПО (Software Development)",
+    "ai-ml": "ИИ и машинное обучение (AI & Machine Learning)",
+    "networking": "Сети (Networking)",
+    "design-ux": "Дизайн и UX (Design & UX)",
+    "cybersecurity-general": "Общие термины (General Terms)",
+    "blue-team": "Синяя команда (Blue Team - Defense)",
+    "siem-log-analysis": "SIEM и анализ логов (SIEM & Log Analysis)",
+    "incident-response": "Реагирование на инциденты (Incident Response)",
+    "threat-intelligence": "Анализ угроз (Threat Intelligence)",
+    "red-team": "Красная команда (Red Team - Offense)",
+    "reconnaissance": "Разведка (Reconnaissance)",
+    "exploitation": "Эксплуатация (Exploitation)",
+    "social-engineering": "Социальная инженерия (Social Engineering)",
+    "cryptography": "Криптография (Cryptography)",
+    "malware": "Анализ вредоносного ПО (Malware Analysis)",
+    "owasp-web-security": "OWASP и веб-безопасность (OWASP & Web Security)",
+    "web-frontend": "Веб-фронтенд (Web Frontend)",
+    "web-backend": "Веб-бэкенд (Web Backend)",
+    "database": "Базы данных и SQL (Database & SQL)",
+    "devops": "DevOps и CI/CD (DevOps & CI/CD)",
+    "git-version-control": "Git и контроль версий (Git & Version Control)",
+    "testing": "Тестирование и QA (Testing & QA)",
+    "machine-learning": "Машинное обучение (Machine Learning)",
+    "deep-learning": "Глубокое обучение (Deep Learning)",
+    "llm-nlp": "LLM и NLP (LLM & NLP)",
+    "computer-vision": "Компьютерное зрение (Computer Vision)",
+    "big-data": "Большие данные (Big Data)",
+    "protocols": "Протоколы (Protocols)",
+    "network-fundamentals": "Основы сетей (Network Fundamentals)",
+    "network-devices": "Сетевые устройства (Network Devices)",
+    "cloud-computing": "Облачные вычисления (Cloud Computing)",
+    "containers": "Контейнеры и оркестрация (Containers & Orchestration)",
+    "wireless": "Беспроводные сети (Wireless Networks)",
+    "ux-fundamentals": "Основы UX (UX Fundamentals)",
+    "ux-research": "UX-исследования (UX Research)",
+    "ui-design": "UI-дизайн (UI Design)",
     "figma": "Figma",
-    "typography": "Типографика",
-    "design-systems": "Дизайн-системы",
-    "project-management": "Управление проектами"
+    "typography": "Типографика (Typography)",
+    "design-systems": "Дизайн-системы (Design Systems)",
+    "project-management": "Управление проектами (Project Management)"
   },
   "quiz": {
     "title": "Тест",
@@ -292,6 +314,18 @@
     "retry": "Ещё раз",
     "perfect": "Идеально!",
     "great": "Отлично!",
-    "tryAgain": "Продолжайте практику!"
+    "tryAgain": "Продолжайте практику!",
+    "notEnoughTitle": "Пока недостаточно терминов",
+    "notEnoughSub": "Для начала теста нужно выучить минимум 10 терминов. (Сейчас: {{current}}/10)",
+    "correctDefinitionLabel": "Правильное определение:",
+    "gotIt": "Понятно",
+    "unlockSource": "Узнать, к какому термину относится",
+    "skip": "Не знаю"
+  },
+  "premiumModal": {
+    "title": "Премиум-функция",
+    "subtitle": "Перейди на Премиум, чтобы получить доступ.",
+    "subtitleRelated": "Перейди на Премиум, чтобы видеть связанные термины и углублённый анализ.",
+    "subtitleQuiz": "Перейди на Премиум, чтобы узнать исходный термин и разблокировать бонусы."
   }
 }

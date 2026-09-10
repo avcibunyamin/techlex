@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "デイリー目標",
     "dailyGoalComplete": "目標達成！",
-    "energyLabel": "エネルギー"
+    "energyLabel": "エネルギー",
+    "continueStudying": "学習を続ける",
+    "needsReview": "復習が必要",
+    "chart_daily": "日別",
+    "chart_weekly": "週別",
+    "chart_monthly": "月別",
+    "chart_swipes": "スワイプ",
+    "chart_quiz": "クイズ",
+    "reviewCta": "復習が必要な概念を学習"
   },
   "learn": {
     "title": "学習",
@@ -37,7 +45,12 @@
     "swipeRight": "知ってる",
     "swipeLeft": "学習中",
     "tapFlip": "タップして裏返す",
-    "undo": "元に戻す"
+    "undo": "元に戻す",
+    "chooseMode": "どのように学習しますか？",
+    "reviewMode": "復習する",
+    "newTerms": "新しい用語を学ぶ",
+    "newTermsSub": "{{count}}個の用語が準備完了",
+    "noReview": "復習する用語はありません"
   },
   "explore": {
     "title": "探索",
@@ -55,7 +68,9 @@
     "beginner": "初級",
     "intermediate": "中級",
     "advanced": "上級",
-    "showMore": "+{{count}}件"
+    "showMore": "+{{count}}件",
+    "relatedTerms": "関連用語",
+    "premiumOnly": "Premiumで解放"
   },
   "profile": {
     "title": "プロフィール",
@@ -105,7 +120,9 @@
       "diamond": "ダイヤモンド"
     },
     "tierFree": "無料",
-    "tierPremium": "プレミアム"
+    "tierPremium": "プレミアム",
+    "usernameLimit": "名前の変更は7日に1回のみ可能です",
+    "thisWeek": "今週"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",
@@ -171,7 +188,9 @@
       "prioritySupport": "優先サポート",
       "shareWith": "{{count}}人とシェア",
       "familySharing": "ファミリー共有（最大6人）",
-      "offlineAccess": "オフラインアクセス"
+      "offlineAccess": "オフラインアクセス",
+      "advancedAnalysis": "高度なエラー分析",
+      "relatedTermsMap": "関連用語マップ"
     },
     "subscribe": "登録する",
     "restore": "購入を復元",
@@ -198,7 +217,9 @@
     "save": "保存",
     "done": "完了",
     "close": "閉じる",
-    "loading": "読み込み中..."
+    "loading": "読み込み中...",
+    "selectAll": "すべて選択",
+    "deselectAll": "すべて解除"
   },
   "onboarding": {
     "welcome": "テクノロジーの\n概念をマスター",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "1日{{count}}概念",
     "continue": "続ける",
     "skip": "スキップ",
-    "startLearning": "学習を開始"
+    "startLearning": "学習を開始",
+    "selectAtLeast": "少なくとも1つのカテゴリを選択"
   },
   "categories": {
-    "cybersecurity": "サイバーセキュリティ",
-    "software-dev": "ソフトウェア開発",
-    "ai-ml": "AI & 機械学習",
-    "networking": "ネットワーク",
-    "design-ux": "デザイン & UX",
-    "cybersecurity-general": "一般用語",
-    "blue-team": "ブルーチーム（防御）",
-    "siem-log-analysis": "SIEM & ログ分析",
-    "incident-response": "インシデント対応",
-    "threat-intelligence": "脅威インテリジェンス",
-    "red-team": "レッドチーム（攻撃）",
-    "reconnaissance": "偵察",
-    "exploitation": "エクスプロイト",
-    "social-engineering": "ソーシャルエンジニアリング",
-    "cryptography": "暗号技術",
-    "malware": "マルウェア分析",
-    "owasp-web-security": "OWASP & Webセキュリティ",
-    "web-frontend": "Webフロントエンド",
-    "web-backend": "Webバックエンド",
-    "database": "データベース & SQL",
+    "cybersecurity": "サイバーセキュリティ (Cybersecurity)",
+    "software-dev": "ソフトウェア開発 (Software Development)",
+    "ai-ml": "AI & 機械学習 (AI & Machine Learning)",
+    "networking": "ネットワーク (Networking)",
+    "design-ux": "デザイン & UX (Design & UX)",
+    "cybersecurity-general": "一般用語 (General Terms)",
+    "blue-team": "ブルーチーム (Blue Team - Defense)",
+    "siem-log-analysis": "SIEM & ログ分析 (SIEM & Log Analysis)",
+    "incident-response": "インシデント対応 (Incident Response)",
+    "threat-intelligence": "脅威インテリジェンス (Threat Intelligence)",
+    "red-team": "レッドチーム (Red Team - Offense)",
+    "reconnaissance": "偵察 (Reconnaissance)",
+    "exploitation": "エクスプロイト (Exploitation)",
+    "social-engineering": "ソーシャルエンジニアリング (Social Engineering)",
+    "cryptography": "暗号技術 (Cryptography)",
+    "malware": "マルウェア分析 (Malware Analysis)",
+    "owasp-web-security": "OWASP & Webセキュリティ (OWASP & Web Security)",
+    "web-frontend": "Webフロントエンド (Web Frontend)",
+    "web-backend": "Webバックエンド (Web Backend)",
+    "database": "データベース & SQL (Database & SQL)",
     "devops": "DevOps & CI/CD",
-    "git-version-control": "Git & バージョン管理",
-    "testing": "テスト & QA",
-    "machine-learning": "機械学習",
-    "deep-learning": "ディープラーニング",
+    "git-version-control": "Git & バージョン管理 (Git & Version Control)",
+    "testing": "テスト & QA (Testing & QA)",
+    "machine-learning": "機械学習 (Machine Learning)",
+    "deep-learning": "ディープラーニング (Deep Learning)",
     "llm-nlp": "LLM & NLP",
-    "computer-vision": "コンピュータビジョン",
-    "big-data": "ビッグデータ",
-    "protocols": "プロトコル",
-    "network-fundamentals": "ネットワーク基礎",
-    "network-devices": "ネットワーク機器",
-    "cloud-computing": "クラウドコンピューティング",
-    "containers": "コンテナ & オーケストレーション",
-    "wireless": "ワイヤレスネットワーク",
-    "ux-fundamentals": "UXの基礎",
-    "ux-research": "UXリサーチ",
-    "ui-design": "UIデザイン",
+    "computer-vision": "コンピュータビジョン (Computer Vision)",
+    "big-data": "ビッグデータ (Big Data)",
+    "protocols": "プロトコル (Protocols)",
+    "network-fundamentals": "ネットワーク基礎 (Network Fundamentals)",
+    "network-devices": "ネットワーク機器 (Network Devices)",
+    "cloud-computing": "クラウドコンピューティング (Cloud Computing)",
+    "containers": "コンテナ & オーケストレーション (Containers & Orchestration)",
+    "wireless": "ワイヤレスネットワーク (Wireless Networks)",
+    "ux-fundamentals": "UXの基礎 (UX Fundamentals)",
+    "ux-research": "UXリサーチ (UX Research)",
+    "ui-design": "UIデザイン (UI Design)",
     "figma": "Figma",
-    "typography": "タイポグラフィ",
-    "design-systems": "デザインシステム",
-    "project-management": "プロジェクト管理"
+    "typography": "タイポグラフィ (Typography)",
+    "design-systems": "デザインシステム (Design Systems)",
+    "project-management": "プロジェクト管理 (Project Management)"
   },
   "quiz": {
     "title": "テスト",
@@ -292,6 +314,18 @@
     "retry": "もう一度",
     "perfect": "完璧!",
     "great": "素晴らしい!",
-    "tryAgain": "もっと練習しよう!"
+    "tryAgain": "もっと練習しよう!",
+    "notEnoughTitle": "まだ用語が足りません",
+    "notEnoughSub": "クイズを始めるには、少なくとも10個の用語を学ぶ必要があります。（現在：{{current}}/10）",
+    "correctDefinitionLabel": "正しい定義：",
+    "gotIt": "わかった",
+    "unlockSource": "どの用語に属するか確認",
+    "skip": "分からない"
+  },
+  "premiumModal": {
+    "title": "Premium機能",
+    "subtitle": "この機能にアクセスするにはPremiumにアップグレード。",
+    "subtitleRelated": "Premiumにアップグレードして関連用語と詳細分析を表示。",
+    "subtitleQuiz": "Premiumにアップグレードして元の用語を表示し、追加機能を解放。"
   }
 }

@@ -15,15 +15,15 @@ CREATE TABLE IF NOT EXISTS public.user_profiles (
   dob DATE,
   streak INTEGER DEFAULT 0,
   last_active_date DATE,
-  daily_goal INTEGER DEFAULT 10,
+  daily_goal INTEGER NOT NULL DEFAULT 30,
   today_count INTEGER DEFAULT 0,
   selected_tags TEXT[] DEFAULT '{}',
   language TEXT DEFAULT 'tr',
   has_completed_onboarding BOOLEAN DEFAULT false,
   last_username_change TIMESTAMPTZ,
-  subscription_tier TEXT DEFAULT 'free'
+  subscription_tier TEXT NOT NULL DEFAULT 'free'
     CHECK (subscription_tier IN ('free', 'individual', 'duo', 'family')),
-  energy_level INTEGER DEFAULT 30,
+  energy_level INTEGER NOT NULL DEFAULT 30,
   last_energy_refill TIMESTAMPTZ DEFAULT now(),
   total_swipes INTEGER DEFAULT 0,
   current_period_end TIMESTAMPTZ,
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS public.user_profiles (
 CREATE TABLE IF NOT EXISTS public.user_progress (
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
   term_id TEXT NOT NULL,
-  leitner_box SMALLINT DEFAULT 1 CHECK (leitner_box BETWEEN 1 AND 5),
-  next_review_date TIMESTAMPTZ DEFAULT now(),
+  box SMALLINT DEFAULT 1 CHECK (box BETWEEN 1 AND 5),
+  next_review TIMESTAMPTZ DEFAULT now(),
   last_seen TIMESTAMPTZ DEFAULT now(),
   times_correct INTEGER DEFAULT 0,
   times_seen INTEGER DEFAULT 0,
@@ -61,7 +61,7 @@ CREATE INDEX IF NOT EXISTS idx_user_progress_user
   ON public.user_progress(user_id);
 
 CREATE INDEX IF NOT EXISTS idx_user_progress_review
-  ON public.user_progress(user_id, next_review_date);
+  ON public.user_progress(user_id, next_review);
 
 -- ============================
 -- 3. ROW LEVEL SECURITY
@@ -205,15 +205,15 @@ CREATE OR REPLACE FUNCTION public.swipe_right(p_term_id TEXT)
 RETURNS VOID
 LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
-  INSERT INTO public.user_progress (user_id, term_id, leitner_box, next_review_date, last_seen, times_correct, times_seen)
+  INSERT INTO public.user_progress (user_id, term_id, box, next_review, last_seen, times_correct, times_seen)
   VALUES (
     auth.uid(), p_term_id, 2,
     now() + public.leitner_interval(2::SMALLINT),
     now(), 1, 1
   )
   ON CONFLICT (user_id, term_id) DO UPDATE SET
-    leitner_box = LEAST(user_progress.leitner_box + 1, 5),
-    next_review_date = now() + public.leitner_interval(LEAST(user_progress.leitner_box + 1, 5)::SMALLINT),
+    box = LEAST(user_progress.box + 1, 5),
+    next_review = now() + public.leitner_interval(LEAST(user_progress.box + 1, 5)::SMALLINT),
     last_seen = now(),
     times_correct = user_progress.times_correct + 1,
     times_seen = user_progress.times_seen + 1;
@@ -229,15 +229,15 @@ CREATE OR REPLACE FUNCTION public.swipe_left(p_term_id TEXT)
 RETURNS VOID
 LANGUAGE plpgsql SECURITY DEFINER AS $$
 BEGIN
-  INSERT INTO public.user_progress (user_id, term_id, leitner_box, next_review_date, last_seen, times_correct, times_seen)
+  INSERT INTO public.user_progress (user_id, term_id, box, next_review, last_seen, times_correct, times_seen)
   VALUES (
     auth.uid(), p_term_id, 1,
     now() + public.leitner_interval(1::SMALLINT),
     now(), 0, 1
   )
   ON CONFLICT (user_id, term_id) DO UPDATE SET
-    leitner_box = 1,
-    next_review_date = now() + public.leitner_interval(1::SMALLINT),
+    box = 1,
+    next_review = now() + public.leitner_interval(1::SMALLINT),
     last_seen = now(),
     times_seen = user_progress.times_seen + 1;
 

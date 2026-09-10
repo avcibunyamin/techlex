@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "الهدف اليومي",
     "dailyGoalComplete": "!تم تحقيق الهدف",
-    "energyLabel": "الطاقة"
+    "energyLabel": "الطاقة",
+    "continueStudying": "متابعة الدراسة",
+    "needsReview": "يحتاج مراجعة",
+    "chart_daily": "يومي",
+    "chart_weekly": "أسبوعي",
+    "chart_monthly": "شهري",
+    "chart_swipes": "التمريرات",
+    "chart_quiz": "اختبار",
+    "reviewCta": "ادرس المفاهيم التي تحتاج مراجعة"
   },
   "learn": {
     "title": "تعلّم",
@@ -37,7 +45,12 @@
     "swipeRight": "أعرفه",
     "swipeLeft": "أتعلّمه",
     "tapFlip": "انقر للقلب",
-    "undo": "تراجع"
+    "undo": "تراجع",
+    "chooseMode": "كيف تريد أن تدرس؟",
+    "reviewMode": "مراجعة",
+    "newTerms": "تعلم مصطلحات جديدة",
+    "newTermsSub": "{{count}} مصطلح جاهز",
+    "noReview": "لا توجد مصطلحات للمراجعة"
   },
   "explore": {
     "title": "استكشاف",
@@ -55,7 +68,9 @@
     "beginner": "مبتدئ",
     "intermediate": "متوسط",
     "advanced": "متقدّم",
-    "showMore": "+{{count}} المزيد"
+    "showMore": "+{{count}} المزيد",
+    "relatedTerms": "مصطلحات ذات صلة",
+    "premiumOnly": "فتح مع بريميوم"
   },
   "profile": {
     "title": "الملف الشخصي",
@@ -105,7 +120,9 @@
       "diamond": "ألماسي"
     },
     "tierFree": "مجاني",
-    "tierPremium": "بريميوم"
+    "tierPremium": "بريميوم",
+    "usernameLimit": "يمكنك تغيير اسمك مرة واحدة فقط كل 7 أيام",
+    "thisWeek": "هذا الأسبوع"
   },
   "auth": {
     "welcomeBack": "أهلاً بعودتك",
@@ -171,7 +188,9 @@
       "prioritySupport": "دعم ذو أولوية",
       "shareWith": "شارك مع {{count}} أشخاص",
       "familySharing": "مشاركة عائلية (حتى 6)",
-      "offlineAccess": "وصول بدون إنترنت"
+      "offlineAccess": "وصول بدون إنترنت",
+      "advancedAnalysis": "تحليل متقدم للأخطاء",
+      "relatedTermsMap": "خريطة المصطلحات ذات الصلة"
     },
     "subscribe": "اشترك",
     "restore": "استعادة الشراء",
@@ -198,7 +217,9 @@
     "save": "حفظ",
     "done": "تمّ",
     "close": "إغلاق",
-    "loading": "جارٍ التحميل..."
+    "loading": "جارٍ التحميل...",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل"
   },
   "onboarding": {
     "welcome": "أتقن المفاهيم\nالتقنية",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "{{count}} مفهوم / يوم",
     "continue": "متابعة",
     "skip": "تخطي",
-    "startLearning": "ابدأ التعلم"
+    "startLearning": "ابدأ التعلم",
+    "selectAtLeast": "اختر فئة واحدة على الأقل"
   },
   "categories": {
-    "cybersecurity": "الأمن السيبراني",
-    "software-dev": "تطوير البرمجيات",
-    "ai-ml": "الذكاء الاصطناعي",
-    "networking": "الشبكات",
-    "design-ux": "التصميم وتجربة المستخدم",
-    "cybersecurity-general": "مصطلحات عامة",
-    "blue-team": "الفريق الأزرق (الدفاع)",
-    "siem-log-analysis": "تحليل السجلات وSIEM",
-    "incident-response": "الاستجابة للحوادث",
-    "threat-intelligence": "استخبارات التهديدات",
-    "red-team": "الفريق الأحمر (الهجوم)",
-    "reconnaissance": "الاستطلاع",
-    "exploitation": "الاستغلال",
-    "social-engineering": "الهندسة الاجتماعية",
-    "cryptography": "التشفير",
-    "malware": "تحليل البرمجيات الخبيثة",
-    "owasp-web-security": "أمان الويب وOWASP",
-    "web-frontend": "واجهة الويب الأمامية",
-    "web-backend": "واجهة الويب الخلفية",
-    "database": "قواعد البيانات وSQL",
-    "devops": "DevOps و CI/CD",
-    "git-version-control": "Git والتحكم بالإصدارات",
-    "testing": "الاختبار وضمان الجودة",
-    "machine-learning": "تعلم الآلة",
-    "deep-learning": "التعلم العميق",
-    "llm-nlp": "LLM و NLP",
-    "computer-vision": "الرؤية الحاسوبية",
-    "big-data": "البيانات الضخمة",
-    "protocols": "البروتوكولات",
-    "network-fundamentals": "أساسيات الشبكات",
-    "network-devices": "أجهزة الشبكة",
-    "cloud-computing": "الحوسبة السحابية",
-    "containers": "الحاويات والتنسيق",
-    "wireless": "الشبكات اللاسلكية",
-    "ux-fundamentals": "أساسيات تجربة المستخدم",
-    "ux-research": "بحث تجربة المستخدم",
-    "ui-design": "تصميم واجهة المستخدم",
+    "cybersecurity": "الأمن السيبراني (Cybersecurity)",
+    "software-dev": "تطوير البرمجيات (Software Development)",
+    "ai-ml": "الذكاء الاصطناعي (AI & Machine Learning)",
+    "networking": "الشبكات (Networking)",
+    "design-ux": "التصميم وتجربة المستخدم (Design & UX)",
+    "cybersecurity-general": "مصطلحات عامة (General Terms)",
+    "blue-team": "الفريق الأزرق (Blue Team - Defense)",
+    "siem-log-analysis": "تحليل السجلات وSIEM (SIEM & Log Analysis)",
+    "incident-response": "الاستجابة للحوادث (Incident Response)",
+    "threat-intelligence": "استخبارات التهديدات (Threat Intelligence)",
+    "red-team": "الفريق الأحمر (Red Team - Offense)",
+    "reconnaissance": "الاستطلاع (Reconnaissance)",
+    "exploitation": "الاستغلال (Exploitation)",
+    "social-engineering": "الهندسة الاجتماعية (Social Engineering)",
+    "cryptography": "التشفير (Cryptography)",
+    "malware": "تحليل البرمجيات الخبيثة (Malware Analysis)",
+    "owasp-web-security": "أمان الويب وOWASP (OWASP & Web Security)",
+    "web-frontend": "واجهة الويب الأمامية (Web Frontend)",
+    "web-backend": "واجهة الويب الخلفية (Web Backend)",
+    "database": "قواعد البيانات وSQL (Database & SQL)",
+    "devops": "DevOps و CI/CD (DevOps & CI/CD)",
+    "git-version-control": "Git والتحكم بالإصدارات (Git & Version Control)",
+    "testing": "الاختبار وضمان الجودة (Testing & QA)",
+    "machine-learning": "تعلم الآلة (Machine Learning)",
+    "deep-learning": "التعلم العميق (Deep Learning)",
+    "llm-nlp": "LLM و NLP (LLM & NLP)",
+    "computer-vision": "الرؤية الحاسوبية (Computer Vision)",
+    "big-data": "البيانات الضخمة (Big Data)",
+    "protocols": "البروتوكولات (Protocols)",
+    "network-fundamentals": "أساسيات الشبكات (Network Fundamentals)",
+    "network-devices": "أجهزة الشبكة (Network Devices)",
+    "cloud-computing": "الحوسبة السحابية (Cloud Computing)",
+    "containers": "الحاويات والتنسيق (Containers & Orchestration)",
+    "wireless": "الشبكات اللاسلكية (Wireless Networks)",
+    "ux-fundamentals": "أساسيات تجربة المستخدم (UX Fundamentals)",
+    "ux-research": "بحث تجربة المستخدم (UX Research)",
+    "ui-design": "تصميم واجهة المستخدم (UI Design)",
     "figma": "Figma",
-    "typography": "الطباعة",
-    "design-systems": "أنظمة التصميم",
-    "project-management": "إدارة المشاريع"
+    "typography": "الطباعة (Typography)",
+    "design-systems": "أنظمة التصميم (Design Systems)",
+    "project-management": "إدارة المشاريع (Project Management)"
   },
   "quiz": {
     "title": "اختبار",
@@ -292,6 +314,18 @@
     "retry": "حاول مرة أخرى",
     "perfect": "ممتاز!",
     "great": "عمل رائع!",
-    "tryAgain": "واصل التدريب!"
+    "tryAgain": "واصل التدريب!",
+    "notEnoughTitle": "لا توجد مصطلحات كافية بعد",
+    "notEnoughSub": "تحتاج إلى تعلم 10 مصطلحات على الأقل لبدء الاختبار. (حالياً: {{current}}/10)",
+    "correctDefinitionLabel": "التعريف الصحيح:",
+    "gotIt": "فهمت",
+    "unlockSource": "اعرف أي مصطلح ينتمي إليه",
+    "skip": "لا أعرف"
+  },
+  "premiumModal": {
+    "title": "ميزة بريميوم",
+    "subtitle": "قم بالترقية إلى Premium للوصول إلى هذه الميزة.",
+    "subtitleRelated": "قم بالترقية إلى Premium لرؤية المصطلحات ذات الصلة والتحليل المعمّق.",
+    "subtitleQuiz": "قم بالترقية إلى Premium لكشف المصطلح المصدر وفتح ميزات إضافية."
   }
 }

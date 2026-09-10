@@ -5,11 +5,11 @@ IT terminology learning platform built with React Native + Expo.
 ## Features
 
 - **Swipe-based learning** — Tinder-style flashcards with Leitner spaced repetition (5 boxes)
-- **200+ IT terms** — Cybersecurity, Software Development (more coming)
+- **500 IT terms** — Cybersecurity, Software Development, AI/ML, Networking, and UX
 - **Multi-category selection** — Pick categories, shuffle, and learn
 - **Energy system** — Freemium model with 30 max energy, 5-minute refill
 - **Level system** — Level up every 100 swipes
-- **Bilingual** — Full Turkish + English support (i18n)
+- **10-language UI** — Term content is currently Turkish and English
 - **Premium subscriptions** — Individual, Duo, Family plans with cancel-at-period-end
 - **Cloud sync** — Supabase backend with RLS
 - **Dark/Light theme** — System-aware with manual override
@@ -63,13 +63,16 @@ types/                # TypeScript interfaces
 
 ## Database Setup
 
-Run the SQL migrations in order on your Supabase project:
+The authoritative migration instructions live in
+[`supabase/README.md`](./supabase/README.md). For a fresh project, run:
 
-1. `supabase/schema.sql`
-2. `supabase/migration_profiles.sql`
-3. `supabase/migration_002_premium.sql`
-4. `supabase/migration_003_leitner_level.sql`
-5. `supabase/migration_004_subscription_cancel.sql`
+1. `supabase/000_full_schema.sql`
+2. `supabase/migration_006_gamification.sql`
+3. `supabase/migration_007_server_time.sql`
+4. `supabase/migration_009_secure_sync.sql`
+
+For an existing project, run `supabase/preflight_009.sql` first. Deploy the
+migration before releasing the client that uses the secure sync RPCs.
 
 ## License
 

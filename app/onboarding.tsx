@@ -42,7 +42,7 @@ export default function OnboardingScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedGoal, setSelectedGoal] = useState(10);
+  const [selectedGoal, setSelectedGoal] = useState(30);
   const [displayName, setDisplayNameLocal] = useState('');
   const [selectedTheme, setSelectedTheme] = useState<ThemeMode>(currentTheme);
 
@@ -318,6 +318,23 @@ export default function OnboardingScreen() {
               {tr('onboarding.interestsSubtitle')}
             </Text>
 
+            <Pressable
+              style={[styles.selectAllBtn, { borderColor: t.border }]}
+              onPress={() => {
+                if (selectedCategories.length === categories.length) {
+                  setSelectedCategories([]);
+                } else {
+                  setSelectedCategories(categories.map(c => c.id));
+                }
+              }}
+            >
+              <Text style={[typography.subhead, { color: accent, fontWeight: '600' }]}>
+                {selectedCategories.length === categories.length
+                  ? tr('common.deselectAll')
+                  : tr('common.selectAll')}
+              </Text>
+            </Pressable>
+
             <View style={styles.categoryList}>
               {categories.map((cat) => {
                 const selected = selectedCategories.includes(cat.id);
@@ -402,9 +419,19 @@ export default function OnboardingScreen() {
 
       {/* Bottom button */}
       <View style={styles.bottomBar}>
+        {currentPage === 4 && selectedCategories.length === 0 && (
+          <Text style={[typography.footnote, { color: colors.warning, textAlign: 'center', marginBottom: spacing.sm }]}>
+            {tr('onboarding.selectAtLeast')}
+          </Text>
+        )}
         <Pressable
-          style={[styles.continueBtn, { backgroundColor: accent }]}
+          style={[
+            styles.continueBtn,
+            { backgroundColor: accent },
+            currentPage === 4 && selectedCategories.length === 0 && { opacity: 0.5 },
+          ]}
           onPress={isLastPage ? handleFinish : goNext}
+          disabled={currentPage === 4 && selectedCategories.length === 0}
         >
           <Text style={[typography.headline, { color: '#fff' }]}>
             {isLastPage ? tr('onboarding.startLearning') : tr('onboarding.continue')}
@@ -501,8 +528,16 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     borderWidth: 1,
   },
+  selectAllBtn: {
+    alignSelf: 'flex-end',
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.full,
+    borderWidth: 0.5,
+  },
   categoryList: {
-    marginTop: spacing['2xl'],
+    marginTop: spacing.lg,
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing.md,

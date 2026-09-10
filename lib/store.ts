@@ -2,9 +2,11 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Term, UserProgress, Language } from '@/types';
 import { createProgress, markKnown, markUnknown } from './spaced-repetition';
-import { pushProgress, pullProgress, pushBatchSwipes, BatchProgressItem } from './sync';
+import { pushPreferences, pullProgress, pushBatchSwipes } from './sync';
+import { getSupabase, isSupabaseConfigured } from './supabase';
 import { ThemeMode } from './useTheme';
 import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel } from '@/constants/badges';
+import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-utils';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -27,12 +29,21 @@ export interface QuizQuestion {
   displayedDefinition: string;
   isCorrect: boolean;
   sourceTerm?: Term;
+  correctDefinition: string;
 }
 
 export interface SwipeQueueItem {
+  id: string;
   termId: string;
   action: 'right' | 'left';
   timestamp: number;
+}
+
+export interface DailyStat {
+  date: string;
+  swipes: number;
+  quizCorrect: number;
+  newTerms: number;
 }
 
 interface AppState {
@@ -58,6 +69,10 @@ interface AppState {
   energyLevel: number;
   lastEnergyRefill: number;
   swipeQueue: SwipeQueueItem[];
+  serverTimeOffset: number;
+  dailyStats: DailyStat[];
+  reviewMode: boolean;
+  quizSeenIds: Set<string>;
 
   loadData: () => Promise<void>;
   saveData: () => Promise<void>;
@@ -84,8 +99,16 @@ interface AppState {
   setCancelAtPeriodEnd: (cancel: boolean, periodEnd?: number) => void;
   checkAndAwardBadges: () => string[];
   undoSwipe: (termId: string, direction: 'right' | 'left', previousProgress: UserProgress | null, wasReview: boolean) => void;
+  getReviewNeededTerms: () => Term[];
+  getKnownTermCount: () => number;
+  downgradeQuizTerm: (termId: string) => void;
+  promoteQuizTerm: (termId: string) => void;
   generateQuiz: () => QuizQuestion[];
   submitQuizResults: (correctCount: number, totalCount: number) => void;
+  recordDailyStat: (field: 'swipes' | 'quizCorrect' | 'newTerms', amount: number) => void;
+  fetchServerTime: () => Promise<void>;
+  getServerNow: () => number;
+  setReviewMode: (on: boolean) => void;
 }
 
 const STORAGE_KEY = '@pratik_kelime_data';
@@ -94,10 +117,14 @@ const ENERGY_REFILL_MS = 5 * 60 * 1000;
 const BATCH_FLUSH_SIZE = 10;
 
 let _saveTimer: ReturnType<typeof setTimeout> | undefined;
-let _flushing = false;
+let _flushPromise: Promise<void> | null = null;
 
 function getTodayString(): string {
-  return new Date().toISOString().split('T')[0];
+  return getLocalDateString();
+}
+
+function createSwipeEventId(): string {
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -108,7 +135,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   streak: 0,
   longestStreak: 0,
   lastActiveDate: null,
-  dailyGoal: 10,
+  dailyGoal: 30,
   todayCount: 0,
   totalSwipes: 0,
   xp: 0,
@@ -123,6 +150,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   energyLevel: MAX_ENERGY,
   lastEnergyRefill: Date.now(),
   swipeQueue: [],
+  serverTimeOffset: 0,
+  dailyStats: [],
+  reviewMode: false,
+  quizSeenIds: new Set<string>(),
+
+  setReviewMode: (on: boolean) => set({ reviewMode: on }),
 
   scheduleSave: () => {
     clearTimeout(_saveTimer);
@@ -141,12 +174,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         let todayCount = data.todayCount || 0;
 
         if (data.lastActiveDate) {
-          const lastDate = new Date(data.lastActiveDate);
-          const todayDate = new Date(today);
-          const diffDays = Math.floor(
-            (todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          if (diffDays > 1) streak = 0;
+          streak = streakAfterLoad(streak, data.lastActiveDate, today);
           if (data.lastActiveDate !== today) todayCount = 0;
         }
 
@@ -174,14 +202,15 @@ export const useAppStore = create<AppState>((set, get) => ({
           }
         }
 
+        const newLongest = Math.max(data.longestStreak || 0, streak);
         set({
           progress,
           selectedTags: data.selectedTags || [],
           language: data.language || 'tr',
           streak,
-          longestStreak: Math.max(data.longestStreak || 0, streak),
-          lastActiveDate: data.lastActiveDate,
-          dailyGoal: data.dailyGoal || 10,
+          longestStreak: newLongest,
+          lastActiveDate: data.lastActiveDate ?? null,
+          dailyGoal: (data.dailyGoal && data.dailyGoal !== 10) ? data.dailyGoal : 30,
           todayCount,
           totalSwipes: data.totalSwipes || 0,
           xp: data.xp || 0,
@@ -195,8 +224,15 @@ export const useAppStore = create<AppState>((set, get) => ({
           currentPeriodEnd: data.currentPeriodEnd || null,
           energyLevel: energy,
           lastEnergyRefill: newLastRefill,
-          swipeQueue: data.swipeQueue || [],
+          swipeQueue: (data.swipeQueue || []).map((item: SwipeQueueItem) => ({
+            ...item,
+            id: item.id || createSwipeEventId(),
+          })),
+          dailyStats: data.dailyStats || [],
         });
+        if (data.lastActiveDate !== today) {
+          get().saveData();
+        }
       } else {
         set({ isLoaded: true });
       }
@@ -231,6 +267,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           energyLevel: s.energyLevel,
           lastEnergyRefill: s.lastEnergyRefill,
           swipeQueue: s.swipeQueue,
+          dailyStats: s.dailyStats,
         })
       );
     } catch {}
@@ -278,15 +315,15 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   swipeRight: (termId) => {
     const { progress, swipeQueue } = get();
+    const isNew = !progress[termId];
     const existing = progress[termId] || createProgress(termId);
     const updated = markKnown(existing);
     const today = getTodayString();
     const state = get();
-    let newStreak = state.streak;
-    if (state.lastActiveDate !== today) newStreak = state.streak + 1;
+    const newStreak = streakAfterStudy(state.streak, state.lastActiveDate, today);
     const newLongest = Math.max(state.longestStreak, newStreak);
 
-    const newQueue = [...swipeQueue, { termId, action: 'right' as const, timestamp: Date.now() }];
+    const newQueue = [...swipeQueue, { id: createSwipeEventId(), termId, action: 'right' as const, timestamp: Date.now() }];
 
     set({
       progress: { ...progress, [termId]: updated },
@@ -300,6 +337,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
     get().scheduleSave();
     get().checkAndAwardBadges();
+    get().recordDailyStat('swipes', 1);
+    if (isNew) get().recordDailyStat('newTerms', 1);
 
     if (newQueue.length >= BATCH_FLUSH_SIZE) {
       get().flushSwipeQueue();
@@ -308,15 +347,15 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   swipeLeft: (termId) => {
     const { progress, swipeQueue } = get();
+    const isNew = !progress[termId];
     const existing = progress[termId] || createProgress(termId);
     const updated = markUnknown(existing);
     const today = getTodayString();
     const state = get();
-    let newStreak = state.streak;
-    if (state.lastActiveDate !== today) newStreak = state.streak + 1;
+    const newStreak = streakAfterStudy(state.streak, state.lastActiveDate, today);
     const newLongest = Math.max(state.longestStreak, newStreak);
 
-    const newQueue = [...swipeQueue, { termId, action: 'left' as const, timestamp: Date.now() }];
+    const newQueue = [...swipeQueue, { id: createSwipeEventId(), termId, action: 'left' as const, timestamp: Date.now() }];
 
     set({
       progress: { ...progress, [termId]: updated },
@@ -330,6 +369,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
     get().scheduleSave();
     get().checkAndAwardBadges();
+    get().recordDailyStat('swipes', 1);
+    if (isNew) get().recordDailyStat('newTerms', 1);
 
     if (newQueue.length >= BATCH_FLUSH_SIZE) {
       get().flushSwipeQueue();
@@ -340,8 +381,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     const s = get();
     if (get().hasActivePremium()) return true;
     if (s.energyLevel <= 0) return false;
-    set({ energyLevel: s.energyLevel - 1 });
-    get().scheduleSave();
+    set({ energyLevel: s.energyLevel - 1, lastEnergyRefill: Date.now() });
+    get().saveData();
     return true;
   },
 
@@ -351,69 +392,57 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({ energyLevel: 999 });
       return;
     }
-    const elapsed = Date.now() - s.lastEnergyRefill;
+    const now = get().getServerNow();
+    const elapsed = now - s.lastEnergyRefill;
+    if (elapsed < 0) return;
     const refills = Math.floor(elapsed / ENERGY_REFILL_MS);
     if (refills > 0 && s.energyLevel < MAX_ENERGY) {
       set({
         energyLevel: Math.min(s.energyLevel + refills, MAX_ENERGY),
-        lastEnergyRefill: Date.now(),
+        lastEnergyRefill: now,
       });
       get().saveData();
     }
   },
 
   flushSwipeQueue: async () => {
-    if (_flushing) return;
-    const state = get();
-    if (state.swipeQueue.length === 0) return;
+    if (_flushPromise) return _flushPromise;
+    if (get().swipeQueue.length === 0) return;
 
-    _flushing = true;
-    const queue = [...state.swipeQueue];
-    set({ swipeQueue: [] });
+    _flushPromise = (async () => {
+      const queue = [...get().swipeQueue];
+      set({ swipeQueue: get().swipeQueue.slice(queue.length) });
 
-    const termIds = [...new Set(queue.map(q => q.termId))];
-    const progressToSync: BatchProgressItem[] = termIds
-      .filter(id => state.progress[id])
-      .map(id => ({
-        term_id: id,
-        box: state.progress[id].box,
-        last_seen: new Date(state.progress[id].lastSeen).toISOString(),
-        next_review: new Date(state.progress[id].nextReview).toISOString(),
-        times_correct: state.progress[id].timesCorrect,
-        times_seen: state.progress[id].timesSeen,
-      }));
+      try {
+        const { synced } = await pushBatchSwipes(queue);
+        if (!synced) {
+          set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
+        }
+      } catch {
+        set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
+      } finally {
+        await get().saveData();
+      }
+    })();
 
-    const isPremium = get().hasActivePremium();
-
-    const { error } = await pushBatchSwipes(
-      progressToSync,
-      queue.length,
-      isPremium ? 0 : queue.length,
-    );
-
-    if (error) {
-      set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
+    try {
+      await _flushPromise;
+    } finally {
+      _flushPromise = null;
     }
-
-    get().saveData();
-    _flushing = false;
   },
 
   syncToCloud: async (userId) => {
-    await get().flushSwipeQueue();
     const s = get();
     try {
-      await pushProgress(userId, s.progress, {
-        streak: s.streak,
-        lastActiveDate: s.lastActiveDate,
+      await pushPreferences({
         dailyGoal: s.dailyGoal,
-        todayCount: s.todayCount,
-        totalSwipes: s.totalSwipes,
         selectedTags: s.selectedTags,
         language: s.language,
         hasCompletedOnboarding: s.hasCompletedOnboarding,
       });
     } catch {}
+    await get().flushSwipeQueue();
   },
 
   loadFromCloud: async (userId) => {
@@ -424,12 +453,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         let streak = profile.streak;
         let todayCount = profile.todayCount;
         if (profile.lastActiveDate) {
-          const lastDate = new Date(profile.lastActiveDate);
-          const todayDate = new Date(today);
-          const diffDays = Math.floor(
-            (todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24)
-          );
-          if (diffDays > 1) streak = 0;
+          streak = streakAfterLoad(streak, profile.lastActiveDate, today);
           if (profile.lastActiveDate !== today) todayCount = 0;
         }
         const local = get();
@@ -437,11 +461,18 @@ export const useAppStore = create<AppState>((set, get) => ({
           progress: Object.keys(progress).length > 0 ? progress : local.progress,
           selectedTags: profile.selectedTags.length > 0 ? profile.selectedTags : local.selectedTags,
           language: profile.language as Language,
-          streak: Math.max(streak, local.streak),
-          lastActiveDate: profile.lastActiveDate || local.lastActiveDate,
-          dailyGoal: profile.dailyGoal,
-          todayCount: Math.max(todayCount, local.todayCount),
-          totalSwipes: Math.max(profile.totalSwipes || 0, local.totalSwipes),
+          streak,
+          longestStreak: profile.longestStreak,
+          lastActiveDate: profile.lastActiveDate,
+          dailyGoal: (profile.dailyGoal && profile.dailyGoal !== 10) ? profile.dailyGoal : 30,
+          todayCount,
+          totalSwipes: profile.totalSwipes,
+          xp: profile.xp,
+          subscriptionTier: profile.subscriptionTier,
+          cancelAtPeriodEnd: profile.cancelAtPeriodEnd,
+          currentPeriodEnd: profile.currentPeriodEnd,
+          energyLevel: profile.energyLevel,
+          lastEnergyRefill: profile.lastEnergyRefill,
           hasCompletedOnboarding: profile.hasCompletedOnboarding || local.hasCompletedOnboarding,
         });
         get().saveData();
@@ -475,6 +506,14 @@ export const useAppStore = create<AppState>((set, get) => ({
       return pa.nextReview - pb.nextReview;
     });
     return due;
+  },
+
+  getReviewNeededTerms: () => {
+    const { progress, terms } = get();
+    return terms.filter(t => {
+      const p = progress[t.id];
+      return p && p.box === 1 && p.timesSeen > 0;
+    });
   },
 
   getLevel: () => {
@@ -571,41 +610,59 @@ export const useAppStore = create<AppState>((set, get) => ({
     get().scheduleSave();
   },
 
+  getKnownTermCount: () => {
+    const { progress } = get();
+    return Object.values(progress).filter(p => p.box >= 2).length;
+  },
+
+  downgradeQuizTerm: (termId: string) => {
+    const { progress } = get();
+    const existing = progress[termId];
+    if (!existing) return;
+    const updated = markUnknown(existing);
+    set({ progress: { ...progress, [termId]: updated } });
+    get().scheduleSave();
+  },
+
+  promoteQuizTerm: (termId: string) => {
+    const { progress } = get();
+    const existing = progress[termId];
+    if (!existing) return;
+    const updated = markKnown(existing);
+    set({ progress: { ...progress, [termId]: updated } });
+    get().scheduleSave();
+  },
+
   generateQuiz: () => {
-    const { progress, terms, language } = get();
+    const { progress, terms, language, quizSeenIds } = get();
     const tl = language === 'tr' ? 'tr' : 'en';
-    const seenIds = Object.keys(progress);
     const QUIZ_SIZE = 10;
 
-    let selectedTerms: Term[];
-    if (seenIds.length >= QUIZ_SIZE) {
-      const shuffled = [...seenIds].sort(() => Math.random() - 0.5);
-      selectedTerms = shuffled.slice(0, QUIZ_SIZE)
-        .map(id => terms.find(t => t.id === id))
-        .filter(Boolean) as Term[];
-    } else {
-      const seen = seenIds
-        .map(id => terms.find(t => t.id === id))
-        .filter(Boolean) as Term[];
-      const unseen = terms
-        .filter(t => !progress[t.id])
-        .sort(() => Math.random() - 0.5)
-        .slice(0, QUIZ_SIZE - seen.length);
-      selectedTerms = [...seen, ...unseen];
-    }
+    const knownIds = Object.keys(progress).filter(id => progress[id].box >= 2);
+    if (knownIds.length < QUIZ_SIZE) return [];
+
+    const unseenFirst = knownIds.filter(id => !quizSeenIds.has(id));
+    const pool = unseenFirst.length >= QUIZ_SIZE ? unseenFirst : knownIds;
+    const shuffled = [...pool].sort(() => Math.random() - 0.5);
+    const selectedTerms = shuffled.slice(0, QUIZ_SIZE)
+      .map(id => terms.find(t => t.id === id))
+      .filter(Boolean) as Term[];
+
+    set({ quizSeenIds: new Set([...quizSeenIds, ...selectedTerms.map(t => t.id)]) });
 
     const questions: QuizQuestion[] = selectedTerms.map(term => {
+      const correctDef = term.translations[tl].definition;
       const showCorrect = Math.random() < 0.5;
 
       if (showCorrect) {
         return {
           term,
-          displayedDefinition: term.translations[tl].definition,
+          displayedDefinition: correctDef,
           isCorrect: true,
+          correctDefinition: correctDef,
         };
       }
 
-      const primaryTag = term.tags[0];
       let candidates = terms.filter(t =>
         t.id !== term.id && t.tags.some(tag => term.tags.includes(tag))
       );
@@ -619,6 +676,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         displayedDefinition: donor.translations[tl].definition,
         isCorrect: false,
         sourceTerm: donor,
+        correctDefinition: correctDef,
       };
     });
 
@@ -628,8 +686,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   submitQuizResults: (correctCount, totalCount) => {
     const today = getTodayString();
     const s = get();
-    let newStreak = s.streak;
-    if (s.lastActiveDate !== today) newStreak = s.streak + 1;
+    const newStreak = streakAfterStudy(s.streak, s.lastActiveDate, today);
     const newLongest = Math.max(s.longestStreak, newStreak);
 
     set({
@@ -642,5 +699,38 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
     get().scheduleSave();
     get().checkAndAwardBadges();
+    if (correctCount > 0) get().recordDailyStat('quizCorrect', correctCount);
+  },
+
+  recordDailyStat: (field, amount) => {
+    const today = getTodayString();
+    const stats = [...get().dailyStats];
+    let entry = stats.find(s => s.date === today);
+    if (!entry) {
+      entry = { date: today, swipes: 0, quizCorrect: 0, newTerms: 0 };
+      stats.push(entry);
+    }
+    entry[field] += amount;
+    const cutoff = stats.length > 90 ? stats.slice(-90) : stats;
+    set({ dailyStats: cutoff });
+    get().scheduleSave();
+  },
+
+  fetchServerTime: async () => {
+    if (!isSupabaseConfigured) return;
+    try {
+      const before = Date.now();
+      const { data } = await getSupabase().rpc('get_server_time');
+      const after = Date.now();
+      if (data) {
+        const serverMs = new Date(data).getTime();
+        const localMs = (before + after) / 2;
+        set({ serverTimeOffset: serverMs - localMs });
+      }
+    } catch {}
+  },
+
+  getServerNow: () => {
+    return Date.now() + get().serverTimeOffset;
   },
 }));

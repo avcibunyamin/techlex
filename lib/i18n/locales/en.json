@@ -26,7 +26,15 @@
     "continueLearning": "CONTINUE LEARNING",
     "conceptsToReview": "{{count}} concepts to review",
     "conceptsMastered": "{{count}} concepts mastered",
-    "noResults": "No concepts found for \"{{query}}\""
+    "noResults": "No concepts found for \"{{query}}\"",
+    "continueStudying": "Continue Studying",
+    "needsReview": "NEEDS REVIEW",
+    "chart_daily": "Daily",
+    "chart_weekly": "Weekly",
+    "chart_monthly": "Monthly",
+    "chart_swipes": "Swipes",
+    "chart_quiz": "Quiz",
+    "reviewCta": "Study Review-Needed Concepts"
   },
   "learn": {
     "title": "Learn",
@@ -37,7 +45,12 @@
     "swipeRight": "Known",
     "swipeLeft": "Learning",
     "tapFlip": "Tap to flip",
-    "undo": "Undo"
+    "undo": "Undo",
+    "chooseMode": "How do you want to study?",
+    "reviewMode": "Review",
+    "newTerms": "Learn New Terms",
+    "newTermsSub": "{{count}} terms ready",
+    "noReview": "No terms to review"
   },
   "explore": {
     "title": "Explore",
@@ -55,7 +68,9 @@
     "beginner": "Beginner",
     "intermediate": "Intermediate",
     "advanced": "Advanced",
-    "showMore": "+{{count}} more"
+    "showMore": "+{{count}} more",
+    "relatedTerms": "RELATED TERMS",
+    "premiumOnly": "Unlock with Premium"
   },
   "profile": {
     "title": "Profile",
@@ -105,7 +120,9 @@
       "diamond": "Diamond"
     },
     "tierFree": "Free",
-    "tierPremium": "Premium"
+    "tierPremium": "Premium",
+    "usernameLimit": "You can only change your name once every 7 days",
+    "thisWeek": "THIS WEEK"
   },
   "auth": {
     "welcomeBack": "Welcome back",
@@ -171,7 +188,9 @@
       "prioritySupport": "Priority support",
       "shareWith": "Share with {{count}} people",
       "familySharing": "Family sharing (up to 6)",
-      "offlineAccess": "Offline access"
+      "offlineAccess": "Offline access",
+      "advancedAnalysis": "Advanced error analysis",
+      "relatedTermsMap": "Related terms map"
     },
     "subscribe": "Subscribe",
     "restore": "Restore purchase",
@@ -224,14 +243,17 @@
     "conceptsPerDay": "{{count}} concepts / day",
     "continue": "Continue",
     "skip": "Skip",
-    "startLearning": "Start learning"
+    "startLearning": "Start learning",
+    "selectAtLeast": "Select at least 1 category"
   },
   "common": {
     "cancel": "Cancel",
     "save": "Save",
     "done": "Done",
     "close": "Close",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All"
   },
   "categories": {
     "cybersecurity": "Cybersecurity",
@@ -292,6 +314,18 @@
     "retry": "Try Again",
     "perfect": "Perfect!",
     "great": "Great job!",
-    "tryAgain": "Keep practicing!"
+    "tryAgain": "Keep practicing!",
+    "notEnoughTitle": "Not enough terms yet",
+    "notEnoughSub": "You need to learn at least 10 terms to start the quiz. (Currently: {{current}}/10)",
+    "correctDefinitionLabel": "Correct definition:",
+    "gotIt": "Got it",
+    "unlockSource": "See which term this belongs to",
+    "skip": "I Don't Know"
+  },
+  "premiumModal": {
+    "title": "Premium Feature",
+    "subtitle": "Upgrade to Premium to access this feature.",
+    "subtitleRelated": "Upgrade to Premium to see related terms and in-depth analysis.",
+    "subtitleQuiz": "Upgrade to Premium to reveal the source term and unlock extra features."
   }
 }

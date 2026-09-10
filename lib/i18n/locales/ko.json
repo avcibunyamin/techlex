@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "일일 목표",
     "dailyGoalComplete": "목표 달성!",
-    "energyLabel": "에너지"
+    "energyLabel": "에너지",
+    "continueStudying": "학습 계속하기",
+    "needsReview": "복습 필요",
+    "chart_daily": "일별",
+    "chart_weekly": "주별",
+    "chart_monthly": "월별",
+    "chart_swipes": "스와이프",
+    "chart_quiz": "퀴즈",
+    "reviewCta": "복습 필요한 개념 학습하기"
   },
   "learn": {
     "title": "학습",
@@ -37,7 +45,12 @@
     "swipeRight": "알고 있음",
     "swipeLeft": "학습 중",
     "tapFlip": "탭해서 뒤집기",
-    "undo": "실행 취소"
+    "undo": "실행 취소",
+    "chooseMode": "어떻게 공부하시겠어요?",
+    "reviewMode": "복습하기",
+    "newTerms": "새 용어 배우기",
+    "newTermsSub": "{{count}}개 용어 준비됨",
+    "noReview": "복습할 용어가 없습니다"
   },
   "explore": {
     "title": "탐색",
@@ -55,7 +68,9 @@
     "beginner": "초급",
     "intermediate": "중급",
     "advanced": "고급",
-    "showMore": "+{{count}}개 더"
+    "showMore": "+{{count}}개 더",
+    "relatedTerms": "관련 용어",
+    "premiumOnly": "Premium으로 잠금 해제"
   },
   "profile": {
     "title": "프로필",
@@ -105,7 +120,9 @@
       "diamond": "다이아몬드"
     },
     "tierFree": "무료",
-    "tierPremium": "프리미엄"
+    "tierPremium": "프리미엄",
+    "usernameLimit": "이름은 7일에 한 번만 변경할 수 있습니다",
+    "thisWeek": "이번 주"
   },
   "auth": {
     "welcomeBack": "다시 오셨군요",
@@ -171,7 +188,9 @@
       "prioritySupport": "우선 지원",
       "shareWith": "{{count}}명과 공유",
       "familySharing": "가족 공유 (최대 6명)",
-      "offlineAccess": "오프라인 이용"
+      "offlineAccess": "오프라인 이용",
+      "advancedAnalysis": "고급 오류 분석",
+      "relatedTermsMap": "관련 용어 맵"
     },
     "subscribe": "구독하기",
     "restore": "구매 복원",
@@ -198,7 +217,9 @@
     "save": "저장",
     "done": "완료",
     "close": "닫기",
-    "loading": "로딩 중..."
+    "loading": "로딩 중...",
+    "selectAll": "모두 선택",
+    "deselectAll": "모두 해제"
   },
   "onboarding": {
     "welcome": "기술 개념을\n마스터하세요",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "하루 {{count}}개 개념",
     "continue": "계속",
     "skip": "건너뛰기",
-    "startLearning": "학습 시작"
+    "startLearning": "학습 시작",
+    "selectAtLeast": "최소 1개 카테고리를 선택하세요"
   },
   "categories": {
-    "cybersecurity": "사이버 보안",
-    "software-dev": "소프트웨어 개발",
-    "ai-ml": "AI & 머신러닝",
-    "networking": "네트워킹",
-    "design-ux": "디자인 & UX",
-    "cybersecurity-general": "일반 용어",
-    "blue-team": "블루팀 (방어)",
-    "siem-log-analysis": "SIEM & 로그 분석",
-    "incident-response": "인시던트 대응",
-    "threat-intelligence": "위협 인텔리전스",
-    "red-team": "레드팀 (공격)",
-    "reconnaissance": "정찰",
-    "exploitation": "익스플로잇",
-    "social-engineering": "소셜 엔지니어링",
-    "cryptography": "암호학",
-    "malware": "멀웨어 분석",
-    "owasp-web-security": "OWASP & 웹 보안",
-    "web-frontend": "웹 프론트엔드",
-    "web-backend": "웹 백엔드",
-    "database": "데이터베이스 & SQL",
+    "cybersecurity": "사이버 보안 (Cybersecurity)",
+    "software-dev": "소프트웨어 개발 (Software Development)",
+    "ai-ml": "AI & 머신러닝 (AI & Machine Learning)",
+    "networking": "네트워킹 (Networking)",
+    "design-ux": "디자인 & UX (Design & UX)",
+    "cybersecurity-general": "일반 용어 (General Terms)",
+    "blue-team": "블루팀 (Blue Team - Defense)",
+    "siem-log-analysis": "SIEM & 로그 분석 (SIEM & Log Analysis)",
+    "incident-response": "인시던트 대응 (Incident Response)",
+    "threat-intelligence": "위협 인텔리전스 (Threat Intelligence)",
+    "red-team": "레드팀 (Red Team - Offense)",
+    "reconnaissance": "정찰 (Reconnaissance)",
+    "exploitation": "익스플로잇 (Exploitation)",
+    "social-engineering": "소셜 엔지니어링 (Social Engineering)",
+    "cryptography": "암호학 (Cryptography)",
+    "malware": "멀웨어 분석 (Malware Analysis)",
+    "owasp-web-security": "OWASP & 웹 보안 (OWASP & Web Security)",
+    "web-frontend": "웹 프론트엔드 (Web Frontend)",
+    "web-backend": "웹 백엔드 (Web Backend)",
+    "database": "데이터베이스 & SQL (Database & SQL)",
     "devops": "DevOps & CI/CD",
-    "git-version-control": "Git & 버전 관리",
-    "testing": "테스트 & QA",
-    "machine-learning": "머신러닝",
-    "deep-learning": "딥러닝",
+    "git-version-control": "Git & 버전 관리 (Git & Version Control)",
+    "testing": "테스트 & QA (Testing & QA)",
+    "machine-learning": "머신러닝 (Machine Learning)",
+    "deep-learning": "딥러닝 (Deep Learning)",
     "llm-nlp": "LLM & NLP",
-    "computer-vision": "컴퓨터 비전",
-    "big-data": "빅데이터",
-    "protocols": "프로토콜",
-    "network-fundamentals": "네트워크 기초",
-    "network-devices": "네트워크 장비",
-    "cloud-computing": "클라우드 컴퓨팅",
-    "containers": "컨테이너 & 오케스트레이션",
-    "wireless": "무선 네트워크",
-    "ux-fundamentals": "UX 기초",
-    "ux-research": "UX 리서치",
-    "ui-design": "UI 디자인",
+    "computer-vision": "컴퓨터 비전 (Computer Vision)",
+    "big-data": "빅데이터 (Big Data)",
+    "protocols": "프로토콜 (Protocols)",
+    "network-fundamentals": "네트워크 기초 (Network Fundamentals)",
+    "network-devices": "네트워크 장비 (Network Devices)",
+    "cloud-computing": "클라우드 컴퓨팅 (Cloud Computing)",
+    "containers": "컨테이너 & 오케스트레이션 (Containers & Orchestration)",
+    "wireless": "무선 네트워크 (Wireless Networks)",
+    "ux-fundamentals": "UX 기초 (UX Fundamentals)",
+    "ux-research": "UX 리서치 (UX Research)",
+    "ui-design": "UI 디자인 (UI Design)",
     "figma": "Figma",
-    "typography": "타이포그래피",
-    "design-systems": "디자인 시스템",
-    "project-management": "프로젝트 관리"
+    "typography": "타이포그래피 (Typography)",
+    "design-systems": "디자인 시스템 (Design Systems)",
+    "project-management": "프로젝트 관리 (Project Management)"
   },
   "quiz": {
     "title": "테스트",
@@ -292,6 +314,18 @@
     "retry": "다시 하기",
     "perfect": "완벽!",
     "great": "잘했어요!",
-    "tryAgain": "더 연습하세요!"
+    "tryAgain": "더 연습하세요!",
+    "notEnoughTitle": "아직 용어가 부족합니다",
+    "notEnoughSub": "퀴즈를 시작하려면 최소 10개의 용어를 학습해야 합니다. (현재: {{current}}/10)",
+    "correctDefinitionLabel": "올바른 정의:",
+    "gotIt": "이해했어요",
+    "unlockSource": "어떤 용어에 속하는지 확인",
+    "skip": "모르겠어요"
+  },
+  "premiumModal": {
+    "title": "Premium 기능",
+    "subtitle": "이 기능을 사용하려면 Premium으로 업그레이드하세요.",
+    "subtitleRelated": "Premium으로 업그레이드하여 관련 용어와 심층 분석을 확인하세요.",
+    "subtitleQuiz": "Premium으로 업그레이드하여 원본 용어를 확인하고 추가 기능을 잠금 해제하세요."
   }
 }

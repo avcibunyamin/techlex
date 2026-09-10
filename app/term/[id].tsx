@@ -8,6 +8,7 @@ import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { getTermLanguage } from '@/types';
+import { toLocaleUpper } from '@/lib/text-utils';
 
 export default function TermDetail() {
   const { colors: t, accent } = useTheme();
@@ -51,7 +52,7 @@ export default function TermDetail() {
         contentContainerStyle={styles.content}
       >
         <Text style={[typography.caption, { color: t.textTertiary }]}>
-          {term.tags[0]?.toUpperCase().replace(/-/g, ' ')}
+          {toLocaleUpper(term.tags[0]?.replace(/-/g, ' ') ?? '', language)}
         </Text>
 
         <Text style={[styles.termText, { color: t.text }]}>

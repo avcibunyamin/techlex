@@ -1,31 +1,61 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Pressable, Modal,
+  StyleSheet, Text, View, Pressable, Modal, ScrollView,
 } from 'react-native';
 import {
-  Zap, Crown, Users, Heart, Check, X, Infinity,
+  Zap, Crown, Users, Heart, Check, X, Infinity, Lock, Sparkles,
 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 
+export type PaywallVariant = 'energy' | 'premium';
+export type PaywallSource = 'energy' | 'relatedTerms' | 'quizHint';
+
 interface PaywallModalProps {
   visible: boolean;
   onDismiss: () => void;
   onSelectPlan?: (plan: string) => void;
+  variant?: PaywallVariant;
+  source?: PaywallSource;
 }
 
 const plans = [
-  { id: 'individual', icon: Crown, color: '#6366F1' },
-  { id: 'duo', icon: Users, color: '#3B82F6' },
-  { id: 'family', icon: Heart, color: '#EC4899' },
+  {
+    id: 'individual',
+    icon: Crown,
+    color: '#6366F1',
+    popular: false,
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync'],
+  },
+  {
+    id: 'duo',
+    icon: Users,
+    color: '#3B82F6',
+    popular: true,
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'shareWith'],
+  },
+  {
+    id: 'family',
+    icon: Heart,
+    color: '#EC4899',
+    popular: false,
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'familySharing'],
+  },
 ] as const;
 
-const features = ['unlimitedEnergy', 'allCategories', 'cloudSync'] as const;
-
-export default function PaywallModal({ visible, onDismiss, onSelectPlan }: PaywallModalProps) {
+export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant = 'energy', source }: PaywallModalProps) {
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
+
+  const isEnergy = variant === 'energy';
+
+  function getSubtitleKey(): string {
+    if (source === 'relatedTerms') return 'premiumModal.subtitleRelated';
+    if (source === 'quizHint') return 'premiumModal.subtitleQuiz';
+    if (isEnergy) return 'energyModal.subtitle';
+    return 'premiumModal.subtitle';
+  }
 
   return (
     <Modal
@@ -43,56 +73,87 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan }: Paywa
             <X size={18} color={t.textTertiary} strokeWidth={1.5} />
           </Pressable>
 
-          <View style={[styles.iconCircle, { backgroundColor: colors.warningMuted }]}>
-            <Zap size={24} color={colors.warning} strokeWidth={2} fill={colors.warning} />
-          </View>
+          {isEnergy ? (
+            <View style={[styles.iconCircle, { backgroundColor: colors.warningMuted }]}>
+              <Zap size={24} color={colors.warning} strokeWidth={2} fill={colors.warning} />
+            </View>
+          ) : (
+            <View style={[styles.iconCircle, { backgroundColor: `${accent}20` }]}>
+              <Lock size={24} color={accent} strokeWidth={2} />
+            </View>
+          )}
 
           <Text style={[typography.title, { color: t.text, textAlign: 'center', marginTop: spacing.lg }]}>
-            {tr('energyModal.title')}
+            {tr(isEnergy ? 'energyModal.title' : 'premiumModal.title')}
           </Text>
           <Text style={[typography.callout, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
-            {tr('energyModal.subtitle')}
+            {tr(getSubtitleKey())}
           </Text>
 
-          <View style={styles.features}>
-            {features.map((f) => (
-              <View key={f} style={styles.featureRow}>
-                <Check size={14} color={colors.success} strokeWidth={2.5} />
-                <Text style={[typography.callout, { color: t.textSecondary }]}>
-                  {tr(`energyModal.${f}`)}
-                </Text>
-              </View>
-            ))}
-          </View>
-
-          <View style={styles.planList}>
+          {/* Side-by-side plan cards */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.planRow}
+            style={styles.planScroll}
+          >
             {plans.map((plan) => {
               const Icon = plan.icon;
+              const isPopular = plan.popular;
               return (
-                <Pressable
-                  key={plan.id}
-                  style={[styles.planBtn, { borderColor: t.border }]}
-                  onPress={() => {
-                    onSelectPlan?.(plan.id);
-                    console.log(`[PaywallModal] Selected plan: ${plan.id}`);
-                  }}
-                >
-                  <View style={[styles.planIcon, { backgroundColor: `${plan.color}15` }]}>
-                    <Icon size={16} color={plan.color} strokeWidth={1.5} />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[typography.subhead, { color: t.text, fontWeight: '600' }]}>
+                <View key={plan.id} style={styles.planCardOuter}>
+                  <Pressable
+                    style={[
+                      styles.planCard,
+                      {
+                        borderColor: isPopular ? plan.color : t.border,
+                        borderWidth: isPopular ? 2 : 1,
+                        backgroundColor: isPopular ? plan.color + '08' : t.bg,
+                      },
+                    ]}
+                    onPress={() => {
+                      onSelectPlan?.(plan.id);
+                    }}
+                  >
+                    <View style={[styles.planIconWrap, { backgroundColor: plan.color + '15' }]}>
+                      <Icon size={20} color={plan.color} strokeWidth={1.5} />
+                    </View>
+
+                    <Text style={[typography.headline, { color: t.text, marginTop: spacing.md }]}>
                       {tr(`energyModal.${plan.id}`)}
                     </Text>
-                    <Text style={[typography.footnote, { color: t.textTertiary }]}>
+                    <Text style={[typography.subhead, { color: plan.color, fontWeight: '700', marginTop: spacing.xs }]}>
                       {tr(`energyModal.${plan.id}Price`)}
                     </Text>
-                  </View>
-                  <Infinity size={14} color={plan.color} strokeWidth={1.5} />
-                </Pressable>
+
+                    <View style={styles.featureList}>
+                      {plan.features.map((f) => (
+                        <View key={f} style={styles.featureItem}>
+                          <Check size={12} color={colors.success} strokeWidth={2.5} />
+                          <Text style={[styles.featureText, { color: t.textSecondary }]} numberOfLines={2}>
+                            {tr(`paywall.features.${f}`, { count: plan.id === 'duo' ? 2 : 6 })}
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    <View style={[styles.selectBtn, { backgroundColor: plan.color }]}>
+                      <Text style={[typography.subhead, { color: '#fff', fontWeight: '600' }]}>
+                        {tr('paywall.subscribe')}
+                      </Text>
+                    </View>
+                  </Pressable>
+
+                  {isPopular && (
+                    <View style={[styles.popularBadge, { backgroundColor: plan.color }]}>
+                      <Sparkles size={10} color="#fff" strokeWidth={2} />
+                      <Text style={styles.popularText}>{tr('paywall.popular')}</Text>
+                    </View>
+                  )}
+                </View>
               );
             })}
-          </View>
+          </ScrollView>
 
           <Pressable style={styles.dismissBtn} onPress={onDismiss}>
             <Text style={[typography.subhead, { color: t.textTertiary }]}>
@@ -117,9 +178,12 @@ const styles = StyleSheet.create({
   sheet: {
     borderTopLeftRadius: radius.xl,
     borderTopRightRadius: radius.xl,
-    paddingHorizontal: spacing['2xl'],
+    paddingHorizontal: spacing.lg,
     paddingBottom: spacing['4xl'],
     alignItems: 'center',
+    maxWidth: 800,
+    alignSelf: 'center',
+    width: '100%',
   },
   handle: {
     width: 36,
@@ -133,6 +197,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: spacing.xl,
     right: spacing.xl,
+    zIndex: 10,
   },
   iconCircle: {
     width: 56,
@@ -141,35 +206,73 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  features: {
+  planScroll: {
     marginTop: spacing.xl,
-    gap: spacing.sm,
     alignSelf: 'stretch',
   },
-  featureRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    paddingLeft: spacing.md,
-  },
-  planList: {
-    marginTop: spacing['2xl'],
-    gap: spacing.sm,
-    alignSelf: 'stretch',
-  },
-  planBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  planRow: {
     gap: spacing.md,
-    padding: spacing.lg,
-    borderRadius: radius.lg,
-    borderWidth: 0.5,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
   },
-  planIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+  planCardOuter: {
+    width: 190,
+    position: 'relative',
+  },
+  planCard: {
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    alignItems: 'center',
+  },
+  popularBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
+    gap: 4,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: 4,
+    borderRadius: 12,
+    position: 'absolute',
+    top: -10,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  popularText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  planIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: spacing.sm,
+  },
+  featureList: {
+    marginTop: spacing.lg,
+    gap: spacing.sm,
+    alignSelf: 'stretch',
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.xs,
+  },
+  featureText: {
+    fontSize: 11,
+    lineHeight: 15,
+    flex: 1,
+  },
+  selectBtn: {
+    marginTop: spacing.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    borderRadius: radius.md,
+    alignSelf: 'stretch',
     alignItems: 'center',
   },
   dismissBtn: {

@@ -195,7 +195,11 @@ export default function LoginScreen() {
 
     if (data?.session) {
       if (data.user) {
-        await useAppStore.getState().loadFromCloud(data.user.id);
+        const store = useAppStore.getState();
+        await store.syncToCloud(data.user.id);
+        if (useAppStore.getState().swipeQueue.length === 0) {
+          await store.loadFromCloud(data.user.id);
+        }
       }
       router.replace('/(tabs)');
     } else {

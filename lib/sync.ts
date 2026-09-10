@@ -1,79 +1,57 @@
 import { getSupabase, isSupabaseConfigured } from './supabase';
 import { UserProgress } from '@/types';
+import { getDeviceTimeZone } from './date-utils';
 
-export interface BatchProgressItem {
-  term_id: string;
-  box: number;
-  last_seen: string;
-  next_review: string;
-  times_correct: number;
-  times_seen: number;
+export interface SwipeEvent {
+  id: string;
+  termId: string;
+  action: 'right' | 'left';
+  timestamp: number;
 }
 
 export async function pushBatchSwipes(
-  progressItems: BatchProgressItem[],
-  swipeCount: number,
-  energyConsumed: number
-): Promise<{ error: any }> {
-  if (!isSupabaseConfigured || progressItems.length === 0) return { error: null };
-  const { error } = await getSupabase().rpc('process_batch_swipes', {
-    p_progress: progressItems,
-    p_swipe_count: swipeCount,
-    p_energy_consumed: energyConsumed,
+  events: SwipeEvent[],
+): Promise<{ synced: boolean; error: unknown }> {
+  if (!isSupabaseConfigured || events.length === 0) {
+    return { synced: false, error: null };
+  }
+
+  const supabase = getSupabase();
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData.session) return { synced: false, error: null };
+
+  const { data, error } = await supabase.rpc('process_swipe_events', {
+    p_events: events.map((event) => ({
+      event_id: event.id,
+      term_id: event.termId,
+      action: event.action,
+      occurred_at: new Date(event.timestamp).toISOString(),
+    })),
   });
-  return { error };
+
+  const result = data as { success?: boolean } | null;
+  return { synced: !error && result?.success === true, error };
 }
 
-export async function pushProgress(
-  userId: string,
-  progress: Record<string, UserProgress>,
-  meta: {
-    streak: number;
-    lastActiveDate: string | null;
+export async function pushPreferences(meta: {
     dailyGoal: number;
-    todayCount: number;
-    totalSwipes: number;
     selectedTags: string[];
     language: string;
     hasCompletedOnboarding: boolean;
-  }
-) {
+  }): Promise<void> {
   if (!isSupabaseConfigured) return;
-  const supabase = getSupabase();
-
-  const progressRows = Object.values(progress).map((p) => ({
-    user_id: userId,
-    term_id: p.termId,
-    box: p.box,
-    last_seen: new Date(p.lastSeen).toISOString(),
-    next_review: new Date(p.nextReview).toISOString(),
-    times_correct: p.timesCorrect,
-    times_seen: p.timesSeen,
-  }));
-
-  if (progressRows.length > 0) {
-    await supabase
-      .from('user_progress')
-      .upsert(progressRows, { onConflict: 'user_id,term_id' });
+  const { data, error } = await getSupabase().rpc('sync_user_preferences', {
+    p_daily_goal: meta.dailyGoal,
+    p_selected_tags: meta.selectedTags,
+    p_language: meta.language,
+    p_has_completed_onboarding: meta.hasCompletedOnboarding,
+    p_timezone: getDeviceTimeZone(),
+  });
+  if (error) throw error;
+  const result = data as { success?: boolean; error?: string } | null;
+  if (result?.success !== true) {
+    throw new Error(result?.error || 'preference_sync_failed');
   }
-
-  await supabase
-    .from('user_profiles')
-    .upsert(
-      {
-        id: userId,
-        streak: meta.streak,
-        last_active_date: meta.lastActiveDate,
-        daily_goal: meta.dailyGoal,
-        today_count: meta.todayCount,
-        total_swipes: meta.totalSwipes,
-        selected_tags: meta.selectedTags,
-        language: meta.language,
-        has_completed_onboarding: meta.hasCompletedOnboarding,
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: 'id' }
-    );
 }
 
 export async function pullProgress(userId: string) {
@@ -114,6 +92,19 @@ export async function pullProgress(userId: string) {
           dailyGoal: profile.daily_goal ?? 10,
           todayCount: profile.today_count ?? 0,
           totalSwipes: profile.total_swipes ?? 0,
+          xp: profile.xp ?? 0,
+          longestStreak: profile.longest_streak ?? 0,
+          subscriptionTier: profile.subscription_tier ?? 'free',
+          cancelAtPeriodEnd: profile.cancel_at_period_end ?? false,
+          currentPeriodEnd: profile.current_period_end
+            ? new Date(profile.current_period_end).getTime()
+            : null,
+          energyLevel: profile.subscription_tier === 'free'
+            ? (profile.energy_level ?? 30)
+            : 999,
+          lastEnergyRefill: profile.last_energy_refill
+            ? new Date(profile.last_energy_refill).getTime()
+            : Date.now(),
           selectedTags: profile.selected_tags ?? [],
           language: profile.language ?? 'tr',
           hasCompletedOnboarding: profile.has_completed_onboarding ?? false,

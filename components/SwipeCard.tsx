@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
+import React, { useRef, useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { StyleSheet, Text, View, Dimensions, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,12 +16,16 @@ import { colors as palette, spacing, radius, typography } from '@/constants/them
 import { useTheme } from '@/lib/useTheme';
 import { getCategoryByTag } from '@/data/categories';
 import { useAppStore } from '@/lib/store';
+import { toLocaleUpper } from '@/lib/text-utils';
+import { useTranslation } from 'react-i18next';
+import { Lock, ChevronDown } from 'lucide-react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_X_THRESHOLD = SCREEN_WIDTH * 0.28;
 const SWIPE_Y_THRESHOLD = 120;
 const VELOCITY_THRESHOLD = 800;
-const CARD_WIDTH = SCREEN_WIDTH - 48;
+const MAX_CARD_WIDTH = 600;
+const CARD_WIDTH = Math.min(SCREEN_WIDTH - 48, MAX_CARD_WIDTH);
 
 export interface SwipeCardRef {
   triggerSwipe: (direction: 'right' | 'left') => void;
@@ -34,10 +38,13 @@ interface SwipeCardProps {
   onSwipeLeft: () => void;
   onSwipeBlocked?: () => void;
   canSwipe?: boolean;
+  isPremium?: boolean;
   onRelatedTermPress?: (term: string) => void;
+  onShowPaywall?: () => void;
   stackIndex: number;
   dragX?: SharedValue<number>;
   dragY?: SharedValue<number>;
+  isReviewMode?: boolean;
 }
 
 const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
@@ -48,16 +55,21 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
     onSwipeLeft,
     onSwipeBlocked,
     canSwipe = true,
+    isPremium = false,
     onRelatedTermPress,
+    onShowPaywall,
     stackIndex,
     dragX,
     dragY,
+    isReviewMode = false,
   },
   ref
 ) {
   const { colors: t, accent } = useTheme();
+  const { t: tr } = useTranslation();
   const allTerms = useAppStore(s => s.terms);
   const flipped = useRef(false);
+  const [expandedRelated, setExpandedRelated] = useState<string | null>(null);
 
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -214,13 +226,19 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
         <Animated.View
           style={[
             styles.card,
-            { backgroundColor: t.bgElevated, borderColor: t.border },
+            { backgroundColor: t.bgElevated, borderColor: isReviewMode ? palette.warning + '60' : t.border },
+            isReviewMode && { borderWidth: 1.5 },
             frontStyle,
           ]}
         >
           <View style={styles.header}>
+            {isReviewMode && (
+              <View style={styles.reviewBadge}>
+                <Text style={styles.reviewBadgeText}>{tr('learn.review')}</Text>
+              </View>
+            )}
             <Text style={[styles.categoryLabel, { color: t.textTertiary }]}>
-              {categoryLabel.toUpperCase()}
+              {toLocaleUpper(categoryLabel, language)}
             </Text>
           </View>
 
@@ -252,7 +270,8 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
           style={[
             styles.card,
             styles.backFace,
-            { backgroundColor: t.bgElevated, borderColor: t.border },
+            { backgroundColor: t.bgElevated, borderColor: isReviewMode ? palette.warning + '60' : t.border },
+            isReviewMode && { borderWidth: 1.5 },
             backAnimStyle,
           ]}
         >
@@ -274,7 +293,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
                 ]}
               >
                 <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
-                  {language === 'tr' ? 'ORNEK' : 'EXAMPLE'}
+                  {toLocaleUpper(language === 'tr' ? 'Örnek' : 'Example', language)}
                 </Text>
                 <Text style={[styles.codeText, { color: t.textSecondary }]}>
                   {translation.example}
@@ -283,20 +302,50 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
             ) : null}
 
             {term.relatedTerms.length > 0 ? (
-              <View style={styles.chips}>
+              <View style={styles.relatedSection}>
+                <Text style={[styles.relatedTitle, { color: t.textTertiary }]}>
+                  {tr('term.relatedTerms')}
+                </Text>
                 {term.relatedTerms.slice(0, 4).map((rt) => {
                   const related = allTerms.find(t => t.id === rt);
                   if (!related) return null;
+                  const isExpanded = expandedRelated === rt;
+                  const relatedTranslation = related.translations[tl];
                   return (
-                    <Pressable
-                      key={rt}
-                      style={[styles.chip, { borderColor: t.border }]}
-                      onPress={() => onRelatedTermPress?.(rt)}
-                    >
-                      <Text style={[styles.chipText, { color: t.textTertiary }]}>
-                        {related.term}
-                      </Text>
-                    </Pressable>
+                    <View key={rt} style={[styles.relatedRow, { borderColor: t.border }]}>
+                      <Pressable
+                        style={[styles.relatedChip, { backgroundColor: t.bgSubtle, borderColor: t.border }]}
+                        onPress={() => {
+                          if (isPremium) {
+                            setExpandedRelated(isExpanded ? null : rt);
+                          } else {
+                            onShowPaywall?.();
+                          }
+                        }}
+                      >
+                        {!isPremium && (
+                          <Lock size={10} color={t.textSecondary} strokeWidth={1.5} />
+                        )}
+                        <Text style={[styles.chipText, { color: t.text }]} numberOfLines={1}>
+                          {related.term}
+                        </Text>
+                        {isPremium && (
+                          <ChevronDown
+                            size={10}
+                            color={t.textTertiary}
+                            strokeWidth={1.5}
+                            style={{ transform: [{ rotate: isExpanded ? '180deg' : '0deg' }] }}
+                          />
+                        )}
+                      </Pressable>
+                      {isExpanded && isPremium && (
+                        <View style={[styles.relatedDef, { backgroundColor: t.bg }]}>
+                          <Text style={[typography.footnote, { color: t.textSecondary }]}>
+                            {relatedTranslation.definition}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
                   );
                 })}
               </View>
@@ -355,6 +404,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1.2,
   },
+  reviewBadge: {
+    backgroundColor: palette.warning + '20',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  reviewBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    color: palette.warning,
+  },
   frontCenter: {
     flex: 1,
     justifyContent: 'center',
@@ -410,16 +471,31 @@ const styles = StyleSheet.create({
   codeText: {
     ...typography.mono,
   },
-  chips: {
+  relatedSection: {
+    gap: spacing.xs,
+  },
+  relatedTitle: {
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 1,
+    marginBottom: spacing.xs,
+  },
+  relatedRow: {
+    paddingVertical: spacing.xs,
+  },
+  relatedChip: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 0.5,
     gap: spacing.sm,
   },
-  chip: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs + 2,
-    borderRadius: radius.sm,
-    borderWidth: 1,
+  relatedDef: {
+    padding: spacing.sm,
+    paddingTop: spacing.xs,
   },
   chipText: {
     fontSize: 12,

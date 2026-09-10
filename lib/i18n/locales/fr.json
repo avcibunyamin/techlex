@@ -26,7 +26,15 @@
     "greeting_name": "{{greeting}}, {{name}}",
     "dailyGoalLabel": "OBJECTIF QUOTIDIEN",
     "dailyGoalComplete": "Objectif atteint !",
-    "energyLabel": "Energie"
+    "energyLabel": "Energie",
+    "continueStudying": "Continuer à étudier",
+    "needsReview": "RÉVISION NÉCESSAIRE",
+    "chart_daily": "Quotidien",
+    "chart_weekly": "Hebdomadaire",
+    "chart_monthly": "Mensuel",
+    "chart_swipes": "Balayages",
+    "chart_quiz": "Quiz",
+    "reviewCta": "Réviser les concepts à revoir"
   },
   "learn": {
     "title": "Apprendre",
@@ -37,7 +45,12 @@
     "swipeRight": "Connu",
     "swipeLeft": "En cours",
     "tapFlip": "Appuie pour retourner",
-    "undo": "Annuler"
+    "undo": "Annuler",
+    "chooseMode": "Comment veux-tu étudier ?",
+    "reviewMode": "Réviser",
+    "newTerms": "Apprendre de nouveaux termes",
+    "newTermsSub": "{{count}} termes prêts",
+    "noReview": "Aucun terme à réviser"
   },
   "explore": {
     "title": "Explorer",
@@ -55,7 +68,9 @@
     "beginner": "Débutant",
     "intermediate": "Intermédiaire",
     "advanced": "Avancé",
-    "showMore": "+{{count}} de plus"
+    "showMore": "+{{count}} de plus",
+    "relatedTerms": "TERMES ASSOCIÉS",
+    "premiumOnly": "Débloquer avec Premium"
   },
   "profile": {
     "title": "Profil",
@@ -105,7 +120,9 @@
       "diamond": "Diamant"
     },
     "tierFree": "Gratuit",
-    "tierPremium": "Premium"
+    "tierPremium": "Premium",
+    "usernameLimit": "Vous ne pouvez changer votre nom qu'une fois tous les 7 jours",
+    "thisWeek": "CETTE SEMAINE"
   },
   "auth": {
     "welcomeBack": "Content de te revoir",
@@ -171,7 +188,9 @@
       "prioritySupport": "Support prioritaire",
       "shareWith": "Partager avec {{count}} personnes",
       "familySharing": "Partage familial (jusqu'à 6)",
-      "offlineAccess": "Accès hors ligne"
+      "offlineAccess": "Accès hors ligne",
+      "advancedAnalysis": "Analyse avancée des erreurs",
+      "relatedTermsMap": "Carte des termes liés"
     },
     "subscribe": "S'abonner",
     "restore": "Restaurer l'achat",
@@ -198,7 +217,9 @@
     "save": "Enregistrer",
     "done": "Terminé",
     "close": "Fermer",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "selectAll": "Tout sélectionner",
+    "deselectAll": "Tout désélectionner"
   },
   "onboarding": {
     "welcome": "Maitrise les concepts\ntechnologiques",
@@ -231,50 +252,51 @@
     "conceptsPerDay": "{{count}} concepts / jour",
     "continue": "Continuer",
     "skip": "Passer",
-    "startLearning": "Commencer"
+    "startLearning": "Commencer",
+    "selectAtLeast": "Sélectionnez au moins 1 catégorie"
   },
   "categories": {
-    "cybersecurity": "Cybersecurite",
-    "software-dev": "Developpement logiciel",
-    "ai-ml": "IA & Machine Learning",
-    "networking": "Reseaux",
+    "cybersecurity": "Cybersecurite (Cybersecurity)",
+    "software-dev": "Developpement logiciel (Software Development)",
+    "ai-ml": "IA & Machine Learning (AI & Machine Learning)",
+    "networking": "Reseaux (Networking)",
     "design-ux": "Design & UX",
-    "cybersecurity-general": "Termes generaux",
+    "cybersecurity-general": "Termes generaux (General Terms)",
     "blue-team": "Blue Team (Defense)",
-    "siem-log-analysis": "SIEM & Analyse de logs",
-    "incident-response": "Reponse aux incidents",
-    "threat-intelligence": "Renseignement sur les menaces",
+    "siem-log-analysis": "SIEM & Analyse de logs (SIEM & Log Analysis)",
+    "incident-response": "Reponse aux incidents (Incident Response)",
+    "threat-intelligence": "Renseignement sur les menaces (Threat Intelligence)",
     "red-team": "Red Team (Attaque)",
     "reconnaissance": "Reconnaissance",
     "exploitation": "Exploitation",
-    "social-engineering": "Ingenierie sociale",
-    "cryptography": "Cryptographie",
-    "malware": "Analyse de malwares",
-    "owasp-web-security": "OWASP & Securite web",
-    "web-frontend": "Frontend Web",
-    "web-backend": "Backend Web",
-    "database": "Base de donnees & SQL",
+    "social-engineering": "Ingenierie sociale (Social Engineering)",
+    "cryptography": "Cryptographie (Cryptography)",
+    "malware": "Analyse de malwares (Malware Analysis)",
+    "owasp-web-security": "OWASP & Securite web (OWASP & Web Security)",
+    "web-frontend": "Frontend Web (Web Frontend)",
+    "web-backend": "Backend Web (Web Backend)",
+    "database": "Base de donnees & SQL (Database & SQL)",
     "devops": "DevOps & CI/CD",
-    "git-version-control": "Git & Controle de version",
-    "testing": "Tests & QA",
+    "git-version-control": "Git & Controle de version (Git & Version Control)",
+    "testing": "Tests & QA (Testing & QA)",
     "machine-learning": "Machine Learning",
     "deep-learning": "Deep Learning",
     "llm-nlp": "LLM & NLP",
-    "computer-vision": "Vision par ordinateur",
+    "computer-vision": "Vision par ordinateur (Computer Vision)",
     "big-data": "Big Data",
-    "protocols": "Protocoles",
-    "network-fundamentals": "Fondamentaux reseau",
-    "network-devices": "Equipements reseau",
+    "protocols": "Protocoles (Protocols)",
+    "network-fundamentals": "Fondamentaux reseau (Network Fundamentals)",
+    "network-devices": "Equipements reseau (Network Devices)",
     "cloud-computing": "Cloud Computing",
-    "containers": "Conteneurs & Orchestration",
-    "wireless": "Reseaux sans fil",
-    "ux-fundamentals": "Fondamentaux UX",
-    "ux-research": "Recherche UX",
-    "ui-design": "Design UI",
+    "containers": "Conteneurs & Orchestration (Containers & Orchestration)",
+    "wireless": "Reseaux sans fil (Wireless Networks)",
+    "ux-fundamentals": "Fondamentaux UX (UX Fundamentals)",
+    "ux-research": "Recherche UX (UX Research)",
+    "ui-design": "Design UI (UI Design)",
     "figma": "Figma",
-    "typography": "Typographie",
-    "design-systems": "Systemes de design",
-    "project-management": "Gestion de projet"
+    "typography": "Typographie (Typography)",
+    "design-systems": "Systemes de design (Design Systems)",
+    "project-management": "Gestion de projet (Project Management)"
   },
   "quiz": {
     "title": "Test",
@@ -292,6 +314,18 @@
     "retry": "Réessayer",
     "perfect": "Parfait !",
     "great": "Excellent !",
-    "tryAgain": "Continuez à pratiquer !"
+    "tryAgain": "Continuez à pratiquer !",
+    "notEnoughTitle": "Pas assez de termes",
+    "notEnoughSub": "Tu dois apprendre au moins 10 termes pour commencer le quiz. (Actuellement : {{current}}/10)",
+    "correctDefinitionLabel": "Bonne définition :",
+    "gotIt": "Compris",
+    "unlockSource": "Voir à quel terme cela appartient",
+    "skip": "Je ne sais pas"
+  },
+  "premiumModal": {
+    "title": "Fonctionnalité Premium",
+    "subtitle": "Passez à Premium pour accéder à cette fonctionnalité.",
+    "subtitleRelated": "Passez à Premium pour voir les termes liés et les analyses approfondies.",
+    "subtitleQuiz": "Passez à Premium pour révéler le terme source et débloquer des extras."
   }
 }

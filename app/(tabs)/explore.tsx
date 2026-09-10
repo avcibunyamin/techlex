@@ -10,6 +10,7 @@ import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { categories, Category, getAllTags, findCategoryById, getDescendantIds, findParentCategory } from '@/data/categories';
 import { Term, Language, getTermLanguage } from '@/types';
+import { toLocaleUpper } from '@/lib/text-utils';
 
 function CategoryCheckbox({
   category,
@@ -137,8 +138,7 @@ export default function ExploreScreen() {
 
   const handleShuffle = () => {
     if (selectedTags.length === 0) {
-      const allTopLevel = categories.map(c => c.id);
-      setSelectedTags(allTopLevel);
+      setSelectedTags(getAllTags());
     }
     router.push('/(tabs)/learn');
   };
@@ -181,7 +181,7 @@ export default function ExploreScreen() {
               <View style={{ flex: 1 }}>
                 <Text style={[typography.headline, { color: t.text }]}>{item.term}</Text>
                 <Text style={[typography.caption, { color: t.textTertiary, marginTop: spacing.xs }]}>
-                  {item.tags[0]?.toUpperCase().replace(/-/g, ' ')}
+                  {toLocaleUpper(item.tags[0]?.replace(/-/g, ' ') ?? '', language)}
                 </Text>
                 <Text
                   style={[typography.callout, { color: t.textSecondary, marginTop: spacing.sm }]}
@@ -211,13 +211,17 @@ export default function ExploreScreen() {
               <Text style={[typography.caption, { color: t.textTertiary }]}>
                 {tr('explore.knowledgeMap')}
               </Text>
-              {selectedTags.length > 0 && (
-                <Pressable onPress={() => setSelectedTags([])}>
-                  <Text style={[typography.caption, { color: accent }]}>
-                    {tr('common.cancel')}
-                  </Text>
-                </Pressable>
-              )}
+              <Pressable onPress={() => {
+                const allIds = getAllTags();
+                const allSelected = allIds.every(id => selectedTags.includes(id));
+                setSelectedTags(allSelected ? [] : allIds);
+              }}>
+                <Text style={[typography.caption, { color: accent }]}>
+                  {getAllTags().every(id => selectedTags.includes(id))
+                    ? tr('common.deselectAll')
+                    : tr('common.selectAll')}
+                </Text>
+              </Pressable>
             </View>
 
             {categories.map(cat => (
@@ -258,7 +262,7 @@ export default function ExploreScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1, maxWidth: 800, alignSelf: 'center' as const, width: '100%' as any },
   header: { padding: spacing.xl, gap: spacing.lg },
   searchContainer: {
     flexDirection: 'row',

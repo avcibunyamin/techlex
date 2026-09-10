@@ -35,15 +35,18 @@ interface SwipeHistoryEntry {
 interface CardDeckProps {
   terms: Term[];
   language: Language;
+  isReviewMode?: boolean;
 }
 
-export default function CardDeck({ terms, language }: CardDeckProps) {
+export default function CardDeck({ terms, language, isReviewMode = false }: CardDeckProps) {
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { swipeRight, swipeLeft, consumeEnergy, energyLevel, hasActivePremium, flushSwipeQueue, progress, undoSwipe } = useAppStore();
 
   const [showPaywall, setShowPaywall] = useState(false);
+  const [paywallVariant, setPaywallVariant] = useState<'energy' | 'premium'>('energy');
+  const [paywallSource, setPaywallSource] = useState<'energy' | 'relatedTerms' | 'quizHint'>('energy');
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const cardRef = useRef<SwipeCardRef>(null);
@@ -115,7 +118,7 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview) {
+    if (!isReview && !isReviewMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -133,7 +136,7 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview) {
+    if (!isReview && !isReviewMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -158,7 +161,7 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview) {
+    if (!isReview && !isReviewMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -304,10 +307,13 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
               onSwipeRight={i === 0 ? handleSwipeRight : () => {}}
               onSwipeLeft={i === 0 ? handleSwipeLeft : () => {}}
               onSwipeBlocked={i === 0 ? handleSwipeBlocked : undefined}
-              canSwipe={i === 0 ? (hasEnergy || isReviewCard(term.id)) : false}
+              canSwipe={i === 0 ? (hasEnergy || isReviewCard(term.id) || isReviewMode) : false}
+              isPremium={hasActivePremium()}
+              onShowPaywall={() => { setPaywallVariant('premium'); setPaywallSource('relatedTerms'); setShowPaywall(true); }}
               stackIndex={i}
               dragX={i === 0 ? dragX : undefined}
               dragY={i === 0 ? dragY : undefined}
+              isReviewMode={isReviewMode}
             />
           ))
           .reverse()}
@@ -381,7 +387,7 @@ export default function CardDeck({ terms, language }: CardDeckProps) {
         </Animated.View>
       )}
 
-      <PaywallModal visible={showPaywall} onDismiss={() => setShowPaywall(false)} />
+      <PaywallModal visible={showPaywall} onDismiss={() => setShowPaywall(false)} variant={paywallVariant} source={paywallSource} />
     </GestureHandlerRootView>
   );
 }
