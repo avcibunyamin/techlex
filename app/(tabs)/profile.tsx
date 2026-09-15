@@ -63,6 +63,18 @@ export default function ProfileScreen() {
   const usernameTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [cancelLoading, setCancelLoading] = useState(false);
   const [showPlans, setShowPlans] = useState(false);
+  const [subscribingPlan, setSubscribingPlan] = useState<string | null>(null);
+
+  async function handleSubscribe(planId: string) {
+    if (subscribingPlan) return;
+    setSubscribingPlan(planId);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      Alert.alert(tr('paywall.comingSoon'), tr('paywall.comingSoonDesc'));
+    } finally {
+      setSubscribingPlan(null);
+    }
+  }
 
   useEffect(() => {
     if (!showUsernameEdit || !newUsername || newUsername.length < 3 || !/^[a-z0-9]+$/.test(newUsername)) {
@@ -334,7 +346,8 @@ export default function ProfileScreen() {
                         backgroundColor: plan.popular ? plan.color + '08' : isCurrent ? t.bgSubtle : t.bg,
                       },
                     ]}
-                    onPress={plan.current ? undefined : () => router.push('/paywall')}
+                    onPress={plan.current ? undefined : () => handleSubscribe(plan.id)}
+                    disabled={!!subscribingPlan}
                   >
                     <View style={styles.planCardHeader}>
                       <View style={[styles.planIconCircle, { backgroundColor: plan.color + '15' }]}>
@@ -363,10 +376,14 @@ export default function ProfileScreen() {
                           </Text>
                         </View>
                       ) : (
-                        <View style={[styles.planSelectBtn, { backgroundColor: plan.color }]}>
-                          <Text style={[typography.footnote, { color: '#fff', fontWeight: '600' }]}>
-                            {tr('profile.upgrade')}
-                          </Text>
+                        <View style={[styles.planSelectBtn, { backgroundColor: plan.color, opacity: subscribingPlan === plan.id ? 0.7 : 1 }]}>
+                          {subscribingPlan === plan.id ? (
+                            <ActivityIndicator size="small" color="#fff" />
+                          ) : (
+                            <Text style={[typography.footnote, { color: '#fff', fontWeight: '600' }]}>
+                              {tr('profile.upgrade')}
+                            </Text>
+                          )}
                         </View>
                       )}
                     </View>
