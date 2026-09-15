@@ -104,8 +104,11 @@ export default function ProfileScreen() {
     }
     const result = data as { success: boolean; error?: string; days_left?: number };
     if (!result.success) {
-      if (result.days_left) setCooldownDays(result.days_left);
-      setUsernameMsg(result.error || 'Error');
+      if (result.days_left) {
+        setCooldownDays(result.days_left);
+      } else {
+        setUsernameMsg(result.error || 'Error');
+      }
       setUsernameSuccess(false);
       return;
     }
