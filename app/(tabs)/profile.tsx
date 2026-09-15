@@ -8,7 +8,7 @@ import {
   Flame, Target, BookCheck, Brain, ChevronRight,
   LogIn, LogOut, Globe, Sun, Moon, Monitor,
   Zap, Infinity, Crown, AtSign, Check, X, AlertCircle,
-  Award, RotateCcw,
+  Award, RotateCcw, Users, Heart, Sparkles, ChevronDown,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -62,6 +62,7 @@ export default function ProfileScreen() {
   const [cooldownDays, setCooldownDays] = useState<number | null>(null);
   const usernameTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [showPlans, setShowPlans] = useState(false);
 
   useEffect(() => {
     if (!showUsernameEdit || !newUsername || newUsername.length < 3 || !/^[a-z0-9]+$/.test(newUsername)) {
@@ -291,10 +292,10 @@ export default function ProfileScreen() {
           {tr('profile.accountSettings')}
         </Text>
         <View style={[styles.settingsGroup, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
-          {/* Subscription */}
+          {/* Subscription — accordion */}
           <Pressable
             style={[styles.settingRow, { borderColor: t.border }]}
-            onPress={() => router.push('/paywall')}
+            onPress={() => setShowPlans(!showPlans)}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
               <Crown size={14} color={accent} strokeWidth={1.5} />
@@ -304,9 +305,86 @@ export default function ProfileScreen() {
               <Text style={[typography.subhead, { color: isPremium ? accent : t.textSecondary, fontWeight: isPremium ? '600' : '500' }]}>
                 {subscriptionTier === 'free' ? tr('profile.tierFree') : tr('profile.tierPremium')}
               </Text>
-              <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
+              <ChevronDown
+                size={14}
+                color={t.textTertiary}
+                strokeWidth={1.5}
+                style={{ transform: [{ rotate: showPlans ? '180deg' : '0deg' }] }}
+              />
             </View>
           </Pressable>
+          {showPlans && (
+            <View style={[styles.plansContainer, { borderColor: t.border }]}>
+              {([
+                { id: 'free', icon: Zap, color: '#6B7280', price: '₺0', popular: false, current: true, features: ['limitedEnergy', 'basicCategories'] },
+                { id: 'individual', icon: Crown, color: '#6366F1', price: '₺39,90', popular: false, current: false, features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap'] },
+                { id: 'duo', icon: Users, color: '#3B82F6', price: '₺59,90', popular: true, current: false, features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'shareWith'] },
+                { id: 'family', icon: Heart, color: '#EC4899', price: '₺99,90', popular: false, current: false, features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'familySharing'] },
+              ] as const).map((plan) => {
+                const Icon = plan.icon;
+                const isCurrent = plan.current && subscriptionTier === 'free';
+                return (
+                  <Pressable
+                    key={plan.id}
+                    style={[
+                      styles.planCard,
+                      {
+                        borderColor: isCurrent ? t.textTertiary : plan.popular ? plan.color : t.border,
+                        borderWidth: plan.popular || isCurrent ? 2 : 1,
+                        backgroundColor: plan.popular ? plan.color + '08' : isCurrent ? t.bgSubtle : t.bg,
+                      },
+                    ]}
+                    onPress={plan.current ? undefined : () => router.push('/paywall')}
+                  >
+                    <View style={styles.planCardHeader}>
+                      <View style={[styles.planIconCircle, { backgroundColor: plan.color + '15' }]}>
+                        <Icon size={18} color={plan.color} strokeWidth={1.5} />
+                      </View>
+                      <View style={{ flex: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+                          <Text style={[typography.headline, { color: t.text }]}>
+                            {tr(`paywall.${plan.id}`)}
+                          </Text>
+                          {plan.popular && (
+                            <View style={[styles.planBadgeInline, { backgroundColor: plan.color }]}>
+                              <Sparkles size={8} color="#fff" strokeWidth={2} />
+                              <Text style={styles.planBadgeText}>{tr('paywall.popular')}</Text>
+                            </View>
+                          )}
+                        </View>
+                        <Text style={[typography.subhead, { color: plan.color, fontWeight: '700' }]}>
+                          {plan.price}{plan.id !== 'free' && <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('paywall.perMonth')}</Text>}
+                        </Text>
+                      </View>
+                      {isCurrent ? (
+                        <View style={[styles.planSelectBtn, { backgroundColor: t.textTertiary }]}>
+                          <Text style={[typography.footnote, { color: '#fff', fontWeight: '600' }]}>
+                            {tr('paywall.current')}
+                          </Text>
+                        </View>
+                      ) : (
+                        <View style={[styles.planSelectBtn, { backgroundColor: plan.color }]}>
+                          <Text style={[typography.footnote, { color: '#fff', fontWeight: '600' }]}>
+                            {tr('profile.upgrade')}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <View style={styles.planFeatures}>
+                      {plan.features.map((f) => (
+                        <View key={f} style={styles.planFeatureRow}>
+                          <Check size={12} color={colors.success} strokeWidth={2.5} />
+                          <Text style={[{ fontSize: 12, color: t.textSecondary }]}>
+                            {tr(`paywall.features.${f}`, { count: plan.id === 'duo' ? 2 : 6 })}
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+                  </Pressable>
+                );
+              })}
+            </View>
+          )}
 
           {/* Cancellation banner */}
           {cancelAtPeriodEnd && subscriptionTier !== 'free' && (
@@ -650,4 +728,61 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.sm,
     writingDirection: 'ltr',
   } as any,
+  plansContainer: {
+    gap: spacing.sm,
+    padding: spacing.md,
+    borderBottomWidth: 0.5,
+  },
+  planCard: {
+    borderRadius: radius.md,
+    padding: spacing.md,
+    overflow: 'hidden',
+  },
+  planCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  planBadgeInline: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.sm,
+  },
+  planBadgeText: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  planIconCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  planSelectBtn: {
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    alignItems: 'center',
+  },
+  planFeatures: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+    paddingTop: spacing.sm,
+    borderTopWidth: 0.5,
+    borderTopColor: 'rgba(255,255,255,0.06)',
+  },
+  planFeatureRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    width: '48%',
+  },
 });
