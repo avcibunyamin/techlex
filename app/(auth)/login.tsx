@@ -525,14 +525,14 @@ export default function LoginScreen() {
               </Text>
             </Pressable>
           </View>
-        </ScrollView>
 
-        {/* Skip */}
-        <Pressable style={styles.skipBtn} onPress={handleSkip}>
-          <Text style={[typography.subhead, { color: t.textTertiary }]}>
-            {tr('auth.continueWithout')}
-          </Text>
-        </Pressable>
+          {/* Skip */}
+          <Pressable style={styles.skipBtn} onPress={handleSkip}>
+            <Text style={[typography.subhead, { color: t.textTertiary }]}>
+              {tr('auth.continueWithout')}
+            </Text>
+          </Pressable>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
