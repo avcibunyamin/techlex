@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet, Text, View, Pressable, Modal, ScrollView,
+  StyleSheet, Text, View, Pressable, Modal,
   ActivityIndicator, Alert,
 } from 'react-native';
 import {
@@ -108,12 +108,7 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant
           </Text>
 
           {/* Side-by-side plan cards */}
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.planRow}
-            style={styles.planScroll}
-          >
+          <View style={styles.planRow}>
             {plans.map((plan) => {
               const Icon = plan.icon;
               const isPopular = plan.popular;
@@ -175,7 +170,7 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant
                 </View>
               );
             })}
-          </ScrollView>
+          </View>
 
           <Pressable style={styles.dismissBtn} onPress={onDismiss}>
             <Text style={[typography.subhead, { color: t.textTertiary }]}>
@@ -228,17 +223,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  planScroll: {
-    marginTop: spacing.xl,
-    alignSelf: 'stretch',
-  },
   planRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     gap: spacing.md,
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
+    marginTop: spacing.xl,
+    alignSelf: 'stretch',
   },
   planCardOuter: {
-    width: 190,
+    flex: 1,
+    minWidth: 150,
+    maxWidth: 210,
     position: 'relative',
   },
   planCard: {
