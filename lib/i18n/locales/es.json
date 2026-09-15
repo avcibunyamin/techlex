@@ -195,7 +195,9 @@
     "subscribe": "Suscribirse",
     "restore": "Restaurar compra",
     "terms": "Términos de servicio",
-    "privacy": "Política de privacidad"
+    "privacy": "Política de privacidad",
+    "comingSoon": "Próximamente",
+    "comingSoonDesc": "El sistema de suscripción estará disponible muy pronto. ¡Estén atentos!"
   },
   "energyModal": {
     "title": "¡Sin energía!",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "Definición correcta:",
     "gotIt": "Entendido",
     "unlockSource": "Ver a qué término pertenece",
-    "skip": "No lo sé"
+    "skip": "No lo sé",
+    "skipMatchCorrect": "¡Esta asociación era correcta!",
+    "skipMatchWrong": "Esta asociación era incorrecta.",
+    "skipBelongsTo": "La definición mostrada pertenece a \"{{term}}\".",
+    "skipRealDefinition": "Definición correcta:"
   },
   "premiumModal": {
     "title": "Función Premium",

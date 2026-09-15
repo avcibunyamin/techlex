@@ -195,7 +195,9 @@
     "subscribe": "Abonnieren",
     "restore": "Kauf wiederherstellen",
     "terms": "Nutzungsbedingungen",
-    "privacy": "Datenschutzrichtlinie"
+    "privacy": "Datenschutzrichtlinie",
+    "comingSoon": "Demnächst",
+    "comingSoonDesc": "Das Abonnement-System wird bald verfügbar sein. Bleiben Sie dran!"
   },
   "energyModal": {
     "title": "Keine Energie mehr!",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "Richtige Definition:",
     "gotIt": "Verstanden",
     "unlockSource": "Sieh, zu welchem Begriff dies gehört",
-    "skip": "Weiß nicht"
+    "skip": "Weiß nicht",
+    "skipMatchCorrect": "Diese Zuordnung war richtig!",
+    "skipMatchWrong": "Diese Zuordnung war falsch.",
+    "skipBelongsTo": "Die angezeigte Definition gehört eigentlich zu \"{{term}}\".",
+    "skipRealDefinition": "Richtige Definition:"
   },
   "premiumModal": {
     "title": "Premium-Funktion",

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet, Text, View, Pressable, Modal, ScrollView,
+  ActivityIndicator, Alert,
 } from 'react-native';
 import {
   Zap, Crown, Users, Heart, Check, X, Infinity, Lock, Sparkles,
@@ -26,21 +27,21 @@ const plans = [
     icon: Crown,
     color: '#6366F1',
     popular: false,
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap'],
   },
   {
     id: 'duo',
     icon: Users,
     color: '#3B82F6',
     popular: true,
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'shareWith'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'shareWith'],
   },
   {
     id: 'family',
     icon: Heart,
     color: '#EC4899',
     popular: false,
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'familySharing'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'familySharing'],
   },
 ] as const;
 
@@ -49,12 +50,28 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant
   const { t: tr } = useTranslation();
 
   const isEnergy = variant === 'energy';
+  const [subscribingPlan, setSubscribingPlan] = useState<string | null>(null);
 
   function getSubtitleKey(): string {
     if (source === 'relatedTerms') return 'premiumModal.subtitleRelated';
     if (source === 'quizHint') return 'premiumModal.subtitleQuiz';
     if (isEnergy) return 'energyModal.subtitle';
     return 'premiumModal.subtitle';
+  }
+
+  async function handleSubscribe(planId: string) {
+    if (subscribingPlan) return;
+    setSubscribingPlan(planId);
+    try {
+      // RevenueCat entegrasyonu Sprint 2'de yapilacak
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      Alert.alert(
+        tr('paywall.comingSoon'),
+        tr('paywall.comingSoonDesc'),
+      );
+    } finally {
+      setSubscribingPlan(null);
+    }
   }
 
   return (
@@ -112,6 +129,7 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant
                       },
                     ]}
                     onPress={() => {
+                      handleSubscribe(plan.id);
                       onSelectPlan?.(plan.id);
                     }}
                   >
@@ -138,9 +156,13 @@ export default function PaywallModal({ visible, onDismiss, onSelectPlan, variant
                     </View>
 
                     <View style={[styles.selectBtn, { backgroundColor: plan.color }]}>
-                      <Text style={[typography.subhead, { color: '#fff', fontWeight: '600' }]}>
-                        {tr('paywall.subscribe')}
-                      </Text>
+                      {subscribingPlan === plan.id ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                      ) : (
+                        <Text style={[typography.subhead, { color: '#fff', fontWeight: '600' }]}>
+                          {tr('paywall.subscribe')}
+                        </Text>
+                      )}
                     </View>
                   </Pressable>
 

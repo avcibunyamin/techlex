@@ -114,12 +114,12 @@
     "subscriptionResumed": "Aboneliğiniz yeniden başlatıldı",
     "league": {
       "bronze": "Bronz",
-      "silver": "Gumus",
-      "gold": "Altin",
+      "silver": "Gümüş",
+      "gold": "Altın",
       "platinum": "Platin",
       "diamond": "Elmas"
     },
-    "tierFree": "Ucretsiz",
+    "tierFree": "Ücretsiz",
     "tierPremium": "Premium",
     "usernameLimit": "7 gün içinde yalnızca 1 kez isim değiştirebilirsiniz",
     "thisWeek": "BU HAFTA"
@@ -193,6 +193,8 @@
       "relatedTermsMap": "İlgili terimler haritası"
     },
     "subscribe": "Abone ol",
+    "comingSoon": "Çok Yakında",
+    "comingSoonDesc": "Abonelik sistemi çok yakında aktif olacak. Takipte kalın!",
     "restore": "Satın almayı geri yükle",
     "terms": "Kullanım Şartları",
     "privacy": "Gizlilik Politikası"
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "Doğru tanım:",
     "gotIt": "Anladım",
     "unlockSource": "Hangi kavrama ait olduğunu gör",
-    "skip": "Bilmiyorum"
+    "skip": "Bilmiyorum",
+    "skipMatchCorrect": "Bu eşleşme doğruydu!",
+    "skipMatchWrong": "Bu eşleşme yanlıştı.",
+    "skipBelongsTo": "Gösterilen tanım aslında \"{{term}}\" kavramına ait.",
+    "skipRealDefinition": "Doğru tanım:"
   },
   "premiumModal": {
     "title": "Premium Özellik",

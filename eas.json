@@ -46,5 +46,13 @@
         "APP_ENV": "production"
       }
     }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleTeamId": "J9GBN9442W",
+        "ascAppId": "6812017421"
+      }
+    }
   }
 }

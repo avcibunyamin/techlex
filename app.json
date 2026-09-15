@@ -14,7 +14,7 @@
         "CFBundleDisplayName": "TechLex",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "3"
+      "buildNumber": "7"
     },
     "android": {
       "adaptiveIcon": {
@@ -44,8 +44,7 @@
       "expo-localization"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "baseUrl": "/techlex"
+      "typedRoutes": true
     },
     "extra": {
       "router": {},

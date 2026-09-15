@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { X, Check, Zap, Crown, Users, Heart, Infinity } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
@@ -26,20 +26,20 @@ const plans: Plan[] = [
     id: 'individual',
     icon: Crown,
     price: '₺39,90',
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap'],
   },
   {
     id: 'duo',
     icon: Users,
     price: '₺59,90',
     popular: true,
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'shareWith'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'shareWith'],
   },
   {
     id: 'family',
     icon: Heart,
     price: '₺99,90',
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'cloudSync', 'familySharing', 'prioritySupport'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'familySharing'],
   },
 ];
 
@@ -48,6 +48,18 @@ export default function PaywallScreen() {
   const router = useRouter();
   const { t: tr } = useTranslation();
   const [selected, setSelected] = useState<string>('duo');
+  const [subscribing, setSubscribing] = useState(false);
+
+  async function handleSubscribe() {
+    if (selected === 'free' || subscribing) return;
+    setSubscribing(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      Alert.alert(tr('paywall.comingSoon'), tr('paywall.comingSoonDesc'));
+    } finally {
+      setSubscribing(false);
+    }
+  }
 
   const featureLabel = (key: string) => {
     if (key === 'limitedEnergy') return tr('paywall.features.limitedEnergy', { count: 30 });
@@ -142,12 +154,17 @@ export default function PaywallScreen() {
         </View>
 
         <Pressable
-          style={[styles.subscribeBtn, { backgroundColor: accent }]}
-          onPress={() => router.back()}
+          style={[styles.subscribeBtn, { backgroundColor: accent, opacity: subscribing ? 0.7 : 1 }]}
+          onPress={selected === 'free' ? () => router.back() : handleSubscribe}
+          disabled={subscribing}
         >
-          <Text style={[typography.headline, { color: '#fff' }]}>
-            {selected === 'free' ? tr('paywall.current') : tr('paywall.subscribe')}
-          </Text>
+          {subscribing ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Text style={[typography.headline, { color: '#fff' }]}>
+              {selected === 'free' ? tr('paywall.current') : tr('paywall.subscribe')}
+            </Text>
+          )}
         </Pressable>
 
         <View style={styles.footer}>

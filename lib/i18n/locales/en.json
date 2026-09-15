@@ -193,6 +193,8 @@
       "relatedTermsMap": "Related terms map"
     },
     "subscribe": "Subscribe",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "The subscription system will be available very soon. Stay tuned!",
     "restore": "Restore purchase",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy"
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "Correct definition:",
     "gotIt": "Got it",
     "unlockSource": "See which term this belongs to",
-    "skip": "I Don't Know"
+    "skip": "I Don't Know",
+    "skipMatchCorrect": "This match was correct!",
+    "skipMatchWrong": "This match was wrong.",
+    "skipBelongsTo": "The definition shown actually belongs to \"{{term}}\".",
+    "skipRealDefinition": "Correct definition:"
   },
   "premiumModal": {
     "title": "Premium Feature",

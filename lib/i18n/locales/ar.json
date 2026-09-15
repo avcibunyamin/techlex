@@ -195,7 +195,9 @@
     "subscribe": "اشترك",
     "restore": "استعادة الشراء",
     "terms": "شروط الخدمة",
-    "privacy": "سياسة الخصوصية"
+    "privacy": "سياسة الخصوصية",
+    "comingSoon": "قريباً",
+    "comingSoonDesc": "سيكون نظام الاشتراك متاحاً قريباً. ترقبوا!"
   },
   "energyModal": {
     "title": "نفدت الطاقة!",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "التعريف الصحيح:",
     "gotIt": "فهمت",
     "unlockSource": "اعرف أي مصطلح ينتمي إليه",
-    "skip": "لا أعرف"
+    "skip": "لا أعرف",
+    "skipMatchCorrect": "هذا التطابق كان صحيحاً!",
+    "skipMatchWrong": "هذا التطابق كان خاطئاً.",
+    "skipBelongsTo": "التعريف المعروض ينتمي فعلياً إلى \"{{term}}\".",
+    "skipRealDefinition": "التعريف الصحيح:"
   },
   "premiumModal": {
     "title": "ميزة بريميوم",

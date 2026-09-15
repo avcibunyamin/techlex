@@ -42,6 +42,7 @@ export default function QuizScreen() {
   const [results, setResults] = useState<(boolean | null)[]>([]);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showCorrection, setShowCorrection] = useState(false);
+  const [showSkipFeedback, setShowSkipFeedback] = useState(false);
 
   const advanceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -93,6 +94,7 @@ export default function QuizScreen() {
     setAnswered(false);
     setLastCorrect(null);
     setShowCorrection(false);
+    setShowSkipFeedback(false);
     setResults(new Array(qs.length).fill(null));
     setQuizState('active');
     borderGlow.value = 0;
@@ -109,6 +111,7 @@ export default function QuizScreen() {
       setAnswered(false);
       setLastCorrect(null);
       setShowCorrection(false);
+      setShowSkipFeedback(false);
       borderGlow.value = 0;
       shakeX.value = 0;
       cardKey.value = cardKey.value + 1;
@@ -153,29 +156,21 @@ export default function QuizScreen() {
   }, [answered, currentQ, questions, score, downgradeQuizTerm, promoteQuizTerm, advanceToNext, borderGlow, shakeX]);
 
   const handleGotIt = useCallback(() => {
+    setShowSkipFeedback(false);
     advanceToNext(false);
   }, [advanceToNext]);
 
   const handleSkip = useCallback(() => {
     if (answered || currentQ >= questions.length) return;
-    const q = questions[currentQ];
     setAnswered(true);
-    setLastCorrect(false);
+    setLastCorrect(null);
     setResults(prev => {
       const copy = [...prev];
       copy[currentQ] = false;
       return copy;
     });
-    downgradeQuizTerm(q.term.id);
-    setShowCorrection(true);
-    shakeX.value = withSequence(
-      withTiming(-8, { duration: 50 }),
-      withTiming(8, { duration: 50 }),
-      withTiming(-5, { duration: 50 }),
-      withTiming(5, { duration: 50 }),
-      withTiming(0, { duration: 50 }),
-    );
-  }, [answered, currentQ, questions, downgradeQuizTerm, shakeX]);
+    setShowSkipFeedback(true);
+  }, [answered, currentQ, questions]);
 
   const getResultMessage = () => {
     const total = questions.length;
@@ -407,6 +402,54 @@ export default function QuizScreen() {
             </Animated.View>
           </Animated.View>
         )}
+
+        {showSkipFeedback && (
+          <Animated.View
+            entering={FadeIn.duration(250)}
+            style={[styles.correctionBox, { borderColor: accent, backgroundColor: accent + '10' }]}
+          >
+            {q.isCorrect ? (
+              <>
+                <Text style={[typography.subhead, { color: colors.success }]}>
+                  {tr('quiz.skipMatchCorrect')}
+                </Text>
+                <Text style={[typography.body, { color: t.text, marginTop: spacing.xs }]}>
+                  {tr('quiz.skipRealDefinition')}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic' }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={[typography.subhead, { color: colors.warning }]}>
+                  {tr('quiz.skipMatchWrong')}
+                </Text>
+                {q.sourceTerm && (
+                  <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs }]}>
+                    {tr('quiz.skipBelongsTo', { term: q.sourceTerm.term })}
+                  </Text>
+                )}
+                <Text style={[typography.body, { color: t.text, marginTop: spacing.md }]}>
+                  {tr('quiz.skipRealDefinition')}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic' }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            )}
+            <Animated.View style={[styles.gotItBtnWrap, gotItBtnStyle]}>
+              <Pressable
+                style={[styles.gotItBtn, { backgroundColor: accent }]}
+                onPressIn={() => { gotItBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
+                onPressOut={() => { gotItBtnScale.value = withSpring(1, PRESS_SPRING); }}
+                onPress={handleGotIt}
+              >
+                <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.gotIt')}</Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+        )}
       </ScrollView>
 
       {/* Answer feedback */}
@@ -418,8 +461,8 @@ export default function QuizScreen() {
         </Animated.View>
       )}
 
-      {/* Action buttons — hide when correction box is visible */}
-      {!showCorrection && (
+      {/* Action buttons — hide when feedback is visible */}
+      {!showCorrection && !showSkipFeedback && (
         <View style={styles.actions}>
           <Animated.View style={falseBtnStyle}>
             <Pressable

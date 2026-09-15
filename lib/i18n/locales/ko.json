@@ -195,7 +195,9 @@
     "subscribe": "구독하기",
     "restore": "구매 복원",
     "terms": "이용약관",
-    "privacy": "개인정보처리방침"
+    "privacy": "개인정보처리방침",
+    "comingSoon": "곧 출시",
+    "comingSoonDesc": "구독 시스템이 곧 활성화됩니다. 기대해 주세요!"
   },
   "energyModal": {
     "title": "에너지가 없어요!",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "올바른 정의:",
     "gotIt": "이해했어요",
     "unlockSource": "어떤 용어에 속하는지 확인",
-    "skip": "모르겠어요"
+    "skip": "모르겠어요",
+    "skipMatchCorrect": "이 매칭은 맞았습니다!",
+    "skipMatchWrong": "이 매칭은 틀렸습니다.",
+    "skipBelongsTo": "표시된 정의는 실제로 \"{{term}}\"에 해당합니다.",
+    "skipRealDefinition": "올바른 정의:"
   },
   "premiumModal": {
     "title": "Premium 기능",

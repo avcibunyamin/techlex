@@ -195,7 +195,9 @@
     "subscribe": "Assinar",
     "restore": "Restaurar compra",
     "terms": "Termos de uso",
-    "privacy": "Política de privacidade"
+    "privacy": "Política de privacidade",
+    "comingSoon": "Em breve",
+    "comingSoonDesc": "O sistema de assinatura estará disponível em breve. Fique ligado!"
   },
   "energyModal": {
     "title": "Sem energia!",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "Definição correta:",
     "gotIt": "Entendi",
     "unlockSource": "Ver a qual termo pertence",
-    "skip": "Não sei"
+    "skip": "Não sei",
+    "skipMatchCorrect": "Esta associação estava correta!",
+    "skipMatchWrong": "Esta associação estava incorreta.",
+    "skipBelongsTo": "A definição exibida pertence a \"{{term}}\".",
+    "skipRealDefinition": "Definição correta:"
   },
   "premiumModal": {
     "title": "Recurso Premium",

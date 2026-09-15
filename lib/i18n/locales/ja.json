@@ -195,7 +195,9 @@
     "subscribe": "登録する",
     "restore": "購入を復元",
     "terms": "利用規約",
-    "privacy": "プライバシーポリシー"
+    "privacy": "プライバシーポリシー",
+    "comingSoon": "近日公開",
+    "comingSoonDesc": "サブスクリプションシステムは近日中にご利用いただけます。お楽しみに！"
   },
   "energyModal": {
     "title": "エナジー切れ！",
@@ -320,7 +322,11 @@
     "correctDefinitionLabel": "正しい定義：",
     "gotIt": "わかった",
     "unlockSource": "どの用語に属するか確認",
-    "skip": "分からない"
+    "skip": "分からない",
+    "skipMatchCorrect": "この組み合わせは正しかったです！",
+    "skipMatchWrong": "この組み合わせは間違いでした。",
+    "skipBelongsTo": "表示された定義は実際には「{{term}}」のものです。",
+    "skipRealDefinition": "正しい定義："
   },
   "premiumModal": {
     "title": "Premium機能",
