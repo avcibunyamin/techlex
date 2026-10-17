@@ -73,4 +73,4 @@ Run the SQL migrations in order on your Supabase project:
 
 ## License
 
-© Bünyamin Avcı. All rights reserved.
+All rights reserved.
