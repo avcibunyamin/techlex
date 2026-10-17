@@ -5,7 +5,7 @@ IT terminology learning platform built with React Native + Expo.
 ## Features
 
 - **Swipe-based learning** — Tinder-style flashcards with Leitner spaced repetition (5 boxes)
-- **200+ IT terms** — Cybersecurity, Software Development (more coming)
+- **500 IT terms** — AI & ML, Cybersecurity, Design & UX, Networking, Software Development
 - **Multi-category selection** — Pick categories, shuffle, and learn
 - **Energy system** — Freemium model with 30 max energy, 5-minute refill
 - **Level system** — Level up every 100 swipes
@@ -73,4 +73,4 @@ Run the SQL migrations in order on your Supabase project:
 
 ## License
 
-Private project. All rights reserved.
+© Bünyamin Avcı. All rights reserved.
