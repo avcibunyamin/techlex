@@ -9,18 +9,54 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
+  Modal,
+  useWindowDimensions,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  withDelay,
+  withSequence,
+  Easing,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Layers, Mail, Lock, Eye, EyeOff, AlertCircle,
-  AtSign, User, Calendar, Check, X, CheckCircle,
+  AtSign, User, Calendar, Check, X, CheckCircle, Globe, ChevronDown,
 } from 'lucide-react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { useAuth } from '@/lib/useAuth';
 import { useAppStore } from '@/lib/store';
+import { Language } from '@/types';
+import { changeLanguage } from '@/lib/i18n';
+import ForgotPasswordModal from '@/components/ForgotPasswordModal';
+
+const LANGUAGES: { code: Language; label: string; flag: string }[] = [
+  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'pt', label: 'Português', flag: '🇵🇹' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'ko', label: '한국어', flag: '🇰🇷' },
+];
+
+const AUTH_ERROR_MAP: Record<string, string> = {
+  'User already registered': 'auth.errors.alreadyRegistered',
+  'Invalid login credentials': 'auth.errors.invalidCredentials',
+  'Email not confirmed': 'auth.errors.emailNotConfirmed',
+  'Too many requests': 'auth.errors.tooManyRequests',
+  'Password should be at least 6 characters': 'auth.errors.passwordTooShort',
+  'Unable to validate email address: invalid format': 'auth.errors.emailInvalid',
+};
 
 // --- Validation ---
 
@@ -72,17 +108,160 @@ function isPasswordStrong(checks: ReturnType<typeof getPasswordChecks>) {
   return Object.values(checks).every(Boolean);
 }
 
+// --- Hero Panel for Web Split-Screen ---
+
+function FloatingCard({ delay, emoji, label, x, y }: { delay: number; emoji: string; label: string; x: number; y: number }) {
+  const translateY = useSharedValue(0);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    opacity.value = withDelay(delay, withTiming(1, { duration: 800 }));
+    translateY.value = withDelay(
+      delay,
+      withRepeat(
+        withSequence(
+          withTiming(-10, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+          withTiming(10, { duration: 2000, easing: Easing.inOut(Easing.ease) }),
+        ),
+        -1,
+        true,
+      ),
+    );
+  }, []);
+
+  const animStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
+
+  return (
+    <Animated.View
+      style={[
+        {
+          position: 'absolute',
+          left: `${x}%`,
+          top: `${y}%`,
+          backgroundColor: 'rgba(255,255,255,0.12)',
+          borderRadius: 16,
+          paddingHorizontal: 18,
+          paddingVertical: 14,
+          backdropFilter: 'blur(8px)',
+        } as any,
+        animStyle,
+      ]}
+    >
+      <Text style={{ fontSize: 28 }}>{emoji}</Text>
+      <Text style={{ color: '#fff', fontSize: 13, fontWeight: '600', marginTop: 4 }}>{label}</Text>
+    </Animated.View>
+  );
+}
+
+function HeroPanel() {
+  return (
+    <View style={heroStyles.container}>
+      <View style={heroStyles.gradient}>
+        <View style={heroStyles.content}>
+          <View style={heroStyles.logoRow}>
+            <View style={heroStyles.logoCircle}>
+              <Layers size={32} color="#fff" strokeWidth={1.5} />
+            </View>
+            <Text style={heroStyles.brand}>TechLex</Text>
+          </View>
+          <Text style={heroStyles.headline}>Master Technology{'\n'}Concepts</Text>
+          <Text style={heroStyles.sub}>
+            Build your technical vocabulary with bite-sized flashcards.
+            From cybersecurity to AI, learn the terms that matter.
+          </Text>
+        </View>
+
+        <FloatingCard delay={0} emoji="🛡️" label="Cybersecurity" x={10} y={55} />
+        <FloatingCard delay={300} emoji="🤖" label="AI & ML" x={60} y={45} />
+        <FloatingCard delay={600} emoji="💻" label="Software Dev" x={15} y={75} />
+        <FloatingCard delay={900} emoji="🌐" label="Networking" x={55} y={70} />
+        <FloatingCard delay={1200} emoji="🎨" label="Design & UX" x={35} y={60} />
+      </View>
+    </View>
+  );
+}
+
+const heroStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    minHeight: '100%' as any,
+  },
+  gradient: {
+    flex: 1,
+    backgroundColor: '#6366F1',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  content: {
+    paddingHorizontal: 48,
+    paddingTop: 80,
+    zIndex: 2,
+  },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 40,
+  },
+  logoCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  brand: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: '#fff',
+    letterSpacing: -0.3,
+  },
+  headline: {
+    fontSize: 38,
+    fontWeight: '800',
+    color: '#fff',
+    lineHeight: 46,
+    letterSpacing: -0.5,
+  },
+  sub: {
+    fontSize: 16,
+    color: 'rgba(255,255,255,0.8)',
+    lineHeight: 24,
+    marginTop: 16,
+    maxWidth: 380,
+  },
+});
+
 // --- Component ---
 
 export default function LoginScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
-  const { t: tr } = useTranslation();
+  const params = useLocalSearchParams<{ mode?: string }>();
+  const { t: tr, i18n } = useTranslation();
   const { signInWithEmail, signUpWithProfile, checkUsername } = useAuth();
+  const setLanguage = useAppStore(s => s.setLanguage);
+  const { width } = useWindowDimensions();
+  const isWide = width >= 768;
 
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup'>(params.mode === 'signup' ? 'signup' : 'login');
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [successEmail, setSuccessEmail] = useState('');
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const [showForgotPw, setShowForgotPw] = useState(false);
+
+  function translateAuthError(message: string): string {
+    const key = AUTH_ERROR_MAP[message];
+    if (key) return tr(key);
+    for (const [pattern, k] of Object.entries(AUTH_ERROR_MAP)) {
+      if (message.toLowerCase().includes(pattern.toLowerCase())) return tr(k);
+    }
+    return message;
+  }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -152,10 +331,10 @@ export default function LoginScreen() {
     const { error: authErr } = await signInWithEmail(email, password);
     setLoading(false);
     if (authErr) {
-      setError(authErr.message);
+      setError(translateAuthError(authErr.message));
       return;
     }
-    router.replace('/(tabs)');
+    // Navigation handled by _layout.tsx after sync conflict check resolves
   };
 
   const handleSignup = async () => {
@@ -189,26 +368,18 @@ export default function LoginScreen() {
     setLoading(false);
 
     if (authErr) {
-      setError(authErr.message);
+      setError(translateAuthError(authErr.message));
       return;
     }
 
     if (data?.session) {
-      if (data.user) {
-        const store = useAppStore.getState();
-        await store.syncToCloud(data.user.id);
-        if (useAppStore.getState().swipeQueue.length === 0) {
-          await store.loadFromCloud(data.user.id);
-        }
-      }
-      router.replace('/(tabs)');
+      // Navigation handled by _layout.tsx after sync conflict check resolves
+      // For new signups, _layout.tsx will detect the user and run the sync flow
     } else {
       setSuccessEmail(email);
       setSignupSuccess(true);
     }
   };
-
-  const handleSkip = () => router.replace('/(tabs)');
 
   const switchMode = () => {
     setMode(mode === 'login' ? 'signup' : 'login');
@@ -259,17 +430,31 @@ export default function LoginScreen() {
   }
 
   // --- Main render ---
-  return (
-    <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]}>
+  const formContent = (
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContent}
+          contentContainerStyle={[styles.scrollContent, isWide && { paddingTop: spacing['3xl'], maxWidth: 450, alignSelf: 'center', width: '100%' }]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
+          {/* Language selector — button only, popover is rendered via Modal */}
+          <View style={styles.langRow}>
+            <View style={{ flex: 1 }} />
+            <Pressable
+              style={[styles.langBtn, { backgroundColor: t.bgElevated, borderColor: t.border }]}
+              onPress={() => setShowLangPicker(true)}
+            >
+              <Globe size={14} color={t.textTertiary} strokeWidth={1.5} />
+              <Text style={[typography.footnote, { color: t.text }]}>
+                {LANGUAGES.find(l => l.code === i18n.language)?.label ?? 'Türkçe'}
+              </Text>
+              <ChevronDown size={12} color={t.textTertiary} strokeWidth={1.5} />
+            </Pressable>
+          </View>
+
           {/* Logo */}
           <View style={[styles.logoCircle, { backgroundColor: colors.accentSubtle }]}>
             <Layers size={28} color={accent} strokeWidth={1.5} />
@@ -437,6 +622,14 @@ export default function LoginScreen() {
               </Pressable>
             </View>
 
+            {mode === 'login' && (
+              <Pressable onPress={() => setShowForgotPw(true)} style={{ alignSelf: 'flex-end', marginTop: spacing.sm }}>
+                <Text style={[typography.footnote, { color: accent }]}>
+                  {tr('auth.forgotPassword.forgotPassword')}
+                </Text>
+              </Pressable>
+            )}
+
             {mode === 'signup' && password.length > 0 && (
               <View style={styles.pwChecklist}>
                 {([
@@ -526,14 +719,60 @@ export default function LoginScreen() {
             </Pressable>
           </View>
 
-          {/* Skip */}
-          <Pressable style={styles.skipBtn} onPress={handleSkip}>
-            <Text style={[typography.subhead, { color: t.textTertiary }]}>
-              {tr('auth.continueWithout')}
-            </Text>
-          </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
+  );
+
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]}>
+      {isWide ? (
+        <View style={styles.splitRow}>
+          <HeroPanel />
+          <View style={styles.formPanel}>
+            {formContent}
+          </View>
+        </View>
+      ) : (
+        formContent
+      )}
+
+      <ForgotPasswordModal
+        visible={showForgotPw}
+        onClose={() => setShowForgotPw(false)}
+        initialEmail={email}
+      />
+
+      {/* Language picker modal — floating popover, no layout shift */}
+      <Modal visible={showLangPicker} transparent animationType="fade" onRequestClose={() => setShowLangPicker(false)}>
+        <Pressable style={styles.langOverlay} onPress={() => setShowLangPicker(false)}>
+          <View style={[styles.langPopover, { backgroundColor: t.bgElevated }]}>
+            {LANGUAGES.map((lang, idx) => {
+              const active = i18n.language === lang.code;
+              return (
+                <Pressable
+                  key={lang.code}
+                  style={[
+                    styles.langOption,
+                    active && { backgroundColor: colors.accentSubtle },
+                    idx < LANGUAGES.length - 1 && { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: t.border },
+                  ]}
+                  onPress={async () => {
+                    await changeLanguage(lang.code);
+                    setLanguage(lang.code);
+                    setShowLangPicker(false);
+                  }}
+                >
+                  <Text style={{ fontSize: 18 }}>{lang.flag}</Text>
+                  <Text style={[typography.callout, { color: active ? accent : t.text, flex: 1, fontWeight: active ? '600' : '400' }]}>
+                    {lang.label}
+                  </Text>
+                  {active && <Check size={14} color={accent} strokeWidth={2.5} />}
+                </Pressable>
+              );
+            })}
+          </View>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -541,6 +780,15 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   keyboardView: { flex: 1 },
+  splitRow: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  formPanel: {
+    flex: 1,
+    maxWidth: 560,
+    justifyContent: 'center',
+  },
   scrollContent: {
     paddingHorizontal: spacing['2xl'],
     paddingTop: spacing['4xl'],
@@ -609,10 +857,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: spacing.xl,
   },
-  skipBtn: {
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
-  },
   successContent: {
     flex: 1,
     justifyContent: 'center',
@@ -625,5 +869,44 @@ const styles = StyleSheet.create({
     borderRadius: 36,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  langRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xl,
+  },
+  langBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 0.5,
+  },
+  langOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingTop: 80,
+    paddingRight: spacing['2xl'],
+  },
+  langPopover: {
+    width: 220,
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 24,
+    elevation: 20,
+  },
+  langOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: 14,
   },
 });

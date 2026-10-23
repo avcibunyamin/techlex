@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, ActivityIndicator, Alert, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { X, Check, Zap, Crown, Users, Heart, Infinity } from 'lucide-react-native';
+import { X, Check, Zap, Crown, Infinity } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/lib/useTheme';
 import { useTranslation } from 'react-i18next';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 
+const PRIVACY_URL = 'https://bunyaminavc.github.io/techlex/privacy.html';
+const TERMS_URL = 'https://bunyaminavc.github.io/techlex/terms.html';
+
 interface Plan {
-  id: 'free' | 'individual' | 'duo' | 'family';
+  id: 'free' | 'individual';
   icon: typeof Zap;
   price: string;
   features: string[];
@@ -26,20 +29,8 @@ const plans: Plan[] = [
     id: 'individual',
     icon: Crown,
     price: '₺39,90',
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap'],
-  },
-  {
-    id: 'duo',
-    icon: Users,
-    price: '₺59,90',
     popular: true,
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'shareWith'],
-  },
-  {
-    id: 'family',
-    icon: Heart,
-    price: '₺99,90',
-    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap', 'familySharing'],
+    features: ['unlimitedEnergy', 'allCategories', 'advancedAnalysis', 'relatedTermsMap'],
   },
 ];
 
@@ -47,7 +38,7 @@ export default function PaywallScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr } = useTranslation();
-  const [selected, setSelected] = useState<string>('duo');
+  const [selected, setSelected] = useState<string>('individual');
   const [subscribing, setSubscribing] = useState(false);
 
   async function handleSubscribe() {
@@ -63,7 +54,6 @@ export default function PaywallScreen() {
 
   const featureLabel = (key: string) => {
     if (key === 'limitedEnergy') return tr('paywall.features.limitedEnergy', { count: 30 });
-    if (key === 'shareWith') return tr('paywall.features.shareWith', { count: 2 });
     return tr(`paywall.features.${key}`);
   };
 
@@ -172,11 +162,11 @@ export default function PaywallScreen() {
             <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('paywall.restore')}</Text>
           </Pressable>
           <Text style={[typography.footnote, { color: t.textMuted }]}> | </Text>
-          <Pressable>
+          <Pressable onPress={() => Linking.openURL(TERMS_URL)}>
             <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('paywall.terms')}</Text>
           </Pressable>
           <Text style={[typography.footnote, { color: t.textMuted }]}> | </Text>
-          <Pressable>
+          <Pressable onPress={() => Linking.openURL(PRIVACY_URL)}>
             <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('paywall.privacy')}</Text>
           </Pressable>
         </View>

@@ -81,7 +81,6 @@
     "masteryByCategory": "MASTERY BY CATEGORY",
     "settings": "SETTINGS",
     "account": "Account",
-    "signInToSync": "Sign in to sync",
     "syncNow": "Sync now",
     "signOut": "Sign out",
     "language": "Language",
@@ -122,7 +121,10 @@
     "tierFree": "Free",
     "tierPremium": "Premium",
     "usernameLimit": "You can only change your name once every 7 days",
-    "thisWeek": "THIS WEEK"
+    "thisWeek": "THIS WEEK",
+    "signUpToSync": "Sign up to sync",
+    "deleteAccount": "Delete Account",
+    "deleteAccountConfirm": "This will permanently delete your account and all learning progress. This cannot be undone."
   },
   "auth": {
     "welcomeBack": "Welcome back",
@@ -167,6 +169,29 @@
       "dobInvalid": "Invalid date",
       "dobFuture": "Cannot be in the future",
       "dobRange": "Invalid date of birth"
+    },
+    "errors": {
+      "alreadyRegistered": "This email is already registered. Please sign in.",
+      "invalidCredentials": "Invalid email or password.",
+      "emailNotConfirmed": "Please confirm your email before signing in.",
+      "tooManyRequests": "Too many attempts. Please try again later.",
+      "passwordTooShort": "Password must be at least 6 characters.",
+      "emailInvalid": "Invalid email format."
+    },
+    "forgotPassword": {
+      "forgotPassword": "Forgot password?",
+      "sendCode": "Send Code",
+      "enterOtp": "Enter verification code",
+      "newPassword": "New Password",
+      "updatePassword": "Update Password",
+      "otpSentSuccess": "Verification code has been sent to your email.",
+      "otpInvalid": "Invalid or expired code.",
+      "passwordUpdated": "Your password has been updated successfully!",
+      "enterEmail": "Enter your email address",
+      "step1Title": "Reset Password",
+      "step1Subtitle": "Enter the email associated with your account. We will send you a verification code.",
+      "step2Title": "Set New Password",
+      "step2Subtitle": "Enter the verification code sent to your email and your new password."
     }
   },
   "paywall": {
@@ -255,7 +280,8 @@
     "close": "Close",
     "loading": "Loading...",
     "selectAll": "Select All",
-    "deselectAll": "Deselect All"
+    "deselectAll": "Deselect All",
+    "error": "Error"
   },
   "categories": {
     "cybersecurity": "Cybersecurity",
@@ -333,5 +359,16 @@
     "subtitle": "Upgrade to Premium to access this feature.",
     "subtitleRelated": "Upgrade to Premium to see related terms and in-depth analysis.",
     "subtitleQuiz": "Upgrade to Premium to reveal the source term and unlock extra features."
+  },
+  "syncConflict": {
+    "title": "Data Conflict",
+    "description": "There is saved progress on this device. The account you're signing into has different progress data.",
+    "device": "Device",
+    "cloud": "Cloud",
+    "terms": "{{count}} terms",
+    "swipes": "{{count}} studies",
+    "warning": "Choosing cloud will replace your local progress.",
+    "useCloud": "Use Cloud",
+    "cancel": "Cancel"
   }
 }

@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { Term, Language, UserProgress } from '@/types';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
+import { haptic } from '@/lib/haptics';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import SwipeCard, { SwipeCardRef } from './SwipeCard';
 import PaywallModal from './PaywallModal';
@@ -176,8 +177,10 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
     setTimeout(() => {
       if (direction === 'right') {
+        haptic.success();
         swipeRight(term.id);
       } else {
+        haptic.medium();
         swipeLeft(term.id);
         setReviewQueue((prev) => [...prev, term]);
       }
@@ -189,6 +192,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
   const handleUndo = useCallback(() => {
     if (!swipeHistory || currentIndex <= 0 || animatingRef.current) return;
+    haptic.light();
 
     const entry = swipeHistory;
     undoSwipe(entry.termId, entry.direction, entry.previousProgress, entry.wasReview);
@@ -308,8 +312,6 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
               onSwipeLeft={i === 0 ? handleSwipeLeft : () => {}}
               onSwipeBlocked={i === 0 ? handleSwipeBlocked : undefined}
               canSwipe={i === 0 ? (hasEnergy || isReviewCard(term.id) || isReviewMode) : false}
-              isPremium={hasActivePremium()}
-              onShowPaywall={() => { setPaywallVariant('premium'); setPaywallSource('relatedTerms'); setShowPaywall(true); }}
               stackIndex={i}
               dragX={i === 0 ? dragX : undefined}
               dragY={i === 0 ? dragY : undefined}

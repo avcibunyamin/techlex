@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppStore, QuizQuestion } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
+import { haptic } from '@/lib/haptics';
 import { XP_PER_QUIZ } from '@/constants/badges';
 import PaywallModal from '@/components/PaywallModal';
 
@@ -133,6 +134,7 @@ export default function QuizScreen() {
     });
 
     if (isUserCorrect) {
+      haptic.success();
       setScore(s => s + 1);
       promoteQuizTerm(q.term.id);
       borderGlow.value = withSequence(
@@ -143,6 +145,7 @@ export default function QuizScreen() {
         advanceToNext(true);
       }, 600);
     } else {
+      haptic.warning();
       shakeX.value = withSequence(
         withTiming(-8, { duration: 50 }),
         withTiming(8, { duration: 50 }),

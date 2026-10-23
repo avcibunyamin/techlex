@@ -81,7 +81,6 @@
     "masteryByCategory": "カテゴリー別の習得度",
     "settings": "設定",
     "account": "アカウント",
-    "signInToSync": "ログインして同期",
     "syncNow": "今すぐ同期",
     "signOut": "ログアウト",
     "language": "言語",
@@ -122,7 +121,10 @@
     "tierFree": "無料",
     "tierPremium": "プレミアム",
     "usernameLimit": "名前の変更は7日に1回のみ可能です",
-    "thisWeek": "今週"
+    "thisWeek": "今週",
+    "signUpToSync": "登録して同期",
+    "deleteAccount": "アカウント削除",
+    "deleteAccountConfirm": "アカウントとすべての学習進捗が完全に削除されます。この操作は取り消せません。"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",
@@ -167,6 +169,29 @@
       "dobInvalid": "無効な日付",
       "dobFuture": "未来の日付は使用できません",
       "dobRange": "無効な生年月日"
+    },
+    "errors": {
+      "alreadyRegistered": "このメールは既に登録されています。ログインしてください。",
+      "invalidCredentials": "メールまたはパスワードが正しくありません。",
+      "emailNotConfirmed": "ログイン前にメールを確認してください。",
+      "tooManyRequests": "試行回数が多すぎます。後でもう一度お試しください。",
+      "passwordTooShort": "パスワードは6文字以上必要です。",
+      "emailInvalid": "メール形式が無効です。"
+    },
+    "forgotPassword": {
+      "forgotPassword": "パスワードを忘れた？",
+      "sendCode": "コードを送信",
+      "enterOtp": "確認コードを入力",
+      "newPassword": "新しいパスワード",
+      "updatePassword": "パスワードを更新",
+      "otpSentSuccess": "確認コードがメールに送信されました。",
+      "otpInvalid": "無効または期限切れのコードです。",
+      "passwordUpdated": "パスワードが正常に更新されました！",
+      "enterEmail": "メールアドレスを入力",
+      "step1Title": "パスワードリセット",
+      "step1Subtitle": "アカウントに関連するメールアドレスを入力してください。確認コードをお送りします。",
+      "step2Title": "新しいパスワードを設定",
+      "step2Subtitle": "確認コードと新しいパスワードを入力してください。"
     }
   },
   "paywall": {
@@ -221,7 +246,8 @@
     "close": "閉じる",
     "loading": "読み込み中...",
     "selectAll": "すべて選択",
-    "deselectAll": "すべて解除"
+    "deselectAll": "すべて解除",
+    "error": "エラー"
   },
   "onboarding": {
     "welcome": "テクノロジーの\n概念をマスター",
@@ -333,5 +359,16 @@
     "subtitle": "この機能にアクセスするにはPremiumにアップグレード。",
     "subtitleRelated": "Premiumにアップグレードして関連用語と詳細分析を表示。",
     "subtitleQuiz": "Premiumにアップグレードして元の用語を表示し、追加機能を解放。"
+  },
+  "syncConflict": {
+    "title": "データ競合",
+    "description": "このデバイスに保存された進捗があります。サインインするアカウントには異なる進捗データがあります。",
+    "device": "デバイス",
+    "cloud": "クラウド",
+    "terms": "{{count}}用語",
+    "swipes": "{{count}}回学習",
+    "warning": "クラウドを選択すると、ローカルの進捗が置き換えられます。",
+    "useCloud": "クラウドを使用",
+    "cancel": "キャンセル"
   }
 }

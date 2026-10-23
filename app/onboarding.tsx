@@ -6,7 +6,6 @@ import {
   Pressable,
   Dimensions,
   ScrollView,
-  TextInput,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
@@ -17,7 +16,6 @@ import {
   Layers,
   Brain,
   Repeat,
-  User,
   Sun,
   Moon,
   Monitor,
@@ -43,14 +41,13 @@ export default function OnboardingScreen() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedGoal, setSelectedGoal] = useState(30);
-  const [displayName, setDisplayNameLocal] = useState('');
   const [selectedTheme, setSelectedTheme] = useState<ThemeMode>(currentTheme);
 
-  const { setSelectedTags, setDailyGoal, setDisplayName, setThemeMode, completeOnboarding, language } =
+  const { setSelectedTags, setDailyGoal, setThemeMode, completeOnboarding, language } =
     useAppStore();
 
   const tl = getTermLanguage(language);
-  const totalPages = 6;
+  const totalPages = 5;
 
   const goNext = () => {
     if (currentPage < totalPages - 1) {
@@ -71,15 +68,12 @@ export default function OnboardingScreen() {
   };
 
   const handleFinish = () => {
-    if (displayName.trim()) {
-      setDisplayName(displayName.trim());
-    }
     if (selectedCategories.length > 0) {
       setSelectedTags(selectedCategories);
     }
     setDailyGoal(selectedGoal);
     completeOnboarding();
-    router.replace('/(tabs)');
+    router.replace('/(auth)/login');
   };
 
   const toggleCategory = (id: string) => {
@@ -232,39 +226,7 @@ export default function OnboardingScreen() {
           </View>
         </View>
 
-        {/* Page 3: Name input */}
-        <View style={[styles.page, { width: SCREEN_WIDTH }]}>
-          <View style={styles.pageContent}>
-            <View style={[styles.iconCircle, { backgroundColor: colors.accentSubtle }]}>
-              <User size={32} color={accent} strokeWidth={1.5} />
-            </View>
-            <Text style={[styles.pageTitle, { color: t.text }]}>
-              {tr('onboarding.nameTitle')}
-            </Text>
-            <Text style={[styles.pageDesc, { color: t.textSecondary }]}>
-              {tr('onboarding.nameSubtitle')}
-            </Text>
-            <TextInput
-              style={[
-                styles.nameInput,
-                {
-                  color: t.text,
-                  backgroundColor: t.bgElevated,
-                  borderColor: displayName.length > 0 ? accent : t.border,
-                },
-              ]}
-              placeholder={tr('onboarding.namePlaceholder')}
-              placeholderTextColor={t.textMuted}
-              value={displayName}
-              onChangeText={setDisplayNameLocal}
-              autoCapitalize="words"
-              autoCorrect={false}
-              maxLength={30}
-            />
-          </View>
-        </View>
-
-        {/* Page 4: Theme toggle */}
+        {/* Page 3: Theme toggle */}
         <View style={[styles.page, { width: SCREEN_WIDTH }]}>
           <View style={styles.pageContent}>
             <View style={[styles.iconCircle, { backgroundColor: colors.accentSubtle }]}>
@@ -308,9 +270,13 @@ export default function OnboardingScreen() {
           </View>
         </View>
 
-        {/* Page 5: Pick interests */}
+        {/* Page 4: Pick interests */}
         <View style={[styles.page, { width: SCREEN_WIDTH }]}>
-          <View style={styles.pageContent}>
+          <ScrollView
+            contentContainerStyle={styles.scrollablePageContent}
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled
+          >
             <Text style={[styles.pageTitle, { color: t.text }]}>
               {tr('onboarding.interestsTitle')}
             </Text>
@@ -368,7 +334,7 @@ export default function OnboardingScreen() {
                 );
               })}
             </View>
-          </View>
+          </ScrollView>
         </View>
 
         {/* Page 6: Daily goal */}
@@ -419,7 +385,7 @@ export default function OnboardingScreen() {
 
       {/* Bottom button */}
       <View style={styles.bottomBar}>
-        {currentPage === 4 && selectedCategories.length === 0 && (
+        {currentPage === 3 && selectedCategories.length === 0 && (
           <Text style={[typography.footnote, { color: colors.warning, textAlign: 'center', marginBottom: spacing.sm }]}>
             {tr('onboarding.selectAtLeast')}
           </Text>
@@ -428,10 +394,10 @@ export default function OnboardingScreen() {
           style={[
             styles.continueBtn,
             { backgroundColor: accent },
-            currentPage === 4 && selectedCategories.length === 0 && { opacity: 0.5 },
+            currentPage === 3 && selectedCategories.length === 0 && { opacity: 0.5 },
           ]}
           onPress={isLastPage ? handleFinish : goNext}
-          disabled={currentPage === 4 && selectedCategories.length === 0}
+          disabled={currentPage === 3 && selectedCategories.length === 0}
         >
           <Text style={[typography.headline, { color: '#fff' }]}>
             {isLastPage ? tr('onboarding.startLearning') : tr('onboarding.continue')}
@@ -471,6 +437,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing['2xl'],
     paddingTop: spacing['4xl'],
   },
+  scrollablePageContent: {
+    flexGrow: 1,
+    paddingHorizontal: spacing['2xl'],
+    paddingTop: spacing['4xl'],
+    paddingBottom: 100,
+  },
   iconCircle: {
     width: 64,
     height: 64,
@@ -507,15 +479,6 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  nameInput: {
-    marginTop: spacing['3xl'],
-    height: 52,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    paddingHorizontal: spacing.xl,
-    fontSize: 16,
-    fontWeight: '500',
   },
   themeList: {
     marginTop: spacing['3xl'],

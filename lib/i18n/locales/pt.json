@@ -81,7 +81,6 @@
     "masteryByCategory": "DOMÍNIO POR CATEGORIA",
     "settings": "CONFIGURAÇÕES",
     "account": "Conta",
-    "signInToSync": "Entre para sincronizar",
     "syncNow": "Sincronizar agora",
     "signOut": "Sair",
     "language": "Idioma",
@@ -122,7 +121,10 @@
     "tierFree": "Gratis",
     "tierPremium": "Premium",
     "usernameLimit": "Você só pode alterar seu nome uma vez a cada 7 dias",
-    "thisWeek": "ESTA SEMANA"
+    "thisWeek": "ESTA SEMANA",
+    "signUpToSync": "Cadastre-se para sincronizar",
+    "deleteAccount": "Excluir conta",
+    "deleteAccountConfirm": "Sua conta e todo o seu progresso de aprendizado serão excluídos permanentemente. Esta ação não pode ser desfeita."
   },
   "auth": {
     "welcomeBack": "Bem-vindo de volta",
@@ -167,6 +169,29 @@
       "dobInvalid": "Data invalida",
       "dobFuture": "Nao pode ser no futuro",
       "dobRange": "Data de nascimento invalida"
+    },
+    "errors": {
+      "alreadyRegistered": "Este e-mail já está registrado. Faça login.",
+      "invalidCredentials": "E-mail ou senha inválidos.",
+      "emailNotConfirmed": "Confirme seu e-mail antes de entrar.",
+      "tooManyRequests": "Muitas tentativas. Tente novamente mais tarde.",
+      "passwordTooShort": "A senha deve ter pelo menos 6 caracteres.",
+      "emailInvalid": "Formato de e-mail inválido."
+    },
+    "forgotPassword": {
+      "forgotPassword": "Esqueceu a senha?",
+      "sendCode": "Enviar código",
+      "enterOtp": "Digite o código de verificação",
+      "newPassword": "Nova senha",
+      "updatePassword": "Atualizar senha",
+      "otpSentSuccess": "O código de verificação foi enviado para seu e-mail.",
+      "otpInvalid": "Código inválido ou expirado.",
+      "passwordUpdated": "Sua senha foi atualizada com sucesso!",
+      "enterEmail": "Digite seu e-mail",
+      "step1Title": "Redefinir senha",
+      "step1Subtitle": "Digite o e-mail associado à sua conta. Enviaremos um código de verificação.",
+      "step2Title": "Definir nova senha",
+      "step2Subtitle": "Digite o código de verificação e sua nova senha."
     }
   },
   "paywall": {
@@ -221,7 +246,8 @@
     "close": "Fechar",
     "loading": "Carregando...",
     "selectAll": "Selecionar tudo",
-    "deselectAll": "Desmarcar tudo"
+    "deselectAll": "Desmarcar tudo",
+    "error": "Erro"
   },
   "onboarding": {
     "welcome": "Domine os conceitos\ntecnologicos",
@@ -333,5 +359,16 @@
     "subtitle": "Atualize para Premium para acessar este recurso.",
     "subtitleRelated": "Atualize para Premium para ver termos relacionados e análises detalhadas.",
     "subtitleQuiz": "Atualize para Premium para revelar o termo fonte e desbloquear extras."
+  },
+  "syncConflict": {
+    "title": "Conflito de dados",
+    "description": "Há progresso salvo neste dispositivo. A conta na qual você está entrando tem dados de progresso diferentes.",
+    "device": "Dispositivo",
+    "cloud": "Nuvem",
+    "terms": "{{count}} termos",
+    "swipes": "{{count}} estudos",
+    "warning": "Escolher a nuvem substituirá seu progresso local.",
+    "useCloud": "Usar a nuvem",
+    "cancel": "Cancelar"
   }
 }

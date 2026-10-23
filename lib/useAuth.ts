@@ -72,10 +72,42 @@ export function useAuth() {
     return data ?? false;
   };
 
+  const resetPasswordForEmail = async (email: string) => {
+    if (!isSupabaseConfigured) return { error: { message: 'Supabase not configured' } };
+    const { error } = await getSupabase().auth.resetPasswordForEmail(email);
+    return { error };
+  };
+
+  const verifyOtpAndUpdatePassword = async (email: string, token: string, newPassword: string) => {
+    if (!isSupabaseConfigured) return { error: { message: 'Supabase not configured' }, phase: 'verify' as const };
+    const sb = getSupabase();
+    const { error: verifyErr } = await sb.auth.verifyOtp({ email, token, type: 'recovery' });
+    if (verifyErr) return { error: verifyErr, phase: 'verify' as const };
+    const { error: updateErr } = await sb.auth.updateUser({ password: newPassword });
+    return { error: updateErr, phase: 'update' as const };
+  };
+
+  const updatePassword = async (newPassword: string) => {
+    if (!isSupabaseConfigured) return { error: { message: 'Supabase not configured' } };
+    const { error } = await getSupabase().auth.updateUser({ password: newPassword });
+    return { error };
+  };
+
   const signOut = async () => {
     if (!isSupabaseConfigured) return { error: null };
     const { error } = await getSupabase().auth.signOut();
     return { error };
+  };
+
+  const deleteAccount = async () => {
+    if (!isSupabaseConfigured) return { error: { message: 'Supabase not configured' } };
+    const sb = getSupabase();
+    const { data, error } = await sb.rpc('delete_own_account');
+    if (error) return { error };
+    const result = data as { success?: boolean; error?: string } | null;
+    if (!result?.success) return { error: { message: result?.error || 'delete_failed' } };
+    await sb.auth.signOut();
+    return { error: null };
   };
 
   return {
@@ -86,6 +118,10 @@ export function useAuth() {
     signInWithEmail,
     signUpWithProfile,
     checkUsername,
+    resetPasswordForEmail,
+    verifyOtpAndUpdatePassword,
+    updatePassword,
     signOut,
+    deleteAccount,
   };
 }

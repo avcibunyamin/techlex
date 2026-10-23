@@ -81,7 +81,6 @@
     "masteryByCategory": "DOMINIO POR CATEGORÍA",
     "settings": "AJUSTES",
     "account": "Cuenta",
-    "signInToSync": "Inicia sesión para sincronizar",
     "syncNow": "Sincronizar ahora",
     "signOut": "Cerrar sesión",
     "language": "Idioma",
@@ -122,7 +121,10 @@
     "tierFree": "Gratis",
     "tierPremium": "Premium",
     "usernameLimit": "Solo puedes cambiar tu nombre una vez cada 7 días",
-    "thisWeek": "ESTA SEMANA"
+    "thisWeek": "ESTA SEMANA",
+    "signUpToSync": "Regístrate para sincronizar",
+    "deleteAccount": "Eliminar cuenta",
+    "deleteAccountConfirm": "Tu cuenta y todo tu progreso de aprendizaje se eliminarán permanentemente. Esta acción no se puede deshacer."
   },
   "auth": {
     "welcomeBack": "Bienvenido de vuelta",
@@ -167,6 +169,29 @@
       "dobInvalid": "Fecha invalida",
       "dobFuture": "No puede ser en el futuro",
       "dobRange": "Fecha de nacimiento invalida"
+    },
+    "errors": {
+      "alreadyRegistered": "Este correo ya está registrado. Inicia sesión.",
+      "invalidCredentials": "Correo o contraseña incorrectos.",
+      "emailNotConfirmed": "Confirma tu correo antes de iniciar sesión.",
+      "tooManyRequests": "Demasiados intentos. Inténtalo más tarde.",
+      "passwordTooShort": "La contraseña debe tener al menos 6 caracteres.",
+      "emailInvalid": "Formato de correo no válido."
+    },
+    "forgotPassword": {
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "sendCode": "Enviar código",
+      "enterOtp": "Ingresa el código de verificación",
+      "newPassword": "Nueva contraseña",
+      "updatePassword": "Actualizar contraseña",
+      "otpSentSuccess": "El código de verificación se envió a tu correo.",
+      "otpInvalid": "Código inválido o expirado.",
+      "passwordUpdated": "¡Tu contraseña se actualizó correctamente!",
+      "enterEmail": "Ingresa tu correo electrónico",
+      "step1Title": "Restablecer contraseña",
+      "step1Subtitle": "Ingresa el correo asociado a tu cuenta. Te enviaremos un código de verificación.",
+      "step2Title": "Establecer nueva contraseña",
+      "step2Subtitle": "Ingresa el código de verificación y tu nueva contraseña."
     }
   },
   "paywall": {
@@ -221,7 +246,8 @@
     "close": "Cerrar",
     "loading": "Cargando...",
     "selectAll": "Seleccionar todo",
-    "deselectAll": "Deseleccionar todo"
+    "deselectAll": "Deseleccionar todo",
+    "error": "Error"
   },
   "onboarding": {
     "welcome": "Domina los conceptos\ntecnologicos",
@@ -333,5 +359,16 @@
     "subtitle": "Actualiza a Premium para acceder a esta función.",
     "subtitleRelated": "Actualiza a Premium para ver términos relacionados y análisis detallados.",
     "subtitleQuiz": "Actualiza a Premium para revelar el término fuente y desbloquear extras."
+  },
+  "syncConflict": {
+    "title": "Conflicto de datos",
+    "description": "Hay progreso guardado en este dispositivo. La cuenta a la que estás accediendo tiene datos de progreso diferentes.",
+    "device": "Dispositivo",
+    "cloud": "Nube",
+    "terms": "{{count}} términos",
+    "swipes": "{{count}} estudios",
+    "warning": "Elegir la nube reemplazará tu progreso local.",
+    "useCloud": "Usar la nube",
+    "cancel": "Cancelar"
   }
 }

@@ -37,6 +37,7 @@ export interface SwipeQueueItem {
   termId: string;
   action: 'right' | 'left';
   timestamp: number;
+  userId?: string;
 }
 
 export interface DailyStat {
@@ -73,6 +74,11 @@ interface AppState {
   dailyStats: DailyStat[];
   reviewMode: boolean;
   quizSeenIds: Set<string>;
+  isSyncConflict: boolean;
+  isCheckingSync: boolean;
+  isResettingPassword: boolean;
+  needsCloudHydration: boolean;
+  pendingCloudData: { progress: Record<string, UserProgress>; profile: any } | null;
 
   loadData: () => Promise<void>;
   saveData: () => Promise<void>;
@@ -90,7 +96,7 @@ interface AppState {
   refillEnergy: () => void;
   flushSwipeQueue: () => Promise<void>;
   syncToCloud: (userId: string) => Promise<void>;
-  loadFromCloud: (userId: string) => Promise<void>;
+  loadFromCloud: (userId: string) => Promise<boolean>;
   getFilteredTerms: () => Term[];
   getTermsForReview: () => Term[];
   getLevel: () => { level: number; currentXp: number; nextLevelXp: number };
@@ -109,6 +115,11 @@ interface AppState {
   fetchServerTime: () => Promise<void>;
   getServerNow: () => number;
   setReviewMode: (on: boolean) => void;
+  checkSyncConflict: (userId: string) => Promise<boolean>;
+  resolveSyncConflict: (useCloud: boolean) => Promise<void>;
+  dismissSyncConflict: () => void;
+  hasLocalProgress: () => boolean;
+  resetUserData: () => void;
 }
 
 const STORAGE_KEY = '@pratik_kelime_data';
@@ -154,6 +165,11 @@ export const useAppStore = create<AppState>((set, get) => ({
   dailyStats: [],
   reviewMode: false,
   quizSeenIds: new Set<string>(),
+  isSyncConflict: false,
+  isCheckingSync: false,
+  isResettingPassword: false,
+  needsCloudHydration: false,
+  pendingCloudData: null,
 
   setReviewMode: (on: boolean) => set({ reviewMode: on }),
 
@@ -218,6 +234,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           isLoaded: true,
           hasCompletedOnboarding: data.hasCompletedOnboarding ?? false,
           displayName: data.displayName || '',
+          needsCloudHydration: data.needsCloudHydration ?? false,
           themeMode: data.themeMode || 'system',
           subscriptionTier: tier,
           cancelAtPeriodEnd: data.cancelAtPeriodEnd || false,
@@ -260,6 +277,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           earnedBadges: s.earnedBadges,
           hasCompletedOnboarding: s.hasCompletedOnboarding,
           displayName: s.displayName,
+          needsCloudHydration: s.needsCloudHydration,
           themeMode: s.themeMode,
           subscriptionTier: s.subscriptionTier,
           cancelAtPeriodEnd: s.cancelAtPeriodEnd,
@@ -381,8 +399,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     const s = get();
     if (get().hasActivePremium()) return true;
     if (s.energyLevel <= 0) return false;
-    set({ energyLevel: s.energyLevel - 1, lastEnergyRefill: Date.now() });
-    get().saveData();
+    set({ energyLevel: s.energyLevel - 1 });
+    get().scheduleSave();
     return true;
   },
 
@@ -414,9 +432,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({ swipeQueue: get().swipeQueue.slice(queue.length) });
 
       try {
-        const { synced } = await pushBatchSwipes(queue);
-        if (!synced) {
-          set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
+        const result = await pushBatchSwipes(queue);
+        const unsent = queue.slice(result.sentCount);
+        if (unsent.length > 0) {
+          set(s => ({ swipeQueue: [...unsent, ...s.swipeQueue] }));
+        }
+        if (result.energy !== undefined && result.error !== 'user_changed') {
+          set({ energyLevel: result.energy });
         }
       } catch {
         set(s => ({ swipeQueue: [...queue, ...s.swipeQueue] }));
@@ -475,9 +497,12 @@ export const useAppStore = create<AppState>((set, get) => ({
           lastEnergyRefill: profile.lastEnergyRefill,
           hasCompletedOnboarding: profile.hasCompletedOnboarding || local.hasCompletedOnboarding,
         });
-        get().saveData();
+        await get().saveData();
       }
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   },
 
   getFilteredTerms: () => {
@@ -732,5 +757,117 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   getServerNow: () => {
     return Date.now() + get().serverTimeOffset;
+  },
+
+  hasLocalProgress: () => {
+    const { progress, totalSwipes, streak } = get();
+    return Object.keys(progress).length > 0 || totalSwipes > 0 || streak > 0;
+  },
+
+  resetUserData: () => {
+    set({
+      progress: {},
+      selectedTags: [],
+      displayName: '',
+      totalSwipes: 0,
+      streak: 0,
+      xp: 0,
+      energyLevel: 30,
+      lastEnergyRefill: 0,
+      swipeQueue: [],
+      dailyStats: [],
+      reviewMode: false,
+      quizSeenIds: new Set<string>(),
+      isSyncConflict: false,
+      isCheckingSync: false,
+      isResettingPassword: false,
+      needsCloudHydration: true,
+      pendingCloudData: null,
+      todayCount: 0,
+      longestStreak: 0,
+      lastActiveDate: null,
+      earnedBadges: [],
+      subscriptionTier: 'free' as SubscriptionTier,
+      cancelAtPeriodEnd: false,
+      currentPeriodEnd: null,
+      hasCompletedOnboarding: false,
+    });
+    get().scheduleSave();
+  },
+
+  checkSyncConflict: async (userId: string) => {
+    if (!isSupabaseConfigured) { set({ isCheckingSync: false }); return false; }
+
+    set({ isCheckingSync: true });
+
+    const localHasData = get().hasLocalProgress();
+    if (!localHasData) { set({ isCheckingSync: false }); return false; }
+
+    try {
+      const cloudData = await pullProgress(userId);
+      if (!cloudData.profile) { set({ isCheckingSync: false }); return false; }
+
+      const cloudHasProgress = Object.keys(cloudData.progress).length > 0
+        || (cloudData.profile.totalSwipes ?? 0) > 0
+        || (cloudData.profile.streak ?? 0) > 0;
+
+      if (!cloudHasProgress) { set({ isCheckingSync: false }); return false; }
+
+      const localTotal = get().totalSwipes;
+      const cloudTotal = cloudData.profile.totalSwipes ?? 0;
+      if (localTotal === cloudTotal && Object.keys(get().progress).length === Object.keys(cloudData.progress).length) {
+        set({ isCheckingSync: false });
+        return false;
+      }
+
+      set({ isSyncConflict: true, isCheckingSync: false, pendingCloudData: cloudData });
+      return true;
+    } catch {
+      set({ isCheckingSync: false });
+      return false;
+    }
+  },
+
+  resolveSyncConflict: async (useCloud: boolean) => {
+    const { pendingCloudData } = get();
+    if (useCloud && pendingCloudData?.profile) {
+      const profile = pendingCloudData.profile;
+      const today = getTodayString();
+      let streak = profile.streak;
+      let todayCount = profile.todayCount;
+      if (profile.lastActiveDate) {
+        streak = streakAfterLoad(streak, profile.lastActiveDate, today);
+        if (profile.lastActiveDate !== today) todayCount = 0;
+      }
+
+      set({
+        progress: pendingCloudData.progress,
+        selectedTags: profile.selectedTags?.length > 0 ? profile.selectedTags : get().selectedTags,
+        language: profile.language as Language,
+        streak,
+        longestStreak: profile.longestStreak ?? 0,
+        lastActiveDate: profile.lastActiveDate ?? null,
+        dailyGoal: (profile.dailyGoal && profile.dailyGoal !== 10) ? profile.dailyGoal : 30,
+        todayCount,
+        totalSwipes: profile.totalSwipes ?? 0,
+        xp: profile.xp ?? 0,
+        subscriptionTier: profile.subscriptionTier ?? 'free',
+        cancelAtPeriodEnd: profile.cancelAtPeriodEnd ?? false,
+        currentPeriodEnd: profile.currentPeriodEnd ?? null,
+        energyLevel: profile.energyLevel ?? MAX_ENERGY,
+        lastEnergyRefill: profile.lastEnergyRefill ?? Date.now(),
+        hasCompletedOnboarding: profile.hasCompletedOnboarding || get().hasCompletedOnboarding,
+        isSyncConflict: false,
+        isCheckingSync: false,
+        pendingCloudData: null,
+      });
+      await get().saveData();
+    } else {
+      set({ isSyncConflict: false, isCheckingSync: false, pendingCloudData: null });
+    }
+  },
+
+  dismissSyncConflict: () => {
+    set({ isSyncConflict: false, isCheckingSync: false, pendingCloudData: null });
   },
 }));

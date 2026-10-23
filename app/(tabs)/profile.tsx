@@ -26,7 +26,8 @@ export default function ProfileScreen() {
   const { colors: t, accent, themeMode } = useTheme();
   const router = useRouter();
   const { t: tr, i18n } = useTranslation();
-  const { user, signOut } = useAuth();
+  const { user, signOut, deleteAccount } = useAuth();
+  const [deleting, setDeleting] = useState(false);
   const {
     streak, longestStreak, language, setLanguage, progress, terms,
     dailyGoal, todayCount,
@@ -521,15 +522,46 @@ export default function ProfileScreen() {
                   <Text style={[typography.body, { color: colors.danger }]}>{tr('profile.signOut')}</Text>
                 </View>
               </Pressable>
+
+              <Pressable
+                style={styles.settingRow}
+                disabled={deleting}
+                onPress={() => {
+                  Alert.alert(
+                    tr('profile.deleteAccount'),
+                    tr('profile.deleteAccountConfirm'),
+                    [
+                      { text: tr('common.cancel'), style: 'cancel' },
+                      {
+                        text: tr('profile.deleteAccount'),
+                        style: 'destructive',
+                        onPress: async () => {
+                          setDeleting(true);
+                          const { error } = await deleteAccount();
+                          setDeleting(false);
+                          if (error) Alert.alert(tr('common.error'), error.message);
+                        },
+                      },
+                    ]
+                  );
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+                  <X size={14} color={colors.danger} strokeWidth={1.5} />
+                  <Text style={[typography.body, { color: colors.danger }]}>
+                    {deleting ? tr('common.loading') : tr('profile.deleteAccount')}
+                  </Text>
+                </View>
+              </Pressable>
             </>
           ) : (
             <Pressable
               style={styles.settingRow}
-              onPress={() => router.push('/(auth)/login')}
+              onPress={() => router.push({ pathname: '/(auth)/login', params: { mode: 'signup' } })}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
                 <LogIn size={14} color={accent} strokeWidth={1.5} />
-                <Text style={[typography.body, { color: t.text }]}>{tr('profile.signInToSync')}</Text>
+                <Text style={[typography.body, { color: t.text }]}>{tr('profile.signUpToSync')}</Text>
               </View>
               <ChevronRight size={14} color={t.textTertiary} strokeWidth={1.5} />
             </Pressable>

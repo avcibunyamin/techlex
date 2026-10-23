@@ -81,7 +81,6 @@
     "masteryByCategory": "FORTSCHRITT NACH KATEGORIE",
     "settings": "EINSTELLUNGEN",
     "account": "Konto",
-    "signInToSync": "Anmelden zum Synchronisieren",
     "syncNow": "Jetzt synchronisieren",
     "signOut": "Abmelden",
     "language": "Sprache",
@@ -122,7 +121,10 @@
     "tierFree": "Kostenlos",
     "tierPremium": "Premium",
     "usernameLimit": "Sie können Ihren Namen nur einmal alle 7 Tage ändern",
-    "thisWeek": "DIESE WOCHE"
+    "thisWeek": "DIESE WOCHE",
+    "signUpToSync": "Registrieren zum Synchronisieren",
+    "deleteAccount": "Konto löschen",
+    "deleteAccountConfirm": "Ihr Konto und Ihr gesamter Lernfortschritt werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden."
   },
   "auth": {
     "welcomeBack": "Willkommen zurück",
@@ -167,6 +169,29 @@
       "dobInvalid": "Ungultiges Datum",
       "dobFuture": "Darf nicht in der Zukunft liegen",
       "dobRange": "Ungultiges Geburtsdatum"
+    },
+    "errors": {
+      "alreadyRegistered": "Diese E-Mail ist bereits registriert. Bitte melden Sie sich an.",
+      "invalidCredentials": "Ungültige E-Mail oder Passwort.",
+      "emailNotConfirmed": "Bitte bestätigen Sie Ihre E-Mail vor der Anmeldung.",
+      "tooManyRequests": "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+      "passwordTooShort": "Passwort muss mindestens 6 Zeichen lang sein.",
+      "emailInvalid": "Ungültiges E-Mail-Format."
+    },
+    "forgotPassword": {
+      "forgotPassword": "Passwort vergessen?",
+      "sendCode": "Code senden",
+      "enterOtp": "Bestätigungscode eingeben",
+      "newPassword": "Neues Passwort",
+      "updatePassword": "Passwort aktualisieren",
+      "otpSentSuccess": "Bestätigungscode wurde an Ihre E-Mail gesendet.",
+      "otpInvalid": "Ungültiger oder abgelaufener Code.",
+      "passwordUpdated": "Ihr Passwort wurde erfolgreich aktualisiert!",
+      "enterEmail": "E-Mail-Adresse eingeben",
+      "step1Title": "Passwort zurücksetzen",
+      "step1Subtitle": "Geben Sie die E-Mail-Adresse Ihres Kontos ein. Wir senden Ihnen einen Bestätigungscode.",
+      "step2Title": "Neues Passwort festlegen",
+      "step2Subtitle": "Geben Sie den Bestätigungscode und Ihr neues Passwort ein."
     }
   },
   "paywall": {
@@ -221,7 +246,8 @@
     "close": "Schließen",
     "loading": "Laden...",
     "selectAll": "Alle auswählen",
-    "deselectAll": "Alle abwählen"
+    "deselectAll": "Alle abwählen",
+    "error": "Fehler"
   },
   "onboarding": {
     "welcome": "Technologie-Begriffe\nmeistern",
@@ -333,5 +359,16 @@
     "subtitle": "Upgrade auf Premium, um diese Funktion zu nutzen.",
     "subtitleRelated": "Upgrade auf Premium, um verwandte Begriffe und tiefere Analysen zu sehen.",
     "subtitleQuiz": "Upgrade auf Premium, um den Quellbegriff zu sehen und Extras freizuschalten."
+  },
+  "syncConflict": {
+    "title": "Datenkonflikt",
+    "description": "Auf diesem Gerät sind gespeicherte Fortschritte vorhanden. Das Konto, bei dem Sie sich anmelden, hat andere Fortschrittsdaten.",
+    "device": "Gerät",
+    "cloud": "Cloud",
+    "terms": "{{count}} Begriffe",
+    "swipes": "{{count}} Übungen",
+    "warning": "Wenn Sie die Cloud wählen, wird Ihr lokaler Fortschritt ersetzt.",
+    "useCloud": "Cloud verwenden",
+    "cancel": "Abbrechen"
   }
 }

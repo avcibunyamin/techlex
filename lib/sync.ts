@@ -9,28 +9,70 @@ export interface SwipeEvent {
   timestamp: number;
 }
 
+export interface BatchResult {
+  synced: boolean;
+  accepted: number;
+  rejected: number;
+  duplicates: number;
+  sentCount: number;
+  energy?: number;
+  error: unknown;
+}
+
+const BATCH_LIMIT = 50;
+
 export async function pushBatchSwipes(
   events: SwipeEvent[],
-): Promise<{ synced: boolean; error: unknown }> {
-  if (!isSupabaseConfigured || events.length === 0) {
-    return { synced: false, error: null };
-  }
+): Promise<BatchResult> {
+  const empty: BatchResult = { synced: false, accepted: 0, rejected: 0, duplicates: 0, sentCount: 0, error: null };
+  if (!isSupabaseConfigured || events.length === 0) return empty;
 
   const supabase = getSupabase();
   const { data: sessionData } = await supabase.auth.getSession();
-  if (!sessionData.session) return { synced: false, error: null };
+  const startUserId = sessionData.session?.user?.id;
+  if (!startUserId) return empty;
 
-  const { data, error } = await supabase.rpc('process_swipe_events', {
-    p_events: events.map((event) => ({
-      event_id: event.id,
-      term_id: event.termId,
-      action: event.action,
-      occurred_at: new Date(event.timestamp).toISOString(),
-    })),
-  });
+  let totalAccepted = 0;
+  let totalRejected = 0;
+  let totalDuplicates = 0;
+  let totalSent = 0;
+  let lastEnergy: number | undefined;
 
-  const result = data as { success?: boolean } | null;
-  return { synced: !error && result?.success === true, error };
+  for (let i = 0; i < events.length; i += BATCH_LIMIT) {
+    if (i > 0) {
+      const { data: check } = await supabase.auth.getSession();
+      if (check.session?.user?.id !== startUserId) {
+        return { synced: false, accepted: totalAccepted, rejected: totalRejected, duplicates: totalDuplicates, sentCount: totalSent, energy: lastEnergy, error: 'user_changed' };
+      }
+    }
+
+    const chunk = events.slice(i, i + BATCH_LIMIT);
+    const { data, error } = await supabase.rpc('process_swipe_events', {
+      p_events: chunk.map((event) => ({
+        event_id: event.id,
+        term_id: event.termId,
+        action: event.action,
+        occurred_at: new Date(event.timestamp).toISOString(),
+      })),
+    });
+
+    if (error) {
+      return { synced: false, accepted: totalAccepted, rejected: totalRejected, duplicates: totalDuplicates, sentCount: totalSent, energy: lastEnergy, error };
+    }
+
+    const result = data as { success?: boolean; accepted?: number; rejected?: number; duplicates?: number; energy?: number } | null;
+    if (!result?.success) {
+      return { synced: false, accepted: totalAccepted, rejected: totalRejected, duplicates: totalDuplicates, sentCount: totalSent, energy: lastEnergy, error: data };
+    }
+
+    totalSent += chunk.length;
+    totalAccepted += result.accepted ?? 0;
+    totalRejected += result.rejected ?? 0;
+    totalDuplicates += result.duplicates ?? 0;
+    lastEnergy = result.energy;
+  }
+
+  return { synced: true, accepted: totalAccepted, rejected: totalRejected, duplicates: totalDuplicates, sentCount: totalSent, energy: lastEnergy, error: null };
 }
 
 export async function pushPreferences(meta: {
@@ -58,16 +100,19 @@ export async function pullProgress(userId: string) {
   if (!isSupabaseConfigured) return { progress: {}, profile: null };
   const supabase = getSupabase();
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('user_profiles')
     .select('*')
     .eq('id', userId)
     .single();
 
-  const { data: rows } = await supabase
+  if (profileError && profileError.code !== 'PGRST116') throw profileError;
+
+  const { data: rows, error: rowsError } = await supabase
     .from('user_progress')
     .select('*')
     .eq('user_id', userId);
+  if (rowsError) throw rowsError;
 
   const progress: Record<string, UserProgress> = {};
   if (rows) {

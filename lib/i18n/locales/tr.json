@@ -81,7 +81,6 @@
     "masteryByCategory": "KATEGORİYE GÖRE USTALIK",
     "settings": "AYARLAR",
     "account": "Hesap",
-    "signInToSync": "Senkronize etmek için giriş yap",
     "syncNow": "Şimdi senkronize et",
     "signOut": "Çıkış yap",
     "language": "Dil",
@@ -122,7 +121,10 @@
     "tierFree": "Ücretsiz",
     "tierPremium": "Premium",
     "usernameLimit": "7 gün içinde yalnızca 1 kez isim değiştirebilirsiniz",
-    "thisWeek": "BU HAFTA"
+    "thisWeek": "BU HAFTA",
+    "signUpToSync": "Senkronize etmek için kayıt ol",
+    "deleteAccount": "Hesabı Sil",
+    "deleteAccountConfirm": "Hesabınız ve tüm öğrenme ilerlemeniz kalıcı olarak silinecektir. Bu işlem geri alınamaz."
   },
   "auth": {
     "welcomeBack": "Tekrar hoş geldin",
@@ -167,6 +169,29 @@
       "dobInvalid": "Gecersiz tarih",
       "dobFuture": "Gelecekte olamaz",
       "dobRange": "Gecersiz dogum tarihi"
+    },
+    "errors": {
+      "alreadyRegistered": "Bu e-posta zaten kayıtlı. Lütfen giriş yapın.",
+      "invalidCredentials": "E-posta veya şifre hatalı.",
+      "emailNotConfirmed": "Giriş yapmadan önce e-postanızı doğrulayın.",
+      "tooManyRequests": "Çok fazla deneme. Lütfen daha sonra tekrar deneyin.",
+      "passwordTooShort": "Şifre en az 6 karakter olmalıdır.",
+      "emailInvalid": "Geçersiz e-posta formatı."
+    },
+    "forgotPassword": {
+      "forgotPassword": "Şifremi Unuttum?",
+      "sendCode": "Kod Gönder",
+      "enterOtp": "Doğrulama kodunu girin",
+      "newPassword": "Yeni Şifre",
+      "updatePassword": "Şifreyi Güncelle",
+      "otpSentSuccess": "Doğrulama kodu e-posta adresinize gönderildi.",
+      "otpInvalid": "Geçersiz veya süresi dolmuş kod.",
+      "passwordUpdated": "Şifreniz başarıyla güncellendi!",
+      "enterEmail": "E-posta adresinizi girin",
+      "step1Title": "Şifre Sıfırlama",
+      "step1Subtitle": "Hesabınıza bağlı e-posta adresini girin. Size bir doğrulama kodu göndereceğiz.",
+      "step2Title": "Yeni Şifre Belirle",
+      "step2Subtitle": "E-postanıza gönderilen doğrulama kodunu ve yeni şifrenizi girin."
     }
   },
   "paywall": {
@@ -238,7 +263,7 @@
     "subcategories": "{{count}} alt kategori",
     "paceTitle": "Hızını belirle",
     "paceSubtitle": "Her gün kaç kavram öğrenmek istersin? Küçük başla, artır.",
-    "goalCasual": "Yava��",
+    "goalCasual": "Yavaş",
     "goalRegular": "Normal",
     "goalSerious": "Ciddi",
     "goalIntense": "Yoğun",
@@ -255,7 +280,8 @@
     "close": "Kapat",
     "loading": "Yükleniyor...",
     "selectAll": "Tümünü Seç",
-    "deselectAll": "Tümünü Kaldır"
+    "deselectAll": "Tümünü Kaldır",
+    "error": "Hata"
   },
   "categories": {
     "cybersecurity": "Siber Güvenlik (Cybersecurity)",
@@ -333,5 +359,16 @@
     "subtitle": "Bu özelliğe erişmek için Premium'a geçin.",
     "subtitleRelated": "İlgili terimleri ve derinlemesine analizleri görmek için Premium'a geçin.",
     "subtitleQuiz": "Hangi kavrama ait olduğunu görmek ve ek özellikler için Premium'a geçin."
+  },
+  "syncConflict": {
+    "title": "Veri Çakışması",
+    "description": "Cihazınızda kaydedilmiş bir ilerleme bulunuyor. Giriş yaptığınız hesapta ise farklı bir ilerleme var.",
+    "device": "Cihaz",
+    "cloud": "Bulut",
+    "terms": "{{count}} terim",
+    "swipes": "{{count}} çalışma",
+    "warning": "Bulutu seçerseniz cihazdaki ilerlemeniz silinecektir.",
+    "useCloud": "Bulutu Kullan",
+    "cancel": "Vazgeç"
   }
 }

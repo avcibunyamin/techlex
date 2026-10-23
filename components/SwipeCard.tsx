@@ -1,5 +1,5 @@
-import React, { useRef, useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { StyleSheet, Text, View, Dimensions, Pressable } from 'react-native';
+import React, { useRef, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,12 +13,12 @@ import Animated, {
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { Term, Language, getTermLanguage } from '@/types';
 import { colors as palette, spacing, radius, typography } from '@/constants/theme';
+import { haptic } from '@/lib/haptics';
 import { useTheme } from '@/lib/useTheme';
 import { getCategoryByTag } from '@/data/categories';
 import { useAppStore } from '@/lib/store';
 import { toLocaleUpper } from '@/lib/text-utils';
 import { useTranslation } from 'react-i18next';
-import { Lock, ChevronDown } from 'lucide-react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_X_THRESHOLD = SCREEN_WIDTH * 0.28;
@@ -38,9 +38,6 @@ interface SwipeCardProps {
   onSwipeLeft: () => void;
   onSwipeBlocked?: () => void;
   canSwipe?: boolean;
-  isPremium?: boolean;
-  onRelatedTermPress?: (term: string) => void;
-  onShowPaywall?: () => void;
   stackIndex: number;
   dragX?: SharedValue<number>;
   dragY?: SharedValue<number>;
@@ -55,9 +52,6 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
     onSwipeLeft,
     onSwipeBlocked,
     canSwipe = true,
-    isPremium = false,
-    onRelatedTermPress,
-    onShowPaywall,
     stackIndex,
     dragX,
     dragY,
@@ -69,7 +63,6 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const { t: tr } = useTranslation();
   const allTerms = useAppStore(s => s.terms);
   const flipped = useRef(false);
-  const [expandedRelated, setExpandedRelated] = useState<string | null>(null);
 
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -99,6 +92,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   }), [translateX, translateY, rotation, cardScale, cardOpacity]);
 
   const toggleFlip = useCallback(() => {
+    haptic.light();
     flipped.current = !flipped.current;
     flipProgress.value = withSpring(flipped.current ? 1 : 0, {
       damping: 18,
@@ -111,6 +105,8 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
 
   const pan = Gesture.Pan()
     .enabled(isTopCard)
+    .activeOffsetX([-15, 15])
+    .failOffsetY([-10, 10])
     .onUpdate((e) => {
       translateX.value = e.translationX;
       translateY.value = e.translationY;
@@ -139,10 +135,12 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
         translateY.value = withSpring(0, { damping: 18, stiffness: 200 });
         rotation.value = withSpring(0, { damping: 18, stiffness: 200 });
         if (onSwipeBlocked) runOnJS(onSwipeBlocked)();
+        runOnJS(haptic.error)();
       } else if (swipedRight) {
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 280 });
         rotation.value = withTiming(20, { duration: 280 });
         runOnJS(onSwipeRight)();
+        runOnJS(haptic.success)();
       } else if (swipedLeft) {
         translateX.value = withTiming(-160, { duration: 380 });
         translateY.value = withTiming(180, { duration: 380 });
@@ -150,6 +148,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
         cardScale.value = withTiming(0.55, { duration: 380 });
         cardOpacity.value = withTiming(0, { duration: 440 });
         runOnJS(onSwipeLeft)();
+        runOnJS(haptic.medium)();
       } else {
         translateX.value = withSpring(0, { damping: 14, stiffness: 120 });
         translateY.value = withSpring(0, { damping: 14, stiffness: 120 });
@@ -280,77 +279,48 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
           </Text>
           <View style={[styles.divider, { backgroundColor: t.border }]} />
 
-          <View style={styles.backContent}>
-            <Text style={[styles.definition, { color: t.textSecondary }]}>
-              {translation.definition}
-            </Text>
+            <View style={styles.backContent}>
+              <Text style={[styles.definition, { color: t.textSecondary }]}>
+                {translation.definition}
+              </Text>
 
-            {translation.example ? (
-              <View
-                style={[
-                  styles.codeBlock,
-                  { backgroundColor: t.bg, borderColor: t.border },
-                ]}
-              >
-                <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
-                  {toLocaleUpper(language === 'tr' ? 'Örnek' : 'Example', language)}
-                </Text>
-                <Text style={[styles.codeText, { color: t.textSecondary }]}>
-                  {translation.example}
-                </Text>
-              </View>
-            ) : null}
+              {translation.example ? (
+                <View
+                  style={[
+                    styles.codeBlock,
+                    { backgroundColor: t.bg, borderColor: t.border },
+                  ]}
+                >
+                  <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
+                    {toLocaleUpper(language === 'tr' ? 'Örnek' : 'Example', language)}
+                  </Text>
+                  <Text style={[styles.codeText, { color: t.textSecondary }]}>
+                    {translation.example}
+                  </Text>
+                </View>
+              ) : null}
 
-            {term.relatedTerms.length > 0 ? (
-              <View style={styles.relatedSection}>
-                <Text style={[styles.relatedTitle, { color: t.textTertiary }]}>
-                  {tr('term.relatedTerms')}
-                </Text>
-                {term.relatedTerms.slice(0, 4).map((rt) => {
-                  const related = allTerms.find(t => t.id === rt);
-                  if (!related) return null;
-                  const isExpanded = expandedRelated === rt;
-                  const relatedTranslation = related.translations[tl];
-                  return (
-                    <View key={rt} style={[styles.relatedRow, { borderColor: t.border }]}>
-                      <Pressable
-                        style={[styles.relatedChip, { backgroundColor: t.bgSubtle, borderColor: t.border }]}
-                        onPress={() => {
-                          if (isPremium) {
-                            setExpandedRelated(isExpanded ? null : rt);
-                          } else {
-                            onShowPaywall?.();
-                          }
-                        }}
-                      >
-                        {!isPremium && (
-                          <Lock size={10} color={t.textSecondary} strokeWidth={1.5} />
-                        )}
-                        <Text style={[styles.chipText, { color: t.text }]} numberOfLines={1}>
-                          {related.term}
-                        </Text>
-                        {isPremium && (
-                          <ChevronDown
-                            size={10}
-                            color={t.textTertiary}
-                            strokeWidth={1.5}
-                            style={{ transform: [{ rotate: isExpanded ? '180deg' : '0deg' }] }}
-                          />
-                        )}
-                      </Pressable>
-                      {isExpanded && isPremium && (
-                        <View style={[styles.relatedDef, { backgroundColor: t.bg }]}>
-                          <Text style={[typography.footnote, { color: t.textSecondary }]}>
-                            {relatedTranslation.definition}
+              {term.relatedTerms.length > 0 && (
+                <View style={styles.relatedSection}>
+                  <Text style={[styles.relatedTitle, { color: t.textTertiary }]}>
+                    {tr('term.relatedTerms')}
+                  </Text>
+                  <View style={styles.chipRow}>
+                    {term.relatedTerms.slice(0, 6).map((rt) => {
+                      const related = allTerms.find(at => at.id === rt);
+                      if (!related) return null;
+                      return (
+                        <View key={rt} style={[styles.passiveChip, { backgroundColor: t.bgSubtle }]}>
+                          <Text style={[styles.chipText, { color: t.textSecondary }]}>
+                            #{related.term}
                           </Text>
                         </View>
-                      )}
-                    </View>
-                  );
-                })}
-              </View>
-            ) : null}
-          </View>
+                      );
+                    })}
+                  </View>
+                </View>
+              )}
+            </View>
         </Animated.View>
 
         <Animated.View
@@ -480,25 +450,18 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: spacing.xs,
   },
-  relatedRow: {
-    paddingVertical: spacing.xs,
-  },
-  relatedChip: {
+  chipRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.md,
-    borderWidth: 0.5,
-    gap: spacing.sm,
+    flexWrap: 'wrap',
+    gap: spacing.xs,
   },
-  relatedDef: {
-    padding: spacing.sm,
-    paddingTop: spacing.xs,
+  passiveChip: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: radius.full,
   },
   chipText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '500',
   },
   tint: {

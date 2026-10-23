@@ -81,7 +81,6 @@
     "masteryByCategory": "카테고리별 습득도",
     "settings": "설정",
     "account": "계정",
-    "signInToSync": "로그인하여 동기화",
     "syncNow": "지금 동기화",
     "signOut": "로그아웃",
     "language": "언어",
@@ -122,7 +121,10 @@
     "tierFree": "무료",
     "tierPremium": "프리미엄",
     "usernameLimit": "이름은 7일에 한 번만 변경할 수 있습니다",
-    "thisWeek": "이번 주"
+    "thisWeek": "이번 주",
+    "signUpToSync": "가입하여 동기화",
+    "deleteAccount": "계정 삭제",
+    "deleteAccountConfirm": "계정과 모든 학습 진행 상황이 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다."
   },
   "auth": {
     "welcomeBack": "다시 오셨군요",
@@ -167,6 +169,29 @@
       "dobInvalid": "잘못된 날짜",
       "dobFuture": "미래 날짜는 사용할 수 없습니다",
       "dobRange": "잘못된 생년월일"
+    },
+    "errors": {
+      "alreadyRegistered": "이미 등록된 이메일입니다. 로그인해 주세요.",
+      "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
+      "emailNotConfirmed": "로그인 전에 이메일을 인증해 주세요.",
+      "tooManyRequests": "시도 횟수가 너무 많습니다. 나중에 다시 시도하세요.",
+      "passwordTooShort": "비밀번호는 6자 이상이어야 합니다.",
+      "emailInvalid": "이메일 형식이 올바르지 않습니다."
+    },
+    "forgotPassword": {
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "sendCode": "코드 전송",
+      "enterOtp": "인증 코드 입력",
+      "newPassword": "새 비밀번호",
+      "updatePassword": "비밀번호 변경",
+      "otpSentSuccess": "인증 코드가 이메일로 전송되었습니다.",
+      "otpInvalid": "유효하지 않거나 만료된 코드입니다.",
+      "passwordUpdated": "비밀번호가 성공적으로 변경되었습니다!",
+      "enterEmail": "이메일 주소를 입력하세요",
+      "step1Title": "비밀번호 재설정",
+      "step1Subtitle": "계정에 연결된 이메일을 입력하세요. 인증 코드를 보내드립니다.",
+      "step2Title": "새 비밀번호 설정",
+      "step2Subtitle": "인증 코드와 새 비밀번호를 입력하세요."
     }
   },
   "paywall": {
@@ -221,7 +246,8 @@
     "close": "닫기",
     "loading": "로딩 중...",
     "selectAll": "모두 선택",
-    "deselectAll": "모두 해제"
+    "deselectAll": "모두 해제",
+    "error": "오류"
   },
   "onboarding": {
     "welcome": "기술 개념을\n마스터하세요",
@@ -333,5 +359,16 @@
     "subtitle": "이 기능을 사용하려면 Premium으로 업그레이드하세요.",
     "subtitleRelated": "Premium으로 업그레이드하여 관련 용어와 심층 분석을 확인하세요.",
     "subtitleQuiz": "Premium으로 업그레이드하여 원본 용어를 확인하고 추가 기능을 잠금 해제하세요."
+  },
+  "syncConflict": {
+    "title": "데이터 충돌",
+    "description": "이 기기에 저장된 진행 상황이 있습니다. 로그인하는 계정에 다른 진행 데이터가 있습니다.",
+    "device": "기기",
+    "cloud": "클라우드",
+    "terms": "{{count}}개 용어",
+    "swipes": "{{count}}회 학습",
+    "warning": "클라우드를 선택하면 로컬 진행 상황이 대체됩니다.",
+    "useCloud": "클라우드 사용",
+    "cancel": "취소"
   }
 }

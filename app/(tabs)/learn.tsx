@@ -141,14 +141,10 @@ export default function LearnScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
       <View style={styles.header}>
-        <View style={{ flex: 1 }}>
+        <View style={styles.headerLeft}>
           <Pressable onPress={handleBack} hitSlop={12}>
-            <Text style={[typography.largeTitle, { color: t.text }]}>{tr('learn.title')}</Text>
+            <Text style={[typography.title, { color: t.text }]} numberOfLines={1}>{tr('learn.title')}</Text>
           </Pressable>
-          <Text style={[typography.callout, { color: t.textTertiary, marginTop: spacing.xs }]}>
-            {terms.length} {tr('learn.review').toLowerCase()}
-            {todayCount > 0 ? `  ·  ${todayCount} ${tr('profile.today').toLowerCase()}` : ''}
-          </Text>
         </View>
 
         <View style={styles.headerRight}>
@@ -184,19 +180,9 @@ export default function LearnScreen() {
             style={[styles.switchBtn, { backgroundColor: reviewMode ? accent + '15' : colors.warning + '15', borderColor: reviewMode ? accent + '40' : colors.warning + '40' }]}
           >
             {reviewMode ? (
-              <>
-                <BookOpen size={14} color={accent} strokeWidth={2} />
-                <Text style={[typography.footnote, { color: accent, fontWeight: '600' }]}>
-                  {tr('learn.newTerms')}
-                </Text>
-              </>
+              <BookOpen size={14} color={accent} strokeWidth={2} />
             ) : (
-              <>
-                <RotateCcw size={14} color={colors.warning} strokeWidth={2} />
-                <Text style={[typography.footnote, { color: colors.warning, fontWeight: '600' }]}>
-                  {tr('learn.reviewMode')}
-                </Text>
-              </>
+              <RotateCcw size={14} color={colors.warning} strokeWidth={2} />
             )}
           </Pressable>
 
@@ -221,10 +207,15 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.md,
     zIndex: 10,
   },
+  headerLeft: {
+    flexShrink: 1,
+    marginRight: spacing.md,
+  },
   headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
+    gap: spacing.sm,
+    flexShrink: 0,
   },
   energyChip: {
     flexDirection: 'row',
@@ -236,12 +227,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   switchBtn: {
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.xs,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 20,
+    justifyContent: 'center',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     borderWidth: 1,
   },
   closeBtn: {
