@@ -408,5 +408,14 @@
     "attributionTitle": "出典とライセンス表記",
     "attributionNote": "単語リストは {{license}} ライセンスの下で提供され、1000語ごとのパックに分割されています。定義と例文はTechLex向けに独自作成されています。",
     "loadError": "パックを読み込めませんでした。もう一度お試しください。"
+  },
+  "dailyReview": {
+    "title": "今日の復習",
+    "subtitle": "今日復習するカード: {{count}}枚（全パック＋IT用語）",
+    "sessionInfo": "このセッション {{count}}枚 · 復習対象 {{total}}枚",
+    "allDoneTitle": "復習完了です！",
+    "allDoneSub": "今日復習するカードはありません。新しい単語に進みましょう。",
+    "continuePack": "続ける: {{pack}}",
+    "browsePacks": "パックを見る"
   }
 }

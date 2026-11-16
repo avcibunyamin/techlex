@@ -7,18 +7,22 @@ import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
-import { getTermLanguage } from '@/types';
+import { getTermLanguage, Term } from '@/types';
 import CardDeck from '@/components/CardDeck';
+import { DailyReviewCard, DailyReviewSession } from '@/components/DailyReview';
 
-type LearnPhase = 'choose' | 'deck';
+type LearnPhase = 'choose' | 'deck' | 'daily';
 
 export default function LearnScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr, i18n } = useTranslation();
-  const { language, getTermsForReview, getReviewNeededTerms, selectedTags, todayCount, energyLevel, hasActivePremium, streak, reviewMode, setReviewMode, progress, packs, activePackId, getPackProgress } = useAppStore();
+  const { language, getTermsForReview, getReviewNeededTerms, selectedTags, todayCount, energyLevel, hasActivePremium, streak, reviewMode, setReviewMode, progress, packs, activePackId, getPackProgress, packsLoaded, getDailyReviewQueue } = useAppStore();
 
   const [phase, setPhase] = useState<LearnPhase>('choose');
+  const [dailyTerms, setDailyTerms] = useState<Term[]>([]);
+  const [dailyTotal, setDailyTotal] = useState(0);
+  const [focusTick, setFocusTick] = useState(0);
   const reviewModeRef = useRef(reviewMode);
   reviewModeRef.current = reviewMode;
 
@@ -47,14 +51,60 @@ export default function LearnScreen() {
   const isPremium = hasActivePremium();
   const reviewCount = reviewOnlyTerms.length;
 
+  // Recomputed on focus too, because cards become due as time passes.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const dailyDue = useMemo(() => getDailyReviewQueue().totalDue, [progress, packsLoaded, focusTick]);
+  const lastPack = useMemo(() => packs.find((p) => p.id === activePackId) ?? null, [packs, activePackId]);
+  const lastPackTitle = lastPack
+    ? i18n.exists(`categories.${lastPack.id}`)
+      ? tr(`categories.${lastPack.id}`)
+      : lastPack.title[getTermLanguage(language)]
+    : null;
+
   useFocusEffect(
     useCallback(() => {
+      setFocusTick((n) => n + 1);
       if (!reviewModeRef.current) {
         setPhase('choose');
       }
       return () => { setReviewMode(false); };
     }, [])
   );
+
+  // Snapshot the queue so the deck does not reset after every swipe.
+  const startDailyReview = () => {
+    const queue = getDailyReviewQueue();
+    setReviewMode(false);
+    setDailyTerms(queue.items);
+    setDailyTotal(queue.totalDue);
+    setPhase('daily');
+  };
+
+  const handleContinuePack = () => {
+    setPhase('choose');
+    if (lastPack) {
+      router.push(`/packs?packId=${encodeURIComponent(lastPack.id)}&autostart=1` as unknown as Parameters<typeof router.push>[0]);
+    } else {
+      router.push('/packs' as unknown as Parameters<typeof router.push>[0]);
+    }
+  };
+
+  if (phase === 'daily') {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
+        <DailyReviewSession
+          terms={dailyTerms}
+          totalDue={dailyTotal}
+          language={language}
+          streak={streak}
+          lastPackTitle={lastPackTitle}
+          onClose={() => setPhase('choose')}
+          onRestart={startDailyReview}
+          onContinuePack={handleContinuePack}
+        />
+      </SafeAreaView>
+    );
+  }
 
   const handleChooseReview = () => {
     setReviewMode(true);
@@ -133,6 +183,14 @@ export default function LearnScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+
+          <DailyReviewCard
+            totalDue={dailyDue}
+            language={language}
+            lastPackTitle={lastPackTitle}
+            onStart={startDailyReview}
+            onContinuePack={handleContinuePack}
+          />
 
           {activePack && activePackProgress && (
             <TouchableOpacity

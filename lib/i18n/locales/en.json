@@ -408,5 +408,14 @@
     "attributionTitle": "SOURCE & LICENSE ATTRIBUTION",
     "attributionNote": "Word lists are licensed under {{license}} and split into 1000-word packs; definitions and example sentences are originally written for TechLex.",
     "loadError": "Failed to load pack. Please try again."
+  },
+  "dailyReview": {
+    "title": "Daily review",
+    "subtitle": "Cards due today: {{count}} (all packs + IT terms)",
+    "sessionInfo": "{{count}} cards in this session · {{total}} due",
+    "allDoneTitle": "All caught up!",
+    "allDoneSub": "No cards are due for review today. Keep going with new words.",
+    "continuePack": "Continue: {{pack}}",
+    "browsePacks": "Browse packs"
   }
 }

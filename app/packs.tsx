@@ -35,6 +35,7 @@ import {
   getTermLanguage,
 } from '@/types';
 import CardDeck from '@/components/CardDeck';
+import { DailyReviewCard, DailyReviewSession } from '@/components/DailyReview';
 
 type GroupFilter = 'all' | PackGroup;
 
@@ -56,6 +57,7 @@ export default function PacksScreen() {
     getAllPacksProgress,
     getPackStudyTerms,
     getPackReviewNeededTerms,
+    getDailyReviewQueue,
     progress,
     language,
     streak,
@@ -70,6 +72,7 @@ export default function PacksScreen() {
   const [packPracticeMode, setPackPracticeMode] = useState(false);
   const [loadingPackId, setLoadingPackId] = useState<string | null>(null);
   const [loadErrorPackId, setLoadErrorPackId] = useState<string | null>(null);
+  const [dailySession, setDailySession] = useState<{ terms: Term[]; total: number } | null>(null);
   const didAutostartRef = useRef(false);
   const loadingPackRef = useRef(false);
   const mountedRef = useRef(true);
@@ -94,6 +97,17 @@ export default function PacksScreen() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const allProgress = useMemo(() => getAllPacksProgress(), [packs, progress, packsLoaded]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const dailyDue = useMemo(() => getDailyReviewQueue().totalDue, [progress, packsLoaded]);
+  const lastPack = useMemo(
+    () => (activePackId ? packs.find((p) => p.id === activePackId) ?? null : null),
+    [packs, activePackId]
+  );
+  const lastPackTitle = lastPack
+    ? i18n.exists(`categories.${lastPack.id}`)
+      ? tr(`categories.${lastPack.id}`)
+      : lastPack.title[termLang]
+    : null;
 
   const availableGroups = useMemo(() => {
     const present = new Set<PackGroup>(packs.map((p) => p.group));
@@ -198,6 +212,19 @@ export default function PacksScreen() {
     }
   }, [router]);
 
+  // Snapshot the queue so the deck does not reset after every swipe.
+  const startDailyReview = useCallback(() => {
+    const queue = getDailyReviewQueue();
+    setDailySession({ terms: queue.items, total: queue.totalDue });
+  }, [getDailyReviewQueue]);
+
+  const handleContinueLastPack = useCallback(() => {
+    setDailySession(null);
+    if (lastPack && lastPack.load) {
+      void handleStartPack(lastPack, false);
+    }
+  }, [lastPack, handleStartPack]);
+
   const studyingPack = useMemo(
     () => (studyingPackId ? packs.find((p) => p.id === studyingPackId) ?? null : null),
     [packs, studyingPackId]
@@ -208,6 +235,24 @@ export default function PacksScreen() {
     () => (studyingPackId ? getPackReviewNeededTerms(studyingPackId) : []),
     [studyingPackId, progress, packsLoaded]
   );
+
+  if (dailySession) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top', 'bottom']}>
+        <Stack.Screen options={{ headerShown: false }} />
+        <DailyReviewSession
+          terms={dailySession.terms}
+          totalDue={dailySession.total}
+          language={language}
+          streak={streak}
+          lastPackTitle={lastPackTitle}
+          onClose={() => setDailySession(null)}
+          onRestart={startDailyReview}
+          onContinuePack={handleContinueLastPack}
+        />
+      </SafeAreaView>
+    );
+  }
 
   if (studyingPack) {
     const packProg = allProgress[studyingPack.id] ?? getPackProgress(studyingPack.id);
@@ -432,6 +477,14 @@ export default function PacksScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
       >
+        <DailyReviewCard
+          totalDue={dailyDue}
+          language={language}
+          lastPackTitle={lastPackTitle}
+          onStart={startDailyReview}
+          onContinuePack={handleContinueLastPack}
+        />
+
         {filteredPacks.map((pack) => {
           const prog = allProgress[pack.id] ?? getPackProgress(pack.id);
           const isReady = Boolean(pack.load);

@@ -8,6 +8,7 @@ import { ThemeMode } from './useTheme';
 import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel } from '@/constants/badges';
 import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-utils';
 import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
+import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './review-queue';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -138,6 +139,7 @@ interface AppState {
   getAllPacksProgress: () => Record<string, PackProgress>;
   getPackStudyTerms: (packId: string, includeAll?: boolean) => Term[];
   getPackReviewNeededTerms: (packId: string) => Term[];
+  getDailyReviewQueue: (limit?: number) => ReviewQueueResult<Term>;
   getLevel: () => { level: number; currentXp: number; nextLevelXp: number };
   getLeague: () => { id: string; minXp: number; color: string };
   hasActivePremium: () => boolean;
@@ -745,6 +747,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       const p = progress[t.id];
       return Boolean(p && p.box === 1 && p.timesSeen > 0);
     });
+  },
+
+  // Due cards across IT terms and every loaded pack. Uses the device clock like
+  // isDueForReview so the count matches the per-pack "due" numbers.
+  getDailyReviewQueue: (limit = DEFAULT_REVIEW_LIMIT) => {
+    const { progress, terms } = get();
+    return buildReviewQueue([terms, ...Object.values(PACK_TERMS_MAP)], progress, Date.now(), limit);
   },
 
   getReviewNeededTerms: () => {

@@ -408,5 +408,14 @@
     "attributionTitle": "QUELLEN- UND LIZENZANGABE",
     "attributionNote": "Wortlisten stehen unter der Lizenz {{license}} und wurden in 1000er-Pakete aufgeteilt; Definitionen und Beispielsätze wurden eigens für TechLex verfasst.",
     "loadError": "Paket konnte nicht geladen werden. Bitte versuche es erneut."
+  },
+  "dailyReview": {
+    "title": "Tägliche Wiederholung",
+    "subtitle": "Heute fällige Karten: {{count}} (alle Pakete + IT-Begriffe)",
+    "sessionInfo": "{{count}} Karten in dieser Runde · {{total}} fällig",
+    "allDoneTitle": "Alles erledigt!",
+    "allDoneSub": "Heute sind keine Karten zur Wiederholung fällig. Mach mit neuen Wörtern weiter.",
+    "continuePack": "Weiter: {{pack}}",
+    "browsePacks": "Pakete ansehen"
   }
 }

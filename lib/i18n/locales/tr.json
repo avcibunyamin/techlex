@@ -408,5 +408,14 @@
     "attributionTitle": "KAYNAK VE LİSANS ATFI",
     "attributionNote": "Kelime listeleri {{license}} lisansı altındadır ve 1000'erlik parçalara bölünmüştür; Türkçe ve İngilizce tanım ile örnek cümleler TechLex için özgün yazılmıştır.",
     "loadError": "Paket yüklenemedi. Lütfen tekrar deneyin."
+  },
+  "dailyReview": {
+    "title": "Günlük tekrar",
+    "subtitle": "Bugün vadesi gelen kart: {{count}} (tüm paketler + BT terimleri)",
+    "sessionInfo": "Bu oturumda {{count}} kart · toplam {{total}} vadeli",
+    "allDoneTitle": "Tebrikler, tekrarlar tamam!",
+    "allDoneSub": "Bugün tekrar edilecek kart kalmadı. Yeni kelimelerle devam et.",
+    "continuePack": "Devam et: {{pack}}",
+    "browsePacks": "Paketlere göz at"
   }
 }

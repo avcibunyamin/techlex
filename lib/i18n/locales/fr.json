@@ -408,5 +408,14 @@
     "attributionTitle": "ATTRIBUTION DE LA SOURCE ET LICENCE",
     "attributionNote": "Les listes de mots sont sous licence {{license}} et divisées en packs de 1000 mots ; les définitions et phrases d'exemple sont rédigées de façon originale pour TechLex.",
     "loadError": "Impossible de charger le pack. Veuillez réessayer."
+  },
+  "dailyReview": {
+    "title": "Révision du jour",
+    "subtitle": "Cartes à réviser aujourd'hui : {{count}} (tous les packs + termes IT)",
+    "sessionInfo": "{{count}} cartes dans cette session · {{total}} à réviser",
+    "allDoneTitle": "Tout est à jour !",
+    "allDoneSub": "Aucune carte à réviser aujourd'hui. Continuez avec de nouveaux mots.",
+    "continuePack": "Continuer : {{pack}}",
+    "browsePacks": "Voir les packs"
   }
 }

@@ -408,5 +408,14 @@
     "attributionTitle": "ATRIBUCIÓN DE FUENTE Y LICENCIA",
     "attributionNote": "Las listas de palabras están bajo licencia {{license}} y se dividieron en paquetes de 1000 palabras; las definiciones y oraciones de ejemplo son originales de TechLex.",
     "loadError": "No se pudo cargar el paquete. Por favor, inténtalo de nuevo."
+  },
+  "dailyReview": {
+    "title": "Repaso diario",
+    "subtitle": "Tarjetas pendientes hoy: {{count}} (todos los paquetes + términos de TI)",
+    "sessionInfo": "{{count}} tarjetas en esta sesión · {{total}} pendientes",
+    "allDoneTitle": "¡Todo al día!",
+    "allDoneSub": "Hoy no hay tarjetas pendientes de repaso. Sigue con palabras nuevas.",
+    "continuePack": "Continuar: {{pack}}",
+    "browsePacks": "Ver paquetes"
   }
 }
