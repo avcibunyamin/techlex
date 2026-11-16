@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Typographie (Typography)",
     "design-systems": "Systemes de design (Design Systems)",
-    "project-management": "Gestion de projet (Project Management)"
+    "project-management": "Gestion de projet (Project Management)",
+    "ngsl-1": "Anglais général 1–1000",
+    "ngsl-2": "Anglais général 1001–2000",
+    "ngsl-3": "Anglais général 2001–2809",
+    "nawl": "Anglais académique (NAWL)",
+    "bsl-1": "Anglais des affaires 1–1000",
+    "bsl-2": "Anglais des affaires 1001–1744",
+    "tsl-1": "Vocabulaire TOEIC 1–1000",
+    "tsl-2": "Vocabulaire TOEIC 1001–1250",
+    "english": "Anglais",
+    "exam": "Examens"
   },
   "quiz": {
     "title": "Test",
@@ -370,5 +380,33 @@
     "warning": "Choisir le cloud remplacera votre progression locale.",
     "useCloud": "Utiliser le cloud",
     "cancel": "Annuler"
+  },
+  "packs": {
+    "title": "Packs de vocabulaire",
+    "sectionLabel": "PACKS DE VOCABULAIRE",
+    "subtitle": "Étudiez des packs de 1000 mots classés par fréquence et reprenez là où vous vous êtes arrêté.",
+    "seeAll": "Tous les packs",
+    "filterAll": "Tous",
+    "group_english": "Anglais",
+    "group_exam": "Examens",
+    "group_it": "IT",
+    "learnedCount": "Appris {{learned}}/{{total}}",
+    "seenCount": "Vus : {{count}}",
+    "dueCount": "À réviser : {{count}}",
+    "sampleNote": "{{loaded}} premiers mots prêts, d'autres arrivent bientôt",
+    "boxesLabel": "RÉPARTITION PAR BOÎTE (BOÎTE 3+ = APPRIS)",
+    "boxShort": "B{{box}}",
+    "continue": "Continuer",
+    "start": "Commencer",
+    "practiceAll": "Tout réviser",
+    "practiceMode": "Mode entraînement",
+    "practiceNotice": "Mode entraînement · Progression inchangée",
+    "comingSoon": "Bientôt",
+    "active": "Actif",
+    "licenseLabel": "Licence",
+    "openSource": "Ouvrir la source",
+    "attributionTitle": "ATTRIBUTION DE LA SOURCE ET LICENCE",
+    "attributionNote": "Les listes de mots sont sous licence {{license}} et divisées en packs de 1000 mots ; les définitions et phrases d'exemple sont rédigées de façon originale pour TechLex.",
+    "loadError": "Impossible de charger le pack. Veuillez réessayer."
   }
 }

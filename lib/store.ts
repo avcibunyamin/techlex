@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Term, UserProgress, Language } from '@/types';
-import { createProgress, markKnown, markUnknown } from './spaced-repetition';
+import { Term, UserProgress, Language, Pack, PackProgress, LeitnerBox } from '@/types';
+import { createProgress, markKnown, markUnknown, isDueForReview } from './spaced-repetition';
 import { pushPreferences, pullProgress, pushBatchSwipes } from './sync';
 import { getSupabase, isSupabaseConfigured } from './supabase';
 import { ThemeMode } from './useTheme';
 import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel } from '@/constants/badges';
 import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-utils';
+import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -21,6 +22,33 @@ const ALL_TERMS: Term[] = [
   ...networkingTerms,
   ...designUxTerms,
 ] as Term[];
+
+function filterWrittenPackTerms(rawTerms: Term[]): Term[] {
+  return rawTerms.filter(
+    (t) =>
+      Boolean(
+        t.translations?.tr?.definition?.trim() &&
+          t.translations?.en?.definition?.trim()
+      )
+  );
+}
+
+const PACK_TERMS_MAP: Record<string, Term[]> = {};
+
+const TERM_BY_ID_MAP: Map<string, Term> = new Map(
+  ALL_TERMS.map((t): [string, Term] => [t.id, t])
+);
+
+const _packLoadPromises = new Map<string, Promise<boolean>>();
+
+function packIdsForProgress(progress: Record<string, UserProgress>): string[] {
+  const ids = new Set<string>();
+  for (const termId of Object.keys(progress)) {
+    const packId = packIdOfTerm(termId);
+    if (packId) ids.add(packId);
+  }
+  return Array.from(ids);
+}
 
 type SubscriptionTier = 'free' | 'individual' | 'duo' | 'family';
 
@@ -49,6 +77,9 @@ export interface DailyStat {
 
 interface AppState {
   terms: Term[];
+  packs: Pack[];
+  packsLoaded: number;
+  activePackId: string | null;
   progress: Record<string, UserProgress>;
   selectedTags: string[];
   language: Language;
@@ -99,6 +130,14 @@ interface AppState {
   loadFromCloud: (userId: string) => Promise<boolean>;
   getFilteredTerms: () => Term[];
   getTermsForReview: () => Term[];
+  setActivePackId: (packId: string | null) => void;
+  ensurePacks: (packIds: string[]) => Promise<boolean>;
+  getTermById: (termId: string) => Term | undefined;
+  getPackTerms: (packId: string) => Term[];
+  getPackProgress: (packId: string) => PackProgress;
+  getAllPacksProgress: () => Record<string, PackProgress>;
+  getPackStudyTerms: (packId: string, includeAll?: boolean) => Term[];
+  getPackReviewNeededTerms: (packId: string) => Term[];
   getLevel: () => { level: number; currentXp: number; nextLevelXp: number };
   getLeague: () => { id: string; minXp: number; color: string };
   hasActivePremium: () => boolean;
@@ -123,7 +162,7 @@ interface AppState {
 }
 
 const STORAGE_KEY = '@pratik_kelime_data';
-const MAX_ENERGY = 30;
+export const MAX_ENERGY = 30;
 const ENERGY_REFILL_MS = 5 * 60 * 1000;
 const BATCH_FLUSH_SIZE = 10;
 
@@ -140,6 +179,9 @@ function createSwipeEventId(): string {
 
 export const useAppStore = create<AppState>((set, get) => ({
   terms: ALL_TERMS,
+  packs: PACKS,
+  packsLoaded: 0,
+  activePackId: 'ngsl-1',
   progress: {},
   selectedTags: [],
   language: 'tr',
@@ -221,6 +263,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         const newLongest = Math.max(data.longestStreak || 0, streak);
         set({
           progress,
+          activePackId:
+            data.activePackId && findPackById(data.activePackId)
+              ? data.activePackId
+              : 'ngsl-1',
           selectedTags: data.selectedTags || [],
           language: data.language || 'tr',
           streak,
@@ -250,6 +296,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         if (data.lastActiveDate !== today) {
           get().saveData();
         }
+        const packIds = packIdsForProgress(progress);
+        if (packIds.length > 0) {
+          await get().ensurePacks(packIds);
+        }
       } else {
         set({ isLoaded: true });
       }
@@ -265,6 +315,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         STORAGE_KEY,
         JSON.stringify({
           progress: s.progress,
+          activePackId: s.activePackId,
           selectedTags: s.selectedTags,
           language: s.language,
           streak: s.streak,
@@ -479,8 +530,9 @@ export const useAppStore = create<AppState>((set, get) => ({
           if (profile.lastActiveDate !== today) todayCount = 0;
         }
         const local = get();
+        const nextProgress = Object.keys(progress).length > 0 ? progress : local.progress;
         set({
-          progress: Object.keys(progress).length > 0 ? progress : local.progress,
+          progress: nextProgress,
           selectedTags: profile.selectedTags.length > 0 ? profile.selectedTags : local.selectedTags,
           language: profile.language as Language,
           streak,
@@ -498,6 +550,10 @@ export const useAppStore = create<AppState>((set, get) => ({
           hasCompletedOnboarding: profile.hasCompletedOnboarding || local.hasCompletedOnboarding,
         });
         await get().saveData();
+        const packIds = packIdsForProgress(nextProgress);
+        if (packIds.length > 0) {
+          await get().ensurePacks(packIds);
+        }
       }
       return true;
     } catch {
@@ -533,6 +589,164 @@ export const useAppStore = create<AppState>((set, get) => ({
     return due;
   },
 
+  setActivePackId: (packId) => {
+    set({ activePackId: packId });
+    get().scheduleSave();
+  },
+
+  ensurePacks: async (packIds) => {
+    const uniqueIds = Array.from(new Set(packIds));
+    if (uniqueIds.length === 0) return true;
+
+    const results = await Promise.all(
+      uniqueIds.map((packId) => {
+        if (Object.prototype.hasOwnProperty.call(PACK_TERMS_MAP, packId)) {
+          return Promise.resolve(true);
+        }
+        const existing = _packLoadPromises.get(packId);
+        if (existing) {
+          return existing;
+        }
+        const pack = findPackById(packId);
+        if (!pack || !pack.load) {
+          return Promise.resolve(true);
+        }
+        const loader = pack.load;
+        const promise = Promise.resolve()
+          .then(() => loader())
+          .then((mod) => {
+            const raw =
+              mod && typeof mod === 'object' && 'default' in mod
+                ? (mod as { default: unknown }).default
+                : mod;
+            if (!Array.isArray(raw)) {
+              throw new Error(`Invalid pack data for ${packId}`);
+            }
+            const filtered = filterWrittenPackTerms(raw as Term[]);
+            PACK_TERMS_MAP[packId] = filtered;
+            for (const term of filtered) {
+              TERM_BY_ID_MAP.set(term.id, term);
+            }
+            set((s) => ({ packsLoaded: s.packsLoaded + 1 }));
+            return true;
+          })
+          .catch((err) => {
+            _packLoadPromises.delete(packId);
+            console.warn(`Failed to load pack ${packId}:`, err);
+            return false;
+          });
+        _packLoadPromises.set(packId, promise);
+        return promise;
+      })
+    );
+
+    return results.every(Boolean);
+  },
+
+  getTermById: (termId) => {
+    return TERM_BY_ID_MAP.get(termId);
+  },
+
+  getPackTerms: (packId) => {
+    return PACK_TERMS_MAP[packId] ?? [];
+  },
+
+  getPackProgress: (packId) => {
+    const { progress } = get();
+    const pack = findPackById(packId);
+    const packTerms = PACK_TERMS_MAP[packId];
+    const boxes: Record<LeitnerBox, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    if (!packTerms) {
+      return {
+        packId,
+        learned: 0,
+        seen: 0,
+        total: pack ? pack.size : 0,
+        loaded: 0,
+        due: 0,
+        new: 0,
+        boxes,
+      };
+    }
+
+    let seen = 0;
+    let learned = 0;
+    let due = 0;
+    let newCount = 0;
+
+    for (const term of packTerms) {
+      const p = progress[term.id];
+      if (p) {
+        seen += 1;
+        const box = (p.box >= 1 && p.box <= 5 ? p.box : 1) as LeitnerBox;
+        boxes[box] += 1;
+        if (box >= 3) {
+          learned += 1;
+        }
+        if (isDueForReview(p)) {
+          due += 1;
+        }
+      } else {
+        newCount += 1;
+      }
+    }
+
+    return {
+      packId,
+      learned,
+      seen,
+      total: pack ? pack.size : packTerms.length,
+      loaded: packTerms.length,
+      due,
+      new: newCount,
+      boxes,
+    };
+  },
+
+  getAllPacksProgress: () => {
+    const result: Record<string, PackProgress> = {};
+    for (const pack of get().packs) {
+      result[pack.id] = get().getPackProgress(pack.id);
+    }
+    return result;
+  },
+
+  getPackStudyTerms: (packId, includeAll = false) => {
+    const { progress } = get();
+    const packTerms = PACK_TERMS_MAP[packId] ?? [];
+    const pool = includeAll
+      ? [...packTerms]
+      : packTerms.filter((term) => {
+          const p = progress[term.id];
+          if (!p) return true;
+          return isDueForReview(p);
+        });
+
+    pool.sort((a, b) => {
+      const pa = progress[a.id];
+      const pb = progress[b.id];
+      if (pa && pb) {
+        if (pa.box !== pb.box) return pa.box - pb.box;
+        return pa.nextReview - pb.nextReview;
+      }
+      if (pa && !pb) return -1;
+      if (!pa && pb) return 1;
+      return (a.rank ?? a.order) - (b.rank ?? b.order);
+    });
+
+    return pool;
+  },
+
+  getPackReviewNeededTerms: (packId) => {
+    const { progress } = get();
+    const packTerms = PACK_TERMS_MAP[packId] ?? [];
+    return packTerms.filter((t) => {
+      const p = progress[t.id];
+      return Boolean(p && p.box === 1 && p.timesSeen > 0);
+    });
+  },
+
   getReviewNeededTerms: () => {
     const { progress, terms } = get();
     return terms.filter(t => {
@@ -553,7 +767,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const s = get();
     const tagCounts: Record<string, number> = {};
     for (const [termId, prog] of Object.entries(s.progress)) {
-      const term = s.terms.find(t => t.id === termId);
+      const term = TERM_BY_ID_MAP.get(termId);
       if (term) {
         for (const tag of term.tags) {
           tagCounts[tag] = (tagCounts[tag] || 0) + prog.timesSeen;
@@ -652,7 +866,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   promoteQuizTerm: (termId: string) => {
     const { progress } = get();
     const existing = progress[termId];
-    if (!existing) return;
+    if (!existing || !isDueForReview(existing)) return;
     const updated = markKnown(existing);
     set({ progress: { ...progress, [termId]: updated } });
     get().scheduleSave();
@@ -663,18 +877,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     const tl = language === 'tr' ? 'tr' : 'en';
     const QUIZ_SIZE = 10;
 
-    const knownIds = Object.keys(progress).filter(id => progress[id].box >= 2);
+    const knownIds = Object.keys(progress).filter(
+      id => progress[id].box >= 2 && TERM_BY_ID_MAP.has(id)
+    );
     if (knownIds.length < QUIZ_SIZE) return [];
 
     const unseenFirst = knownIds.filter(id => !quizSeenIds.has(id));
     const pool = unseenFirst.length >= QUIZ_SIZE ? unseenFirst : knownIds;
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const selectedTerms = shuffled.slice(0, QUIZ_SIZE)
-      .map(id => terms.find(t => t.id === id))
-      .filter(Boolean) as Term[];
+      .map(id => TERM_BY_ID_MAP.get(id))
+      .filter((t): t is Term => Boolean(t));
 
     set({ quizSeenIds: new Set([...quizSeenIds, ...selectedTerms.map(t => t.id)]) });
 
+    const allTermsPool = [...terms, ...Object.values(PACK_TERMS_MAP).flat()];
     const questions: QuizQuestion[] = selectedTerms.map(term => {
       const correctDef = term.translations[tl].definition;
       const showCorrect = Math.random() < 0.5;
@@ -688,11 +905,11 @@ export const useAppStore = create<AppState>((set, get) => ({
         };
       }
 
-      let candidates = terms.filter(t =>
+      let candidates = allTermsPool.filter(t =>
         t.id !== term.id && t.tags.some(tag => term.tags.includes(tag))
       );
       if (candidates.length === 0) {
-        candidates = terms.filter(t => t.id !== term.id);
+        candidates = allTermsPool.filter(t => t.id !== term.id);
       }
       const donor = candidates[Math.floor(Math.random() * candidates.length)];
 
@@ -767,6 +984,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   resetUserData: () => {
     set({
       progress: {},
+      activePackId: 'ngsl-1',
       selectedTags: [],
       displayName: '',
       totalSwipes: 0,
@@ -862,6 +1080,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         pendingCloudData: null,
       });
       await get().saveData();
+      const packIds = packIdsForProgress(pendingCloudData.progress);
+      if (packIds.length > 0) {
+        await get().ensurePacks(packIds);
+      }
     } else {
       set({ isSyncConflict: false, isCheckingSync: false, pendingCloudData: null });
     }

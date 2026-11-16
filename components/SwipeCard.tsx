@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
+import React, { useRef, useCallback, useEffect, useMemo, useImperativeHandle, forwardRef } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,6 +16,7 @@ import { colors as palette, spacing, radius, typography } from '@/constants/them
 import { haptic } from '@/lib/haptics';
 import { useTheme } from '@/lib/useTheme';
 import { getCategoryByTag } from '@/data/categories';
+import { findPackById } from '@/data/packs';
 import { useAppStore } from '@/lib/store';
 import { toLocaleUpper } from '@/lib/text-utils';
 import { useTranslation } from 'react-i18next';
@@ -60,8 +61,8 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   ref
 ) {
   const { colors: t, accent } = useTheme();
-  const { t: tr } = useTranslation();
-  const allTerms = useAppStore(s => s.terms);
+  const { t: tr, i18n } = useTranslation();
+  const getTermById = useAppStore((s) => s.getTermById);
   const flipped = useRef(false);
 
   const translateX = useSharedValue(0);
@@ -217,7 +218,21 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const translation = term.translations[tl];
   const primaryTag = term.tags[0];
   const cat = primaryTag ? getCategoryByTag(primaryTag) : undefined;
-  const categoryLabel = cat?.name[tl] ?? primaryTag?.replace(/-/g, ' ') ?? '';
+  const pack = !cat && primaryTag ? findPackById(primaryTag) : undefined;
+  const categoryLabel = cat
+    ? cat.name[tl]
+    : primaryTag && i18n.exists(`categories.${primaryTag}`)
+      ? tr(`categories.${primaryTag}`)
+      : pack?.title[tl] ?? primaryTag?.replace(/-/g, ' ') ?? '';
+
+  const resolvedRelatedTerms = useMemo(
+    () =>
+      Array.from(new Set(term.relatedTerms))
+        .slice(0, 6)
+        .map((rt) => getTermById(rt))
+        .filter((item): item is Term => Boolean(item)),
+    [term.relatedTerms, getTermById]
+  );
 
   return (
     <GestureDetector gesture={gesture}>
@@ -292,7 +307,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
                   ]}
                 >
                   <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
-                    {toLocaleUpper(language === 'tr' ? 'Örnek' : 'Example', language)}
+                    {tr('term.example')}
                   </Text>
                   <Text style={[styles.codeText, { color: t.textSecondary }]}>
                     {translation.example}
@@ -300,23 +315,19 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
                 </View>
               ) : null}
 
-              {term.relatedTerms.length > 0 && (
+              {resolvedRelatedTerms.length > 0 && (
                 <View style={styles.relatedSection}>
                   <Text style={[styles.relatedTitle, { color: t.textTertiary }]}>
                     {tr('term.relatedTerms')}
                   </Text>
                   <View style={styles.chipRow}>
-                    {term.relatedTerms.slice(0, 6).map((rt) => {
-                      const related = allTerms.find(at => at.id === rt);
-                      if (!related) return null;
-                      return (
-                        <View key={rt} style={[styles.passiveChip, { backgroundColor: t.bgSubtle }]}>
-                          <Text style={[styles.chipText, { color: t.textSecondary }]}>
-                            #{related.term}
-                          </Text>
-                        </View>
-                      );
-                    })}
+                    {resolvedRelatedTerms.map((related) => (
+                      <View key={related.id} style={[styles.passiveChip, { backgroundColor: t.bgSubtle }]}>
+                        <Text style={[styles.chipText, { color: t.textSecondary }]}>
+                          #{related.term}
+                        </Text>
+                      </View>
+                    ))}
                   </View>
                 </View>
               )}

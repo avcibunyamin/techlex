@@ -1,12 +1,13 @@
 import React, { useMemo, useEffect, useState, useCallback, useRef } from 'react';
-import { StyleSheet, View, Text, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Pressable, TouchableOpacity, I18nManager } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { X, RotateCcw, BookOpen, Zap, Infinity, Flame } from 'lucide-react-native';
+import { X, RotateCcw, BookOpen, Zap, Infinity, Flame, ChevronRight } from 'lucide-react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
+import { getTermLanguage } from '@/types';
 import CardDeck from '@/components/CardDeck';
 
 type LearnPhase = 'choose' | 'deck';
@@ -14,12 +15,30 @@ type LearnPhase = 'choose' | 'deck';
 export default function LearnScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
-  const { t: tr } = useTranslation();
-  const { language, getTermsForReview, getReviewNeededTerms, selectedTags, todayCount, energyLevel, hasActivePremium, streak, reviewMode, setReviewMode, progress } = useAppStore();
+  const { t: tr, i18n } = useTranslation();
+  const { language, getTermsForReview, getReviewNeededTerms, selectedTags, todayCount, energyLevel, hasActivePremium, streak, reviewMode, setReviewMode, progress, packs, activePackId, getPackProgress } = useAppStore();
 
   const [phase, setPhase] = useState<LearnPhase>('choose');
   const reviewModeRef = useRef(reviewMode);
   reviewModeRef.current = reviewMode;
+
+  const isArabic = language === 'ar';
+  const shouldMirror = isArabic && !I18nManager.isRTL;
+  const rowDir = shouldMirror ? ('row-reverse' as const) : ('row' as const);
+  const textDirStyle = isArabic
+    ? ({ writingDirection: 'rtl' as const, textAlign: (shouldMirror ? 'right' : 'left') as 'right' | 'left' })
+    : undefined;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const activePack = useMemo(
+    () => packs.find((p) => p.id === activePackId && getPackProgress(p.id).loaded > 0) ?? packs[0] ?? null,
+    [packs, activePackId, progress]
+  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const activePackProgress = useMemo(
+    () => (activePack ? getPackProgress(activePack.id) : null),
+    [activePack, progress]
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const normalTerms = useMemo(() => getTermsForReview(), [selectedTags, progress]);
@@ -114,6 +133,51 @@ export default function LearnScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+
+          {activePack && activePackProgress && (
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={[
+                styles.packsCard,
+                {
+                  backgroundColor: t.bgElevated,
+                  borderColor: t.border,
+                  flexDirection: rowDir,
+                },
+              ]}
+              onPress={() => router.push('/packs' as unknown as Parameters<typeof router.push>[0])}
+            >
+              <View style={{ flex: 1 }}>
+                <Text style={[typography.caption, { color: accent }, textDirStyle]}>
+                  {tr('packs.sectionLabel')}
+                </Text>
+                <Text
+                  style={[typography.headline, { color: t.text, marginTop: spacing.xs }, textDirStyle]}
+                  numberOfLines={1}
+                >
+                  {i18n.exists(`categories.${activePack.id}`)
+                    ? tr(`categories.${activePack.id}`)
+                    : activePack.title[getTermLanguage(language)]}
+                </Text>
+              </View>
+              <View style={[styles.packsCardRight, { flexDirection: rowDir }]}>
+                <Text
+                  style={[
+                    typography.mono,
+                    { color: activePackProgress.learned > 0 ? colors.success : t.textSecondary },
+                  ]}
+                >
+                  {`${activePackProgress.learned}/${activePackProgress.total}`}
+                </Text>
+                <ChevronRight
+                  size={16}
+                  color={t.textTertiary}
+                  strokeWidth={1.8}
+                  style={isArabic ? { transform: [{ rotate: '180deg' }] } : undefined}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
 
           {/* Stats row */}
           <View style={[styles.chooseStats, { borderColor: t.border }]}>
@@ -270,6 +334,19 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  packsCard: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+    marginTop: spacing.lg,
+    padding: spacing.lg,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+  },
+  packsCardRight: {
+    alignItems: 'center',
+    gap: spacing.xs,
   },
   chooseStats: {
     flexDirection: 'row',

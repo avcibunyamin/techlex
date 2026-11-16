@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Tipografia (Typography)",
     "design-systems": "Sistemas de diseno (Design Systems)",
-    "project-management": "Gestion de proyectos (Project Management)"
+    "project-management": "Gestion de proyectos (Project Management)",
+    "ngsl-1": "Inglés general 1–1000",
+    "ngsl-2": "Inglés general 1001–2000",
+    "ngsl-3": "Inglés general 2001–2809",
+    "nawl": "Inglés académico (NAWL)",
+    "bsl-1": "Inglés de negocios 1–1000",
+    "bsl-2": "Inglés de negocios 1001–1744",
+    "tsl-1": "Vocabulario TOEIC 1–1000",
+    "tsl-2": "Vocabulario TOEIC 1001–1250",
+    "english": "Inglés",
+    "exam": "Exámenes"
   },
   "quiz": {
     "title": "Test",
@@ -370,5 +380,33 @@
     "warning": "Elegir la nube reemplazará tu progreso local.",
     "useCloud": "Usar la nube",
     "cancel": "Cancelar"
+  },
+  "packs": {
+    "title": "Paquetes de vocabulario",
+    "sectionLabel": "PAQUETES DE VOCABULARIO",
+    "subtitle": "Estudia paquetes de 1000 palabras ordenadas por frecuencia y continúa donde lo dejaste.",
+    "seeAll": "Todos los paquetes",
+    "filterAll": "Todos",
+    "group_english": "Inglés",
+    "group_exam": "Exámenes",
+    "group_it": "TI",
+    "learnedCount": "Aprendidas {{learned}}/{{total}}",
+    "seenCount": "Vistas: {{count}}",
+    "dueCount": "Por repasar: {{count}}",
+    "sampleNote": "Primeras {{loaded}} palabras listas, más próximamente",
+    "boxesLabel": "DISTRIBUCIÓN DE CAJAS (CAJA 3+ = APRENDIDA)",
+    "boxShort": "C{{box}}",
+    "continue": "Continuar",
+    "start": "Empezar",
+    "practiceAll": "Practicar todas",
+    "practiceMode": "Modo de práctica",
+    "practiceNotice": "Modo de práctica · El progreso no cambia",
+    "comingSoon": "Próximamente",
+    "active": "Activo",
+    "licenseLabel": "Licencia",
+    "openSource": "Abrir fuente",
+    "attributionTitle": "ATRIBUCIÓN DE FUENTE Y LICENCIA",
+    "attributionNote": "Las listas de palabras están bajo licencia {{license}} y se dividieron en paquetes de 1000 palabras; las definiciones y oraciones de ejemplo son originales de TechLex.",
+    "loadError": "No se pudo cargar el paquete. Por favor, inténtalo de nuevo."
   }
 }

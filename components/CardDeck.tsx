@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Pressable, Platform } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Platform, I18nManager } from 'react-native';
 import Animated, {
   FadeIn,
   FadeOut,
@@ -37,9 +37,17 @@ interface CardDeckProps {
   terms: Term[];
   language: Language;
   isReviewMode?: boolean;
+  isPracticeMode?: boolean;
+  onRestart?: () => void;
 }
 
-export default function CardDeck({ terms, language, isReviewMode = false }: CardDeckProps) {
+export default function CardDeck({
+  terms,
+  language,
+  isReviewMode = false,
+  isPracticeMode = false,
+  onRestart,
+}: CardDeckProps) {
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -76,6 +84,8 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
   const isPremium = hasActivePremium();
   const hasEnergy = isPremium || energyLevel > 0;
+  const isArabic = language === 'ar';
+  const shouldMirror = isArabic && !I18nManager.isRTL;
 
   const isReviewCard = useCallback((termId: string) => {
     return seenTermIds.has(termId);
@@ -119,7 +129,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview && !isReviewMode) {
+    if (!isReview && !isReviewMode && !isPracticeMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -127,17 +137,19 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     const prev = progress[term.id] ? { ...progress[term.id] } : null;
     setSwipeHistory({ termId: term.id, direction: 'right', previousProgress: prev, wasReview: isReview });
 
-    swipeRight(term.id);
+    if (!isPracticeMode) {
+      swipeRight(term.id);
+    }
     setSeenTermIds(prev => new Set(prev).add(term.id));
     setCurrentIndex((i) => i + 1);
-  }, [currentIndex, deckTerms, swipeRight, consumeEnergy, isReviewCard, progress]);
+  }, [currentIndex, deckTerms, swipeRight, consumeEnergy, isReviewCard, isReviewMode, isPracticeMode, progress]);
 
   const handleSwipeLeft = useCallback(() => {
     if (currentIndex >= deckTerms.length) return;
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview && !isReviewMode) {
+    if (!isReview && !isReviewMode && !isPracticeMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -145,11 +157,13 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     const prev = progress[term.id] ? { ...progress[term.id] } : null;
     setSwipeHistory({ termId: term.id, direction: 'left', previousProgress: prev, wasReview: isReview });
 
-    swipeLeft(term.id);
+    if (!isPracticeMode) {
+      swipeLeft(term.id);
+    }
     setSeenTermIds(prev => new Set(prev).add(term.id));
     setReviewQueue((prev) => [...prev, term]);
     setCurrentIndex((i) => i + 1);
-  }, [currentIndex, deckTerms, swipeLeft, consumeEnergy, isReviewCard, progress]);
+  }, [currentIndex, deckTerms, swipeLeft, consumeEnergy, isReviewCard, isReviewMode, isPracticeMode, progress]);
 
   const handleSwipeBlocked = useCallback(() => {
     setShowPaywall(true);
@@ -162,7 +176,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     const term = deckTerms[currentIndex];
     const isReview = isReviewCard(term.id);
 
-    if (!isReview && !isReviewMode) {
+    if (!isReview && !isReviewMode && !isPracticeMode) {
       const ok = consumeEnergy();
       if (!ok) { setShowPaywall(true); return; }
     }
@@ -178,24 +192,30 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     setTimeout(() => {
       if (direction === 'right') {
         haptic.success();
-        swipeRight(term.id);
+        if (!isPracticeMode) {
+          swipeRight(term.id);
+        }
       } else {
         haptic.medium();
-        swipeLeft(term.id);
+        if (!isPracticeMode) {
+          swipeLeft(term.id);
+        }
         setReviewQueue((prev) => [...prev, term]);
       }
       setSeenTermIds(prev => new Set(prev).add(term.id));
       setCurrentIndex((i) => i + 1);
       animatingRef.current = false;
     }, delay);
-  }, [currentIndex, deckTerms, consumeEnergy, swipeRight, swipeLeft, isReviewCard, progress]);
+  }, [currentIndex, deckTerms, consumeEnergy, swipeRight, swipeLeft, isReviewCard, isReviewMode, isPracticeMode, progress]);
 
   const handleUndo = useCallback(() => {
     if (!swipeHistory || currentIndex <= 0 || animatingRef.current) return;
     haptic.light();
 
     const entry = swipeHistory;
-    undoSwipe(entry.termId, entry.direction, entry.previousProgress, entry.wasReview);
+    if (!isPracticeMode) {
+      undoSwipe(entry.termId, entry.direction, entry.previousProgress, entry.wasReview);
+    }
 
     setCurrentIndex((i) => i - 1);
 
@@ -213,7 +233,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     }
 
     setSwipeHistory(null);
-  }, [swipeHistory, currentIndex, undoSwipe]);
+  }, [swipeHistory, currentIndex, isPracticeMode, undoSwipe]);
 
   const handleRestart = () => {
     setCurrentIndex(0);
@@ -221,6 +241,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
     setDeckTerms(terms);
     setSeenTermIds(new Set());
     setSwipeHistory(null);
+    onRestart?.();
   };
 
   const isMobile = Platform.OS !== 'web';
@@ -270,6 +291,26 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
     return (
       <View style={styles.empty}>
+        {isPracticeMode && (
+          <View
+            style={[
+              styles.practiceBanner,
+              shouldMirror ? styles.rowReverse : styles.row,
+              { backgroundColor: colors.accentSubtle, borderColor: accent + '40', marginBottom: spacing.lg },
+            ]}
+          >
+            <RefreshCw size={13} color={accent} strokeWidth={2} />
+            <Text
+              style={[
+                typography.footnote,
+                { color: accent, fontWeight: '600', flexShrink: 1 },
+                isArabic ? { writingDirection: 'rtl' } : undefined,
+              ]}
+            >
+              {tr('packs.practiceNotice')}
+            </Text>
+          </View>
+        )}
         <CheckCircle size={28} color={accent} strokeWidth={1.5} />
         <Text style={[typography.title, { color: t.text, marginTop: spacing.xl }]}>{tr('learn.completed')}</Text>
         <Text style={[typography.body, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
@@ -287,6 +328,26 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
   return (
     <GestureHandlerRootView style={styles.root}>
+      {isPracticeMode && (
+        <View
+          style={[
+            styles.practiceBanner,
+            shouldMirror ? styles.rowReverse : styles.row,
+            { backgroundColor: colors.accentSubtle, borderColor: accent + '40' },
+          ]}
+        >
+          <RefreshCw size={13} color={accent} strokeWidth={2} />
+          <Text
+            style={[
+              typography.footnote,
+              { color: accent, fontWeight: '600', flexShrink: 1 },
+              isArabic ? { writingDirection: 'rtl' } : undefined,
+            ]}
+          >
+            {tr('packs.practiceNotice')}
+          </Text>
+        </View>
+      )}
       <View style={styles.deck}>
         {isMobile && (
           <>
@@ -311,7 +372,7 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
               onSwipeRight={i === 0 ? handleSwipeRight : () => {}}
               onSwipeLeft={i === 0 ? handleSwipeLeft : () => {}}
               onSwipeBlocked={i === 0 ? handleSwipeBlocked : undefined}
-              canSwipe={i === 0 ? (hasEnergy || isReviewCard(term.id) || isReviewMode) : false}
+              canSwipe={i === 0 ? (hasEnergy || isReviewCard(term.id) || isReviewMode || isPracticeMode) : false}
               stackIndex={i}
               dragX={i === 0 ? dragX : undefined}
               dragY={i === 0 ? dragY : undefined}
@@ -396,6 +457,19 @@ export default function CardDeck({ terms, language, isReviewMode = false }: Card
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  row: { flexDirection: 'row' },
+  rowReverse: { flexDirection: 'row-reverse' },
+  practiceBanner: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginHorizontal: spacing.xl,
+    marginTop: spacing.xs,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.full,
+    borderWidth: 1,
+  },
   deck: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   empty: {
     flex: 1,

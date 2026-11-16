@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "الطباعة (Typography)",
     "design-systems": "أنظمة التصميم (Design Systems)",
-    "project-management": "إدارة المشاريع (Project Management)"
+    "project-management": "إدارة المشاريع (Project Management)",
+    "ngsl-1": "الإنجليزية العامة 1–1000",
+    "ngsl-2": "الإنجليزية العامة 1001–2000",
+    "ngsl-3": "الإنجليزية العامة 2001–2809",
+    "nawl": "الإنجليزية الأكاديمية (NAWL)",
+    "bsl-1": "إنجليزية الأعمال 1–1000",
+    "bsl-2": "إنجليزية الأعمال 1001–1744",
+    "tsl-1": "مفردات TOEIC‏ 1–1000",
+    "tsl-2": "مفردات TOEIC‏ 1001–1250",
+    "english": "الإنجليزية",
+    "exam": "الاختبارات"
   },
   "quiz": {
     "title": "اختبار",
@@ -370,5 +380,33 @@
     "warning": "اختيار السحابة سيستبدل تقدمك المحلي.",
     "useCloud": "استخدام السحابة",
     "cancel": "إلغاء"
+  },
+  "packs": {
+    "title": "حزم المفردات",
+    "sectionLabel": "حزم المفردات",
+    "subtitle": "ادرس حزم المفردات المرتبة حسب الشيوع (1000 كلمة) وتابع من حيث توقفت.",
+    "seeAll": "كل الحزم",
+    "filterAll": "الكل",
+    "group_english": "الإنجليزية",
+    "group_exam": "الاختبارات",
+    "group_it": "تقنية المعلومات",
+    "learnedCount": "تمّ تعلّم {{learned}}/{{total}}",
+    "seenCount": "مشاهَد: {{count}}",
+    "dueCount": "للمراجعة: {{count}}",
+    "sampleNote": "أول {{loaded}} كلمة جاهزة، والمزيد قريباً",
+    "boxesLabel": "توزيع الصناديق (الصندوق 3+ = متقَن)",
+    "boxShort": "ص{{box}}",
+    "continue": "متابعة",
+    "start": "ابدأ",
+    "practiceAll": "تدريب على الكل",
+    "practiceMode": "وضع التدريب",
+    "practiceNotice": "وضع التدريب · لا يتغير التقدم",
+    "comingSoon": "قريباً",
+    "active": "نشط",
+    "licenseLabel": "الترخيص",
+    "openSource": "فتح المصدر",
+    "attributionTitle": "نسب المصدر والترخيص",
+    "attributionNote": "قوائم الكلمات مرخّصة بموجب {{license}} وقد قُسّمت إلى حزم من 1000 كلمة؛ أما التعريفات والجمل التوضيحية فقد كُتبت أصلياً لتطبيق TechLex.",
+    "loadError": "تعذّر تحميل الحزمة. يرجى المحاولة مرة أخرى."
   }
 }

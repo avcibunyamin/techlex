@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Tipografi (Typography)",
     "design-systems": "Tasarım Sistemleri (Design Systems)",
-    "project-management": "Proje Yönetimi (Project Management)"
+    "project-management": "Proje Yönetimi (Project Management)",
+    "ngsl-1": "Genel İngilizce 1–1000",
+    "ngsl-2": "Genel İngilizce 1001–2000",
+    "ngsl-3": "Genel İngilizce 2001–2809",
+    "nawl": "Akademik İngilizce (NAWL)",
+    "bsl-1": "İş İngilizcesi 1–1000",
+    "bsl-2": "İş İngilizcesi 1001–1744",
+    "tsl-1": "TOEIC İngilizcesi 1–1000",
+    "tsl-2": "TOEIC İngilizcesi 1001–1250",
+    "english": "İngilizce",
+    "exam": "Sınav"
   },
   "quiz": {
     "title": "Test",
@@ -370,5 +380,33 @@
     "warning": "Bulutu seçerseniz cihazdaki ilerlemeniz silinecektir.",
     "useCloud": "Bulutu Kullan",
     "cancel": "Vazgeç"
+  },
+  "packs": {
+    "title": "Kelime Paketleri",
+    "sectionLabel": "KELİME PAKETLERİ",
+    "subtitle": "Sıklık sıralı 1000'er kelimelik paketlerle kaldığın yerden devam et.",
+    "seeAll": "Tüm Paketler",
+    "filterAll": "Tümü",
+    "group_english": "İngilizce",
+    "group_exam": "Sınav",
+    "group_it": "Bilişim",
+    "learnedCount": "Öğrenildi {{learned}}/{{total}}",
+    "seenCount": "Görüldü: {{count}}",
+    "dueCount": "Tekrar: {{count}}",
+    "sampleNote": "İlk {{loaded}} kelime hazır, yenileri yakında",
+    "boxesLabel": "KUTU DAĞILIMI (KUTU 3+ = ÖĞRENİLDİ)",
+    "boxShort": "K{{box}}",
+    "continue": "Devam et",
+    "start": "Başla",
+    "practiceAll": "Tümünü tekrar çalış",
+    "practiceMode": "Alıştırma modu",
+    "practiceNotice": "Alıştırma modu · İlerleme değişmez",
+    "comingSoon": "Yakında",
+    "active": "Seçili",
+    "licenseLabel": "Lisans",
+    "openSource": "Kaynağı aç",
+    "attributionTitle": "KAYNAK VE LİSANS ATFI",
+    "attributionNote": "Kelime listeleri {{license}} lisansı altındadır ve 1000'erlik parçalara bölünmüştür; Türkçe ve İngilizce tanım ile örnek cümleler TechLex için özgün yazılmıştır.",
+    "loadError": "Paket yüklenemedi. Lütfen tekrar deneyin."
   }
 }

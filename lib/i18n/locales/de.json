@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Typografie (Typography)",
     "design-systems": "Design-Systeme (Design Systems)",
-    "project-management": "Projektmanagement (Project Management)"
+    "project-management": "Projektmanagement (Project Management)",
+    "ngsl-1": "Allgemeines Englisch 1–1000",
+    "ngsl-2": "Allgemeines Englisch 1001–2000",
+    "ngsl-3": "Allgemeines Englisch 2001–2809",
+    "nawl": "Akademisches Englisch (NAWL)",
+    "bsl-1": "Wirtschaftsenglisch 1–1000",
+    "bsl-2": "Wirtschaftsenglisch 1001–1744",
+    "tsl-1": "TOEIC-Wortschatz 1–1000",
+    "tsl-2": "TOEIC-Wortschatz 1001–1250",
+    "english": "Englisch",
+    "exam": "Prüfung"
   },
   "quiz": {
     "title": "Test",
@@ -370,5 +380,33 @@
     "warning": "Wenn Sie die Cloud wählen, wird Ihr lokaler Fortschritt ersetzt.",
     "useCloud": "Cloud verwenden",
     "cancel": "Abbrechen"
+  },
+  "packs": {
+    "title": "Wortpakete",
+    "sectionLabel": "WORTPAKETE",
+    "subtitle": "Lerne nach Häufigkeit sortierte 1000-Wörter-Pakete und mach dort weiter, wo du aufgehört hast.",
+    "seeAll": "Alle Pakete",
+    "filterAll": "Alle",
+    "group_english": "Englisch",
+    "group_exam": "Prüfung",
+    "group_it": "IT",
+    "learnedCount": "Gelernt {{learned}}/{{total}}",
+    "seenCount": "Gesehen: {{count}}",
+    "dueCount": "Fällig: {{count}}",
+    "sampleNote": "Erste {{loaded}} Wörter bereit, weitere folgen bald",
+    "boxesLabel": "FACHVERTEILUNG (FACH 3+ = GELERNT)",
+    "boxShort": "F{{box}}",
+    "continue": "Weiter",
+    "start": "Starten",
+    "practiceAll": "Alle wiederholen",
+    "practiceMode": "Übungsmodus",
+    "practiceNotice": "Übungsmodus · Fortschritt unverändert",
+    "comingSoon": "Demnächst",
+    "active": "Aktiv",
+    "licenseLabel": "Lizenz",
+    "openSource": "Quelle öffnen",
+    "attributionTitle": "QUELLEN- UND LIZENZANGABE",
+    "attributionNote": "Wortlisten stehen unter der Lizenz {{license}} und wurden in 1000er-Pakete aufgeteilt; Definitionen und Beispielsätze wurden eigens für TechLex verfasst.",
+    "loadError": "Paket konnte nicht geladen werden. Bitte versuche es erneut."
   }
 }

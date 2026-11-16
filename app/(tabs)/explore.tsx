@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList, I18nManager } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check } from 'lucide-react-native';
+import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check, BookOpen } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -90,9 +90,28 @@ function CategoryCheckbox({
 export default function ExploreScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
-  const { t: tr } = useTranslation();
-  const { terms, language, selectedTags, toggleTag, setSelectedTags } = useAppStore();
+  const { t: tr, i18n } = useTranslation();
+  const { terms, language, selectedTags, toggleTag, setSelectedTags, packs, activePackId, getPackProgress, progress } = useAppStore();
   const [query, setQuery] = useState('');
+
+  const isArabic = language === 'ar';
+  const shouldMirror = isArabic && !I18nManager.isRTL;
+  const rowDir = shouldMirror ? ('row-reverse' as const) : ('row' as const);
+  const textDirStyle = isArabic
+    ? ({ writingDirection: 'rtl' as const, textAlign: (shouldMirror ? 'right' : 'left') as 'right' | 'left' })
+    : undefined;
+
+  const featuredPack = useMemo(
+    () => packs.find(p => p.id === activePackId && getPackProgress(p.id).loaded > 0) ?? packs[0] ?? null,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [packs, activePackId, progress]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const featuredProgress = useMemo(
+    () => (featuredPack ? getPackProgress(featuredPack.id) : null),
+    [featuredPack, progress]
+  );
 
   const selectedSet = useMemo(() => new Set(selectedTags), [selectedTags]);
 
@@ -207,6 +226,101 @@ export default function ExploreScreen() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.mapContent}
           >
+            {featuredPack && featuredProgress && (
+              <View style={styles.packsSection}>
+                <View style={[styles.sectionHeader, { flexDirection: rowDir }]}>
+                  <Text style={[typography.caption, { color: t.textTertiary }, textDirStyle]}>
+                    {tr('packs.sectionLabel')}
+                  </Text>
+                  <Pressable
+                    onPress={() => router.push('/packs' as unknown as Parameters<typeof router.push>[0])}
+                  >
+                    <Text style={[typography.caption, { color: accent }]}>
+                      {tr('packs.seeAll')}
+                    </Text>
+                  </Pressable>
+                </View>
+
+                <Pressable
+                  style={[styles.packBanner, { backgroundColor: t.bgElevated, borderColor: t.border }]}
+                  onPress={() => router.push('/packs' as unknown as Parameters<typeof router.push>[0])}
+                >
+                  <View style={[styles.packBannerTop, { flexDirection: rowDir }]}>
+                    <Text
+                      style={[typography.headline, { color: t.text, flex: 1 }, textDirStyle]}
+                      numberOfLines={1}
+                    >
+                      {i18n.exists(`categories.${featuredPack.id}`)
+                        ? tr(`categories.${featuredPack.id}`)
+                        : featuredPack.title[getTermLanguage(language)]}
+                    </Text>
+                    <Text
+                      style={[
+                        typography.mono,
+                        { color: featuredProgress.learned > 0 ? colors.success : t.textSecondary },
+                      ]}
+                    >
+                      {`${featuredProgress.learned}/${featuredProgress.total}`}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={[
+                      styles.packProgressTrack,
+                      { backgroundColor: t.bgSubtle, flexDirection: rowDir },
+                    ]}
+                  >
+                    {featuredProgress.seen > 0 && (
+                      <View
+                        style={[
+                          styles.packProgressSeen,
+                          shouldMirror ? { right: 0 } : { left: 0 },
+                          {
+                            width: `${Math.min(Math.max((featuredProgress.seen / featuredProgress.total) * 100, 1.5), 100)}%` as `${number}%`,
+                            backgroundColor: colors.accentMuted,
+                          },
+                        ]}
+                      />
+                    )}
+                    {featuredProgress.learned > 0 && (
+                      <View
+                        style={[
+                          styles.packProgressLearned,
+                          {
+                            width: `${Math.min(Math.max((featuredProgress.learned / featuredProgress.total) * 100, 1.5), 100)}%` as `${number}%`,
+                            backgroundColor: colors.success,
+                          },
+                        ]}
+                      />
+                    )}
+                  </View>
+
+                  <View style={[styles.packBannerBottom, { flexDirection: rowDir }]}>
+                    <Text
+                      style={[typography.footnote, { color: t.textTertiary, flex: 1 }, textDirStyle]}
+                      numberOfLines={1}
+                    >
+                      {`${featuredPack.source.name} · ${featuredPack.source.license}`}
+                    </Text>
+                    <Pressable
+                      style={[styles.packContinueBtn, { backgroundColor: accent, flexDirection: rowDir }]}
+                      onPress={(e) => {
+                        e.stopPropagation();
+                        router.push(
+                          `/packs?packId=${featuredPack.id}&autostart=1` as unknown as Parameters<typeof router.push>[0]
+                        );
+                      }}
+                    >
+                      <BookOpen size={13} color={colors.dark.text} strokeWidth={2} />
+                      <Text style={[typography.subhead, { color: colors.dark.text, fontWeight: '600' }]}>
+                        {featuredProgress.seen > 0 ? tr('packs.continue') : tr('packs.start')}
+                      </Text>
+                    </Pressable>
+                  </View>
+                </Pressable>
+              </View>
+            )}
+
             <View style={styles.sectionHeader}>
               <Text style={[typography.caption, { color: t.textTertiary }]}>
                 {tr('explore.knowledgeMap')}
@@ -282,6 +396,48 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: spacing.lg,
+  },
+  packsSection: {
+    marginBottom: spacing['2xl'],
+  },
+  packBanner: {
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+  packBannerTop: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+  },
+  packProgressTrack: {
+    height: 6,
+    borderRadius: radius.full,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  packProgressSeen: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    borderRadius: radius.full,
+  },
+  packProgressLearned: {
+    height: '100%',
+    borderRadius: radius.full,
+  },
+  packBannerBottom: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+  },
+  packContinueBtn: {
+    alignItems: 'center',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
   },
   mapContent: { padding: spacing.xl, paddingTop: 0, paddingBottom: 120 },
   nodeRow: {

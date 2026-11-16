@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "タイポグラフィ (Typography)",
     "design-systems": "デザインシステム (Design Systems)",
-    "project-management": "プロジェクト管理 (Project Management)"
+    "project-management": "プロジェクト管理 (Project Management)",
+    "ngsl-1": "一般英語 1–1000",
+    "ngsl-2": "一般英語 1001–2000",
+    "ngsl-3": "一般英語 2001–2809",
+    "nawl": "学術英語 (NAWL)",
+    "bsl-1": "ビジネス英語 1–1000",
+    "bsl-2": "ビジネス英語 1001–1744",
+    "tsl-1": "TOEIC 単語 1–1000",
+    "tsl-2": "TOEIC 単語 1001–1250",
+    "english": "英語",
+    "exam": "試験"
   },
   "quiz": {
     "title": "テスト",
@@ -370,5 +380,33 @@
     "warning": "クラウドを選択すると、ローカルの進捗が置き換えられます。",
     "useCloud": "クラウドを使用",
     "cancel": "キャンセル"
+  },
+  "packs": {
+    "title": "単語パック",
+    "sectionLabel": "単語パック",
+    "subtitle": "頻度順の1000語パックで、前回の続きから学習できます。",
+    "seeAll": "すべてのパック",
+    "filterAll": "すべて",
+    "group_english": "英語",
+    "group_exam": "試験",
+    "group_it": "IT",
+    "learnedCount": "習得済み {{learned}}/{{total}}",
+    "seenCount": "学習済み: {{count}}",
+    "dueCount": "復習待ち: {{count}}",
+    "sampleNote": "最初の{{loaded}}語が利用可能、さらに近日追加予定",
+    "boxesLabel": "ボックス分布 (ボックス3以上 = 習得)",
+    "boxShort": "B{{box}}",
+    "continue": "続ける",
+    "start": "始める",
+    "practiceAll": "すべて復習",
+    "practiceMode": "練習モード",
+    "practiceNotice": "練習モード · 進捗は変わりません",
+    "comingSoon": "近日公開",
+    "active": "選択中",
+    "licenseLabel": "ライセンス",
+    "openSource": "出典を開く",
+    "attributionTitle": "出典とライセンス表記",
+    "attributionNote": "単語リストは {{license}} ライセンスの下で提供され、1000語ごとのパックに分割されています。定義と例文はTechLex向けに独自作成されています。",
+    "loadError": "パックを読み込めませんでした。もう一度お試しください。"
   }
 }

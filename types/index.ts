@@ -9,6 +9,51 @@ export interface Term {
   tags: string[];
   relatedTerms: string[];
   order: number;
+  rank?: number;
+  pos?: string;
+}
+
+export type PackGroup = 'english' | 'exam' | 'it';
+
+export interface PackSource {
+  name: string;
+  url: string;
+  license: string;
+  licenseUrl: string;
+}
+
+export interface Pack {
+  id: string;
+  title: {
+    tr: string;
+    en: string;
+  };
+  group: PackGroup;
+  size: number;
+  source: PackSource;
+  file: string;
+  load?: () => Promise<unknown>;
+}
+
+export type PackTerm = Term;
+
+export interface PackWord {
+  id: string;
+  word: string;
+  rank: number;
+}
+
+export type LeitnerBox = 1 | 2 | 3 | 4 | 5;
+
+export interface PackProgress {
+  packId: string;
+  learned: number;
+  seen: number;
+  total: number;
+  loaded: number;
+  due: number;
+  new: number;
+  boxes: Record<LeitnerBox, number>;
 }
 
 export interface UserProgress {

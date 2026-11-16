@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Tipografia (Typography)",
     "design-systems": "Sistemas de design (Design Systems)",
-    "project-management": "Gestao de projetos (Project Management)"
+    "project-management": "Gestao de projetos (Project Management)",
+    "ngsl-1": "Inglês geral 1–1000",
+    "ngsl-2": "Inglês geral 1001–2000",
+    "ngsl-3": "Inglês geral 2001–2809",
+    "nawl": "Inglês acadêmico (NAWL)",
+    "bsl-1": "Inglês de negócios 1–1000",
+    "bsl-2": "Inglês de negócios 1001–1744",
+    "tsl-1": "Vocabulário TOEIC 1–1000",
+    "tsl-2": "Vocabulário TOEIC 1001–1250",
+    "english": "Inglês",
+    "exam": "Exames"
   },
   "quiz": {
     "title": "Teste",
@@ -370,5 +380,33 @@
     "warning": "Escolher a nuvem substituirá seu progresso local.",
     "useCloud": "Usar a nuvem",
     "cancel": "Cancelar"
+  },
+  "packs": {
+    "title": "Pacotes de vocabulário",
+    "sectionLabel": "PACOTES DE VOCABULÁRIO",
+    "subtitle": "Estude pacotes de 1000 palavras por frequência e continue de onde parou.",
+    "seeAll": "Todos os pacotes",
+    "filterAll": "Todos",
+    "group_english": "Inglês",
+    "group_exam": "Exames",
+    "group_it": "TI",
+    "learnedCount": "Aprendidas {{learned}}/{{total}}",
+    "seenCount": "Vistas: {{count}}",
+    "dueCount": "Para revisar: {{count}}",
+    "sampleNote": "Primeiras {{loaded}} palavras prontas, novas em breve",
+    "boxesLabel": "DISTRIBUIÇÃO POR CAIXA (CAIXA 3+ = APRENDIDA)",
+    "boxShort": "C{{box}}",
+    "continue": "Continuar",
+    "start": "Começar",
+    "practiceAll": "Praticar todas",
+    "practiceMode": "Modo de prática",
+    "practiceNotice": "Modo de prática · O progresso não muda",
+    "comingSoon": "Em breve",
+    "active": "Ativo",
+    "licenseLabel": "Licença",
+    "openSource": "Abrir fonte",
+    "attributionTitle": "ATRIBUIÇÃO DE FONTE E LICENÇA",
+    "attributionNote": "As listas de palavras estão sob a licença {{license}} e foram divididas em pacotes de 1000 palavras; definições e frases de exemplo foram escritas originalmente para o TechLex.",
+    "loadError": "Não foi possível carregar o pacote. Tente novamente."
   }
 }

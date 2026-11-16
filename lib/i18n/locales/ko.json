@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "타이포그래피 (Typography)",
     "design-systems": "디자인 시스템 (Design Systems)",
-    "project-management": "프로젝트 관리 (Project Management)"
+    "project-management": "프로젝트 관리 (Project Management)",
+    "ngsl-1": "일반 영어 1–1000",
+    "ngsl-2": "일반 영어 1001–2000",
+    "ngsl-3": "일반 영어 2001–2809",
+    "nawl": "학술 영어 (NAWL)",
+    "bsl-1": "비즈니스 영어 1–1000",
+    "bsl-2": "비즈니스 영어 1001–1744",
+    "tsl-1": "TOEIC 어휘 1–1000",
+    "tsl-2": "TOEIC 어휘 1001–1250",
+    "english": "영어",
+    "exam": "시험"
   },
   "quiz": {
     "title": "테스트",
@@ -370,5 +380,33 @@
     "warning": "클라우드를 선택하면 로컬 진행 상황이 대체됩니다.",
     "useCloud": "클라우드 사용",
     "cancel": "취소"
+  },
+  "packs": {
+    "title": "단어 팩",
+    "sectionLabel": "단어 팩",
+    "subtitle": "빈도순 1000단어 팩으로 중단한 곳에서 이어서 학습하세요.",
+    "seeAll": "모든 팩",
+    "filterAll": "전체",
+    "group_english": "영어",
+    "group_exam": "시험",
+    "group_it": "IT",
+    "learnedCount": "학습 완료 {{learned}}/{{total}}",
+    "seenCount": "확인함: {{count}}",
+    "dueCount": "복습 예정: {{count}}",
+    "sampleNote": "처음 {{loaded}}개 단어 준비 완료, 새 단어 곧 추가 예정",
+    "boxesLabel": "박스 분포 (박스 3+ = 학습 완료)",
+    "boxShort": "B{{box}}",
+    "continue": "이어하기",
+    "start": "시작",
+    "practiceAll": "전체 다시 연습",
+    "practiceMode": "연습 모드",
+    "practiceNotice": "연습 모드 · 진행도 변경 없음",
+    "comingSoon": "출시 예정",
+    "active": "선택됨",
+    "licenseLabel": "라이선스",
+    "openSource": "출처 열기",
+    "attributionTitle": "출처 및 라이선스 표기",
+    "attributionNote": "단어 목록은 {{license}} 라이선스를 따르며 1000단어 단위로 분할되었습니다. 정의와 예문은 TechLex를 위해 독자적으로 작성되었습니다.",
+    "loadError": "팩을 불러오지 못했습니다. 다시 시도해 주세요."
   }
 }

@@ -324,7 +324,17 @@
     "figma": "Figma",
     "typography": "Typography",
     "design-systems": "Design Systems",
-    "project-management": "Project Management"
+    "project-management": "Project Management",
+    "ngsl-1": "General English 1–1000",
+    "ngsl-2": "General English 1001–2000",
+    "ngsl-3": "General English 2001–2809",
+    "nawl": "Academic English (NAWL)",
+    "bsl-1": "Business English 1–1000",
+    "bsl-2": "Business English 1001–1744",
+    "tsl-1": "TOEIC Vocabulary 1–1000",
+    "tsl-2": "TOEIC Vocabulary 1001–1250",
+    "english": "English",
+    "exam": "Exam"
   },
   "quiz": {
     "title": "Test",
@@ -370,5 +380,33 @@
     "warning": "Choosing cloud will replace your local progress.",
     "useCloud": "Use Cloud",
     "cancel": "Cancel"
+  },
+  "packs": {
+    "title": "Vocabulary Packs",
+    "sectionLabel": "VOCABULARY PACKS",
+    "subtitle": "Study frequency-ranked 1000-word packs and pick up where you left off.",
+    "seeAll": "All Packs",
+    "filterAll": "All",
+    "group_english": "English",
+    "group_exam": "Exam",
+    "group_it": "IT",
+    "learnedCount": "Learned {{learned}}/{{total}}",
+    "seenCount": "Seen: {{count}}",
+    "dueCount": "Due: {{count}}",
+    "sampleNote": "First {{loaded}} words ready, more coming soon",
+    "boxesLabel": "BOX DISTRIBUTION (BOX 3+ = LEARNED)",
+    "boxShort": "B{{box}}",
+    "continue": "Continue",
+    "start": "Start",
+    "practiceAll": "Practice all",
+    "practiceMode": "Practice mode",
+    "practiceNotice": "Practice mode · Progress unchanged",
+    "comingSoon": "Coming soon",
+    "active": "Active",
+    "licenseLabel": "License",
+    "openSource": "Open source",
+    "attributionTitle": "SOURCE & LICENSE ATTRIBUTION",
+    "attributionNote": "Word lists are licensed under {{license}} and split into 1000-word packs; definitions and example sentences are originally written for TechLex.",
+    "loadError": "Failed to load pack. Please try again."
   }
 }
