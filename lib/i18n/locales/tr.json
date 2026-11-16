@@ -362,7 +362,11 @@
     "skipMatchCorrect": "Bu eşleşme doğruydu!",
     "skipMatchWrong": "Bu eşleşme yanlıştı.",
     "skipBelongsTo": "Gösterilen tanım aslında \"{{term}}\" kavramına ait.",
-    "skipRealDefinition": "Doğru tanım:"
+    "skipRealDefinition": "Doğru tanım:",
+    "modeDefinition": "Tanım eşleştirme",
+    "modeCloze": "Cümlede boşluk",
+    "clozePrompt": "Boşluğu dolduran kelimeyi seç",
+    "correctAnswerLabel": "Doğru cevap:"
   },
   "premiumModal": {
     "title": "Premium Özellik",

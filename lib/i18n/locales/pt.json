@@ -362,7 +362,11 @@
     "skipMatchCorrect": "Esta associação estava correta!",
     "skipMatchWrong": "Esta associação estava incorreta.",
     "skipBelongsTo": "A definição exibida pertence a \"{{term}}\".",
-    "skipRealDefinition": "Definição correta:"
+    "skipRealDefinition": "Definição correta:",
+    "modeDefinition": "Associar definição",
+    "modeCloze": "Complete a lacuna",
+    "clozePrompt": "Escolha a palavra que completa a lacuna",
+    "correctAnswerLabel": "Resposta correta:"
   },
   "premiumModal": {
     "title": "Recurso Premium",

@@ -362,7 +362,11 @@
     "skipMatchCorrect": "Diese Zuordnung war richtig!",
     "skipMatchWrong": "Diese Zuordnung war falsch.",
     "skipBelongsTo": "Die angezeigte Definition gehört eigentlich zu \"{{term}}\".",
-    "skipRealDefinition": "Richtige Definition:"
+    "skipRealDefinition": "Richtige Definition:",
+    "modeDefinition": "Definition zuordnen",
+    "modeCloze": "Lückentext",
+    "clozePrompt": "Wähle das Wort, das in die Lücke passt",
+    "correctAnswerLabel": "Richtige Antwort:"
   },
   "premiumModal": {
     "title": "Premium-Funktion",

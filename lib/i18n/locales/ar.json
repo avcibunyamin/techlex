@@ -362,7 +362,11 @@
     "skipMatchCorrect": "هذا التطابق كان صحيحاً!",
     "skipMatchWrong": "هذا التطابق كان خاطئاً.",
     "skipBelongsTo": "التعريف المعروض ينتمي فعلياً إلى \"{{term}}\".",
-    "skipRealDefinition": "التعريف الصحيح:"
+    "skipRealDefinition": "التعريف الصحيح:",
+    "modeDefinition": "مطابقة التعريف",
+    "modeCloze": "املأ الفراغ",
+    "clozePrompt": "اختر الكلمة التي تملأ الفراغ",
+    "correctAnswerLabel": "الإجابة الصحيحة:"
   },
   "premiumModal": {
     "title": "ميزة بريميوم",

@@ -362,7 +362,11 @@
     "skipMatchCorrect": "This match was correct!",
     "skipMatchWrong": "This match was wrong.",
     "skipBelongsTo": "The definition shown actually belongs to \"{{term}}\".",
-    "skipRealDefinition": "Correct definition:"
+    "skipRealDefinition": "Correct definition:",
+    "modeDefinition": "Definition match",
+    "modeCloze": "Fill the blank",
+    "clozePrompt": "Choose the word that fills the blank",
+    "correctAnswerLabel": "Correct answer:"
   },
   "premiumModal": {
     "title": "Premium Feature",

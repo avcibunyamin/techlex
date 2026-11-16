@@ -362,7 +362,11 @@
     "skipMatchCorrect": "Cette association était correcte !",
     "skipMatchWrong": "Cette association était incorrecte.",
     "skipBelongsTo": "La définition affichée appartient en fait à \"{{term}}\".",
-    "skipRealDefinition": "Bonne définition :"
+    "skipRealDefinition": "Bonne définition :",
+    "modeDefinition": "Associer la définition",
+    "modeCloze": "Texte à trous",
+    "clozePrompt": "Choisis le mot qui complète le blanc",
+    "correctAnswerLabel": "Bonne réponse :"
   },
   "premiumModal": {
     "title": "Fonctionnalité Premium",

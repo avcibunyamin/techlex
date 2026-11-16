@@ -362,7 +362,11 @@
     "skipMatchCorrect": "この組み合わせは正しかったです！",
     "skipMatchWrong": "この組み合わせは間違いでした。",
     "skipBelongsTo": "表示された定義は実際には「{{term}}」のものです。",
-    "skipRealDefinition": "正しい定義："
+    "skipRealDefinition": "正しい定義：",
+    "modeDefinition": "定義マッチ",
+    "modeCloze": "穴埋め",
+    "clozePrompt": "空欄に入る単語を選んでください",
+    "correctAnswerLabel": "正解："
   },
   "premiumModal": {
     "title": "Premium機能",

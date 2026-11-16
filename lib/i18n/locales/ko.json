@@ -362,7 +362,11 @@
     "skipMatchCorrect": "이 매칭은 맞았습니다!",
     "skipMatchWrong": "이 매칭은 틀렸습니다.",
     "skipBelongsTo": "표시된 정의는 실제로 \"{{term}}\"에 해당합니다.",
-    "skipRealDefinition": "올바른 정의:"
+    "skipRealDefinition": "올바른 정의:",
+    "modeDefinition": "정의 맞추기",
+    "modeCloze": "빈칸 채우기",
+    "clozePrompt": "빈칸에 들어갈 단어를 고르세요",
+    "correctAnswerLabel": "정답:"
   },
   "premiumModal": {
     "title": "Premium 기능",

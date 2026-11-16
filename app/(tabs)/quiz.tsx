@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import {
-  StyleSheet, Text, View, Pressable, ScrollView,
+  StyleSheet, Text, View, Pressable, ScrollView, I18nManager,
 } from 'react-native';
 import Animated, {
   FadeIn,
@@ -15,7 +15,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { useAppStore, QuizQuestion } from '@/lib/store';
+import { useAppStore, QuizQuestion, QuizMode } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { haptic } from '@/lib/haptics';
@@ -32,9 +32,13 @@ export default function QuizScreen() {
   const { t: tr } = useTranslation();
   const knownCount = useAppStore(s => s.getKnownTermCount());
   const isPremium = useAppStore(s => s.hasActivePremium());
+  const language = useAppStore(s => s.language);
   const { generateQuiz, submitQuizResults, downgradeQuizTerm, promoteQuizTerm } = useAppStore();
+  const rowDir = language === 'ar' && !I18nManager.isRTL ? 'row-reverse' : 'row';
 
   const [quizState, setQuizState] = useState<QuizState>('idle');
+  const [mode, setMode] = useState<QuizMode>('definition');
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [score, setScore] = useState(0);
@@ -87,20 +91,21 @@ export default function QuizScreen() {
 
   const startQuiz = useCallback(() => {
     if (advanceTimer.current) clearTimeout(advanceTimer.current);
-    const qs = generateQuiz();
+    const qs = generateQuiz(mode);
     if (qs.length === 0) return;
     setQuestions(qs);
     setCurrentQ(0);
     setScore(0);
     setAnswered(false);
     setLastCorrect(null);
+    setSelectedOption(null);
     setShowCorrection(false);
     setShowSkipFeedback(false);
     setResults(new Array(qs.length).fill(null));
     setQuizState('active');
     borderGlow.value = 0;
     shakeX.value = 0;
-  }, [generateQuiz, borderGlow, shakeX]);
+  }, [generateQuiz, mode, borderGlow, shakeX]);
 
   const advanceToNext = useCallback((wasCorrect: boolean) => {
     if (currentQ + 1 >= questions.length) {
@@ -111,6 +116,7 @@ export default function QuizScreen() {
       setCurrentQ(i => i + 1);
       setAnswered(false);
       setLastCorrect(null);
+      setSelectedOption(null);
       setShowCorrection(false);
       setShowSkipFeedback(false);
       borderGlow.value = 0;
@@ -119,11 +125,11 @@ export default function QuizScreen() {
     }
   }, [currentQ, questions, score, submitQuizResults, borderGlow, shakeX, cardKey]);
 
-  const handleAnswer = useCallback((userSaysTrue: boolean) => {
+  // Shared by the true/false and cloze questions: same Leitner promote/downgrade and XP flow.
+  const resolveAnswer = useCallback((isUserCorrect: boolean) => {
     if (answered || currentQ >= questions.length) return;
 
     const q = questions[currentQ];
-    const isUserCorrect = userSaysTrue === q.isCorrect;
 
     setAnswered(true);
     setLastCorrect(isUserCorrect);
@@ -156,7 +162,20 @@ export default function QuizScreen() {
       setShowCorrection(true);
       downgradeQuizTerm(q.term.id);
     }
-  }, [answered, currentQ, questions, score, downgradeQuizTerm, promoteQuizTerm, advanceToNext, borderGlow, shakeX]);
+  }, [answered, currentQ, questions, downgradeQuizTerm, promoteQuizTerm, advanceToNext, borderGlow, shakeX]);
+
+  const handleAnswer = useCallback((userSaysTrue: boolean) => {
+    const q = questions[currentQ];
+    if (!q) return;
+    resolveAnswer(userSaysTrue === q.isCorrect);
+  }, [questions, currentQ, resolveAnswer]);
+
+  const handleClozeAnswer = useCallback((index: number) => {
+    const q = questions[currentQ];
+    if (answered || !q?.cloze) return;
+    setSelectedOption(index);
+    resolveAnswer(index === q.cloze.correctIndex);
+  }, [answered, questions, currentQ, resolveAnswer]);
 
   const handleGotIt = useCallback(() => {
     setShowSkipFeedback(false);
@@ -223,6 +242,27 @@ export default function QuizScreen() {
               <Text style={[typography.callout, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
                 {knownCount} {tr('quiz.termsReady')}
               </Text>
+              <View
+                style={[styles.modePicker, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
+                accessibilityRole="radiogroup"
+              >
+                {(['definition', 'cloze'] as const).map(m => {
+                  const active = mode === m;
+                  return (
+                    <Pressable
+                      key={m}
+                      style={[styles.modeOption, active && { backgroundColor: t.bgElevated, borderColor: accent }]}
+                      onPress={() => setMode(m)}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: active }}
+                    >
+                      <Text style={[typography.subhead, { color: active ? accent : t.textSecondary, fontWeight: '600', textAlign: 'center' }]}>
+                        {tr(m === 'cloze' ? 'quiz.modeCloze' : 'quiz.modeDefinition')}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
               <Animated.View style={[styles.startBtnWrap, startBtnStyle]}>
                 <Pressable
                   style={[styles.startBtn, { backgroundColor: accent }]}
@@ -355,31 +395,97 @@ export default function QuizScreen() {
               pointerEvents="none"
             />
 
-            <Text style={[styles.quizTerm, { color: t.text }]}>
-              {q.term.term}
-            </Text>
+            {q.cloze ? (
+              <>
+                <Text style={[typography.subhead, { color: t.textTertiary, textAlign: 'center', marginBottom: spacing.lg }]}>
+                  {tr('quiz.clozePrompt')}
+                </Text>
+                {/* The example sentence is English, so it stays LTR in every locale. */}
+                <Text style={[styles.clozeSentence, { color: t.text }]}>
+                  {q.cloze.masked}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={[styles.quizTerm, { color: t.text }]}>
+                  {q.term.term}
+                </Text>
 
-            <View style={[styles.quizDivider, { backgroundColor: t.border }]} />
+                <View style={[styles.quizDivider, { backgroundColor: t.border }]} />
 
-            <Text style={[styles.quizDefinition, { color: t.textSecondary }]}>
-              {q.displayedDefinition}
-            </Text>
+                <Text style={[styles.quizDefinition, { color: t.textSecondary }]}>
+                  {q.displayedDefinition}
+                </Text>
+              </>
+            )}
 
           </View>
         </Animated.View>
+
+        {q.cloze && !showCorrection && !showSkipFeedback && (
+          <View style={styles.clozeOptions}>
+            {q.cloze.options.map((option, index) => {
+              const isPicked = selectedOption === index;
+              const pickedColor = lastCorrect ? colors.success : colors.danger;
+              return (
+                <Pressable
+                  key={option.id}
+                  style={({ pressed }) => [
+                    styles.clozeOption,
+                    { backgroundColor: t.bgElevated, borderColor: t.border },
+                    isPicked && { borderColor: pickedColor, backgroundColor: pickedColor + '15' },
+                    pressed && !answered && { opacity: 0.7 },
+                  ]}
+                  onPress={() => handleClozeAnswer(index)}
+                  disabled={answered}
+                  accessibilityRole="button"
+                >
+                  <Text style={[typography.headline, { color: isPicked ? pickedColor : t.text, textAlign: 'center', writingDirection: 'ltr' }]}>
+                    {option.term}
+                  </Text>
+                </Pressable>
+              );
+            })}
+            <Pressable
+              style={({ pressed }) => [styles.clozeSkip, pressed && !answered && { opacity: 0.7 }]}
+              onPress={handleSkip}
+              disabled={answered}
+              accessibilityRole="button"
+            >
+              <HelpCircle size={18} color={colors.warning} strokeWidth={2} />
+              <Text style={[typography.subhead, { color: colors.warning, fontWeight: '600' }]}>{tr('quiz.skip')}</Text>
+            </Pressable>
+          </View>
+        )}
 
         {showCorrection && (
           <Animated.View
             entering={FadeIn.duration(250)}
             style={[styles.correctionBox, { borderColor: colors.danger, backgroundColor: colors.dangerMuted }]}
           >
-            <Text style={[typography.subhead, { color: colors.danger }]}>
-              {tr('quiz.correctDefinitionLabel')}
-            </Text>
-            <Text style={[typography.body, { color: t.text, marginTop: spacing.xs }]}>
-              {q.correctDefinition}
-            </Text>
-            {q.sourceTerm && (
+            {q.cloze ? (
+              <>
+                <Text style={[typography.subhead, { color: colors.danger }]}>
+                  {tr('quiz.correctAnswerLabel')}
+                </Text>
+                <Text style={[typography.headline, { color: t.text, marginTop: spacing.xs, writingDirection: 'ltr' }]}>
+                  {q.cloze.answerForm}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic', writingDirection: 'ltr' }]}>
+                  {q.term.translations.en.example}
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text style={[typography.subhead, { color: colors.danger }]}>
+                  {tr('quiz.correctDefinitionLabel')}
+                </Text>
+                <Text style={[typography.body, { color: t.text, marginTop: spacing.xs }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            )}
+            {!q.cloze && q.sourceTerm && (
               isPremium ? (
                 <Text style={[typography.footnote, { color: t.textTertiary, marginTop: spacing.sm }]}>
                   {tr('quiz.definitionFrom', { term: q.sourceTerm.term })}
@@ -411,7 +517,25 @@ export default function QuizScreen() {
             entering={FadeIn.duration(250)}
             style={[styles.correctionBox, { borderColor: accent, backgroundColor: accent + '10' }]}
           >
-            {q.isCorrect ? (
+            {q.cloze ? (
+              <>
+                <Text style={[typography.subhead, { color: accent }]}>
+                  {tr('quiz.correctAnswerLabel')}
+                </Text>
+                <Text style={[typography.headline, { color: t.text, marginTop: spacing.xs, writingDirection: 'ltr' }]}>
+                  {q.cloze.answerForm}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic', writingDirection: 'ltr' }]}>
+                  {q.term.translations.en.example}
+                </Text>
+                <Text style={[typography.body, { color: t.text, marginTop: spacing.md }]}>
+                  {tr('quiz.skipRealDefinition')}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic' }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            ) : q.isCorrect ? (
               <>
                 <Text style={[typography.subhead, { color: colors.success }]}>
                   {tr('quiz.skipMatchCorrect')}
@@ -464,8 +588,8 @@ export default function QuizScreen() {
         </Animated.View>
       )}
 
-      {/* Action buttons — hide when feedback is visible */}
-      {!showCorrection && !showSkipFeedback && (
+      {/* Action buttons — hide when feedback is visible; cloze questions show their options in the scroll view */}
+      {!q.cloze && !showCorrection && !showSkipFeedback && (
         <View style={styles.actions}>
           <Animated.View style={falseBtnStyle}>
             <Pressable
@@ -543,6 +667,23 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.lg,
     borderRadius: radius.lg,
   },
+  modePicker: {
+    width: '100%',
+    marginTop: spacing['2xl'],
+    padding: spacing.xs,
+    borderRadius: radius.lg,
+    gap: spacing.xs,
+  },
+  modeOption: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
   progressBar: {
     width: '100%',
     height: 6,
@@ -608,6 +749,32 @@ const styles = StyleSheet.create({
     ...typography.body,
     lineHeight: 24,
     textAlign: 'center',
+  },
+  clozeSentence: {
+    ...typography.body,
+    fontSize: 20,
+    lineHeight: 30,
+    textAlign: 'center',
+    writingDirection: 'ltr',
+  },
+  clozeOptions: {
+    marginTop: spacing.lg,
+    gap: spacing.sm,
+  },
+  clozeOption: {
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.xl,
+    borderRadius: radius.lg,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  clozeSkip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    paddingVertical: spacing.md,
   },
   sourceHint: {
     marginTop: spacing.xl,

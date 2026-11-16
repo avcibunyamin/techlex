@@ -362,7 +362,11 @@
     "skipMatchCorrect": "¡Esta asociación era correcta!",
     "skipMatchWrong": "Esta asociación era incorrecta.",
     "skipBelongsTo": "La definición mostrada pertenece a \"{{term}}\".",
-    "skipRealDefinition": "Definición correcta:"
+    "skipRealDefinition": "Definición correcta:",
+    "modeDefinition": "Emparejar definición",
+    "modeCloze": "Completa el hueco",
+    "clozePrompt": "Elige la palabra que completa el hueco",
+    "correctAnswerLabel": "Respuesta correcta:"
   },
   "premiumModal": {
     "title": "Función Premium",

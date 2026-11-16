@@ -9,6 +9,7 @@ import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel
 import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-utils';
 import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
 import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './review-queue';
+import { buildClozeQuestion, ClozeQuestion } from './cloze-quiz';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -53,12 +54,23 @@ function packIdsForProgress(progress: Record<string, UserProgress>): string[] {
 
 type SubscriptionTier = 'free' | 'individual' | 'duo' | 'family';
 
+function findLoadedTerm(termId: string): Term | undefined {
+  const itTerm = TERM_BY_ID_MAP.get(termId);
+  if (itTerm) return itTerm;
+  const packId = packIdOfTerm(termId);
+  return packId ? PACK_TERMS_MAP[packId]?.find(t => t.id === termId) : undefined;
+}
+
+export type QuizMode = 'definition' | 'cloze';
+
 export interface QuizQuestion {
   term: Term;
   displayedDefinition: string;
   isCorrect: boolean;
   sourceTerm?: Term;
   correctDefinition: string;
+  /** Set only for cloze questions; otherwise the card is a true/false definition question. */
+  cloze?: ClozeQuestion;
 }
 
 export interface SwipeQueueItem {
@@ -150,7 +162,7 @@ interface AppState {
   getKnownTermCount: () => number;
   downgradeQuizTerm: (termId: string) => void;
   promoteQuizTerm: (termId: string) => void;
-  generateQuiz: () => QuizQuestion[];
+  generateQuiz: (mode?: QuizMode) => QuizQuestion[];
   submitQuizResults: (correctCount: number, totalCount: number) => void;
   recordDailyStat: (field: 'swipes' | 'quizCorrect' | 'newTerms', amount: number) => void;
   fetchServerTime: () => Promise<void>;
@@ -881,13 +893,14 @@ export const useAppStore = create<AppState>((set, get) => ({
     get().scheduleSave();
   },
 
-  generateQuiz: () => {
+  generateQuiz: (mode = 'definition') => {
     const { progress, terms, language, quizSeenIds } = get();
     const tl = language === 'tr' ? 'tr' : 'en';
     const QUIZ_SIZE = 10;
 
+    // IT terms plus terms of packs already loaded into memory.
     const knownIds = Object.keys(progress).filter(
-      id => progress[id].box >= 2 && TERM_BY_ID_MAP.has(id)
+      id => progress[id].box >= 2 && findLoadedTerm(id) !== undefined
     );
     if (knownIds.length < QUIZ_SIZE) return [];
 
@@ -895,14 +908,27 @@ export const useAppStore = create<AppState>((set, get) => ({
     const pool = unseenFirst.length >= QUIZ_SIZE ? unseenFirst : knownIds;
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     const selectedTerms = shuffled.slice(0, QUIZ_SIZE)
-      .map(id => TERM_BY_ID_MAP.get(id))
+      .map(id => findLoadedTerm(id))
       .filter((t): t is Term => Boolean(t));
 
     set({ quizSeenIds: new Set([...quizSeenIds, ...selectedTerms.map(t => t.id)]) });
 
     const allTermsPool = [...terms, ...Object.values(PACK_TERMS_MAP).flat()];
-    const questions: QuizQuestion[] = selectedTerms.map(term => {
+    const baseSeed = Math.floor(Math.random() * 0x7fffffff);
+    const questions: QuizQuestion[] = selectedTerms.map((term, index) => {
       const correctDef = term.translations[tl].definition;
+
+      if (mode === 'cloze') {
+        // Distractors come from the term's own pack; IT terms share the IT term list as their pack.
+        const packId = packIdOfTerm(term.id);
+        const packTerms = (packId && PACK_TERMS_MAP[packId]) || terms;
+        const cloze = buildClozeQuestion(term, packTerms, baseSeed + index);
+        // No match in the example (or too few distractors): fall back to the definition question below.
+        if (cloze) {
+          return { term, displayedDefinition: correctDef, isCorrect: true, correctDefinition: correctDef, cloze };
+        }
+      }
+
       const showCorrect = Math.random() < 0.5;
 
       if (showCorrect) {

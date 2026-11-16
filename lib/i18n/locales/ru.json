@@ -362,7 +362,11 @@
     "skipMatchCorrect": "Это сопоставление было верным!",
     "skipMatchWrong": "Это сопоставление было неверным.",
     "skipBelongsTo": "Показанное определение относится к \"{{term}}\".",
-    "skipRealDefinition": "Правильное определение:"
+    "skipRealDefinition": "Правильное определение:",
+    "modeDefinition": "Сопоставить определение",
+    "modeCloze": "Заполни пропуск",
+    "clozePrompt": "Выбери слово, которое заполняет пропуск",
+    "correctAnswerLabel": "Правильный ответ:"
   },
   "premiumModal": {
     "title": "Премиум-функция",
