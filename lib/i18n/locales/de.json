@@ -366,7 +366,11 @@
     "modeDefinition": "Definition zuordnen",
     "modeCloze": "Lückentext",
     "clozePrompt": "Wähle das Wort, das in die Lücke passt",
-    "correctAnswerLabel": "Richtige Antwort:"
+    "correctAnswerLabel": "Richtige Antwort:",
+    "scopeTitle": "Quiz mit ausgewählten Wörtern",
+    "scopeSub": "{{label}} · {{count}} Wörter bereit",
+    "scopeNotEnough": "Lerne zuerst mindestens {{min}} dieser Wörter und komm dann zurück.",
+    "scopeClear": "Stattdessen alle meine Wörter abfragen"
   },
   "premiumModal": {
     "title": "Premium-Funktion",
@@ -411,7 +415,20 @@
     "openSource": "Quelle öffnen",
     "attributionTitle": "QUELLEN- UND LIZENZANGABE",
     "attributionNote": "Wortlisten stehen unter der Lizenz {{license}} und wurden in 1000er-Pakete aufgeteilt; Definitionen und Beispielsätze wurden eigens für TechLex verfasst.",
-    "loadError": "Paket konnte nicht geladen werden. Bitte versuche es erneut."
+    "loadError": "Paket konnte nicht geladen werden. Bitte versuche es erneut.",
+    "browseWords": "Wörter",
+    "searchPlaceholder": "Wort oder Bedeutung suchen",
+    "clearSearch": "Suche löschen",
+    "resultCount": "{{count}} Wörter",
+    "filterNew": "Neu",
+    "filterBox": "Box {{box}}",
+    "filterStruggling": "Schwierige Wörter",
+    "strugglingHint": "Wörter, die du mindestens zweimal nicht wusstest und die wieder in Box 1 sind.",
+    "missedCount": "{{count}}× falsch",
+    "noResults": "Keine Wörter passen zu dieser Suche.",
+    "studyFiltered": "Karten ({{count}})",
+    "quizFiltered": "Quiz ({{count}})",
+    "quizNeedsSeen": "Ein Quiz braucht mindestens {{min}} Wörter aus dieser Liste, die du schon gelernt hast."
   },
   "dailyReview": {
     "title": "Tägliche Wiederholung",

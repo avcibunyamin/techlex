@@ -366,7 +366,11 @@
     "modeDefinition": "정의 맞추기",
     "modeCloze": "빈칸 채우기",
     "clozePrompt": "빈칸에 들어갈 단어를 고르세요",
-    "correctAnswerLabel": "정답:"
+    "correctAnswerLabel": "정답:",
+    "scopeTitle": "선택한 단어로 퀴즈",
+    "scopeSub": "{{label}} · {{count}}개 단어 준비됨",
+    "scopeNotEnough": "먼저 이 단어 중 {{min}}개 이상을 학습한 뒤 다시 오세요.",
+    "scopeClear": "대신 내 모든 단어로 퀴즈 풀기"
   },
   "premiumModal": {
     "title": "Premium 기능",
@@ -411,7 +415,20 @@
     "openSource": "출처 열기",
     "attributionTitle": "출처 및 라이선스 표기",
     "attributionNote": "단어 목록은 {{license}} 라이선스를 따르며 1000단어 단위로 분할되었습니다. 정의와 예문은 TechLex를 위해 독자적으로 작성되었습니다.",
-    "loadError": "팩을 불러오지 못했습니다. 다시 시도해 주세요."
+    "loadError": "팩을 불러오지 못했습니다. 다시 시도해 주세요.",
+    "browseWords": "단어 목록",
+    "searchPlaceholder": "단어나 뜻으로 검색",
+    "clearSearch": "검색 지우기",
+    "resultCount": "단어 {{count}}개",
+    "filterNew": "새 단어",
+    "filterBox": "상자 {{box}}",
+    "filterStruggling": "어려운 단어",
+    "strugglingHint": "두 번 이상 틀려서 1번 상자로 돌아간 단어입니다.",
+    "missedCount": "{{count}}번 틀림",
+    "noResults": "검색과 일치하는 단어가 없습니다.",
+    "studyFiltered": "카드 ({{count}})",
+    "quizFiltered": "퀴즈 ({{count}})",
+    "quizNeedsSeen": "퀴즈를 하려면 이 목록에서 이미 학습한 단어가 {{min}}개 이상 필요합니다."
   },
   "dailyReview": {
     "title": "오늘의 복습",

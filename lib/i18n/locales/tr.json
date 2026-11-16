@@ -366,7 +366,11 @@
     "modeDefinition": "Tanım eşleştirme",
     "modeCloze": "Cümlede boşluk",
     "clozePrompt": "Boşluğu dolduran kelimeyi seç",
-    "correctAnswerLabel": "Doğru cevap:"
+    "correctAnswerLabel": "Doğru cevap:",
+    "scopeTitle": "Seçili kelimelerle test",
+    "scopeSub": "{{label}} · {{count}} kelime hazır",
+    "scopeNotEnough": "Önce bu kelimelerden en az {{min}} tanesini çalış, sonra geri gel.",
+    "scopeClear": "Bunun yerine tüm kelimelerimle test et"
   },
   "premiumModal": {
     "title": "Premium Özellik",
@@ -411,7 +415,20 @@
     "openSource": "Kaynağı aç",
     "attributionTitle": "KAYNAK VE LİSANS ATFI",
     "attributionNote": "Kelime listeleri {{license}} lisansı altındadır ve 1000'erlik parçalara bölünmüştür; Türkçe ve İngilizce tanım ile örnek cümleler TechLex için özgün yazılmıştır.",
-    "loadError": "Paket yüklenemedi. Lütfen tekrar deneyin."
+    "loadError": "Paket yüklenemedi. Lütfen tekrar deneyin.",
+    "browseWords": "Kelimeler",
+    "searchPlaceholder": "Kelime ya da anlam ara",
+    "clearSearch": "Aramayı temizle",
+    "resultCount": "{{count}} kelime",
+    "filterNew": "Yeni",
+    "filterBox": "Kutu {{box}}",
+    "filterStruggling": "Zorlandıklarım",
+    "strugglingHint": "En az iki kez bilemediğin ve 1. kutuya dönen kelimeler.",
+    "missedCount": "{{count}} kez yanlış",
+    "noResults": "Bu aramayla eşleşen kelime yok.",
+    "studyFiltered": "Kartlar ({{count}})",
+    "quizFiltered": "Test ({{count}})",
+    "quizNeedsSeen": "Test için bu listede daha önce çalıştığın en az {{min}} kelime gerekir."
   },
   "dailyReview": {
     "title": "Günlük tekrar",

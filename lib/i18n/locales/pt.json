@@ -366,7 +366,11 @@
     "modeDefinition": "Associar definição",
     "modeCloze": "Complete a lacuna",
     "clozePrompt": "Escolha a palavra que completa a lacuna",
-    "correctAnswerLabel": "Resposta correta:"
+    "correctAnswerLabel": "Resposta correta:",
+    "scopeTitle": "Quiz com as palavras selecionadas",
+    "scopeSub": "{{label}} · {{count}} palavras prontas",
+    "scopeNotEnough": "Estude primeiro pelo menos {{min}} destas palavras e depois volte.",
+    "scopeClear": "Fazer o quiz com todas as minhas palavras"
   },
   "premiumModal": {
     "title": "Recurso Premium",
@@ -411,7 +415,20 @@
     "openSource": "Abrir fonte",
     "attributionTitle": "ATRIBUIÇÃO DE FONTE E LICENÇA",
     "attributionNote": "As listas de palavras estão sob a licença {{license}} e foram divididas em pacotes de 1000 palavras; definições e frases de exemplo foram escritas originalmente para o TechLex.",
-    "loadError": "Não foi possível carregar o pacote. Tente novamente."
+    "loadError": "Não foi possível carregar o pacote. Tente novamente.",
+    "browseWords": "Palavras",
+    "searchPlaceholder": "Busque uma palavra ou o significado",
+    "clearSearch": "Limpar busca",
+    "resultCount": "{{count}} palavras",
+    "filterNew": "Novas",
+    "filterBox": "Caixa {{box}}",
+    "filterStruggling": "Difíceis",
+    "strugglingHint": "Palavras que você errou pelo menos duas vezes e voltaram para a caixa 1.",
+    "missedCount": "Errou {{count}}×",
+    "noResults": "Nenhuma palavra corresponde a esta busca.",
+    "studyFiltered": "Cartões ({{count}})",
+    "quizFiltered": "Quiz ({{count}})",
+    "quizNeedsSeen": "Um quiz precisa de pelo menos {{min}} palavras desta lista que você já estudou."
   },
   "dailyReview": {
     "title": "Revisão diária",

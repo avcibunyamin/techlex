@@ -366,7 +366,11 @@
     "modeDefinition": "مطابقة التعريف",
     "modeCloze": "املأ الفراغ",
     "clozePrompt": "اختر الكلمة التي تملأ الفراغ",
-    "correctAnswerLabel": "الإجابة الصحيحة:"
+    "correctAnswerLabel": "الإجابة الصحيحة:",
+    "scopeTitle": "اختبار على الكلمات المحددة",
+    "scopeSub": "{{label}} · {{count}} كلمة جاهزة",
+    "scopeNotEnough": "ادرس {{min}} كلمات على الأقل من هذه القائمة أولًا، ثم عُد.",
+    "scopeClear": "اختبرني في كل كلماتي بدلًا من ذلك"
   },
   "premiumModal": {
     "title": "ميزة بريميوم",
@@ -411,7 +415,20 @@
     "openSource": "فتح المصدر",
     "attributionTitle": "نسب المصدر والترخيص",
     "attributionNote": "قوائم الكلمات مرخّصة بموجب {{license}} وقد قُسّمت إلى حزم من 1000 كلمة؛ أما التعريفات والجمل التوضيحية فقد كُتبت أصلياً لتطبيق TechLex.",
-    "loadError": "تعذّر تحميل الحزمة. يرجى المحاولة مرة أخرى."
+    "loadError": "تعذّر تحميل الحزمة. يرجى المحاولة مرة أخرى.",
+    "browseWords": "الكلمات",
+    "searchPlaceholder": "ابحث عن كلمة أو معناها",
+    "clearSearch": "مسح البحث",
+    "resultCount": "{{count}} كلمة",
+    "filterNew": "جديدة",
+    "filterBox": "الصندوق {{box}}",
+    "filterStruggling": "الكلمات الصعبة",
+    "strugglingHint": "كلمات أخطأت فيها مرتين على الأقل وعادت إلى الصندوق 1.",
+    "missedCount": "أخطأت {{count}} مرات",
+    "noResults": "لا توجد كلمات تطابق هذا البحث.",
+    "studyFiltered": "البطاقات ({{count}})",
+    "quizFiltered": "اختبار ({{count}})",
+    "quizNeedsSeen": "يحتاج الاختبار إلى {{min}} كلمات على الأقل درستها من قبل في هذه القائمة."
   },
   "dailyReview": {
     "title": "المراجعة اليومية",

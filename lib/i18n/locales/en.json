@@ -366,7 +366,11 @@
     "modeDefinition": "Definition match",
     "modeCloze": "Fill the blank",
     "clozePrompt": "Choose the word that fills the blank",
-    "correctAnswerLabel": "Correct answer:"
+    "correctAnswerLabel": "Correct answer:",
+    "scopeTitle": "Quiz on selected words",
+    "scopeSub": "{{label}} · {{count}} words ready",
+    "scopeNotEnough": "Study at least {{min}} of these words first, then come back.",
+    "scopeClear": "Quiz all my words instead"
   },
   "premiumModal": {
     "title": "Premium Feature",
@@ -411,7 +415,20 @@
     "openSource": "Open source",
     "attributionTitle": "SOURCE & LICENSE ATTRIBUTION",
     "attributionNote": "Word lists are licensed under {{license}} and split into 1000-word packs; definitions and example sentences are originally written for TechLex.",
-    "loadError": "Failed to load pack. Please try again."
+    "loadError": "Failed to load pack. Please try again.",
+    "browseWords": "Words",
+    "searchPlaceholder": "Search a word or its meaning",
+    "clearSearch": "Clear search",
+    "resultCount": "{{count}} words",
+    "filterNew": "New",
+    "filterBox": "Box {{box}}",
+    "filterStruggling": "Struggling",
+    "strugglingHint": "Words you missed at least twice that are back in box 1.",
+    "missedCount": "Missed {{count}}×",
+    "noResults": "No words match this search.",
+    "studyFiltered": "Cards ({{count}})",
+    "quizFiltered": "Quiz ({{count}})",
+    "quizNeedsSeen": "A quiz needs at least {{min}} words you have already studied in this list."
   },
   "dailyReview": {
     "title": "Daily review",

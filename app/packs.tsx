@@ -4,6 +4,10 @@ import {
   View,
   Text,
   ScrollView,
+  FlatList,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   Linking,
   I18nManager,
@@ -18,13 +22,24 @@ import {
   CheckCircle,
   Flame,
   Infinity,
+  List,
   RotateCcw,
+  Search,
+  Target,
   X,
   Zap,
 } from 'lucide-react-native';
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useAppStore, MAX_ENERGY } from '@/lib/store';
+import { useAppStore, MAX_ENERGY, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
+import {
+  PACK_FILTERS,
+  PackFilter,
+  countPackFilters,
+  filterPackTerms,
+  isStruggling,
+  wrongCount,
+} from '@/lib/pack-filter';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import {
@@ -40,6 +55,7 @@ import { DailyReviewCard, DailyReviewSession } from '@/components/DailyReview';
 type GroupFilter = 'all' | PackGroup;
 
 const LEITNER_BOXES: LeitnerBox[] = [1, 2, 3, 4, 5];
+const SEARCH_DEBOUNCE_MS = 200;
 
 export default function PacksScreen() {
   const { colors: t, accent } = useTheme();
@@ -58,6 +74,9 @@ export default function PacksScreen() {
     getPackStudyTerms,
     getPackReviewNeededTerms,
     getDailyReviewQueue,
+    getPackTerms,
+    setQuizScope,
+    countScopedQuizReady,
     progress,
     language,
     streak,
@@ -73,6 +92,13 @@ export default function PacksScreen() {
   const [loadingPackId, setLoadingPackId] = useState<string | null>(null);
   const [loadErrorPackId, setLoadErrorPackId] = useState<string | null>(null);
   const [dailySession, setDailySession] = useState<{ terms: Term[]; total: number } | null>(null);
+  // Word list ("Words") view of one pack: search + box/struggling filter.
+  const [browsingPackId, setBrowsingPackId] = useState<string | null>(null);
+  const [queryInput, setQueryInput] = useState('');
+  const [query, setQuery] = useState('');
+  const [wordFilter, setWordFilter] = useState<PackFilter>('all');
+  // True while the card deck shows a filtered word list instead of the pack's due cards.
+  const [filteredSession, setFilteredSession] = useState(false);
   const didAutostartRef = useRef(false);
   const loadingPackRef = useRef(false);
   const mountedRef = useRef(true);
@@ -157,6 +183,7 @@ export default function PacksScreen() {
         }
 
         setActivePackId(pack.id);
+        setFilteredSession(false);
 
         if (reviewOnly) {
           const revTerms = getPackReviewNeededTerms(pack.id);
@@ -198,11 +225,197 @@ export default function PacksScreen() {
     }
   }, [params.autostart, params.packId, packs, handleStartPack]);
 
+  // Closes the deck; after a filtered session this returns to the word list (browsingPackId stays set).
   const handleBackToPacks = useCallback(() => {
     setPackReviewMode(false);
     setPackPracticeMode(false);
+    setFilteredSession(false);
     setStudyingPackId(null);
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setQuery(queryInput), SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [queryInput]);
+
+  const packTitleOf = useCallback(
+    (pack: Pack) =>
+      i18n.exists(`categories.${pack.id}`) ? tr(`categories.${pack.id}`) : pack.title[termLang],
+    [i18n, tr, termLang]
+  );
+
+  const filterLabelOf = useCallback(
+    (filter: PackFilter) => {
+      if (filter === 'all') return tr('packs.filterAll');
+      if (filter === 'new') return tr('packs.filterNew');
+      if (filter === 'struggling') return tr('packs.filterStruggling');
+      return tr('packs.filterBox', { box: filter });
+    },
+    [tr]
+  );
+
+  const handleBrowsePack = useCallback(
+    async (pack: Pack) => {
+      if (!pack.load) return;
+      if (loadingPackRef.current) return;
+
+      loadingPackRef.current = true;
+      setLoadingPackId(pack.id);
+      setLoadErrorPackId(null);
+
+      try {
+        const ok = await ensurePacks([pack.id]);
+        if (!mountedRef.current) return;
+        if (!ok) {
+          setLoadErrorPackId(pack.id);
+          return;
+        }
+        setQueryInput('');
+        setQuery('');
+        setWordFilter('all');
+        setBrowsingPackId(pack.id);
+      } finally {
+        loadingPackRef.current = false;
+        if (mountedRef.current) {
+          setLoadingPackId(null);
+        }
+      }
+    },
+    [ensurePacks]
+  );
+
+  const handleCloseBrowse = useCallback(() => {
+    setBrowsingPackId(null);
+    setQueryInput('');
+    setQuery('');
+    setWordFilter('all');
+  }, []);
+
+  const browsingPack = useMemo(
+    () => (browsingPackId ? packs.find((p) => p.id === browsingPackId) ?? null : null),
+    [packs, browsingPackId]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const browseTerms = useMemo(
+    () => (browsingPackId ? getPackTerms(browsingPackId) : []),
+    [browsingPackId, packsLoaded]
+  );
+
+  const filteredWords = useMemo(
+    () => filterPackTerms(browseTerms, progress, { query, filter: wordFilter }),
+    [browseTerms, progress, query, wordFilter]
+  );
+
+  const filterCounts = useMemo(
+    () => countPackFilters(browseTerms, progress, query),
+    [browseTerms, progress, query]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const filteredQuizReady = useMemo(
+    () => countScopedQuizReady(filteredWords.map((w) => w.id)),
+    [filteredWords, progress]
+  );
+
+  // Card session on the filtered list; normal deck rules (energy for new cards, swipe sync) apply.
+  const handleStudyFiltered = useCallback(() => {
+    if (!browsingPackId || filteredWords.length === 0) return;
+    setActivePackId(browsingPackId);
+    setPackReviewMode(false);
+    setPackPracticeMode(false);
+    setFilteredSession(true);
+    setStudyTerms(filteredWords);
+    setStudyingPackId(browsingPackId);
+  }, [browsingPackId, filteredWords, setActivePackId]);
+
+  const handleQuizFiltered = useCallback(() => {
+    if (!browsingPack || filteredQuizReady < MIN_SCOPED_QUIZ_SIZE) return;
+    const trimmed = query.trim();
+    const label = [
+      packTitleOf(browsingPack),
+      filterLabelOf(wordFilter),
+      ...(trimmed ? [`"${trimmed}"`] : []),
+    ].join(' · ');
+    setQuizScope({ ids: filteredWords.map((w) => w.id), label });
+    router.navigate('/(tabs)/quiz' as unknown as Parameters<typeof router.navigate>[0]);
+  }, [
+    browsingPack,
+    filteredQuizReady,
+    query,
+    packTitleOf,
+    filterLabelOf,
+    wordFilter,
+    setQuizScope,
+    filteredWords,
+    router,
+  ]);
+
+  const renderWordRow = useCallback(
+    ({ item }: { item: Term }) => {
+      const p = progress[item.id];
+      const wrong = wrongCount(p);
+      const isLearnedBox = Boolean(p && p.box >= 3);
+      return (
+        <View
+          style={[
+            styles.wordRow,
+            rowStyle,
+            { backgroundColor: t.bgElevated, borderColor: t.border },
+          ]}
+        >
+          <View style={styles.wordTextCol}>
+            <Text
+              style={[typography.headline, { color: t.text }, styles.ltrText]}
+              numberOfLines={1}
+            >
+              {item.term}
+            </Text>
+            <Text
+              style={[typography.footnote, { color: t.textSecondary, marginTop: 2 }, styles.ltrText]}
+              numberOfLines={2}
+            >
+              {item.translations[termLang].definition}
+            </Text>
+          </View>
+          <View style={styles.wordMetaCol}>
+            <View
+              style={[
+                styles.boxPill,
+                {
+                  backgroundColor: !p
+                    ? t.bgSubtle
+                    : isLearnedBox
+                      ? colors.successMuted
+                      : colors.accentSubtle,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  typography.caption,
+                  { color: !p ? t.textTertiary : isLearnedBox ? colors.success : accent },
+                ]}
+              >
+                {p ? tr('packs.boxShort', { box: p.box }) : tr('packs.filterNew')}
+              </Text>
+            </View>
+            {wrong > 0 && (
+              <Text
+                style={[
+                  typography.caption,
+                  { color: isStruggling(p) ? colors.danger : t.textTertiary },
+                ]}
+              >
+                {tr('packs.missedCount', { count: wrong })}
+              </Text>
+            )}
+          </View>
+        </View>
+      );
+    },
+    [progress, rowStyle, t, accent, termLang, tr]
+  );
 
   const handleNavigateBack = useCallback(() => {
     if (router.canGoBack()) {
@@ -282,10 +495,12 @@ export default function PacksScreen() {
               >
                 {packPracticeMode
                   ? `${tr('packs.learnedCount', { learned: packProg.learned, total: packProg.total })} · ${tr('packs.practiceMode')}`
-                  : tr('packs.learnedCount', {
-                      learned: packProg.learned,
-                      total: packProg.total,
-                    })}
+                  : filteredSession
+                    ? `${tr('packs.learnedCount', { learned: packProg.learned, total: packProg.total })} · ${filterLabelOf(wordFilter)}`
+                    : tr('packs.learnedCount', {
+                        learned: packProg.learned,
+                        total: packProg.total,
+                      })}
               </Text>
             </Pressable>
           </View>
@@ -325,30 +540,32 @@ export default function PacksScreen() {
               )}
             </View>
 
-            <Pressable
-              disabled={!canToggleReview}
-              onPress={() => {
-                if (packReviewMode) {
-                  handleStartPack(studyingPack, false);
-                } else {
-                  handleStartPack(studyingPack, true);
-                }
-              }}
-              style={[
-                styles.iconCircleBtn,
-                {
-                  backgroundColor: packReviewMode ? colors.accentMuted : colors.warningMuted,
-                  borderColor: packReviewMode ? accent : colors.warning,
-                  opacity: canToggleReview ? 1 : 0.4,
-                },
-              ]}
-            >
-              {packReviewMode ? (
-                <BookOpen size={14} color={accent} strokeWidth={2} />
-              ) : (
-                <RotateCcw size={14} color={colors.warning} strokeWidth={2} />
-              )}
-            </Pressable>
+            {!filteredSession && (
+              <Pressable
+                disabled={!canToggleReview}
+                onPress={() => {
+                  if (packReviewMode) {
+                    handleStartPack(studyingPack, false);
+                  } else {
+                    handleStartPack(studyingPack, true);
+                  }
+                }}
+                style={[
+                  styles.iconCircleBtn,
+                  {
+                    backgroundColor: packReviewMode ? colors.accentMuted : colors.warningMuted,
+                    borderColor: packReviewMode ? accent : colors.warning,
+                    opacity: canToggleReview ? 1 : 0.4,
+                  },
+                ]}
+              >
+                {packReviewMode ? (
+                  <BookOpen size={14} color={accent} strokeWidth={2} />
+                ) : (
+                  <RotateCcw size={14} color={colors.warning} strokeWidth={2} />
+                )}
+              </Pressable>
+            )}
 
             <Pressable onPress={handleBackToPacks} hitSlop={12} style={styles.closeBtn}>
               <X size={22} color={t.textTertiary} strokeWidth={2} />
@@ -362,6 +579,19 @@ export default function PacksScreen() {
           isReviewMode={packReviewMode}
           isPracticeMode={packPracticeMode}
           onRestart={() => {
+            if (filteredSession) {
+              // Re-run the same search/filter on current progress (e.g. fixed words leave "Struggling").
+              const next = filterPackTerms(getPackTerms(studyingPack.id), progress, {
+                query,
+                filter: wordFilter,
+              });
+              if (next.length === 0) {
+                handleBackToPacks();
+              } else {
+                setStudyTerms(next);
+              }
+              return;
+            }
             if (packReviewMode && getPackReviewNeededTerms(studyingPack.id).length === 0) {
               handleStartPack(studyingPack, false);
             } else {
@@ -369,6 +599,230 @@ export default function PacksScreen() {
             }
           }}
         />
+      </SafeAreaView>
+    );
+  }
+
+  if (browsingPack) {
+    const canStudy = filteredWords.length > 0;
+    const canQuiz = filteredQuizReady >= MIN_SCOPED_QUIZ_SIZE;
+
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top', 'bottom']}>
+        <Stack.Screen options={{ headerShown: false }} />
+        <KeyboardAvoidingView
+          style={styles.flex}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <View style={styles.topHeader}>
+            <View style={[styles.titleBar, rowStyle]}>
+              <Pressable
+                onPress={handleCloseBrowse}
+                hitSlop={12}
+                accessibilityRole="button"
+                style={[styles.backBtn, { backgroundColor: t.bgElevated, borderColor: t.border }]}
+              >
+                {isArabic ? (
+                  <ArrowRight size={18} color={t.text} strokeWidth={2} />
+                ) : (
+                  <ArrowLeft size={18} color={t.text} strokeWidth={2} />
+                )}
+              </Pressable>
+              <View style={styles.titleTextWrap}>
+                <Text style={[typography.title, { color: t.text }, textDirStyle]} numberOfLines={1}>
+                  {packTitleOf(browsingPack)}
+                </Text>
+                <Text style={[typography.footnote, { color: t.textSecondary }, textDirStyle]}>
+                  {tr('packs.resultCount', { count: filteredWords.length })}
+                </Text>
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.searchBox,
+                rowStyle,
+                { backgroundColor: t.bgElevated, borderColor: t.border },
+              ]}
+            >
+              <Search size={16} color={t.textTertiary} strokeWidth={2} />
+              <TextInput
+                value={queryInput}
+                onChangeText={setQueryInput}
+                placeholder={tr('packs.searchPlaceholder')}
+                placeholderTextColor={t.textMuted}
+                accessibilityLabel={tr('packs.searchPlaceholder')}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="search"
+                style={[
+                  typography.body,
+                  styles.searchInput,
+                  { color: t.text },
+                  isArabic ? styles.searchInputRtl : null,
+                ]}
+              />
+              {queryInput.length > 0 && (
+                <Pressable
+                  onPress={() => {
+                    setQueryInput('');
+                    setQuery('');
+                  }}
+                  hitSlop={8}
+                  accessibilityRole="button"
+                  accessibilityLabel={tr('packs.clearSearch')}
+                >
+                  <X size={16} color={t.textTertiary} strokeWidth={2} />
+                </Pressable>
+              )}
+            </View>
+
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={[styles.tabRow, rowStyle]}
+            >
+              {PACK_FILTERS.map((filter) => {
+                const active = wordFilter === filter;
+                const count = filterCounts[String(filter)] ?? 0;
+                const isStrugglingTab = filter === 'struggling';
+                return (
+                  <Pressable
+                    key={String(filter)}
+                    onPress={() => setWordFilter(filter)}
+                    accessibilityRole="tab"
+                    accessibilityState={{ selected: active }}
+                    style={[
+                      styles.filterChip,
+                      styles.tabChip,
+                      rowStyle,
+                      {
+                        backgroundColor: active
+                          ? isStrugglingTab
+                            ? colors.danger
+                            : accent
+                          : t.bgElevated,
+                        borderColor: active
+                          ? isStrugglingTab
+                            ? colors.danger
+                            : accent
+                          : isStrugglingTab && count > 0
+                            ? colors.danger
+                            : t.border,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        typography.subhead,
+                        { color: active ? colors.dark.text : t.textSecondary },
+                      ]}
+                    >
+                      {filterLabelOf(filter)}
+                    </Text>
+                    <Text
+                      style={[
+                        typography.caption,
+                        { color: active ? colors.dark.text : t.textTertiary },
+                      ]}
+                    >
+                      {count}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+
+            {wordFilter === 'struggling' && (
+              <Text style={[typography.footnote, { color: t.textTertiary }, textDirStyle]}>
+                {tr('packs.strugglingHint')}
+              </Text>
+            )}
+          </View>
+
+          <FlatList
+            data={filteredWords}
+            keyExtractor={(item) => item.id}
+            renderItem={renderWordRow}
+            style={styles.flex}
+            contentContainerStyle={styles.wordListContent}
+            ItemSeparatorComponent={WordSeparator}
+            initialNumToRender={20}
+            maxToRenderPerBatch={20}
+            windowSize={11}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+            ListEmptyComponent={
+              <Text
+                style={[
+                  typography.callout,
+                  { color: t.textTertiary, textAlign: 'center', marginTop: spacing['2xl'] },
+                ]}
+              >
+                {tr('packs.noResults')}
+              </Text>
+            }
+          />
+
+          <View style={[styles.actionBar, { borderTopColor: t.border, backgroundColor: t.bg }]}>
+            {canStudy && !canQuiz && (
+              <Text style={[typography.caption, { color: t.textTertiary }, textDirStyle]}>
+                {tr('packs.quizNeedsSeen', { min: MIN_SCOPED_QUIZ_SIZE })}
+              </Text>
+            )}
+            <View style={[styles.actionBtnRow, rowStyle]}>
+              <Pressable
+                disabled={!canStudy}
+                onPress={handleStudyFiltered}
+                accessibilityRole="button"
+                style={[
+                  styles.actionBtn,
+                  rowStyle,
+                  {
+                    backgroundColor: canStudy ? accent : t.bgSubtle,
+                    borderColor: canStudy ? accent : t.border,
+                  },
+                ]}
+              >
+                <BookOpen size={15} color={canStudy ? colors.dark.text : t.textMuted} strokeWidth={2} />
+                <Text
+                  style={[
+                    typography.subhead,
+                    { color: canStudy ? colors.dark.text : t.textMuted, fontWeight: '600' },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {tr('packs.studyFiltered', { count: filteredWords.length })}
+                </Text>
+              </Pressable>
+              <Pressable
+                disabled={!canQuiz}
+                onPress={handleQuizFiltered}
+                accessibilityRole="button"
+                style={[
+                  styles.actionBtn,
+                  rowStyle,
+                  {
+                    backgroundColor: t.bgElevated,
+                    borderColor: canQuiz ? accent : t.border,
+                  },
+                ]}
+              >
+                <Target size={15} color={canQuiz ? accent : t.textMuted} strokeWidth={2} />
+                <Text
+                  style={[
+                    typography.subhead,
+                    { color: canQuiz ? accent : t.textMuted, fontWeight: '600' },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {tr('packs.quizFiltered', { count: filteredQuizReady })}
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     );
   }
@@ -686,6 +1140,30 @@ export default function PacksScreen() {
                   </Pressable>
                 </View>
 
+                {isReady && (
+                  <Pressable
+                    disabled={isAnyLoading}
+                    onPress={() => {
+                      void handleBrowsePack(pack);
+                    }}
+                    accessibilityRole="button"
+                    accessibilityLabel={tr('packs.browseWords')}
+                    style={[
+                      styles.wordsBtn,
+                      rowStyle,
+                      {
+                        borderColor: t.border,
+                        opacity: isAnyLoading ? 0.6 : 1,
+                      },
+                    ]}
+                  >
+                    <List size={15} color={t.text} strokeWidth={2} />
+                    <Text style={[typography.subhead, { color: t.text }]} numberOfLines={1}>
+                      {tr('packs.browseWords')}
+                    </Text>
+                  </Pressable>
+                )}
+
                 <Pressable
                   disabled={!isReady || isAnyLoading}
                   onPress={() => {
@@ -789,12 +1267,104 @@ export default function PacksScreen() {
   );
 }
 
+function WordSeparator() {
+  return <View style={styles.wordSeparator} />;
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxWidth: 800,
     alignSelf: 'center',
     width: '100%',
+  },
+  flex: {
+    flex: 1,
+  },
+  searchBox: {
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    minHeight: 44,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: spacing.sm,
+  },
+  searchInputRtl: {
+    textAlign: 'right',
+    writingDirection: 'rtl',
+  },
+  tabRow: {
+    gap: spacing.sm,
+    paddingVertical: 2,
+  },
+  tabChip: {
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  wordListContent: {
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.xl,
+  },
+  wordSeparator: {
+    height: spacing.sm,
+  },
+  wordRow: {
+    alignItems: 'center',
+    gap: spacing.md,
+    padding: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  wordTextCol: {
+    flex: 1,
+    minWidth: 0,
+  },
+  wordMetaCol: {
+    alignItems: 'center',
+    gap: spacing.xs,
+    flexShrink: 0,
+  },
+  boxPill: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.full,
+  },
+  ltrText: {
+    writingDirection: 'ltr',
+  },
+  actionBar: {
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
+    borderTopWidth: 0.5,
+    gap: spacing.sm,
+  },
+  actionBtnRow: {
+    gap: spacing.sm,
+  },
+  actionBtn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  wordsBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 1,
   },
   row: {
     flexDirection: 'row',

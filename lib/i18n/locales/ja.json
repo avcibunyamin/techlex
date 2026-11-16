@@ -366,7 +366,11 @@
     "modeDefinition": "定義マッチ",
     "modeCloze": "穴埋め",
     "clozePrompt": "空欄に入る単語を選んでください",
-    "correctAnswerLabel": "正解："
+    "correctAnswerLabel": "正解：",
+    "scopeTitle": "選んだ単語でクイズ",
+    "scopeSub": "{{label}} · {{count}}語が準備完了",
+    "scopeNotEnough": "まずこの中の単語を{{min}}語以上学習してから戻ってきてください。",
+    "scopeClear": "代わりにすべての単語でクイズ"
   },
   "premiumModal": {
     "title": "Premium機能",
@@ -411,7 +415,20 @@
     "openSource": "出典を開く",
     "attributionTitle": "出典とライセンス表記",
     "attributionNote": "単語リストは {{license}} ライセンスの下で提供され、1000語ごとのパックに分割されています。定義と例文はTechLex向けに独自作成されています。",
-    "loadError": "パックを読み込めませんでした。もう一度お試しください。"
+    "loadError": "パックを読み込めませんでした。もう一度お試しください。",
+    "browseWords": "単語一覧",
+    "searchPlaceholder": "単語や意味で検索",
+    "clearSearch": "検索をクリア",
+    "resultCount": "{{count}}語",
+    "filterNew": "未学習",
+    "filterBox": "ボックス{{box}}",
+    "filterStruggling": "苦手な単語",
+    "strugglingHint": "2回以上間違えて、ボックス1に戻った単語です。",
+    "missedCount": "{{count}}回ミス",
+    "noResults": "この検索に一致する単語はありません。",
+    "studyFiltered": "カード（{{count}}）",
+    "quizFiltered": "クイズ（{{count}}）",
+    "quizNeedsSeen": "クイズには、このリストで学習済みの単語が{{min}}語以上必要です。"
   },
   "dailyReview": {
     "title": "今日の復習",

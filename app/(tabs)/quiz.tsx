@@ -15,7 +15,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { useAppStore, QuizQuestion, QuizMode } from '@/lib/store';
+import { useAppStore, QuizQuestion, QuizMode, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { haptic } from '@/lib/haptics';
@@ -33,7 +33,10 @@ export default function QuizScreen() {
   const knownCount = useAppStore(s => s.getKnownTermCount());
   const isPremium = useAppStore(s => s.hasActivePremium());
   const language = useAppStore(s => s.language);
-  const { generateQuiz, submitQuizResults, downgradeQuizTerm, promoteQuizTerm } = useAppStore();
+  const quizScope = useAppStore(s => s.quizScope);
+  // Selector re-runs on progress changes, so the ready count stays current after a quiz.
+  const scopedReady = useAppStore(s => (s.quizScope ? s.countScopedQuizReady(s.quizScope.ids) : 0));
+  const { generateQuiz, submitQuizResults, downgradeQuizTerm, promoteQuizTerm, setQuizScope } = useAppStore();
   const rowDir = language === 'ar' && !I18nManager.isRTL ? 'row-reverse' : 'row';
 
   const [quizState, setQuizState] = useState<QuizState>('idle');
@@ -91,7 +94,7 @@ export default function QuizScreen() {
 
   const startQuiz = useCallback(() => {
     if (advanceTimer.current) clearTimeout(advanceTimer.current);
-    const qs = generateQuiz(mode);
+    const qs = generateQuiz(mode, quizScope?.ids);
     if (qs.length === 0) return;
     setQuestions(qs);
     setCurrentQ(0);
@@ -105,7 +108,7 @@ export default function QuizScreen() {
     setQuizState('active');
     borderGlow.value = 0;
     shakeX.value = 0;
-  }, [generateQuiz, mode, borderGlow, shakeX]);
+  }, [generateQuiz, mode, quizScope, borderGlow, shakeX]);
 
   const advanceToNext = useCallback((wasCorrect: boolean) => {
     if (currentQ + 1 >= questions.length) {
@@ -204,13 +207,71 @@ export default function QuizScreen() {
 
   // --- IDLE STATE ---
   if (quizState === 'idle') {
+    const startControls = (
+      <>
+        <View
+          style={[styles.modePicker, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
+          accessibilityRole="radiogroup"
+        >
+          {(['definition', 'cloze'] as const).map(m => {
+            const active = mode === m;
+            return (
+              <Pressable
+                key={m}
+                style={[styles.modeOption, active && { backgroundColor: t.bgElevated, borderColor: accent }]}
+                onPress={() => setMode(m)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: active }}
+              >
+                <Text style={[typography.subhead, { color: active ? accent : t.textSecondary, fontWeight: '600', textAlign: 'center' }]}>
+                  {tr(m === 'cloze' ? 'quiz.modeCloze' : 'quiz.modeDefinition')}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+        <Animated.View style={[styles.startBtnWrap, startBtnStyle]}>
+          <Pressable
+            style={[styles.startBtn, { backgroundColor: accent }]}
+            onPressIn={() => { startBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
+            onPressOut={() => { startBtnScale.value = withSpring(1, PRESS_SPRING); }}
+            onPress={startQuiz}
+          >
+            <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.start')}</Text>
+          </Pressable>
+        </Animated.View>
+      </>
+    );
+
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
         <View style={styles.header}>
           <Text style={[typography.largeTitle, { color: t.text }]}>{tr('quiz.title')}</Text>
         </View>
         <View style={styles.centerContent}>
-          {knownCount === 0 ? (
+          {quizScope ? (
+            <Animated.View entering={FadeIn.duration(300)} style={styles.emptyInner}>
+              <Target size={32} color={scopedReady >= MIN_SCOPED_QUIZ_SIZE ? accent : t.textMuted} strokeWidth={1.5} />
+              <Text style={[typography.headline, { color: t.text, marginTop: spacing.xl, textAlign: 'center' }]}>
+                {tr('quiz.scopeTitle')}
+              </Text>
+              <Text style={[typography.callout, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
+                {tr('quiz.scopeSub', { label: quizScope.label, count: scopedReady })}
+              </Text>
+              {scopedReady >= MIN_SCOPED_QUIZ_SIZE ? (
+                startControls
+              ) : (
+                <Text style={[typography.callout, { color: t.textSecondary, textAlign: 'center', marginTop: spacing.lg }]}>
+                  {tr('quiz.scopeNotEnough', { min: MIN_SCOPED_QUIZ_SIZE })}
+                </Text>
+              )}
+              <Pressable onPress={() => setQuizScope(null)} hitSlop={8} style={{ marginTop: spacing.lg }}>
+                <Text style={[typography.subhead, { color: accent, fontWeight: '600' }]}>
+                  {tr('quiz.scopeClear')}
+                </Text>
+              </Pressable>
+            </Animated.View>
+          ) : knownCount === 0 ? (
             <Animated.View entering={FadeIn.duration(300)} style={styles.emptyInner}>
               <Target size={32} color={t.textMuted} strokeWidth={1} />
               <Text style={[typography.headline, { color: t.text, marginTop: spacing.xl }]}>
@@ -242,37 +303,7 @@ export default function QuizScreen() {
               <Text style={[typography.callout, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
                 {knownCount} {tr('quiz.termsReady')}
               </Text>
-              <View
-                style={[styles.modePicker, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
-                accessibilityRole="radiogroup"
-              >
-                {(['definition', 'cloze'] as const).map(m => {
-                  const active = mode === m;
-                  return (
-                    <Pressable
-                      key={m}
-                      style={[styles.modeOption, active && { backgroundColor: t.bgElevated, borderColor: accent }]}
-                      onPress={() => setMode(m)}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected: active }}
-                    >
-                      <Text style={[typography.subhead, { color: active ? accent : t.textSecondary, fontWeight: '600', textAlign: 'center' }]}>
-                        {tr(m === 'cloze' ? 'quiz.modeCloze' : 'quiz.modeDefinition')}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-              <Animated.View style={[styles.startBtnWrap, startBtnStyle]}>
-                <Pressable
-                  style={[styles.startBtn, { backgroundColor: accent }]}
-                  onPressIn={() => { startBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
-                  onPressOut={() => { startBtnScale.value = withSpring(1, PRESS_SPRING); }}
-                  onPress={startQuiz}
-                >
-                  <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.start')}</Text>
-                </Pressable>
-              </Animated.View>
+              {startControls}
             </Animated.View>
           )}
         </View>

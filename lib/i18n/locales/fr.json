@@ -366,7 +366,11 @@
     "modeDefinition": "Associer la définition",
     "modeCloze": "Texte à trous",
     "clozePrompt": "Choisis le mot qui complète le blanc",
-    "correctAnswerLabel": "Bonne réponse :"
+    "correctAnswerLabel": "Bonne réponse :",
+    "scopeTitle": "Quiz sur les mots sélectionnés",
+    "scopeSub": "{{label}} · {{count}} mots prêts",
+    "scopeNotEnough": "Étudie d'abord au moins {{min}} de ces mots, puis reviens.",
+    "scopeClear": "Faire plutôt le quiz sur tous mes mots"
   },
   "premiumModal": {
     "title": "Fonctionnalité Premium",
@@ -411,7 +415,20 @@
     "openSource": "Ouvrir la source",
     "attributionTitle": "ATTRIBUTION DE LA SOURCE ET LICENCE",
     "attributionNote": "Les listes de mots sont sous licence {{license}} et divisées en packs de 1000 mots ; les définitions et phrases d'exemple sont rédigées de façon originale pour TechLex.",
-    "loadError": "Impossible de charger le pack. Veuillez réessayer."
+    "loadError": "Impossible de charger le pack. Veuillez réessayer.",
+    "browseWords": "Mots",
+    "searchPlaceholder": "Chercher un mot ou son sens",
+    "clearSearch": "Effacer la recherche",
+    "resultCount": "{{count}} mots",
+    "filterNew": "Nouveaux",
+    "filterBox": "Boîte {{box}}",
+    "filterStruggling": "Mots difficiles",
+    "strugglingHint": "Mots ratés au moins deux fois et revenus dans la boîte 1.",
+    "missedCount": "Raté {{count}}×",
+    "noResults": "Aucun mot ne correspond à cette recherche.",
+    "studyFiltered": "Cartes ({{count}})",
+    "quizFiltered": "Quiz ({{count}})",
+    "quizNeedsSeen": "Un quiz demande au moins {{min}} mots de cette liste déjà étudiés."
   },
   "dailyReview": {
     "title": "Révision du jour",

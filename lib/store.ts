@@ -63,6 +63,36 @@ function findLoadedTerm(termId: string): Term | undefined {
 
 export type QuizMode = 'definition' | 'cloze';
 
+/** Words picked on another screen (e.g. a filtered pack list) to quiz on. Not persisted. */
+export interface QuizScope {
+  ids: string[];
+  label: string;
+}
+
+const QUIZ_SIZE = 10;
+/** A scoped quiz may be shorter than QUIZ_SIZE, but needs at least this many seen words. */
+export const MIN_SCOPED_QUIZ_SIZE = 4;
+
+// Scoped quiz pool: loaded words the user has already seen (any box, so box-1 "struggling"
+// words qualify). Unseen words are skipped because they have nothing to recall yet.
+// Uses per-pack id sets instead of findLoadedTerm so a 1000-word scope stays linear
+// (the quiz screen re-runs this in a store selector).
+function scopedQuizIds(ids: string[], progress: Record<string, UserProgress>): string[] {
+  const loadedByPack = new Map<string, Set<string>>();
+  const isLoaded = (id: string): boolean => {
+    if (TERM_BY_ID_MAP.has(id)) return true;
+    const packId = packIdOfTerm(id);
+    if (!packId) return false;
+    let loaded = loadedByPack.get(packId);
+    if (!loaded) {
+      loaded = new Set((PACK_TERMS_MAP[packId] ?? []).map(t => t.id));
+      loadedByPack.set(packId, loaded);
+    }
+    return loaded.has(id);
+  };
+  return Array.from(new Set(ids)).filter(id => progress[id] !== undefined && isLoaded(id));
+}
+
 export interface QuizQuestion {
   term: Term;
   displayedDefinition: string;
@@ -118,6 +148,7 @@ interface AppState {
   dailyStats: DailyStat[];
   reviewMode: boolean;
   quizSeenIds: Set<string>;
+  quizScope: QuizScope | null;
   isSyncConflict: boolean;
   isCheckingSync: boolean;
   isResettingPassword: boolean;
@@ -162,7 +193,9 @@ interface AppState {
   getKnownTermCount: () => number;
   downgradeQuizTerm: (termId: string) => void;
   promoteQuizTerm: (termId: string) => void;
-  generateQuiz: (mode?: QuizMode) => QuizQuestion[];
+  generateQuiz: (mode?: QuizMode, scopeIds?: string[]) => QuizQuestion[];
+  setQuizScope: (scope: QuizScope | null) => void;
+  countScopedQuizReady: (ids: string[]) => number;
   submitQuizResults: (correctCount: number, totalCount: number) => void;
   recordDailyStat: (field: 'swipes' | 'quizCorrect' | 'newTerms', amount: number) => void;
   fetchServerTime: () => Promise<void>;
@@ -221,6 +254,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   dailyStats: [],
   reviewMode: false,
   quizSeenIds: new Set<string>(),
+  quizScope: null,
   isSyncConflict: false,
   isCheckingSync: false,
   isResettingPassword: false,
@@ -893,16 +927,25 @@ export const useAppStore = create<AppState>((set, get) => ({
     get().scheduleSave();
   },
 
-  generateQuiz: (mode = 'definition') => {
+  setQuizScope: (scope) => {
+    set({ quizScope: scope && scope.ids.length > 0 ? scope : null });
+  },
+
+  countScopedQuizReady: (ids) => {
+    return scopedQuizIds(ids, get().progress).length;
+  },
+
+  generateQuiz: (mode = 'definition', scopeIds) => {
     const { progress, terms, language, quizSeenIds } = get();
     const tl = language === 'tr' ? 'tr' : 'en';
-    const QUIZ_SIZE = 10;
 
-    // IT terms plus terms of packs already loaded into memory.
-    const knownIds = Object.keys(progress).filter(
-      id => progress[id].box >= 2 && findLoadedTerm(id) !== undefined
-    );
-    if (knownIds.length < QUIZ_SIZE) return [];
+    // Unscoped: IT terms plus terms of packs already loaded into memory, box 2+.
+    const knownIds = scopeIds
+      ? scopedQuizIds(scopeIds, progress)
+      : Object.keys(progress).filter(
+          id => progress[id].box >= 2 && findLoadedTerm(id) !== undefined
+        );
+    if (knownIds.length < (scopeIds ? MIN_SCOPED_QUIZ_SIZE : QUIZ_SIZE)) return [];
 
     const unseenFirst = knownIds.filter(id => !quizSeenIds.has(id));
     const pool = unseenFirst.length >= QUIZ_SIZE ? unseenFirst : knownIds;
@@ -1031,6 +1074,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       dailyStats: [],
       reviewMode: false,
       quizSeenIds: new Set<string>(),
+      quizScope: null,
       isSyncConflict: false,
       isCheckingSync: false,
       isResettingPassword: false,
