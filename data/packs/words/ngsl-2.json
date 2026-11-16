@@ -1,0 +1,5002 @@
+[
+  {
+    "id": "ngsl-1001",
+    "word": "difficulty",
+    "rank": 1001
+  },
+  {
+    "id": "ngsl-1002",
+    "word": "purchase",
+    "rank": 1002
+  },
+  {
+    "id": "ngsl-1003",
+    "word": "shoot",
+    "rank": 1003
+  },
+  {
+    "id": "ngsl-1004",
+    "word": "announce",
+    "rank": 1004
+  },
+  {
+    "id": "ngsl-1005",
+    "word": "unless",
+    "rank": 1005
+  },
+  {
+    "id": "ngsl-1006",
+    "word": "independent",
+    "rank": 1006
+  },
+  {
+    "id": "ngsl-1007",
+    "word": "recommend",
+    "rank": 1007
+  },
+  {
+    "id": "ngsl-1008",
+    "word": "survey",
+    "rank": 1008
+  },
+  {
+    "id": "ngsl-1009",
+    "word": "majority",
+    "rank": 1009
+  },
+  {
+    "id": "ngsl-1010",
+    "word": "stick",
+    "rank": 1010
+  },
+  {
+    "id": "ngsl-1011",
+    "word": "request",
+    "rank": 1011
+  },
+  {
+    "id": "ngsl-1012",
+    "word": "rich",
+    "rank": 1012
+  },
+  {
+    "id": "ngsl-1013",
+    "word": "wind",
+    "rank": 1013
+  },
+  {
+    "id": "ngsl-1014",
+    "word": "none",
+    "rank": 1014
+  },
+  {
+    "id": "ngsl-1015",
+    "word": "exchange",
+    "rank": 1015
+  },
+  {
+    "id": "ngsl-1016",
+    "word": "budget",
+    "rank": 1016
+  },
+  {
+    "id": "ngsl-1017",
+    "word": "famous",
+    "rank": 1017
+  },
+  {
+    "id": "ngsl-1018",
+    "word": "blood",
+    "rank": 1018
+  },
+  {
+    "id": "ngsl-1019",
+    "word": "appropriate",
+    "rank": 1019
+  },
+  {
+    "id": "ngsl-1020",
+    "word": "block",
+    "rank": 1020
+  },
+  {
+    "id": "ngsl-1021",
+    "word": "warm",
+    "rank": 1021
+  },
+  {
+    "id": "ngsl-1022",
+    "word": "count",
+    "rank": 1022
+  },
+  {
+    "id": "ngsl-1023",
+    "word": "scene",
+    "rank": 1023
+  },
+  {
+    "id": "ngsl-1024",
+    "word": "writer",
+    "rank": 1024
+  },
+  {
+    "id": "ngsl-1025",
+    "word": "content",
+    "rank": 1025
+  },
+  {
+    "id": "ngsl-1026",
+    "word": "prevent",
+    "rank": 1026
+  },
+  {
+    "id": "ngsl-1027",
+    "word": "safe",
+    "rank": 1027
+  },
+  {
+    "id": "ngsl-1028",
+    "word": "invite",
+    "rank": 1028
+  },
+  {
+    "id": "ngsl-1029",
+    "word": "mix",
+    "rank": 1029
+  },
+  {
+    "id": "ngsl-1030",
+    "word": "element",
+    "rank": 1030
+  },
+  {
+    "id": "ngsl-1031",
+    "word": "effective",
+    "rank": 1031
+  },
+  {
+    "id": "ngsl-1032",
+    "word": "correct",
+    "rank": 1032
+  },
+  {
+    "id": "ngsl-1033",
+    "word": "medical",
+    "rank": 1033
+  },
+  {
+    "id": "ngsl-1034",
+    "word": "admit",
+    "rank": 1034
+  },
+  {
+    "id": "ngsl-1035",
+    "word": "beat",
+    "rank": 1035
+  },
+  {
+    "id": "ngsl-1036",
+    "word": "telephone",
+    "rank": 1036
+  },
+  {
+    "id": "ngsl-1037",
+    "word": "copy",
+    "rank": 1037
+  },
+  {
+    "id": "ngsl-1038",
+    "word": "committee",
+    "rank": 1038
+  },
+  {
+    "id": "ngsl-1039",
+    "word": "aware",
+    "rank": 1039
+  },
+  {
+    "id": "ngsl-1040",
+    "word": "advice",
+    "rank": 1040
+  },
+  {
+    "id": "ngsl-1041",
+    "word": "handle",
+    "rank": 1041
+  },
+  {
+    "id": "ngsl-1042",
+    "word": "glass",
+    "rank": 1042
+  },
+  {
+    "id": "ngsl-1043",
+    "word": "trial",
+    "rank": 1043
+  },
+  {
+    "id": "ngsl-1044",
+    "word": "stress",
+    "rank": 1044
+  },
+  {
+    "id": "ngsl-1045",
+    "word": "radio",
+    "rank": 1045
+  },
+  {
+    "id": "ngsl-1046",
+    "word": "administration",
+    "rank": 1046
+  },
+  {
+    "id": "ngsl-1047",
+    "word": "complex",
+    "rank": 1047
+  },
+  {
+    "id": "ngsl-1048",
+    "word": "text",
+    "rank": 1048
+  },
+  {
+    "id": "ngsl-1049",
+    "word": "context",
+    "rank": 1049
+  },
+  {
+    "id": "ngsl-1050",
+    "word": "ride",
+    "rank": 1050
+  },
+  {
+    "id": "ngsl-1051",
+    "word": "directly",
+    "rank": 1051
+  },
+  {
+    "id": "ngsl-1052",
+    "word": "heavy",
+    "rank": 1052
+  },
+  {
+    "id": "ngsl-1053",
+    "word": "remove",
+    "rank": 1053
+  },
+  {
+    "id": "ngsl-1054",
+    "word": "conduct",
+    "rank": 1054
+  },
+  {
+    "id": "ngsl-1055",
+    "word": "equipment",
+    "rank": 1055
+  },
+  {
+    "id": "ngsl-1056",
+    "word": "otherwise",
+    "rank": 1056
+  },
+  {
+    "id": "ngsl-1057",
+    "word": "title",
+    "rank": 1057
+  },
+  {
+    "id": "ngsl-1058",
+    "word": "extra",
+    "rank": 1058
+  },
+  {
+    "id": "ngsl-1059",
+    "word": "executive",
+    "rank": 1059
+  },
+  {
+    "id": "ngsl-1060",
+    "word": "chair",
+    "rank": 1060
+  },
+  {
+    "id": "ngsl-1061",
+    "word": "expensive",
+    "rank": 1061
+  },
+  {
+    "id": "ngsl-1062",
+    "word": "sample",
+    "rank": 1062
+  },
+  {
+    "id": "ngsl-1063",
+    "word": "sex",
+    "rank": 1063
+  },
+  {
+    "id": "ngsl-1064",
+    "word": "deliver",
+    "rank": 1064
+  },
+  {
+    "id": "ngsl-1065",
+    "word": "video",
+    "rank": 1065
+  },
+  {
+    "id": "ngsl-1066",
+    "word": "connection",
+    "rank": 1066
+  },
+  {
+    "id": "ngsl-1067",
+    "word": "primary",
+    "rank": 1067
+  },
+  {
+    "id": "ngsl-1068",
+    "word": "weather",
+    "rank": 1068
+  },
+  {
+    "id": "ngsl-1069",
+    "word": "collect",
+    "rank": 1069
+  },
+  {
+    "id": "ngsl-1070",
+    "word": "inform",
+    "rank": 1070
+  },
+  {
+    "id": "ngsl-1071",
+    "word": "principle",
+    "rank": 1071
+  },
+  {
+    "id": "ngsl-1072",
+    "word": "straight",
+    "rank": 1072
+  },
+  {
+    "id": "ngsl-1073",
+    "word": "appeal",
+    "rank": 1073
+  },
+  {
+    "id": "ngsl-1074",
+    "word": "highly",
+    "rank": 1074
+  },
+  {
+    "id": "ngsl-1075",
+    "word": "trust",
+    "rank": 1075
+  },
+  {
+    "id": "ngsl-1076",
+    "word": "wonderful",
+    "rank": 1076
+  },
+  {
+    "id": "ngsl-1077",
+    "word": "flat",
+    "rank": 1077
+  },
+  {
+    "id": "ngsl-1078",
+    "word": "absolutely",
+    "rank": 1078
+  },
+  {
+    "id": "ngsl-1079",
+    "word": "flow",
+    "rank": 1079
+  },
+  {
+    "id": "ngsl-1080",
+    "word": "fair",
+    "rank": 1080
+  },
+  {
+    "id": "ngsl-1081",
+    "word": "additional",
+    "rank": 1081
+  },
+  {
+    "id": "ngsl-1082",
+    "word": "responsible",
+    "rank": 1082
+  },
+  {
+    "id": "ngsl-1083",
+    "word": "farm",
+    "rank": 1083
+  },
+  {
+    "id": "ngsl-1084",
+    "word": "collection",
+    "rank": 1084
+  },
+  {
+    "id": "ngsl-1085",
+    "word": "hang",
+    "rank": 1085
+  },
+  {
+    "id": "ngsl-1086",
+    "word": "negative",
+    "rank": 1086
+  },
+  {
+    "id": "ngsl-1087",
+    "word": "band",
+    "rank": 1087
+  },
+  {
+    "id": "ngsl-1088",
+    "word": "relative",
+    "rank": 1088
+  },
+  {
+    "id": "ngsl-1089",
+    "word": "tour",
+    "rank": 1089
+  },
+  {
+    "id": "ngsl-1090",
+    "word": "alternative",
+    "rank": 1090
+  },
+  {
+    "id": "ngsl-1091",
+    "word": "software",
+    "rank": 1091
+  },
+  {
+    "id": "ngsl-1092",
+    "word": "pair",
+    "rank": 1092
+  },
+  {
+    "id": "ngsl-1093",
+    "word": "ship",
+    "rank": 1093
+  },
+  {
+    "id": "ngsl-1094",
+    "word": "attitude",
+    "rank": 1094
+  },
+  {
+    "id": "ngsl-1095",
+    "word": "cheap",
+    "rank": 1095
+  },
+  {
+    "id": "ngsl-1096",
+    "word": "double",
+    "rank": 1096
+  },
+  {
+    "id": "ngsl-1097",
+    "word": "leg",
+    "rank": 1097
+  },
+  {
+    "id": "ngsl-1098",
+    "word": "observe",
+    "rank": 1098
+  },
+  {
+    "id": "ngsl-1099",
+    "word": "sentence",
+    "rank": 1099
+  },
+  {
+    "id": "ngsl-1100",
+    "word": "print",
+    "rank": 1100
+  },
+  {
+    "id": "ngsl-1101",
+    "word": "progress",
+    "rank": 1101
+  },
+  {
+    "id": "ngsl-1102",
+    "word": "truth",
+    "rank": 1102
+  },
+  {
+    "id": "ngsl-1103",
+    "word": "nobody",
+    "rank": 1103
+  },
+  {
+    "id": "ngsl-1104",
+    "word": "examine",
+    "rank": 1104
+  },
+  {
+    "id": "ngsl-1105",
+    "word": "lay",
+    "rank": 1105
+  },
+  {
+    "id": "ngsl-1106",
+    "word": "speed",
+    "rank": 1106
+  },
+  {
+    "id": "ngsl-1107",
+    "word": "politics",
+    "rank": 1107
+  },
+  {
+    "id": "ngsl-1108",
+    "word": "reply",
+    "rank": 1108
+  },
+  {
+    "id": "ngsl-1109",
+    "word": "display",
+    "rank": 1109
+  },
+  {
+    "id": "ngsl-1110",
+    "word": "transfer",
+    "rank": 1110
+  },
+  {
+    "id": "ngsl-1111",
+    "word": "perfect",
+    "rank": 1111
+  },
+  {
+    "id": "ngsl-1112",
+    "word": "slightly",
+    "rank": 1112
+  },
+  {
+    "id": "ngsl-1113",
+    "word": "overall",
+    "rank": 1113
+  },
+  {
+    "id": "ngsl-1114",
+    "word": "intend",
+    "rank": 1114
+  },
+  {
+    "id": "ngsl-1115",
+    "word": "user",
+    "rank": 1115
+  },
+  {
+    "id": "ngsl-1116",
+    "word": "respond",
+    "rank": 1116
+  },
+  {
+    "id": "ngsl-1117",
+    "word": "dinner",
+    "rank": 1117
+  },
+  {
+    "id": "ngsl-1118",
+    "word": "slow",
+    "rank": 1118
+  },
+  {
+    "id": "ngsl-1119",
+    "word": "regular",
+    "rank": 1119
+  },
+  {
+    "id": "ngsl-1120",
+    "word": "physical",
+    "rank": 1120
+  },
+  {
+    "id": "ngsl-1121",
+    "word": "apart",
+    "rank": 1121
+  },
+  {
+    "id": "ngsl-1122",
+    "word": "suit",
+    "rank": 1122
+  },
+  {
+    "id": "ngsl-1123",
+    "word": "federal",
+    "rank": 1123
+  },
+  {
+    "id": "ngsl-1124",
+    "word": "reveal",
+    "rank": 1124
+  },
+  {
+    "id": "ngsl-1125",
+    "word": "percentage",
+    "rank": 1125
+  },
+  {
+    "id": "ngsl-1126",
+    "word": "peace",
+    "rank": 1126
+  },
+  {
+    "id": "ngsl-1127",
+    "word": "status",
+    "rank": 1127
+  },
+  {
+    "id": "ngsl-1128",
+    "word": "crime",
+    "rank": 1128
+  },
+  {
+    "id": "ngsl-1129",
+    "word": "decline",
+    "rank": 1129
+  },
+  {
+    "id": "ngsl-1130",
+    "word": "decade",
+    "rank": 1130
+  },
+  {
+    "id": "ngsl-1131",
+    "word": "launch",
+    "rank": 1131
+  },
+  {
+    "id": "ngsl-1132",
+    "word": "warn",
+    "rank": 1132
+  },
+  {
+    "id": "ngsl-1133",
+    "word": "consumer",
+    "rank": 1133
+  },
+  {
+    "id": "ngsl-1134",
+    "word": "favor",
+    "rank": 1134
+  },
+  {
+    "id": "ngsl-1135",
+    "word": "dry",
+    "rank": 1135
+  },
+  {
+    "id": "ngsl-1136",
+    "word": "partner",
+    "rank": 1136
+  },
+  {
+    "id": "ngsl-1137",
+    "word": "institution",
+    "rank": 1137
+  },
+  {
+    "id": "ngsl-1138",
+    "word": "spot",
+    "rank": 1138
+  },
+  {
+    "id": "ngsl-1139",
+    "word": "horse",
+    "rank": 1139
+  },
+  {
+    "id": "ngsl-1140",
+    "word": "eventually",
+    "rank": 1140
+  },
+  {
+    "id": "ngsl-1141",
+    "word": "heat",
+    "rank": 1141
+  },
+  {
+    "id": "ngsl-1142",
+    "word": "excite",
+    "rank": 1142
+  },
+  {
+    "id": "ngsl-1143",
+    "word": "reader",
+    "rank": 1143
+  },
+  {
+    "id": "ngsl-1144",
+    "word": "importance",
+    "rank": 1144
+  },
+  {
+    "id": "ngsl-1145",
+    "word": "distance",
+    "rank": 1145
+  },
+  {
+    "id": "ngsl-1146",
+    "word": "guide",
+    "rank": 1146
+  },
+  {
+    "id": "ngsl-1147",
+    "word": "grant",
+    "rank": 1147
+  },
+  {
+    "id": "ngsl-1148",
+    "word": "taxi",
+    "rank": 1148
+  },
+  {
+    "id": "ngsl-1149",
+    "word": "feed",
+    "rank": 1149
+  },
+  {
+    "id": "ngsl-1150",
+    "word": "pain",
+    "rank": 1150
+  },
+  {
+    "id": "ngsl-1151",
+    "word": "sector",
+    "rank": 1151
+  },
+  {
+    "id": "ngsl-1152",
+    "word": "mistake",
+    "rank": 1152
+  },
+  {
+    "id": "ngsl-1153",
+    "word": "ensure",
+    "rank": 1153
+  },
+  {
+    "id": "ngsl-1154",
+    "word": "satisfy",
+    "rank": 1154
+  },
+  {
+    "id": "ngsl-1155",
+    "word": "chief",
+    "rank": 1155
+  },
+  {
+    "id": "ngsl-1156",
+    "word": "cool",
+    "rank": 1156
+  },
+  {
+    "id": "ngsl-1157",
+    "word": "expert",
+    "rank": 1157
+  },
+  {
+    "id": "ngsl-1158",
+    "word": "wave",
+    "rank": 1158
+  },
+  {
+    "id": "ngsl-1159",
+    "word": "south",
+    "rank": 1159
+  },
+  {
+    "id": "ngsl-1160",
+    "word": "labor",
+    "rank": 1160
+  },
+  {
+    "id": "ngsl-1161",
+    "word": "surface",
+    "rank": 1161
+  },
+  {
+    "id": "ngsl-1162",
+    "word": "library",
+    "rank": 1162
+  },
+  {
+    "id": "ngsl-1163",
+    "word": "excellent",
+    "rank": 1163
+  },
+  {
+    "id": "ngsl-1164",
+    "word": "edge",
+    "rank": 1164
+  },
+  {
+    "id": "ngsl-1165",
+    "word": "camp",
+    "rank": 1165
+  },
+  {
+    "id": "ngsl-1166",
+    "word": "audience",
+    "rank": 1166
+  },
+  {
+    "id": "ngsl-1167",
+    "word": "lift",
+    "rank": 1167
+  },
+  {
+    "id": "ngsl-1168",
+    "word": "procedure",
+    "rank": 1168
+  },
+  {
+    "id": "ngsl-1169",
+    "word": "email",
+    "rank": 1169
+  },
+  {
+    "id": "ngsl-1170",
+    "word": "global",
+    "rank": 1170
+  },
+  {
+    "id": "ngsl-1171",
+    "word": "struggle",
+    "rank": 1171
+  },
+  {
+    "id": "ngsl-1172",
+    "word": "advertise",
+    "rank": 1172
+  },
+  {
+    "id": "ngsl-1173",
+    "word": "select",
+    "rank": 1173
+  },
+  {
+    "id": "ngsl-1174",
+    "word": "surround",
+    "rank": 1174
+  },
+  {
+    "id": "ngsl-1175",
+    "word": "extent",
+    "rank": 1175
+  },
+  {
+    "id": "ngsl-1176",
+    "word": "river",
+    "rank": 1176
+  },
+  {
+    "id": "ngsl-1177",
+    "word": "annual",
+    "rank": 1177
+  },
+  {
+    "id": "ngsl-1178",
+    "word": "fully",
+    "rank": 1178
+  },
+  {
+    "id": "ngsl-1179",
+    "word": "contrast",
+    "rank": 1179
+  },
+  {
+    "id": "ngsl-1180",
+    "word": "roll",
+    "rank": 1180
+  },
+  {
+    "id": "ngsl-1181",
+    "word": "reality",
+    "rank": 1181
+  },
+  {
+    "id": "ngsl-1182",
+    "word": "photograph",
+    "rank": 1182
+  },
+  {
+    "id": "ngsl-1183",
+    "word": "artist",
+    "rank": 1183
+  },
+  {
+    "id": "ngsl-1184",
+    "word": "conflict",
+    "rank": 1184
+  },
+  {
+    "id": "ngsl-1185",
+    "word": "entire",
+    "rank": 1185
+  },
+  {
+    "id": "ngsl-1186",
+    "word": "presence",
+    "rank": 1186
+  },
+  {
+    "id": "ngsl-1187",
+    "word": "crowd",
+    "rank": 1187
+  },
+  {
+    "id": "ngsl-1188",
+    "word": "corner",
+    "rank": 1188
+  },
+  {
+    "id": "ngsl-1189",
+    "word": "gas",
+    "rank": 1189
+  },
+  {
+    "id": "ngsl-1190",
+    "word": "shift",
+    "rank": 1190
+  },
+  {
+    "id": "ngsl-1191",
+    "word": "net",
+    "rank": 1191
+  },
+  {
+    "id": "ngsl-1192",
+    "word": "category",
+    "rank": 1192
+  },
+  {
+    "id": "ngsl-1193",
+    "word": "secretary",
+    "rank": 1193
+  },
+  {
+    "id": "ngsl-1194",
+    "word": "defense",
+    "rank": 1194
+  },
+  {
+    "id": "ngsl-1195",
+    "word": "quick",
+    "rank": 1195
+  },
+  {
+    "id": "ngsl-1196",
+    "word": "cook",
+    "rank": 1196
+  },
+  {
+    "id": "ngsl-1197",
+    "word": "spread",
+    "rank": 1197
+  },
+  {
+    "id": "ngsl-1198",
+    "word": "nuclear",
+    "rank": 1198
+  },
+  {
+    "id": "ngsl-1199",
+    "word": "scale",
+    "rank": 1199
+  },
+  {
+    "id": "ngsl-1200",
+    "word": "driver",
+    "rank": 1200
+  },
+  {
+    "id": "ngsl-1201",
+    "word": "ball",
+    "rank": 1201
+  },
+  {
+    "id": "ngsl-1202",
+    "word": "cry",
+    "rank": 1202
+  },
+  {
+    "id": "ngsl-1203",
+    "word": "introduction",
+    "rank": 1203
+  },
+  {
+    "id": "ngsl-1204",
+    "word": "requirement",
+    "rank": 1204
+  },
+  {
+    "id": "ngsl-1205",
+    "word": "north",
+    "rank": 1205
+  },
+  {
+    "id": "ngsl-1206",
+    "word": "confirm",
+    "rank": 1206
+  },
+  {
+    "id": "ngsl-1207",
+    "word": "senior",
+    "rank": 1207
+  },
+  {
+    "id": "ngsl-1208",
+    "word": "photo",
+    "rank": 1208
+  },
+  {
+    "id": "ngsl-1209",
+    "word": "refuse",
+    "rank": 1209
+  },
+  {
+    "id": "ngsl-1210",
+    "word": "transport",
+    "rank": 1210
+  },
+  {
+    "id": "ngsl-1211",
+    "word": "emerge",
+    "rank": 1211
+  },
+  {
+    "id": "ngsl-1212",
+    "word": "map",
+    "rank": 1212
+  },
+  {
+    "id": "ngsl-1213",
+    "word": "concept",
+    "rank": 1213
+  },
+  {
+    "id": "ngsl-1214",
+    "word": "island",
+    "rank": 1214
+  },
+  {
+    "id": "ngsl-1215",
+    "word": "reform",
+    "rank": 1215
+  },
+  {
+    "id": "ngsl-1216",
+    "word": "neither",
+    "rank": 1216
+  },
+  {
+    "id": "ngsl-1217",
+    "word": "football",
+    "rank": 1217
+  },
+  {
+    "id": "ngsl-1218",
+    "word": "survive",
+    "rank": 1218
+  },
+  {
+    "id": "ngsl-1219",
+    "word": "flight",
+    "rank": 1219
+  },
+  {
+    "id": "ngsl-1220",
+    "word": "left",
+    "rank": 1220
+  },
+  {
+    "id": "ngsl-1221",
+    "word": "solve",
+    "rank": 1221
+  },
+  {
+    "id": "ngsl-1222",
+    "word": "neighbor",
+    "rank": 1222
+  },
+  {
+    "id": "ngsl-1223",
+    "word": "background",
+    "rank": 1223
+  },
+  {
+    "id": "ngsl-1224",
+    "word": "technique",
+    "rank": 1224
+  },
+  {
+    "id": "ngsl-1225",
+    "word": "traffic",
+    "rank": 1225
+  },
+  {
+    "id": "ngsl-1226",
+    "word": "improvement",
+    "rank": 1226
+  },
+  {
+    "id": "ngsl-1227",
+    "word": "tool",
+    "rank": 1227
+  },
+  {
+    "id": "ngsl-1228",
+    "word": "consequence",
+    "rank": 1228
+  },
+  {
+    "id": "ngsl-1229",
+    "word": "circumstance",
+    "rank": 1229
+  },
+  {
+    "id": "ngsl-1230",
+    "word": "smoke",
+    "rank": 1230
+  },
+  {
+    "id": "ngsl-1231",
+    "word": "reaction",
+    "rank": 1231
+  },
+  {
+    "id": "ngsl-1232",
+    "word": "rain",
+    "rank": 1232
+  },
+  {
+    "id": "ngsl-1233",
+    "word": "busy",
+    "rank": 1233
+  },
+  {
+    "id": "ngsl-1234",
+    "word": "lesson",
+    "rank": 1234
+  },
+  {
+    "id": "ngsl-1235",
+    "word": "brain",
+    "rank": 1235
+  },
+  {
+    "id": "ngsl-1236",
+    "word": "mass",
+    "rank": 1236
+  },
+  {
+    "id": "ngsl-1237",
+    "word": "funny",
+    "rank": 1237
+  },
+  {
+    "id": "ngsl-1238",
+    "word": "contribute",
+    "rank": 1238
+  },
+  {
+    "id": "ngsl-1239",
+    "word": "failure",
+    "rank": 1239
+  },
+  {
+    "id": "ngsl-1240",
+    "word": "schedule",
+    "rank": 1240
+  },
+  {
+    "id": "ngsl-1241",
+    "word": "speaker",
+    "rank": 1241
+  },
+  {
+    "id": "ngsl-1242",
+    "word": "bottom",
+    "rank": 1242
+  },
+  {
+    "id": "ngsl-1243",
+    "word": "adopt",
+    "rank": 1243
+  },
+  {
+    "id": "ngsl-1244",
+    "word": "combine",
+    "rank": 1244
+  },
+  {
+    "id": "ngsl-1245",
+    "word": "mountain",
+    "rank": 1245
+  },
+  {
+    "id": "ngsl-1246",
+    "word": "waste",
+    "rank": 1246
+  },
+  {
+    "id": "ngsl-1247",
+    "word": "hide",
+    "rank": 1247
+  },
+  {
+    "id": "ngsl-1248",
+    "word": "marriage",
+    "rank": 1248
+  },
+  {
+    "id": "ngsl-1249",
+    "word": "ticket",
+    "rank": 1249
+  },
+  {
+    "id": "ngsl-1250",
+    "word": "meal",
+    "rank": 1250
+  },
+  {
+    "id": "ngsl-1251",
+    "word": "colleague",
+    "rank": 1251
+  },
+  {
+    "id": "ngsl-1252",
+    "word": "bag",
+    "rank": 1252
+  },
+  {
+    "id": "ngsl-1253",
+    "word": "repeat",
+    "rank": 1253
+  },
+  {
+    "id": "ngsl-1254",
+    "word": "equal",
+    "rank": 1254
+  },
+  {
+    "id": "ngsl-1255",
+    "word": "expression",
+    "rank": 1255
+  },
+  {
+    "id": "ngsl-1256",
+    "word": "plus",
+    "rank": 1256
+  },
+  {
+    "id": "ngsl-1257",
+    "word": "extremely",
+    "rank": 1257
+  },
+  {
+    "id": "ngsl-1258",
+    "word": "owner",
+    "rank": 1258
+  },
+  {
+    "id": "ngsl-1259",
+    "word": "plane",
+    "rank": 1259
+  },
+  {
+    "id": "ngsl-1260",
+    "word": "commercial",
+    "rank": 1260
+  },
+  {
+    "id": "ngsl-1261",
+    "word": "lady",
+    "rank": 1261
+  },
+  {
+    "id": "ngsl-1262",
+    "word": "duty",
+    "rank": 1262
+  },
+  {
+    "id": "ngsl-1263",
+    "word": "strength",
+    "rank": 1263
+  },
+  {
+    "id": "ngsl-1264",
+    "word": "connect",
+    "rank": 1264
+  },
+  {
+    "id": "ngsl-1265",
+    "word": "cultural",
+    "rank": 1265
+  },
+  {
+    "id": "ngsl-1266",
+    "word": "arrange",
+    "rank": 1266
+  },
+  {
+    "id": "ngsl-1267",
+    "word": "scheme",
+    "rank": 1267
+  },
+  {
+    "id": "ngsl-1268",
+    "word": "payment",
+    "rank": 1268
+  },
+  {
+    "id": "ngsl-1269",
+    "word": "unfortunately",
+    "rank": 1269
+  },
+  {
+    "id": "ngsl-1270",
+    "word": "brief",
+    "rank": 1270
+  },
+  {
+    "id": "ngsl-1271",
+    "word": "bird",
+    "rank": 1271
+  },
+  {
+    "id": "ngsl-1272",
+    "word": "demonstrate",
+    "rank": 1272
+  },
+  {
+    "id": "ngsl-1273",
+    "word": "contribution",
+    "rank": 1273
+  },
+  {
+    "id": "ngsl-1274",
+    "word": "appreciate",
+    "rank": 1274
+  },
+  {
+    "id": "ngsl-1275",
+    "word": "chapter",
+    "rank": 1275
+  },
+  {
+    "id": "ngsl-1276",
+    "word": "secret",
+    "rank": 1276
+  },
+  {
+    "id": "ngsl-1277",
+    "word": "apparently",
+    "rank": 1277
+  },
+  {
+    "id": "ngsl-1278",
+    "word": "novel",
+    "rank": 1278
+  },
+  {
+    "id": "ngsl-1279",
+    "word": "union",
+    "rank": 1279
+  },
+  {
+    "id": "ngsl-1280",
+    "word": "burn",
+    "rank": 1280
+  },
+  {
+    "id": "ngsl-1281",
+    "word": "trend",
+    "rank": 1281
+  },
+  {
+    "id": "ngsl-1282",
+    "word": "initial",
+    "rank": 1282
+  },
+  {
+    "id": "ngsl-1283",
+    "word": "pleasure",
+    "rank": 1283
+  },
+  {
+    "id": "ngsl-1284",
+    "word": "suggestion",
+    "rank": 1284
+  },
+  {
+    "id": "ngsl-1285",
+    "word": "critical",
+    "rank": 1285
+  },
+  {
+    "id": "ngsl-1286",
+    "word": "gather",
+    "rank": 1286
+  },
+  {
+    "id": "ngsl-1287",
+    "word": "mostly",
+    "rank": 1287
+  },
+  {
+    "id": "ngsl-1288",
+    "word": "earth",
+    "rank": 1288
+  },
+  {
+    "id": "ngsl-1289",
+    "word": "pop",
+    "rank": 1289
+  },
+  {
+    "id": "ngsl-1290",
+    "word": "essential",
+    "rank": 1290
+  },
+  {
+    "id": "ngsl-1291",
+    "word": "desire",
+    "rank": 1291
+  },
+  {
+    "id": "ngsl-1292",
+    "word": "promote",
+    "rank": 1292
+  },
+  {
+    "id": "ngsl-1293",
+    "word": "currently",
+    "rank": 1293
+  },
+  {
+    "id": "ngsl-1294",
+    "word": "employ",
+    "rank": 1294
+  },
+  {
+    "id": "ngsl-1295",
+    "word": "path",
+    "rank": 1295
+  },
+  {
+    "id": "ngsl-1296",
+    "word": "topic",
+    "rank": 1296
+  },
+  {
+    "id": "ngsl-1297",
+    "word": "beach",
+    "rank": 1297
+  },
+  {
+    "id": "ngsl-1298",
+    "word": "attract",
+    "rank": 1298
+  },
+  {
+    "id": "ngsl-1299",
+    "word": "engage",
+    "rank": 1299
+  },
+  {
+    "id": "ngsl-1300",
+    "word": "powerful",
+    "rank": 1300
+  },
+  {
+    "id": "ngsl-1301",
+    "word": "flower",
+    "rank": 1301
+  },
+  {
+    "id": "ngsl-1302",
+    "word": "crisis",
+    "rank": 1302
+  },
+  {
+    "id": "ngsl-1303",
+    "word": "settle",
+    "rank": 1303
+  },
+  {
+    "id": "ngsl-1304",
+    "word": "boat",
+    "rank": 1304
+  },
+  {
+    "id": "ngsl-1305",
+    "word": "aid",
+    "rank": 1305
+  },
+  {
+    "id": "ngsl-1306",
+    "word": "fan",
+    "rank": 1306
+  },
+  {
+    "id": "ngsl-1307",
+    "word": "kitchen",
+    "rank": 1307
+  },
+  {
+    "id": "ngsl-1308",
+    "word": "twice",
+    "rank": 1308
+  },
+  {
+    "id": "ngsl-1309",
+    "word": "fresh",
+    "rank": 1309
+  },
+  {
+    "id": "ngsl-1310",
+    "word": "delay",
+    "rank": 1310
+  },
+  {
+    "id": "ngsl-1311",
+    "word": "safety",
+    "rank": 1311
+  },
+  {
+    "id": "ngsl-1312",
+    "word": "engineer",
+    "rank": 1312
+  },
+  {
+    "id": "ngsl-1313",
+    "word": "quiet",
+    "rank": 1313
+  },
+  {
+    "id": "ngsl-1314",
+    "word": "insurance",
+    "rank": 1314
+  },
+  {
+    "id": "ngsl-1315",
+    "word": "nurse",
+    "rank": 1315
+  },
+  {
+    "id": "ngsl-1316",
+    "word": "divide",
+    "rank": 1316
+  },
+  {
+    "id": "ngsl-1317",
+    "word": "length",
+    "rank": 1317
+  },
+  {
+    "id": "ngsl-1318",
+    "word": "investigation",
+    "rank": 1318
+  },
+  {
+    "id": "ngsl-1319",
+    "word": "package",
+    "rank": 1319
+  },
+  {
+    "id": "ngsl-1320",
+    "word": "somewhere",
+    "rank": 1320
+  },
+  {
+    "id": "ngsl-1321",
+    "word": "expand",
+    "rank": 1321
+  },
+  {
+    "id": "ngsl-1322",
+    "word": "commit",
+    "rank": 1322
+  },
+  {
+    "id": "ngsl-1323",
+    "word": "obvious",
+    "rank": 1323
+  },
+  {
+    "id": "ngsl-1324",
+    "word": "jump",
+    "rank": 1324
+  },
+  {
+    "id": "ngsl-1325",
+    "word": "weapon",
+    "rank": 1325
+  },
+  {
+    "id": "ngsl-1326",
+    "word": "relatively",
+    "rank": 1326
+  },
+  {
+    "id": "ngsl-1327",
+    "word": "host",
+    "rank": 1327
+  },
+  {
+    "id": "ngsl-1328",
+    "word": "winter",
+    "rank": 1328
+  },
+  {
+    "id": "ngsl-1329",
+    "word": "district",
+    "rank": 1329
+  },
+  {
+    "id": "ngsl-1330",
+    "word": "broad",
+    "rank": 1330
+  },
+  {
+    "id": "ngsl-1331",
+    "word": "tire",
+    "rank": 1331
+  },
+  {
+    "id": "ngsl-1332",
+    "word": "spring",
+    "rank": 1332
+  },
+  {
+    "id": "ngsl-1333",
+    "word": "spirit",
+    "rank": 1333
+  },
+  {
+    "id": "ngsl-1334",
+    "word": "lunch",
+    "rank": 1334
+  },
+  {
+    "id": "ngsl-1335",
+    "word": "actual",
+    "rank": 1335
+  },
+  {
+    "id": "ngsl-1336",
+    "word": "pool",
+    "rank": 1336
+  },
+  {
+    "id": "ngsl-1337",
+    "word": "battle",
+    "rank": 1337
+  },
+  {
+    "id": "ngsl-1338",
+    "word": "tradition",
+    "rank": 1338
+  },
+  {
+    "id": "ngsl-1339",
+    "word": "cash",
+    "rank": 1339
+  },
+  {
+    "id": "ngsl-1340",
+    "word": "hardly",
+    "rank": 1340
+  },
+  {
+    "id": "ngsl-1341",
+    "word": "award",
+    "rank": 1341
+  },
+  {
+    "id": "ngsl-1342",
+    "word": "coach",
+    "rank": 1342
+  },
+  {
+    "id": "ngsl-1343",
+    "word": "experiment",
+    "rank": 1343
+  },
+  {
+    "id": "ngsl-1344",
+    "word": "consideration",
+    "rank": 1344
+  },
+  {
+    "id": "ngsl-1345",
+    "word": "strange",
+    "rank": 1345
+  },
+  {
+    "id": "ngsl-1346",
+    "word": "code",
+    "rank": 1346
+  },
+  {
+    "id": "ngsl-1347",
+    "word": "possibly",
+    "rank": 1347
+  },
+  {
+    "id": "ngsl-1348",
+    "word": "threat",
+    "rank": 1348
+  },
+  {
+    "id": "ngsl-1349",
+    "word": "accident",
+    "rank": 1349
+  },
+  {
+    "id": "ngsl-1350",
+    "word": "impossible",
+    "rank": 1350
+  },
+  {
+    "id": "ngsl-1351",
+    "word": "revenue",
+    "rank": 1351
+  },
+  {
+    "id": "ngsl-1352",
+    "word": "enable",
+    "rank": 1352
+  },
+  {
+    "id": "ngsl-1353",
+    "word": "afraid",
+    "rank": 1353
+  },
+  {
+    "id": "ngsl-1354",
+    "word": "active",
+    "rank": 1354
+  },
+  {
+    "id": "ngsl-1355",
+    "word": "conclude",
+    "rank": 1355
+  },
+  {
+    "id": "ngsl-1356",
+    "word": "religious",
+    "rank": 1356
+  },
+  {
+    "id": "ngsl-1357",
+    "word": "cancer",
+    "rank": 1357
+  },
+  {
+    "id": "ngsl-1358",
+    "word": "convince",
+    "rank": 1358
+  },
+  {
+    "id": "ngsl-1359",
+    "word": "vary",
+    "rank": 1359
+  },
+  {
+    "id": "ngsl-1360",
+    "word": "environmental",
+    "rank": 1360
+  },
+  {
+    "id": "ngsl-1361",
+    "word": "sun",
+    "rank": 1361
+  },
+  {
+    "id": "ngsl-1362",
+    "word": "healthy",
+    "rank": 1362
+  },
+  {
+    "id": "ngsl-1363",
+    "word": "blow",
+    "rank": 1363
+  },
+  {
+    "id": "ngsl-1364",
+    "word": "volume",
+    "rank": 1364
+  },
+  {
+    "id": "ngsl-1365",
+    "word": "location",
+    "rank": 1365
+  },
+  {
+    "id": "ngsl-1366",
+    "word": "invest",
+    "rank": 1366
+  },
+  {
+    "id": "ngsl-1367",
+    "word": "proceed",
+    "rank": 1367
+  },
+  {
+    "id": "ngsl-1368",
+    "word": "wash",
+    "rank": 1368
+  },
+  {
+    "id": "ngsl-1369",
+    "word": "actor",
+    "rank": 1369
+  },
+  {
+    "id": "ngsl-1370",
+    "word": "glad",
+    "rank": 1370
+  },
+  {
+    "id": "ngsl-1371",
+    "word": "tape",
+    "rank": 1371
+  },
+  {
+    "id": "ngsl-1372",
+    "word": "whereas",
+    "rank": 1372
+  },
+  {
+    "id": "ngsl-1373",
+    "word": "opposite",
+    "rank": 1373
+  },
+  {
+    "id": "ngsl-1374",
+    "word": "stone",
+    "rank": 1374
+  },
+  {
+    "id": "ngsl-1375",
+    "word": "sum",
+    "rank": 1375
+  },
+  {
+    "id": "ngsl-1376",
+    "word": "murder",
+    "rank": 1376
+  },
+  {
+    "id": "ngsl-1377",
+    "word": "monitor",
+    "rank": 1377
+  },
+  {
+    "id": "ngsl-1378",
+    "word": "soldier",
+    "rank": 1378
+  },
+  {
+    "id": "ngsl-1379",
+    "word": "finance",
+    "rank": 1379
+  },
+  {
+    "id": "ngsl-1380",
+    "word": "hate",
+    "rank": 1380
+  },
+  {
+    "id": "ngsl-1381",
+    "word": "egg",
+    "rank": 1381
+  },
+  {
+    "id": "ngsl-1382",
+    "word": "concert",
+    "rank": 1382
+  },
+  {
+    "id": "ngsl-1383",
+    "word": "shock",
+    "rank": 1383
+  },
+  {
+    "id": "ngsl-1384",
+    "word": "comfortable",
+    "rank": 1384
+  },
+  {
+    "id": "ngsl-1385",
+    "word": "usual",
+    "rank": 1385
+  },
+  {
+    "id": "ngsl-1386",
+    "word": "carefully",
+    "rank": 1386
+  },
+  {
+    "id": "ngsl-1387",
+    "word": "pack",
+    "rank": 1387
+  },
+  {
+    "id": "ngsl-1388",
+    "word": "recall",
+    "rank": 1388
+  },
+  {
+    "id": "ngsl-1389",
+    "word": "wine",
+    "rank": 1389
+  },
+  {
+    "id": "ngsl-1390",
+    "word": "camera",
+    "rank": 1390
+  },
+  {
+    "id": "ngsl-1391",
+    "word": "swim",
+    "rank": 1391
+  },
+  {
+    "id": "ngsl-1392",
+    "word": "manufacture",
+    "rank": 1392
+  },
+  {
+    "id": "ngsl-1393",
+    "word": "theater",
+    "rank": 1393
+  },
+  {
+    "id": "ngsl-1394",
+    "word": "cycle",
+    "rank": 1394
+  },
+  {
+    "id": "ngsl-1395",
+    "word": "coffee",
+    "rank": 1395
+  },
+  {
+    "id": "ngsl-1396",
+    "word": "totally",
+    "rank": 1396
+  },
+  {
+    "id": "ngsl-1397",
+    "word": "museum",
+    "rank": 1397
+  },
+  {
+    "id": "ngsl-1398",
+    "word": "visitor",
+    "rank": 1398
+  },
+  {
+    "id": "ngsl-1399",
+    "word": "freedom",
+    "rank": 1399
+  },
+  {
+    "id": "ngsl-1400",
+    "word": "construction",
+    "rank": 1400
+  },
+  {
+    "id": "ngsl-1401",
+    "word": "dear",
+    "rank": 1401
+  },
+  {
+    "id": "ngsl-1402",
+    "word": "objective",
+    "rank": 1402
+  },
+  {
+    "id": "ngsl-1403",
+    "word": "moreover",
+    "rank": 1403
+  },
+  {
+    "id": "ngsl-1404",
+    "word": "onto",
+    "rank": 1404
+  },
+  {
+    "id": "ngsl-1405",
+    "word": "historical",
+    "rank": 1405
+  },
+  {
+    "id": "ngsl-1406",
+    "word": "oppose",
+    "rank": 1406
+  },
+  {
+    "id": "ngsl-1407",
+    "word": "branch",
+    "rank": 1407
+  },
+  {
+    "id": "ngsl-1408",
+    "word": "vehicle",
+    "rank": 1408
+  },
+  {
+    "id": "ngsl-1409",
+    "word": "scientist",
+    "rank": 1409
+  },
+  {
+    "id": "ngsl-1410",
+    "word": "route",
+    "rank": 1410
+  },
+  {
+    "id": "ngsl-1411",
+    "word": "bind",
+    "rank": 1411
+  },
+  {
+    "id": "ngsl-1412",
+    "word": "belong",
+    "rank": 1412
+  },
+  {
+    "id": "ngsl-1413",
+    "word": "taste",
+    "rank": 1413
+  },
+  {
+    "id": "ngsl-1414",
+    "word": "tonight",
+    "rank": 1414
+  },
+  {
+    "id": "ngsl-1415",
+    "word": "fashion",
+    "rank": 1415
+  },
+  {
+    "id": "ngsl-1416",
+    "word": "danger",
+    "rank": 1416
+  },
+  {
+    "id": "ngsl-1417",
+    "word": "bomb",
+    "rank": 1417
+  },
+  {
+    "id": "ngsl-1418",
+    "word": "army",
+    "rank": 1418
+  },
+  {
+    "id": "ngsl-1419",
+    "word": "dangerous",
+    "rank": 1419
+  },
+  {
+    "id": "ngsl-1420",
+    "word": "decrease",
+    "rank": 1420
+  },
+  {
+    "id": "ngsl-1421",
+    "word": "hurt",
+    "rank": 1421
+  },
+  {
+    "id": "ngsl-1422",
+    "word": "council",
+    "rank": 1422
+  },
+  {
+    "id": "ngsl-1423",
+    "word": "editor",
+    "rank": 1423
+  },
+  {
+    "id": "ngsl-1424",
+    "word": "normally",
+    "rank": 1424
+  },
+  {
+    "id": "ngsl-1425",
+    "word": "sight",
+    "rank": 1425
+  },
+  {
+    "id": "ngsl-1426",
+    "word": "generate",
+    "rank": 1426
+  },
+  {
+    "id": "ngsl-1427",
+    "word": "gift",
+    "rank": 1427
+  },
+  {
+    "id": "ngsl-1428",
+    "word": "delivery",
+    "rank": 1428
+  },
+  {
+    "id": "ngsl-1429",
+    "word": "deny",
+    "rank": 1429
+  },
+  {
+    "id": "ngsl-1430",
+    "word": "guest",
+    "rank": 1430
+  },
+  {
+    "id": "ngsl-1431",
+    "word": "anybody",
+    "rank": 1431
+  },
+  {
+    "id": "ngsl-1432",
+    "word": "bedroom",
+    "rank": 1432
+  },
+  {
+    "id": "ngsl-1433",
+    "word": "quote",
+    "rank": 1433
+  },
+  {
+    "id": "ngsl-1434",
+    "word": "climb",
+    "rank": 1434
+  },
+  {
+    "id": "ngsl-1435",
+    "word": "basically",
+    "rank": 1435
+  },
+  {
+    "id": "ngsl-1436",
+    "word": "violence",
+    "rank": 1436
+  },
+  {
+    "id": "ngsl-1437",
+    "word": "minister",
+    "rank": 1437
+  },
+  {
+    "id": "ngsl-1438",
+    "word": "mainly",
+    "rank": 1438
+  },
+  {
+    "id": "ngsl-1439",
+    "word": "mouth",
+    "rank": 1439
+  },
+  {
+    "id": "ngsl-1440",
+    "word": "noise",
+    "rank": 1440
+  },
+  {
+    "id": "ngsl-1441",
+    "word": "manner",
+    "rank": 1441
+  },
+  {
+    "id": "ngsl-1442",
+    "word": "gun",
+    "rank": 1442
+  },
+  {
+    "id": "ngsl-1443",
+    "word": "square",
+    "rank": 1443
+  },
+  {
+    "id": "ngsl-1444",
+    "word": "occasion",
+    "rank": 1444
+  },
+  {
+    "id": "ngsl-1445",
+    "word": "familiar",
+    "rank": 1445
+  },
+  {
+    "id": "ngsl-1446",
+    "word": "ignore",
+    "rank": 1446
+  },
+  {
+    "id": "ngsl-1447",
+    "word": "destroy",
+    "rank": 1447
+  },
+  {
+    "id": "ngsl-1448",
+    "word": "affair",
+    "rank": 1448
+  },
+  {
+    "id": "ngsl-1449",
+    "word": "civil",
+    "rank": 1449
+  },
+  {
+    "id": "ngsl-1450",
+    "word": "locate",
+    "rank": 1450
+  },
+  {
+    "id": "ngsl-1451",
+    "word": "citizen",
+    "rank": 1451
+  },
+  {
+    "id": "ngsl-1452",
+    "word": "temperature",
+    "rank": 1452
+  },
+  {
+    "id": "ngsl-1453",
+    "word": "gold",
+    "rank": 1453
+  },
+  {
+    "id": "ngsl-1454",
+    "word": "domestic",
+    "rank": 1454
+  },
+  {
+    "id": "ngsl-1455",
+    "word": "load",
+    "rank": 1455
+  },
+  {
+    "id": "ngsl-1456",
+    "word": "belief",
+    "rank": 1456
+  },
+  {
+    "id": "ngsl-1457",
+    "word": "troop",
+    "rank": 1457
+  },
+  {
+    "id": "ngsl-1458",
+    "word": "technical",
+    "rank": 1458
+  },
+  {
+    "id": "ngsl-1459",
+    "word": "remind",
+    "rank": 1459
+  },
+  {
+    "id": "ngsl-1460",
+    "word": "arrangement",
+    "rank": 1460
+  },
+  {
+    "id": "ngsl-1461",
+    "word": "skin",
+    "rank": 1461
+  },
+  {
+    "id": "ngsl-1462",
+    "word": "prison",
+    "rank": 1462
+  },
+  {
+    "id": "ngsl-1463",
+    "word": "switch",
+    "rank": 1463
+  },
+  {
+    "id": "ngsl-1464",
+    "word": "acquire",
+    "rank": 1464
+  },
+  {
+    "id": "ngsl-1465",
+    "word": "corporate",
+    "rank": 1465
+  },
+  {
+    "id": "ngsl-1466",
+    "word": "fairly",
+    "rank": 1466
+  },
+  {
+    "id": "ngsl-1467",
+    "word": "wood",
+    "rank": 1467
+  },
+  {
+    "id": "ngsl-1468",
+    "word": "participate",
+    "rank": 1468
+  },
+  {
+    "id": "ngsl-1469",
+    "word": "tough",
+    "rank": 1469
+  },
+  {
+    "id": "ngsl-1470",
+    "word": "tear",
+    "rank": 1470
+  },
+  {
+    "id": "ngsl-1471",
+    "word": "representative",
+    "rank": 1471
+  },
+  {
+    "id": "ngsl-1472",
+    "word": "capacity",
+    "rank": 1472
+  },
+  {
+    "id": "ngsl-1473",
+    "word": "border",
+    "rank": 1473
+  },
+  {
+    "id": "ngsl-1474",
+    "word": "shake",
+    "rank": 1474
+  },
+  {
+    "id": "ngsl-1475",
+    "word": "assessment",
+    "rank": 1475
+  },
+  {
+    "id": "ngsl-1476",
+    "word": "shoe",
+    "rank": 1476
+  },
+  {
+    "id": "ngsl-1477",
+    "word": "ought",
+    "rank": 1477
+  },
+  {
+    "id": "ngsl-1478",
+    "word": "ad",
+    "rank": 1478
+  },
+  {
+    "id": "ngsl-1479",
+    "word": "fee",
+    "rank": 1479
+  },
+  {
+    "id": "ngsl-1480",
+    "word": "hall",
+    "rank": 1480
+  },
+  {
+    "id": "ngsl-1481",
+    "word": "regulation",
+    "rank": 1481
+  },
+  {
+    "id": "ngsl-1482",
+    "word": "escape",
+    "rank": 1482
+  },
+  {
+    "id": "ngsl-1483",
+    "word": "studio",
+    "rank": 1483
+  },
+  {
+    "id": "ngsl-1484",
+    "word": "proper",
+    "rank": 1484
+  },
+  {
+    "id": "ngsl-1485",
+    "word": "relax",
+    "rank": 1485
+  },
+  {
+    "id": "ngsl-1486",
+    "word": "tourist",
+    "rank": 1486
+  },
+  {
+    "id": "ngsl-1487",
+    "word": "component",
+    "rank": 1487
+  },
+  {
+    "id": "ngsl-1488",
+    "word": "afford",
+    "rank": 1488
+  },
+  {
+    "id": "ngsl-1489",
+    "word": "lawyer",
+    "rank": 1489
+  },
+  {
+    "id": "ngsl-1490",
+    "word": "suspect",
+    "rank": 1490
+  },
+  {
+    "id": "ngsl-1491",
+    "word": "cup",
+    "rank": 1491
+  },
+  {
+    "id": "ngsl-1492",
+    "word": "description",
+    "rank": 1492
+  },
+  {
+    "id": "ngsl-1493",
+    "word": "confidence",
+    "rank": 1493
+  },
+  {
+    "id": "ngsl-1494",
+    "word": "industrial",
+    "rank": 1494
+  },
+  {
+    "id": "ngsl-1495",
+    "word": "complain",
+    "rank": 1495
+  },
+  {
+    "id": "ngsl-1496",
+    "word": "perspective",
+    "rank": 1496
+  },
+  {
+    "id": "ngsl-1497",
+    "word": "error",
+    "rank": 1497
+  },
+  {
+    "id": "ngsl-1498",
+    "word": "arrest",
+    "rank": 1498
+  },
+  {
+    "id": "ngsl-1499",
+    "word": "assess",
+    "rank": 1499
+  },
+  {
+    "id": "ngsl-1500",
+    "word": "register",
+    "rank": 1500
+  },
+  {
+    "id": "ngsl-1501",
+    "word": "asset",
+    "rank": 1501
+  },
+  {
+    "id": "ngsl-1502",
+    "word": "signal",
+    "rank": 1502
+  },
+  {
+    "id": "ngsl-1503",
+    "word": "finger",
+    "rank": 1503
+  },
+  {
+    "id": "ngsl-1504",
+    "word": "relevant",
+    "rank": 1504
+  },
+  {
+    "id": "ngsl-1505",
+    "word": "explore",
+    "rank": 1505
+  },
+  {
+    "id": "ngsl-1506",
+    "word": "leadership",
+    "rank": 1506
+  },
+  {
+    "id": "ngsl-1507",
+    "word": "commitment",
+    "rank": 1507
+  },
+  {
+    "id": "ngsl-1508",
+    "word": "wake",
+    "rank": 1508
+  },
+  {
+    "id": "ngsl-1509",
+    "word": "necessarily",
+    "rank": 1509
+  },
+  {
+    "id": "ngsl-1510",
+    "word": "bright",
+    "rank": 1510
+  },
+  {
+    "id": "ngsl-1511",
+    "word": "frame",
+    "rank": 1511
+  },
+  {
+    "id": "ngsl-1512",
+    "word": "slowly",
+    "rank": 1512
+  },
+  {
+    "id": "ngsl-1513",
+    "word": "bond",
+    "rank": 1513
+  },
+  {
+    "id": "ngsl-1514",
+    "word": "hire",
+    "rank": 1514
+  },
+  {
+    "id": "ngsl-1515",
+    "word": "hole",
+    "rank": 1515
+  },
+  {
+    "id": "ngsl-1516",
+    "word": "tie",
+    "rank": 1516
+  },
+  {
+    "id": "ngsl-1517",
+    "word": "internal",
+    "rank": 1517
+  },
+  {
+    "id": "ngsl-1518",
+    "word": "chain",
+    "rank": 1518
+  },
+  {
+    "id": "ngsl-1519",
+    "word": "literature",
+    "rank": 1519
+  },
+  {
+    "id": "ngsl-1520",
+    "word": "victim",
+    "rank": 1520
+  },
+  {
+    "id": "ngsl-1521",
+    "word": "threaten",
+    "rank": 1521
+  },
+  {
+    "id": "ngsl-1522",
+    "word": "division",
+    "rank": 1522
+  },
+  {
+    "id": "ngsl-1523",
+    "word": "secure",
+    "rank": 1523
+  },
+  {
+    "id": "ngsl-1524",
+    "word": "amaze",
+    "rank": 1524
+  },
+  {
+    "id": "ngsl-1525",
+    "word": "device",
+    "rank": 1525
+  },
+  {
+    "id": "ngsl-1526",
+    "word": "birth",
+    "rank": 1526
+  },
+  {
+    "id": "ngsl-1527",
+    "word": "forest",
+    "rank": 1527
+  },
+  {
+    "id": "ngsl-1528",
+    "word": "label",
+    "rank": 1528
+  },
+  {
+    "id": "ngsl-1529",
+    "word": "root",
+    "rank": 1529
+  },
+  {
+    "id": "ngsl-1530",
+    "word": "factory",
+    "rank": 1530
+  },
+  {
+    "id": "ngsl-1531",
+    "word": "expense",
+    "rank": 1531
+  },
+  {
+    "id": "ngsl-1532",
+    "word": "channel",
+    "rank": 1532
+  },
+  {
+    "id": "ngsl-1533",
+    "word": "investigate",
+    "rank": 1533
+  },
+  {
+    "id": "ngsl-1534",
+    "word": "recommendation",
+    "rank": 1534
+  },
+  {
+    "id": "ngsl-1535",
+    "word": "rank",
+    "rank": 1535
+  },
+  {
+    "id": "ngsl-1536",
+    "word": "typical",
+    "rank": 1536
+  },
+  {
+    "id": "ngsl-1537",
+    "word": "west",
+    "rank": 1537
+  },
+  {
+    "id": "ngsl-1538",
+    "word": "friendly",
+    "rank": 1538
+  },
+  {
+    "id": "ngsl-1539",
+    "word": "resident",
+    "rank": 1539
+  },
+  {
+    "id": "ngsl-1540",
+    "word": "provision",
+    "rank": 1540
+  },
+  {
+    "id": "ngsl-1541",
+    "word": "concentrate",
+    "rank": 1541
+  },
+  {
+    "id": "ngsl-1542",
+    "word": "plenty",
+    "rank": 1542
+  },
+  {
+    "id": "ngsl-1543",
+    "word": "export",
+    "rank": 1543
+  },
+  {
+    "id": "ngsl-1544",
+    "word": "entirely",
+    "rank": 1544
+  },
+  {
+    "id": "ngsl-1545",
+    "word": "strongly",
+    "rank": 1545
+  },
+  {
+    "id": "ngsl-1546",
+    "word": "bridge",
+    "rank": 1546
+  },
+  {
+    "id": "ngsl-1547",
+    "word": "consist",
+    "rank": 1547
+  },
+  {
+    "id": "ngsl-1548",
+    "word": "graduate",
+    "rank": 1548
+  },
+  {
+    "id": "ngsl-1549",
+    "word": "brand",
+    "rank": 1549
+  },
+  {
+    "id": "ngsl-1550",
+    "word": "moral",
+    "rank": 1550
+  },
+  {
+    "id": "ngsl-1551",
+    "word": "insist",
+    "rank": 1551
+  },
+  {
+    "id": "ngsl-1552",
+    "word": "combination",
+    "rank": 1552
+  },
+  {
+    "id": "ngsl-1553",
+    "word": "abuse",
+    "rank": 1553
+  },
+  {
+    "id": "ngsl-1554",
+    "word": "ice",
+    "rank": 1554
+  },
+  {
+    "id": "ngsl-1555",
+    "word": "principal",
+    "rank": 1555
+  },
+  {
+    "id": "ngsl-1556",
+    "word": "master",
+    "rank": 1556
+  },
+  {
+    "id": "ngsl-1557",
+    "word": "definitely",
+    "rank": 1557
+  },
+  {
+    "id": "ngsl-1558",
+    "word": "session",
+    "rank": 1558
+  },
+  {
+    "id": "ngsl-1559",
+    "word": "grade",
+    "rank": 1559
+  },
+  {
+    "id": "ngsl-1560",
+    "word": "nevertheless",
+    "rank": 1560
+  },
+  {
+    "id": "ngsl-1561",
+    "word": "predict",
+    "rank": 1561
+  },
+  {
+    "id": "ngsl-1562",
+    "word": "previously",
+    "rank": 1562
+  },
+  {
+    "id": "ngsl-1563",
+    "word": "protection",
+    "rank": 1563
+  },
+  {
+    "id": "ngsl-1564",
+    "word": "largely",
+    "rank": 1564
+  },
+  {
+    "id": "ngsl-1565",
+    "word": "wed",
+    "rank": 1565
+  },
+  {
+    "id": "ngsl-1566",
+    "word": "rent",
+    "rank": 1566
+  },
+  {
+    "id": "ngsl-1567",
+    "word": "shot",
+    "rank": 1567
+  },
+  {
+    "id": "ngsl-1568",
+    "word": "appearance",
+    "rank": 1568
+  },
+  {
+    "id": "ngsl-1569",
+    "word": "reasonable",
+    "rank": 1569
+  },
+  {
+    "id": "ngsl-1570",
+    "word": "guarantee",
+    "rank": 1570
+  },
+  {
+    "id": "ngsl-1571",
+    "word": "till",
+    "rank": 1571
+  },
+  {
+    "id": "ngsl-1572",
+    "word": "theme",
+    "rank": 1572
+  },
+  {
+    "id": "ngsl-1573",
+    "word": "judgment",
+    "rank": 1573
+  },
+  {
+    "id": "ngsl-1574",
+    "word": "odd",
+    "rank": 1574
+  },
+  {
+    "id": "ngsl-1575",
+    "word": "approve",
+    "rank": 1575
+  },
+  {
+    "id": "ngsl-1576",
+    "word": "loan",
+    "rank": 1576
+  },
+  {
+    "id": "ngsl-1577",
+    "word": "definition",
+    "rank": 1577
+  },
+  {
+    "id": "ngsl-1578",
+    "word": "elect",
+    "rank": 1578
+  },
+  {
+    "id": "ngsl-1579",
+    "word": "atmosphere",
+    "rank": 1579
+  },
+  {
+    "id": "ngsl-1580",
+    "word": "farmer",
+    "rank": 1580
+  },
+  {
+    "id": "ngsl-1581",
+    "word": "comparison",
+    "rank": 1581
+  },
+  {
+    "id": "ngsl-1582",
+    "word": "characteristic",
+    "rank": 1582
+  },
+  {
+    "id": "ngsl-1583",
+    "word": "license",
+    "rank": 1583
+  },
+  {
+    "id": "ngsl-1584",
+    "word": "rely",
+    "rank": 1584
+  },
+  {
+    "id": "ngsl-1585",
+    "word": "narrow",
+    "rank": 1585
+  },
+  {
+    "id": "ngsl-1586",
+    "word": "succeed",
+    "rank": 1586
+  },
+  {
+    "id": "ngsl-1587",
+    "word": "identity",
+    "rank": 1587
+  },
+  {
+    "id": "ngsl-1588",
+    "word": "desk",
+    "rank": 1588
+  },
+  {
+    "id": "ngsl-1589",
+    "word": "permit",
+    "rank": 1589
+  },
+  {
+    "id": "ngsl-1590",
+    "word": "seriously",
+    "rank": 1590
+  },
+  {
+    "id": "ngsl-1591",
+    "word": "wild",
+    "rank": 1591
+  },
+  {
+    "id": "ngsl-1592",
+    "word": "empty",
+    "rank": 1592
+  },
+  {
+    "id": "ngsl-1593",
+    "word": "commission",
+    "rank": 1593
+  },
+  {
+    "id": "ngsl-1594",
+    "word": "unique",
+    "rank": 1594
+  },
+  {
+    "id": "ngsl-1595",
+    "word": "association",
+    "rank": 1595
+  },
+  {
+    "id": "ngsl-1596",
+    "word": "instrument",
+    "rank": 1596
+  },
+  {
+    "id": "ngsl-1597",
+    "word": "investor",
+    "rank": 1597
+  },
+  {
+    "id": "ngsl-1598",
+    "word": "practical",
+    "rank": 1598
+  },
+  {
+    "id": "ngsl-1599",
+    "word": "tea",
+    "rank": 1599
+  },
+  {
+    "id": "ngsl-1600",
+    "word": "lovely",
+    "rank": 1600
+  },
+  {
+    "id": "ngsl-1601",
+    "word": "soft",
+    "rank": 1601
+  },
+  {
+    "id": "ngsl-1602",
+    "word": "row",
+    "rank": 1602
+  },
+  {
+    "id": "ngsl-1603",
+    "word": "youth",
+    "rank": 1603
+  },
+  {
+    "id": "ngsl-1604",
+    "word": "lock",
+    "rank": 1604
+  },
+  {
+    "id": "ngsl-1605",
+    "word": "fuel",
+    "rank": 1605
+  },
+  {
+    "id": "ngsl-1606",
+    "word": "expectation",
+    "rank": 1606
+  },
+  {
+    "id": "ngsl-1607",
+    "word": "employment",
+    "rank": 1607
+  },
+  {
+    "id": "ngsl-1608",
+    "word": "celebrate",
+    "rank": 1608
+  },
+  {
+    "id": "ngsl-1609",
+    "word": "sexual",
+    "rank": 1609
+  },
+  {
+    "id": "ngsl-1610",
+    "word": "shoulder",
+    "rank": 1610
+  },
+  {
+    "id": "ngsl-1611",
+    "word": "breath",
+    "rank": 1611
+  },
+  {
+    "id": "ngsl-1612",
+    "word": "increasingly",
+    "rank": 1612
+  },
+  {
+    "id": "ngsl-1613",
+    "word": "import",
+    "rank": 1613
+  },
+  {
+    "id": "ngsl-1614",
+    "word": "bottle",
+    "rank": 1614
+  },
+  {
+    "id": "ngsl-1615",
+    "word": "ourselves",
+    "rank": 1615
+  },
+  {
+    "id": "ngsl-1616",
+    "word": "sheet",
+    "rank": 1616
+  },
+  {
+    "id": "ngsl-1617",
+    "word": "engine",
+    "rank": 1617
+  },
+  {
+    "id": "ngsl-1618",
+    "word": "cast",
+    "rank": 1618
+  },
+  {
+    "id": "ngsl-1619",
+    "word": "notion",
+    "rank": 1619
+  },
+  {
+    "id": "ngsl-1620",
+    "word": "conservative",
+    "rank": 1620
+  },
+  {
+    "id": "ngsl-1621",
+    "word": "journey",
+    "rank": 1621
+  },
+  {
+    "id": "ngsl-1622",
+    "word": "opposition",
+    "rank": 1622
+  },
+  {
+    "id": "ngsl-1623",
+    "word": "relief",
+    "rank": 1623
+  },
+  {
+    "id": "ngsl-1624",
+    "word": "debt",
+    "rank": 1624
+  },
+  {
+    "id": "ngsl-1625",
+    "word": "honor",
+    "rank": 1625
+  },
+  {
+    "id": "ngsl-1626",
+    "word": "outcome",
+    "rank": 1626
+  },
+  {
+    "id": "ngsl-1627",
+    "word": "blame",
+    "rank": 1627
+  },
+  {
+    "id": "ngsl-1628",
+    "word": "explanation",
+    "rank": 1628
+  },
+  {
+    "id": "ngsl-1629",
+    "word": "arise",
+    "rank": 1629
+  },
+  {
+    "id": "ngsl-1630",
+    "word": "musical",
+    "rank": 1630
+  },
+  {
+    "id": "ngsl-1631",
+    "word": "recover",
+    "rank": 1631
+  },
+  {
+    "id": "ngsl-1632",
+    "word": "dad",
+    "rank": 1632
+  },
+  {
+    "id": "ngsl-1633",
+    "word": "stretch",
+    "rank": 1633
+  },
+  {
+    "id": "ngsl-1634",
+    "word": "declare",
+    "rank": 1634
+  },
+  {
+    "id": "ngsl-1635",
+    "word": "retire",
+    "rank": 1635
+  },
+  {
+    "id": "ngsl-1636",
+    "word": "tiny",
+    "rank": 1636
+  },
+  {
+    "id": "ngsl-1637",
+    "word": "careful",
+    "rank": 1637
+  },
+  {
+    "id": "ngsl-1638",
+    "word": "suitable",
+    "rank": 1638
+  },
+  {
+    "id": "ngsl-1639",
+    "word": "native",
+    "rank": 1639
+  },
+  {
+    "id": "ngsl-1640",
+    "word": "fruit",
+    "rank": 1640
+  },
+  {
+    "id": "ngsl-1641",
+    "word": "analyze",
+    "rank": 1641
+  },
+  {
+    "id": "ngsl-1642",
+    "word": "witness",
+    "rank": 1642
+  },
+  {
+    "id": "ngsl-1643",
+    "word": "mail",
+    "rank": 1643
+  },
+  {
+    "id": "ngsl-1644",
+    "word": "terrible",
+    "rank": 1644
+  },
+  {
+    "id": "ngsl-1645",
+    "word": "researcher",
+    "rank": 1645
+  },
+  {
+    "id": "ngsl-1646",
+    "word": "ordinary",
+    "rank": 1646
+  },
+  {
+    "id": "ngsl-1647",
+    "word": "selection",
+    "rank": 1647
+  },
+  {
+    "id": "ngsl-1648",
+    "word": "anywhere",
+    "rank": 1648
+  },
+  {
+    "id": "ngsl-1649",
+    "word": "mental",
+    "rank": 1649
+  },
+  {
+    "id": "ngsl-1650",
+    "word": "participant",
+    "rank": 1650
+  },
+  {
+    "id": "ngsl-1651",
+    "word": "vision",
+    "rank": 1651
+  },
+  {
+    "id": "ngsl-1652",
+    "word": "personality",
+    "rank": 1652
+  },
+  {
+    "id": "ngsl-1653",
+    "word": "specifically",
+    "rank": 1653
+  },
+  {
+    "id": "ngsl-1654",
+    "word": "fat",
+    "rank": 1654
+  },
+  {
+    "id": "ngsl-1655",
+    "word": "entry",
+    "rank": 1655
+  },
+  {
+    "id": "ngsl-1656",
+    "word": "fellow",
+    "rank": 1656
+  },
+  {
+    "id": "ngsl-1657",
+    "word": "chemical",
+    "rank": 1657
+  },
+  {
+    "id": "ngsl-1658",
+    "word": "capture",
+    "rank": 1658
+  },
+  {
+    "id": "ngsl-1659",
+    "word": "tip",
+    "rank": 1659
+  },
+  {
+    "id": "ngsl-1660",
+    "word": "discount",
+    "rank": 1660
+  },
+  {
+    "id": "ngsl-1661",
+    "word": "peak",
+    "rank": 1661
+  },
+  {
+    "id": "ngsl-1662",
+    "word": "chairman",
+    "rank": 1662
+  },
+  {
+    "id": "ngsl-1663",
+    "word": "proportion",
+    "rank": 1663
+  },
+  {
+    "id": "ngsl-1664",
+    "word": "ear",
+    "rank": 1664
+  },
+  {
+    "id": "ngsl-1665",
+    "word": "disappear",
+    "rank": 1665
+  },
+  {
+    "id": "ngsl-1666",
+    "word": "shout",
+    "rank": 1666
+  },
+  {
+    "id": "ngsl-1667",
+    "word": "yard",
+    "rank": 1667
+  },
+  {
+    "id": "ngsl-1668",
+    "word": "constant",
+    "rank": 1668
+  },
+  {
+    "id": "ngsl-1669",
+    "word": "significantly",
+    "rank": 1669
+  },
+  {
+    "id": "ngsl-1670",
+    "word": "hill",
+    "rank": 1670
+  },
+  {
+    "id": "ngsl-1671",
+    "word": "considerable",
+    "rank": 1671
+  },
+  {
+    "id": "ngsl-1672",
+    "word": "instruction",
+    "rank": 1672
+  },
+  {
+    "id": "ngsl-1673",
+    "word": "intelligence",
+    "rank": 1673
+  },
+  {
+    "id": "ngsl-1674",
+    "word": "ideal",
+    "rank": 1674
+  },
+  {
+    "id": "ngsl-1675",
+    "word": "folk",
+    "rank": 1675
+  },
+  {
+    "id": "ngsl-1676",
+    "word": "surely",
+    "rank": 1676
+  },
+  {
+    "id": "ngsl-1677",
+    "word": "guard",
+    "rank": 1677
+  },
+  {
+    "id": "ngsl-1678",
+    "word": "cat",
+    "rank": 1678
+  },
+  {
+    "id": "ngsl-1679",
+    "word": "somewhat",
+    "rank": 1679
+  },
+  {
+    "id": "ngsl-1680",
+    "word": "kiss",
+    "rank": 1680
+  },
+  {
+    "id": "ngsl-1681",
+    "word": "presentation",
+    "rank": 1681
+  },
+  {
+    "id": "ngsl-1682",
+    "word": "joint",
+    "rank": 1682
+  },
+  {
+    "id": "ngsl-1683",
+    "word": "compete",
+    "rank": 1683
+  },
+  {
+    "id": "ngsl-1684",
+    "word": "poll",
+    "rank": 1684
+  },
+  {
+    "id": "ngsl-1685",
+    "word": "weak",
+    "rank": 1685
+  },
+  {
+    "id": "ngsl-1686",
+    "word": "faith",
+    "rank": 1686
+  },
+  {
+    "id": "ngsl-1687",
+    "word": "reduction",
+    "rank": 1687
+  },
+  {
+    "id": "ngsl-1688",
+    "word": "reserve",
+    "rank": 1688
+  },
+  {
+    "id": "ngsl-1689",
+    "word": "complaint",
+    "rank": 1689
+  },
+  {
+    "id": "ngsl-1690",
+    "word": "bore",
+    "rank": 1690
+  },
+  {
+    "id": "ngsl-1691",
+    "word": "mission",
+    "rank": 1691
+  },
+  {
+    "id": "ngsl-1692",
+    "word": "somehow",
+    "rank": 1692
+  },
+  {
+    "id": "ngsl-1693",
+    "word": "tone",
+    "rank": 1693
+  },
+  {
+    "id": "ngsl-1694",
+    "word": "neighborhood",
+    "rank": 1694
+  },
+  {
+    "id": "ngsl-1695",
+    "word": "passenger",
+    "rank": 1695
+  },
+  {
+    "id": "ngsl-1696",
+    "word": "justice",
+    "rank": 1696
+  },
+  {
+    "id": "ngsl-1697",
+    "word": "phase",
+    "rank": 1697
+  },
+  {
+    "id": "ngsl-1698",
+    "word": "thin",
+    "rank": 1698
+  },
+  {
+    "id": "ngsl-1699",
+    "word": "rush",
+    "rank": 1699
+  },
+  {
+    "id": "ngsl-1700",
+    "word": "formal",
+    "rank": 1700
+  },
+  {
+    "id": "ngsl-1701",
+    "word": "religion",
+    "rank": 1701
+  },
+  {
+    "id": "ngsl-1702",
+    "word": "employer",
+    "rank": 1702
+  },
+  {
+    "id": "ngsl-1703",
+    "word": "reject",
+    "rank": 1703
+  },
+  {
+    "id": "ngsl-1704",
+    "word": "latter",
+    "rank": 1704
+  },
+  {
+    "id": "ngsl-1705",
+    "word": "plate",
+    "rank": 1705
+  },
+  {
+    "id": "ngsl-1706",
+    "word": "ban",
+    "rank": 1706
+  },
+  {
+    "id": "ngsl-1707",
+    "word": "steal",
+    "rank": 1707
+  },
+  {
+    "id": "ngsl-1708",
+    "word": "protest",
+    "rank": 1708
+  },
+  {
+    "id": "ngsl-1709",
+    "word": "index",
+    "rank": 1709
+  },
+  {
+    "id": "ngsl-1710",
+    "word": "sad",
+    "rank": 1710
+  },
+  {
+    "id": "ngsl-1711",
+    "word": "frequently",
+    "rank": 1711
+  },
+  {
+    "id": "ngsl-1712",
+    "word": "circle",
+    "rank": 1712
+  },
+  {
+    "id": "ngsl-1713",
+    "word": "helpful",
+    "rank": 1713
+  },
+  {
+    "id": "ngsl-1714",
+    "word": "command",
+    "rank": 1714
+  },
+  {
+    "id": "ngsl-1715",
+    "word": "attractive",
+    "rank": 1715
+  },
+  {
+    "id": "ngsl-1716",
+    "word": "sick",
+    "rank": 1716
+  },
+  {
+    "id": "ngsl-1717",
+    "word": "impression",
+    "rank": 1717
+  },
+  {
+    "id": "ngsl-1718",
+    "word": "unable",
+    "rank": 1718
+  },
+  {
+    "id": "ngsl-1719",
+    "word": "joke",
+    "rank": 1719
+  },
+  {
+    "id": "ngsl-1720",
+    "word": "sky",
+    "rank": 1720
+  },
+  {
+    "id": "ngsl-1721",
+    "word": "column",
+    "rank": 1721
+  },
+  {
+    "id": "ngsl-1722",
+    "word": "electronic",
+    "rank": 1722
+  },
+  {
+    "id": "ngsl-1723",
+    "word": "impose",
+    "rank": 1723
+  },
+  {
+    "id": "ngsl-1724",
+    "word": "criminal",
+    "rank": 1724
+  },
+  {
+    "id": "ngsl-1725",
+    "word": "besides",
+    "rank": 1725
+  },
+  {
+    "id": "ngsl-1726",
+    "word": "properly",
+    "rank": 1726
+  },
+  {
+    "id": "ngsl-1727",
+    "word": "ancient",
+    "rank": 1727
+  },
+  {
+    "id": "ngsl-1728",
+    "word": "coast",
+    "rank": 1728
+  },
+  {
+    "id": "ngsl-1729",
+    "word": "ill",
+    "rank": 1729
+  },
+  {
+    "id": "ngsl-1730",
+    "word": "kick",
+    "rank": 1730
+  },
+  {
+    "id": "ngsl-1731",
+    "word": "closely",
+    "rank": 1731
+  },
+  {
+    "id": "ngsl-1732",
+    "word": "multiple",
+    "rank": 1732
+  },
+  {
+    "id": "ngsl-1733",
+    "word": "yield",
+    "rank": 1733
+  },
+  {
+    "id": "ngsl-1734",
+    "word": "via",
+    "rank": 1734
+  },
+  {
+    "id": "ngsl-1735",
+    "word": "legislation",
+    "rank": 1735
+  },
+  {
+    "id": "ngsl-1736",
+    "word": "county",
+    "rank": 1736
+  },
+  {
+    "id": "ngsl-1737",
+    "word": "unlike",
+    "rank": 1737
+  },
+  {
+    "id": "ngsl-1738",
+    "word": "mobile",
+    "rank": 1738
+  },
+  {
+    "id": "ngsl-1739",
+    "word": "assistant",
+    "rank": 1739
+  },
+  {
+    "id": "ngsl-1740",
+    "word": "implement",
+    "rank": 1740
+  },
+  {
+    "id": "ngsl-1741",
+    "word": "chart",
+    "rank": 1741
+  },
+  {
+    "id": "ngsl-1742",
+    "word": "attach",
+    "rank": 1742
+  },
+  {
+    "id": "ngsl-1743",
+    "word": "hell",
+    "rank": 1743
+  },
+  {
+    "id": "ngsl-1744",
+    "word": "everywhere",
+    "rank": 1744
+  },
+  {
+    "id": "ngsl-1745",
+    "word": "advise",
+    "rank": 1745
+  },
+  {
+    "id": "ngsl-1746",
+    "word": "household",
+    "rank": 1746
+  },
+  {
+    "id": "ngsl-1747",
+    "word": "acknowledge",
+    "rank": 1747
+  },
+  {
+    "id": "ngsl-1748",
+    "word": "reward",
+    "rank": 1748
+  },
+  {
+    "id": "ngsl-1749",
+    "word": "east",
+    "rank": 1749
+  },
+  {
+    "id": "ngsl-1750",
+    "word": "hat",
+    "rank": 1750
+  },
+  {
+    "id": "ngsl-1751",
+    "word": "academic",
+    "rank": 1751
+  },
+  {
+    "id": "ngsl-1752",
+    "word": "voter",
+    "rank": 1752
+  },
+  {
+    "id": "ngsl-1753",
+    "word": "meanwhile",
+    "rank": 1753
+  },
+  {
+    "id": "ngsl-1754",
+    "word": "furthermore",
+    "rank": 1754
+  },
+  {
+    "id": "ngsl-1755",
+    "word": "accuse",
+    "rank": 1755
+  },
+  {
+    "id": "ngsl-1756",
+    "word": "scientific",
+    "rank": 1756
+  },
+  {
+    "id": "ngsl-1757",
+    "word": "wage",
+    "rank": 1757
+  },
+  {
+    "id": "ngsl-1758",
+    "word": "absence",
+    "rank": 1758
+  },
+  {
+    "id": "ngsl-1759",
+    "word": "construct",
+    "rank": 1759
+  },
+  {
+    "id": "ngsl-1760",
+    "word": "remark",
+    "rank": 1760
+  },
+  {
+    "id": "ngsl-1761",
+    "word": "medicine",
+    "rank": 1761
+  },
+  {
+    "id": "ngsl-1762",
+    "word": "professor",
+    "rank": 1762
+  },
+  {
+    "id": "ngsl-1763",
+    "word": "rare",
+    "rank": 1763
+  },
+  {
+    "id": "ngsl-1764",
+    "word": "intention",
+    "rank": 1764
+  },
+  {
+    "id": "ngsl-1765",
+    "word": "dozen",
+    "rank": 1765
+  },
+  {
+    "id": "ngsl-1766",
+    "word": "settlement",
+    "rank": 1766
+  },
+  {
+    "id": "ngsl-1767",
+    "word": "gap",
+    "rank": 1767
+  },
+  {
+    "id": "ngsl-1768",
+    "word": "widely",
+    "rank": 1768
+  },
+  {
+    "id": "ngsl-1769",
+    "word": "minimum",
+    "rank": 1769
+  },
+  {
+    "id": "ngsl-1770",
+    "word": "northern",
+    "rank": 1770
+  },
+  {
+    "id": "ngsl-1771",
+    "word": "estate",
+    "rank": 1771
+  },
+  {
+    "id": "ngsl-1772",
+    "word": "equally",
+    "rank": 1772
+  },
+  {
+    "id": "ngsl-1773",
+    "word": "expose",
+    "rank": 1773
+  },
+  {
+    "id": "ngsl-1774",
+    "word": "alive",
+    "rank": 1774
+  },
+  {
+    "id": "ngsl-1775",
+    "word": "shut",
+    "rank": 1775
+  },
+  {
+    "id": "ngsl-1776",
+    "word": "victory",
+    "rank": 1776
+  },
+  {
+    "id": "ngsl-1777",
+    "word": "resolve",
+    "rank": 1777
+  },
+  {
+    "id": "ngsl-1778",
+    "word": "critic",
+    "rank": 1778
+  },
+  {
+    "id": "ngsl-1779",
+    "word": "variable",
+    "rank": 1779
+  },
+  {
+    "id": "ngsl-1780",
+    "word": "enormous",
+    "rank": 1780
+  },
+  {
+    "id": "ngsl-1781",
+    "word": "sweet",
+    "rank": 1781
+  },
+  {
+    "id": "ngsl-1782",
+    "word": "permanent",
+    "rank": 1782
+  },
+  {
+    "id": "ngsl-1783",
+    "word": "emotion",
+    "rank": 1783
+  },
+  {
+    "id": "ngsl-1784",
+    "word": "pursue",
+    "rank": 1784
+  },
+  {
+    "id": "ngsl-1785",
+    "word": "tall",
+    "rank": 1785
+  },
+  {
+    "id": "ngsl-1786",
+    "word": "urge",
+    "rank": 1786
+  },
+  {
+    "id": "ngsl-1787",
+    "word": "enemy",
+    "rank": 1787
+  },
+  {
+    "id": "ngsl-1788",
+    "word": "appoint",
+    "rank": 1788
+  },
+  {
+    "id": "ngsl-1789",
+    "word": "milk",
+    "rank": 1789
+  },
+  {
+    "id": "ngsl-1790",
+    "word": "talent",
+    "rank": 1790
+  },
+  {
+    "id": "ngsl-1791",
+    "word": "smell",
+    "rank": 1791
+  },
+  {
+    "id": "ngsl-1792",
+    "word": "prior",
+    "rank": 1792
+  },
+  {
+    "id": "ngsl-1793",
+    "word": "priority",
+    "rank": 1793
+  },
+  {
+    "id": "ngsl-1794",
+    "word": "online",
+    "rank": 1794
+  },
+  {
+    "id": "ngsl-1795",
+    "word": "phrase",
+    "rank": 1795
+  },
+  {
+    "id": "ngsl-1796",
+    "word": "pilot",
+    "rank": 1796
+  },
+  {
+    "id": "ngsl-1797",
+    "word": "stable",
+    "rank": 1797
+  },
+  {
+    "id": "ngsl-1798",
+    "word": "merely",
+    "rank": 1798
+  },
+  {
+    "id": "ngsl-1799",
+    "word": "resolution",
+    "rank": 1799
+  },
+  {
+    "id": "ngsl-1800",
+    "word": "communicate",
+    "rank": 1800
+  },
+  {
+    "id": "ngsl-1801",
+    "word": "injury",
+    "rank": 1801
+  },
+  {
+    "id": "ngsl-1802",
+    "word": "vast",
+    "rank": 1802
+  },
+  {
+    "id": "ngsl-1803",
+    "word": "exhibition",
+    "rank": 1803
+  },
+  {
+    "id": "ngsl-1804",
+    "word": "producer",
+    "rank": 1804
+  },
+  {
+    "id": "ngsl-1805",
+    "word": "regional",
+    "rank": 1805
+  },
+  {
+    "id": "ngsl-1806",
+    "word": "immediate",
+    "rank": 1806
+  },
+  {
+    "id": "ngsl-1807",
+    "word": "incident",
+    "rank": 1807
+  },
+  {
+    "id": "ngsl-1808",
+    "word": "childhood",
+    "rank": 1808
+  },
+  {
+    "id": "ngsl-1809",
+    "word": "draft",
+    "rank": 1809
+  },
+  {
+    "id": "ngsl-1810",
+    "word": "slip",
+    "rank": 1810
+  },
+  {
+    "id": "ngsl-1811",
+    "word": "accompany",
+    "rank": 1811
+  },
+  {
+    "id": "ngsl-1812",
+    "word": "politician",
+    "rank": 1812
+  },
+  {
+    "id": "ngsl-1813",
+    "word": "angry",
+    "rank": 1813
+  },
+  {
+    "id": "ngsl-1814",
+    "word": "knock",
+    "rank": 1814
+  },
+  {
+    "id": "ngsl-1815",
+    "word": "seed",
+    "rank": 1815
+  },
+  {
+    "id": "ngsl-1816",
+    "word": "salary",
+    "rank": 1816
+  },
+  {
+    "id": "ngsl-1817",
+    "word": "illustrate",
+    "rank": 1817
+  },
+  {
+    "id": "ngsl-1818",
+    "word": "imply",
+    "rank": 1818
+  },
+  {
+    "id": "ngsl-1819",
+    "word": "breakfast",
+    "rank": 1819
+  },
+  {
+    "id": "ngsl-1820",
+    "word": "temporary",
+    "rank": 1820
+  },
+  {
+    "id": "ngsl-1821",
+    "word": "liberal",
+    "rank": 1821
+  },
+  {
+    "id": "ngsl-1822",
+    "word": "lake",
+    "rank": 1822
+  },
+  {
+    "id": "ngsl-1823",
+    "word": "qualify",
+    "rank": 1823
+  },
+  {
+    "id": "ngsl-1824",
+    "word": "competitive",
+    "rank": 1824
+  },
+  {
+    "id": "ngsl-1825",
+    "word": "truly",
+    "rank": 1825
+  },
+  {
+    "id": "ngsl-1826",
+    "word": "hi",
+    "rank": 1826
+  },
+  {
+    "id": "ngsl-1827",
+    "word": "yellow",
+    "rank": 1827
+  },
+  {
+    "id": "ngsl-1828",
+    "word": "habit",
+    "rank": 1828
+  },
+  {
+    "id": "ngsl-1829",
+    "word": "disk",
+    "rank": 1829
+  },
+  {
+    "id": "ngsl-1830",
+    "word": "core",
+    "rank": 1830
+  },
+  {
+    "id": "ngsl-1831",
+    "word": "emotional",
+    "rank": 1831
+  },
+  {
+    "id": "ngsl-1832",
+    "word": "aircraft",
+    "rank": 1832
+  },
+  {
+    "id": "ngsl-1833",
+    "word": "self",
+    "rank": 1833
+  },
+  {
+    "id": "ngsl-1834",
+    "word": "metal",
+    "rank": 1834
+  },
+  {
+    "id": "ngsl-1835",
+    "word": "existence",
+    "rank": 1835
+  },
+  {
+    "id": "ngsl-1836",
+    "word": "bone",
+    "rank": 1836
+  },
+  {
+    "id": "ngsl-1837",
+    "word": "panel",
+    "rank": 1837
+  },
+  {
+    "id": "ngsl-1838",
+    "word": "prime",
+    "rank": 1838
+  },
+  {
+    "id": "ngsl-1839",
+    "word": "appointment",
+    "rank": 1839
+  },
+  {
+    "id": "ngsl-1840",
+    "word": "emphasize",
+    "rank": 1840
+  },
+  {
+    "id": "ngsl-1841",
+    "word": "maximum",
+    "rank": 1841
+  },
+  {
+    "id": "ngsl-1842",
+    "word": "effectively",
+    "rank": 1842
+  },
+  {
+    "id": "ngsl-1843",
+    "word": "elsewhere",
+    "rank": 1843
+  },
+  {
+    "id": "ngsl-1844",
+    "word": "bother",
+    "rank": 1844
+  },
+  {
+    "id": "ngsl-1845",
+    "word": "initiative",
+    "rank": 1845
+  },
+  {
+    "id": "ngsl-1846",
+    "word": "sharp",
+    "rank": 1846
+  },
+  {
+    "id": "ngsl-1847",
+    "word": "diet",
+    "rank": 1847
+  },
+  {
+    "id": "ngsl-1848",
+    "word": "motion",
+    "rank": 1848
+  },
+  {
+    "id": "ngsl-1849",
+    "word": "gray",
+    "rank": 1849
+  },
+  {
+    "id": "ngsl-1850",
+    "word": "plastic",
+    "rank": 1850
+  },
+  {
+    "id": "ngsl-1851",
+    "word": "complicate",
+    "rank": 1851
+  },
+  {
+    "id": "ngsl-1852",
+    "word": "discipline",
+    "rank": 1852
+  },
+  {
+    "id": "ngsl-1853",
+    "word": "disappoint",
+    "rank": 1853
+  },
+  {
+    "id": "ngsl-1854",
+    "word": "boss",
+    "rank": 1854
+  },
+  {
+    "id": "ngsl-1855",
+    "word": "assumption",
+    "rank": 1855
+  },
+  {
+    "id": "ngsl-1856",
+    "word": "freeze",
+    "rank": 1856
+  },
+  {
+    "id": "ngsl-1857",
+    "word": "extreme",
+    "rank": 1857
+  },
+  {
+    "id": "ngsl-1858",
+    "word": "passage",
+    "rank": 1858
+  },
+  {
+    "id": "ngsl-1859",
+    "word": "reputation",
+    "rank": 1859
+  },
+  {
+    "id": "ngsl-1860",
+    "word": "forth",
+    "rank": 1860
+  },
+  {
+    "id": "ngsl-1861",
+    "word": "negotiation",
+    "rank": 1861
+  },
+  {
+    "id": "ngsl-1862",
+    "word": "mechanism",
+    "rank": 1862
+  },
+  {
+    "id": "ngsl-1863",
+    "word": "coat",
+    "rank": 1863
+  },
+  {
+    "id": "ngsl-1864",
+    "word": "democracy",
+    "rank": 1864
+  },
+  {
+    "id": "ngsl-1865",
+    "word": "pocket",
+    "rank": 1865
+  },
+  {
+    "id": "ngsl-1866",
+    "word": "lucky",
+    "rank": 1866
+  },
+  {
+    "id": "ngsl-1867",
+    "word": "crash",
+    "rank": 1867
+  },
+  {
+    "id": "ngsl-1868",
+    "word": "observation",
+    "rank": 1868
+  },
+  {
+    "id": "ngsl-1869",
+    "word": "meat",
+    "rank": 1869
+  },
+  {
+    "id": "ngsl-1870",
+    "word": "concentration",
+    "rank": 1870
+  },
+  {
+    "id": "ngsl-1871",
+    "word": "implication",
+    "rank": 1871
+  },
+  {
+    "id": "ngsl-1872",
+    "word": "deserve",
+    "rank": 1872
+  },
+  {
+    "id": "ngsl-1873",
+    "word": "unusual",
+    "rank": 1873
+  },
+  {
+    "id": "ngsl-1874",
+    "word": "defend",
+    "rank": 1874
+  },
+  {
+    "id": "ngsl-1875",
+    "word": "classic",
+    "rank": 1875
+  },
+  {
+    "id": "ngsl-1876",
+    "word": "king",
+    "rank": 1876
+  },
+  {
+    "id": "ngsl-1877",
+    "word": "interaction",
+    "rank": 1877
+  },
+  {
+    "id": "ngsl-1878",
+    "word": "repair",
+    "rank": 1878
+  },
+  {
+    "id": "ngsl-1879",
+    "word": "collapse",
+    "rank": 1879
+  },
+  {
+    "id": "ngsl-1880",
+    "word": "borrow",
+    "rank": 1880
+  },
+  {
+    "id": "ngsl-1881",
+    "word": "fundamental",
+    "rank": 1881
+  },
+  {
+    "id": "ngsl-1882",
+    "word": "dish",
+    "rank": 1882
+  },
+  {
+    "id": "ngsl-1883",
+    "word": "abroad",
+    "rank": 1883
+  },
+  {
+    "id": "ngsl-1884",
+    "word": "soul",
+    "rank": 1884
+  },
+  {
+    "id": "ngsl-1885",
+    "word": "capable",
+    "rank": 1885
+  },
+  {
+    "id": "ngsl-1886",
+    "word": "defeat",
+    "rank": 1886
+  },
+  {
+    "id": "ngsl-1887",
+    "word": "presidential",
+    "rank": 1887
+  },
+  {
+    "id": "ngsl-1888",
+    "word": "perfectly",
+    "rank": 1888
+  },
+  {
+    "id": "ngsl-1889",
+    "word": "enhance",
+    "rank": 1889
+  },
+  {
+    "id": "ngsl-1890",
+    "word": "proud",
+    "rank": 1890
+  },
+  {
+    "id": "ngsl-1891",
+    "word": "emergency",
+    "rank": 1891
+  },
+  {
+    "id": "ngsl-1892",
+    "word": "educational",
+    "rank": 1892
+  },
+  {
+    "id": "ngsl-1893",
+    "word": "distinguish",
+    "rank": 1893
+  },
+  {
+    "id": "ngsl-1894",
+    "word": "substantial",
+    "rank": 1894
+  },
+  {
+    "id": "ngsl-1895",
+    "word": "nearby",
+    "rank": 1895
+  },
+  {
+    "id": "ngsl-1896",
+    "word": "manufacturer",
+    "rank": 1896
+  },
+  {
+    "id": "ngsl-1897",
+    "word": "slide",
+    "rank": 1897
+  },
+  {
+    "id": "ngsl-1898",
+    "word": "valuable",
+    "rank": 1898
+  },
+  {
+    "id": "ngsl-1899",
+    "word": "personally",
+    "rank": 1899
+  },
+  {
+    "id": "ngsl-1900",
+    "word": "breast",
+    "rank": 1900
+  },
+  {
+    "id": "ngsl-1901",
+    "word": "cope",
+    "rank": 1901
+  },
+  {
+    "id": "ngsl-1902",
+    "word": "approximately",
+    "rank": 1902
+  },
+  {
+    "id": "ngsl-1903",
+    "word": "accommodation",
+    "rank": 1903
+  },
+  {
+    "id": "ngsl-1904",
+    "word": "highlight",
+    "rank": 1904
+  },
+  {
+    "id": "ngsl-1905",
+    "word": "reporter",
+    "rank": 1905
+  },
+  {
+    "id": "ngsl-1906",
+    "word": "climate",
+    "rank": 1906
+  },
+  {
+    "id": "ngsl-1907",
+    "word": "shirt",
+    "rank": 1907
+  },
+  {
+    "id": "ngsl-1908",
+    "word": "exception",
+    "rank": 1908
+  },
+  {
+    "id": "ngsl-1909",
+    "word": "corporation",
+    "rank": 1909
+  },
+  {
+    "id": "ngsl-1910",
+    "word": "chip",
+    "rank": 1910
+  },
+  {
+    "id": "ngsl-1911",
+    "word": "winner",
+    "rank": 1911
+  },
+  {
+    "id": "ngsl-1912",
+    "word": "encounter",
+    "rank": 1912
+  },
+  {
+    "id": "ngsl-1913",
+    "word": "brown",
+    "rank": 1913
+  },
+  {
+    "id": "ngsl-1914",
+    "word": "breathe",
+    "rank": 1914
+  },
+  {
+    "id": "ngsl-1915",
+    "word": "excuse",
+    "rank": 1915
+  },
+  {
+    "id": "ngsl-1916",
+    "word": "partly",
+    "rank": 1916
+  },
+  {
+    "id": "ngsl-1917",
+    "word": "tennis",
+    "rank": 1917
+  },
+  {
+    "id": "ngsl-1918",
+    "word": "urban",
+    "rank": 1918
+  },
+  {
+    "id": "ngsl-1919",
+    "word": "confuse",
+    "rank": 1919
+  },
+  {
+    "id": "ngsl-1920",
+    "word": "southern",
+    "rank": 1920
+  },
+  {
+    "id": "ngsl-1921",
+    "word": "output",
+    "rank": 1921
+  },
+  {
+    "id": "ngsl-1922",
+    "word": "beauty",
+    "rank": 1922
+  },
+  {
+    "id": "ngsl-1923",
+    "word": "massive",
+    "rank": 1923
+  },
+  {
+    "id": "ngsl-1924",
+    "word": "install",
+    "rank": 1924
+  },
+  {
+    "id": "ngsl-1925",
+    "word": "calculate",
+    "rank": 1925
+  },
+  {
+    "id": "ngsl-1926",
+    "word": "mouse",
+    "rank": 1926
+  },
+  {
+    "id": "ngsl-1927",
+    "word": "mathematics",
+    "rank": 1927
+  },
+  {
+    "id": "ngsl-1928",
+    "word": "upper",
+    "rank": 1928
+  },
+  {
+    "id": "ngsl-1929",
+    "word": "creation",
+    "rank": 1929
+  },
+  {
+    "id": "ngsl-1930",
+    "word": "occupy",
+    "rank": 1930
+  },
+  {
+    "id": "ngsl-1931",
+    "word": "outline",
+    "rank": 1931
+  },
+  {
+    "id": "ngsl-1932",
+    "word": "sufficient",
+    "rank": 1932
+  },
+  {
+    "id": "ngsl-1933",
+    "word": "update",
+    "rank": 1933
+  },
+  {
+    "id": "ngsl-1934",
+    "word": "luck",
+    "rank": 1934
+  },
+  {
+    "id": "ngsl-1935",
+    "word": "preserve",
+    "rank": 1935
+  },
+  {
+    "id": "ngsl-1936",
+    "word": "split",
+    "rank": 1936
+  },
+  {
+    "id": "ngsl-1937",
+    "word": "swing",
+    "rank": 1937
+  },
+  {
+    "id": "ngsl-1938",
+    "word": "illness",
+    "rank": 1938
+  },
+  {
+    "id": "ngsl-1939",
+    "word": "journalist",
+    "rank": 1939
+  },
+  {
+    "id": "ngsl-1940",
+    "word": "sudden",
+    "rank": 1940
+  },
+  {
+    "id": "ngsl-1941",
+    "word": "advertisement",
+    "rank": 1941
+  },
+  {
+    "id": "ngsl-1942",
+    "word": "consistent",
+    "rank": 1942
+  },
+  {
+    "id": "ngsl-1943",
+    "word": "originally",
+    "rank": 1943
+  },
+  {
+    "id": "ngsl-1944",
+    "word": "aside",
+    "rank": 1944
+  },
+  {
+    "id": "ngsl-1945",
+    "word": "comfort",
+    "rank": 1945
+  },
+  {
+    "id": "ngsl-1946",
+    "word": "secondly",
+    "rank": 1946
+  },
+  {
+    "id": "ngsl-1947",
+    "word": "severe",
+    "rank": 1947
+  },
+  {
+    "id": "ngsl-1948",
+    "word": "gene",
+    "rank": 1948
+  },
+  {
+    "id": "ngsl-1949",
+    "word": "prospect",
+    "rank": 1949
+  },
+  {
+    "id": "ngsl-1950",
+    "word": "snow",
+    "rank": 1950
+  },
+  {
+    "id": "ngsl-1951",
+    "word": "plot",
+    "rank": 1951
+  },
+  {
+    "id": "ngsl-1952",
+    "word": "neck",
+    "rank": 1952
+  },
+  {
+    "id": "ngsl-1953",
+    "word": "criteria",
+    "rank": 1953
+  },
+  {
+    "id": "ngsl-1954",
+    "word": "primarily",
+    "rank": 1954
+  },
+  {
+    "id": "ngsl-1955",
+    "word": "integrate",
+    "rank": 1955
+  },
+  {
+    "id": "ngsl-1956",
+    "word": "criticism",
+    "rank": 1956
+  },
+  {
+    "id": "ngsl-1957",
+    "word": "convention",
+    "rank": 1957
+  },
+  {
+    "id": "ngsl-1958",
+    "word": "bet",
+    "rank": 1958
+  },
+  {
+    "id": "ngsl-1959",
+    "word": "retain",
+    "rank": 1959
+  },
+  {
+    "id": "ngsl-1960",
+    "word": "sequence",
+    "rank": 1960
+  },
+  {
+    "id": "ngsl-1961",
+    "word": "plain",
+    "rank": 1961
+  },
+  {
+    "id": "ngsl-1962",
+    "word": "volunteer",
+    "rank": 1962
+  },
+  {
+    "id": "ngsl-1963",
+    "word": "rural",
+    "rank": 1963
+  },
+  {
+    "id": "ngsl-1964",
+    "word": "calm",
+    "rank": 1964
+  },
+  {
+    "id": "ngsl-1965",
+    "word": "abandon",
+    "rank": 1965
+  },
+  {
+    "id": "ngsl-1966",
+    "word": "examination",
+    "rank": 1966
+  },
+  {
+    "id": "ngsl-1967",
+    "word": "silence",
+    "rank": 1967
+  },
+  {
+    "id": "ngsl-1968",
+    "word": "rapidly",
+    "rank": 1968
+  },
+  {
+    "id": "ngsl-1969",
+    "word": "efficient",
+    "rank": 1969
+  },
+  {
+    "id": "ngsl-1970",
+    "word": "revolution",
+    "rank": 1970
+  },
+  {
+    "id": "ngsl-1971",
+    "word": "delight",
+    "rank": 1971
+  },
+  {
+    "id": "ngsl-1972",
+    "word": "spell",
+    "rank": 1972
+  },
+  {
+    "id": "ngsl-1973",
+    "word": "premise",
+    "rank": 1973
+  },
+  {
+    "id": "ngsl-1974",
+    "word": "lean",
+    "rank": 1974
+  },
+  {
+    "id": "ngsl-1975",
+    "word": "dramatic",
+    "rank": 1975
+  },
+  {
+    "id": "ngsl-1976",
+    "word": "differ",
+    "rank": 1976
+  },
+  {
+    "id": "ngsl-1977",
+    "word": "grateful",
+    "rank": 1977
+  },
+  {
+    "id": "ngsl-1978",
+    "word": "protein",
+    "rank": 1978
+  },
+  {
+    "id": "ngsl-1979",
+    "word": "bike",
+    "rank": 1979
+  },
+  {
+    "id": "ngsl-1980",
+    "word": "distribute",
+    "rank": 1980
+  },
+  {
+    "id": "ngsl-1981",
+    "word": "intellectual",
+    "rank": 1981
+  },
+  {
+    "id": "ngsl-1982",
+    "word": "derive",
+    "rank": 1982
+  },
+  {
+    "id": "ngsl-1983",
+    "word": "crucial",
+    "rank": 1983
+  },
+  {
+    "id": "ngsl-1984",
+    "word": "unemployment",
+    "rank": 1984
+  },
+  {
+    "id": "ngsl-1985",
+    "word": "wheel",
+    "rank": 1985
+  },
+  {
+    "id": "ngsl-1986",
+    "word": "crop",
+    "rank": 1986
+  },
+  {
+    "id": "ngsl-1987",
+    "word": "minority",
+    "rank": 1987
+  },
+  {
+    "id": "ngsl-1988",
+    "word": "origin",
+    "rank": 1988
+  },
+  {
+    "id": "ngsl-1989",
+    "word": "interpretation",
+    "rank": 1989
+  },
+  {
+    "id": "ngsl-1990",
+    "word": "gentleman",
+    "rank": 1990
+  },
+  {
+    "id": "ngsl-1991",
+    "word": "drama",
+    "rank": 1991
+  },
+  {
+    "id": "ngsl-1992",
+    "word": "landscape",
+    "rank": 1992
+  },
+  {
+    "id": "ngsl-1993",
+    "word": "educate",
+    "rank": 1993
+  },
+  {
+    "id": "ngsl-1994",
+    "word": "toy",
+    "rank": 1994
+  },
+  {
+    "id": "ngsl-1995",
+    "word": "fault",
+    "rank": 1995
+  },
+  {
+    "id": "ngsl-1996",
+    "word": "exhibit",
+    "rank": 1996
+  },
+  {
+    "id": "ngsl-1997",
+    "word": "minor",
+    "rank": 1997
+  },
+  {
+    "id": "ngsl-1998",
+    "word": "hunt",
+    "rank": 1998
+  },
+  {
+    "id": "ngsl-1999",
+    "word": "storm",
+    "rank": 1999
+  },
+  {
+    "id": "ngsl-2000",
+    "word": "thick",
+    "rank": 2000
+  }
+]
