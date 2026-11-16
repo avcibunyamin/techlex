@@ -41,6 +41,7 @@ export const PACKS: Pack[] = [
     size: 1000,
     source: NGSL_SOURCE,
     file: 'ngsl-1.json',
+    load: () => import('./ngsl-1.json'),
   },
   {
     id: 'ngsl-2',
@@ -52,6 +53,7 @@ export const PACKS: Pack[] = [
     size: 1000,
     source: NGSL_SOURCE,
     file: 'ngsl-2.json',
+    load: () => import('./ngsl-2.json'),
   },
   {
     id: 'ngsl-3',
@@ -63,6 +65,7 @@ export const PACKS: Pack[] = [
     size: 809,
     source: NGSL_SOURCE,
     file: 'ngsl-3.json',
+    load: () => import('./ngsl-3.json'),
   },
   {
     id: 'nawl',
@@ -74,6 +77,7 @@ export const PACKS: Pack[] = [
     size: 959,
     source: NAWL_SOURCE,
     file: 'nawl.json',
+    load: () => import('./nawl.json'),
   },
   {
     id: 'bsl-1',
@@ -85,6 +89,7 @@ export const PACKS: Pack[] = [
     size: 1000,
     source: BSL_SOURCE,
     file: 'bsl-1.json',
+    load: () => import('./bsl-1.json'),
   },
   {
     id: 'bsl-2',
@@ -96,6 +101,7 @@ export const PACKS: Pack[] = [
     size: 744,
     source: BSL_SOURCE,
     file: 'bsl-2.json',
+    load: () => import('./bsl-2.json'),
   },
   {
     id: 'tsl-1',
