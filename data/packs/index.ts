@@ -113,6 +113,7 @@ export const PACKS: Pack[] = [
     size: 1000,
     source: TSL_SOURCE,
     file: 'tsl-1.json',
+    load: () => import('./tsl-1.json'),
   },
   {
     id: 'tsl-2',
@@ -124,6 +125,7 @@ export const PACKS: Pack[] = [
     size: 250,
     source: TSL_SOURCE,
     file: 'tsl-2.json',
+    load: () => import('./tsl-2.json'),
   },
 ];
 
