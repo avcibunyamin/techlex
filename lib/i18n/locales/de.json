@@ -89,6 +89,12 @@
     "themeDark": "Dunkel",
     "themeSystem": "System",
     "version": "Version",
+    "summaryTitle": "Fortschrittsübersicht",
+    "summaryCopy": "Übersicht kopieren",
+    "summaryShare": "Übersicht teilen",
+    "summaryCopied": "Übersicht in die Zwischenablage kopiert.",
+    "summaryShared": "Übersicht geteilt.",
+    "summaryFailed": "Übersicht konnte nicht kopiert werden.",
     "subscription": "Abonnement",
     "energy": "Energie",
     "unlimited": "Unbegrenzt",
@@ -438,5 +444,10 @@
     "allDoneSub": "Heute sind keine Karten zur Wiederholung fällig. Mach mit neuen Wörtern weiter.",
     "continuePack": "Weiter: {{pack}}",
     "browsePacks": "Pakete ansehen"
+  },
+  "shortcuts": {
+    "deckHint": "Leertaste: umdrehen · → oder 1: {{known}} · ← oder 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: Antwort wählen · Enter: nächste Frage",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: nächste Frage"
   }
 }

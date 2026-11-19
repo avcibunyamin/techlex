@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Term, UserProgress, Language, Pack, PackProgress, LeitnerBox } from '@/types';
+import { Term, UserProgress, Language, Pack, PackProgress, LeitnerBox, getTermLanguage } from '@/types';
 import { createProgress, markKnown, markUnknown, isDueForReview } from './spaced-repetition';
 import { pushPreferences, pullProgress, pushBatchSwipes } from './sync';
 import { getSupabase, isSupabaseConfigured } from './supabase';
@@ -10,6 +10,7 @@ import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-ut
 import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
 import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './review-queue';
 import { buildClozeQuestion, ClozeQuestion } from './cloze-quiz';
+import type { ShareSummaryInput } from './share-summary';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
 import softwareDevTerms from '@/data/terms/software-dev.json';
@@ -191,6 +192,7 @@ interface AppState {
   undoSwipe: (termId: string, direction: 'right' | 'left', previousProgress: UserProgress | null, wasReview: boolean) => void;
   getReviewNeededTerms: () => Term[];
   getKnownTermCount: () => number;
+  getShareSummaryInput: () => ShareSummaryInput;
   downgradeQuizTerm: (termId: string) => void;
   promoteQuizTerm: (termId: string) => void;
   generateQuiz: (mode?: QuizMode, scopeIds?: string[]) => QuizQuestion[];
@@ -907,6 +909,26 @@ export const useAppStore = create<AppState>((set, get) => ({
   getKnownTermCount: () => {
     const { progress } = get();
     return Object.values(progress).filter(p => p.box >= 2).length;
+  },
+
+  // "Learned" uses the pack rule (box >= 3) across IT terms and every pack word.
+  getShareSummaryInput: () => {
+    const { progress, language, streak, xp, earnedBadges, packs } = get();
+    const titleLang = getTermLanguage(language);
+    const packsProgress = get().getAllPacksProgress();
+    return {
+      language,
+      learnedCount: Object.values(progress).filter(p => p.box >= 3).length,
+      streak,
+      xp,
+      badgeCount: earnedBadges.length,
+      packs: packs.map(pack => ({
+        id: pack.id,
+        title: pack.title[titleLang],
+        learned: packsProgress[pack.id]?.learned ?? 0,
+        total: packsProgress[pack.id]?.total ?? pack.size,
+      })),
+    };
   },
 
   downgradeQuizTerm: (termId: string) => {

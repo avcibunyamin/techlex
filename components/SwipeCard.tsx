@@ -30,6 +30,7 @@ const CARD_WIDTH = Math.min(SCREEN_WIDTH - 48, MAX_CARD_WIDTH);
 
 export interface SwipeCardRef {
   triggerSwipe: (direction: 'right' | 'left') => void;
+  flip: () => void;
 }
 
 interface SwipeCardProps {
@@ -77,7 +78,18 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
     canSwipeShared.value = canSwipe ? 1 : 0;
   }, [canSwipe, canSwipeShared]);
 
+  const toggleFlip = useCallback(() => {
+    haptic.light();
+    flipped.current = !flipped.current;
+    flipProgress.value = withSpring(flipped.current ? 1 : 0, {
+      damping: 18,
+      stiffness: 180,
+      mass: 0.8,
+    });
+  }, [flipProgress]);
+
   useImperativeHandle(ref, () => ({
+    flip: toggleFlip,
     triggerSwipe(direction: 'right' | 'left') {
       if (direction === 'right') {
         translateX.value = withTiming(SCREEN_WIDTH * 1.5, { duration: 280 });
@@ -90,17 +102,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
         cardOpacity.value = withTiming(0, { duration: 440 });
       }
     },
-  }), [translateX, translateY, rotation, cardScale, cardOpacity]);
-
-  const toggleFlip = useCallback(() => {
-    haptic.light();
-    flipped.current = !flipped.current;
-    flipProgress.value = withSpring(flipped.current ? 1 : 0, {
-      damping: 18,
-      stiffness: 180,
-      mass: 0.8,
-    });
-  }, [flipProgress]);
+  }), [translateX, translateY, rotation, cardScale, cardOpacity, toggleFlip]);
 
   const isTopCard = stackIndex === 0;
 

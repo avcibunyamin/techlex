@@ -89,6 +89,12 @@
     "themeDark": "다크",
     "themeSystem": "시스템",
     "version": "버전",
+    "summaryTitle": "학습 요약",
+    "summaryCopy": "요약 복사",
+    "summaryShare": "요약 공유",
+    "summaryCopied": "요약을 클립보드에 복사했어요.",
+    "summaryShared": "요약을 공유했어요.",
+    "summaryFailed": "요약을 복사하지 못했어요.",
     "subscription": "구독",
     "energy": "에너지",
     "unlimited": "무제한",
@@ -438,5 +444,10 @@
     "allDoneSub": "오늘 복습할 카드가 없습니다. 새 단어로 계속하세요.",
     "continuePack": "계속하기: {{pack}}",
     "browsePacks": "팩 둘러보기"
+  },
+  "shortcuts": {
+    "deckHint": "스페이스: 카드 뒤집기 · → 또는 1: {{known}} · ← 또는 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: 답 선택 · Enter: 다음 문제",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: 다음 문제"
   }
 }

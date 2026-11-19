@@ -89,6 +89,12 @@
     "themeDark": "Koyu",
     "themeSystem": "Sistem",
     "version": "Sürüm",
+    "summaryTitle": "İlerleme özeti",
+    "summaryCopy": "Özeti kopyala",
+    "summaryShare": "Özeti paylaş",
+    "summaryCopied": "Özet panoya kopyalandı.",
+    "summaryShared": "Özet paylaşıldı.",
+    "summaryFailed": "Özet kopyalanamadı.",
     "subscription": "Abonelik",
     "energy": "Enerji",
     "unlimited": "Sınırsız",
@@ -438,5 +444,10 @@
     "allDoneSub": "Bugün tekrar edilecek kart kalmadı. Yeni kelimelerle devam et.",
     "continuePack": "Devam et: {{pack}}",
     "browsePacks": "Paketlere göz at"
+  },
+  "shortcuts": {
+    "deckHint": "Boşluk: kartı çevir · → veya 1: {{known}} · ← veya 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: şık seç · Enter: sonraki soru",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: sonraki soru"
   }
 }

@@ -89,6 +89,12 @@
     "themeDark": "ダーク",
     "themeSystem": "システム",
     "version": "バージョン",
+    "summaryTitle": "学習の概要",
+    "summaryCopy": "概要をコピー",
+    "summaryShare": "概要を共有",
+    "summaryCopied": "概要をクリップボードにコピーしました。",
+    "summaryShared": "概要を共有しました。",
+    "summaryFailed": "概要をコピーできませんでした。",
     "subscription": "サブスクリプション",
     "energy": "エナジー",
     "unlimited": "無制限",
@@ -438,5 +444,10 @@
     "allDoneSub": "今日復習するカードはありません。新しい単語に進みましょう。",
     "continuePack": "続ける: {{pack}}",
     "browsePacks": "パックを見る"
+  },
+  "shortcuts": {
+    "deckHint": "スペース：カードをめくる · → または 1：{{known}} · ← または 2：{{unknown}}",
+    "quizChoiceHint": "1–{{max}}：回答を選ぶ · Enter：次の問題",
+    "quizTrueFalseHint": "1：{{no}} · 2：{{skip}} · 3：{{yes}} · Enter：次の問題"
   }
 }

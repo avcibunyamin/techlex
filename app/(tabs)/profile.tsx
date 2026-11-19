@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   StyleSheet, Text, View, ScrollView, Pressable,
-  TextInput, ActivityIndicator, Alert,
+  TextInput, ActivityIndicator, Alert, Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Flame, Target, BookCheck, Brain, ChevronRight,
   LogIn, LogOut, Globe, Sun, Moon, Monitor,
   Zap, Infinity, Crown, AtSign, Check, X, AlertCircle,
-  Award, RotateCcw, Users, Heart, Sparkles, ChevronDown,
+  Award, RotateCcw, Users, Heart, Sparkles, ChevronDown, Copy, Share2,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,8 @@ import { getStats } from '@/lib/spaced-repetition';
 import { categories } from '@/data/categories';
 import { changeLanguage } from '@/lib/i18n';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
+import { buildShareSummary } from '@/lib/share-summary';
+import { shareText, ShareTextResult } from '@/lib/share-text';
 import { Language, getTermLanguage } from '@/types';
 
 export default function ProfileScreen() {
@@ -34,6 +36,7 @@ export default function ProfileScreen() {
     setThemeMode, subscriptionTier, energyLevel,
     totalSwipes, xp, earnedBadges, getLevel, getLeague, hasActivePremium,
     cancelAtPeriodEnd, currentPeriodEnd, setCancelAtPeriodEnd,
+    packs, packsLoaded, getShareSummaryInput,
   } = useAppStore();
 
   const progressValues = Object.values(progress);
@@ -203,6 +206,30 @@ export default function ProfileScreen() {
     return { ...cat, total: catTerms.length, mastered };
   }).filter(cat => cat.mastered > 0), [terms, progress]);
 
+  const isWeb = Platform.OS === 'web';
+  const [summaryStatus, setSummaryStatus] = useState<ShareTextResult | null>(null);
+  const summaryTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  useEffect(() => () => clearTimeout(summaryTimer.current), []);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const summaryText = useMemo(() => {
+    const input = getShareSummaryInput();
+    return buildShareSummary({
+      ...input,
+      packs: input.packs.map(p => ({
+        ...p,
+        title: i18n.exists(`categories.${p.id}`) ? tr(`categories.${p.id}`) : p.title,
+      })),
+    });
+  }, [progress, streak, xp, earnedBadges, language, packs, packsLoaded]);
+
+  const handleShareSummary = async () => {
+    const result = await shareText(summaryText);
+    clearTimeout(summaryTimer.current);
+    setSummaryStatus(result === 'dismissed' ? null : result);
+    summaryTimer.current = setTimeout(() => setSummaryStatus(null), 3000);
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -277,6 +304,47 @@ export default function ProfileScreen() {
               <Text style={[typography.subhead, { color: accent, fontWeight: '600' }]}>{tr('profile.upgrade')}</Text>
             </Pressable>
           )}
+        </View>
+
+        {/* Shareable progress summary (plain text, no image) */}
+        <View style={[styles.summaryCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+          <Text style={[typography.caption, { color: t.textTertiary }]}>{tr('profile.summaryTitle')}</Text>
+          <Text
+            style={[
+              typography.callout,
+              { color: t.textSecondary, marginTop: spacing.sm },
+              language === 'ar' ? { writingDirection: 'rtl' } : undefined,
+            ]}
+            selectable
+          >
+            {summaryText}
+          </Text>
+          <View style={styles.summaryActions}>
+            <Pressable
+              style={[styles.upgradeChip, { backgroundColor: colors.accentSubtle }]}
+              onPress={handleShareSummary}
+              accessibilityRole="button"
+            >
+              {isWeb
+                ? <Copy size={12} color={accent} strokeWidth={2} />
+                : <Share2 size={12} color={accent} strokeWidth={2} />}
+              <Text style={[typography.subhead, { color: accent, fontWeight: '600' }]}>
+                {isWeb ? tr('profile.summaryCopy') : tr('profile.summaryShare')}
+              </Text>
+            </Pressable>
+            {summaryStatus && (
+              <Text
+                style={[typography.footnote, { color: summaryStatus === 'failed' ? colors.danger : colors.success, flexShrink: 1 }]}
+                accessibilityLiveRegion="polite"
+              >
+                {summaryStatus === 'copied'
+                  ? tr('profile.summaryCopied')
+                  : summaryStatus === 'shared'
+                    ? tr('profile.summaryShared')
+                    : tr('profile.summaryFailed')}
+              </Text>
+            )}
+          </View>
         </View>
 
         {/* Category Progress */}
@@ -710,6 +778,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: radius.full,
+  },
+  summaryCard: {
+    padding: spacing.lg,
+    borderRadius: radius.lg,
+    borderWidth: 0.5,
+    marginTop: spacing.md,
+  },
+  summaryActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: spacing.md,
+    marginTop: spacing.md,
   },
   categoryRow: {
     flexDirection: 'row',

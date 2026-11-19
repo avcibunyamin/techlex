@@ -89,6 +89,12 @@
     "themeDark": "Тёмная",
     "themeSystem": "Системная",
     "version": "Версия",
+    "summaryTitle": "Сводка прогресса",
+    "summaryCopy": "Копировать сводку",
+    "summaryShare": "Поделиться сводкой",
+    "summaryCopied": "Сводка скопирована в буфер обмена.",
+    "summaryShared": "Сводка отправлена.",
+    "summaryFailed": "Не удалось скопировать сводку.",
     "subscription": "Подписка",
     "energy": "Энергия",
     "unlimited": "Безлимитно",
@@ -438,5 +444,10 @@
     "allDoneSub": "Сегодня нет карточек для повторения. Продолжайте с новыми словами.",
     "continuePack": "Продолжить: {{pack}}",
     "browsePacks": "Все наборы"
+  },
+  "shortcuts": {
+    "deckHint": "Пробел: перевернуть · → или 1: {{known}} · ← или 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: выбрать ответ · Enter: следующий вопрос",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: следующий вопрос"
   }
 }

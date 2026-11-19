@@ -89,6 +89,12 @@
     "themeDark": "Oscuro",
     "themeSystem": "Sistema",
     "version": "Versión",
+    "summaryTitle": "Resumen de progreso",
+    "summaryCopy": "Copiar resumen",
+    "summaryShare": "Compartir resumen",
+    "summaryCopied": "Resumen copiado al portapapeles.",
+    "summaryShared": "Resumen compartido.",
+    "summaryFailed": "No se pudo copiar el resumen.",
     "subscription": "Suscripción",
     "energy": "Energía",
     "unlimited": "Ilimitada",
@@ -438,5 +444,10 @@
     "allDoneSub": "Hoy no hay tarjetas pendientes de repaso. Sigue con palabras nuevas.",
     "continuePack": "Continuar: {{pack}}",
     "browsePacks": "Ver paquetes"
+  },
+  "shortcuts": {
+    "deckHint": "Espacio: girar · → o 1: {{known}} · ← o 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: elegir respuesta · Intro: siguiente pregunta",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Intro: siguiente pregunta"
   }
 }

@@ -19,6 +19,8 @@ import { Term, Language, UserProgress } from '@/types';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { haptic } from '@/lib/haptics';
+import { mapDeckKey } from '@/lib/shortcuts';
+import { useWebKeyboard } from '@/lib/useWebKeyboard';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import SwipeCard, { SwipeCardRef } from './SwipeCard';
 import PaywallModal from './PaywallModal';
@@ -246,6 +248,19 @@ export default function CardDeck({
 
   const isMobile = Platform.OS !== 'web';
 
+  // Web only: Space flips, ArrowRight/1 = known, ArrowLeft/2 = unknown (same path as the buttons).
+  useWebKeyboard((e) => {
+    if (showPaywall || currentIndex >= deckTerms.length) return false;
+    const action = mapDeckKey(e);
+    if (!action) return false;
+    if (action === 'flip') {
+      cardRef.current?.flip();
+    } else {
+      handleButtonSwipe(action === 'known' ? 'right' : 'left');
+    }
+    return true;
+  });
+
   const leftHintStyle = useAnimatedStyle(() => ({
     opacity: interpolate(dragX.value, [-SWIPE_X_THRESHOLD, -20, 0], [1, 0.4, 0.15], Extrapolation.CLAMP),
     transform: [{ scale: interpolate(dragX.value, [-SWIPE_X_THRESHOLD, 0], [1.1, 1], Extrapolation.CLAMP) }],
@@ -439,6 +454,12 @@ export default function CardDeck({
         </Animated.View>
       </View>
 
+      {!isMobile && (
+        <Text style={[styles.shortcutHint, { color: t.textMuted }]}>
+          {tr('shortcuts.deckHint', { known: tr('learn.swipeRight'), unknown: tr('learn.swipeLeft') })}
+        </Text>
+      )}
+
       {toast && (
         <Animated.View
           entering={FadeIn.duration(200)}
@@ -561,6 +582,13 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     paddingVertical: spacing.xl,
     paddingBottom: spacing['2xl'],
+  },
+  shortcutHint: {
+    ...typography.footnote,
+    textAlign: 'center',
+    marginTop: -spacing.lg,
+    paddingHorizontal: spacing.xl,
+    paddingBottom: spacing.md,
   },
   actionBtn: {
     alignItems: 'center',

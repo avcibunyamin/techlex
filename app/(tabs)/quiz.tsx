@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef } from 'react';
 import {
-  StyleSheet, Text, View, Pressable, ScrollView, I18nManager,
+  StyleSheet, Text, View, Pressable, ScrollView, I18nManager, Platform,
 } from 'react-native';
 import Animated, {
   FadeIn,
@@ -19,6 +19,8 @@ import { useAppStore, QuizQuestion, QuizMode, MIN_SCOPED_QUIZ_SIZE } from '@/lib
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { haptic } from '@/lib/haptics';
+import { mapQuizKey } from '@/lib/shortcuts';
+import { useWebKeyboard } from '@/lib/useWebKeyboard';
 import { XP_PER_QUIZ } from '@/constants/badges';
 import PaywallModal from '@/components/PaywallModal';
 
@@ -196,6 +198,44 @@ export default function QuizScreen() {
     });
     setShowSkipFeedback(true);
   }, [answered, currentQ, questions]);
+
+  // Web only. Options follow the on-screen order: cloze 1–4; true/false 1 = false, 2 = skip, 3 = true.
+  useWebKeyboard((e) => {
+    if (quizState !== 'active' || showPaywall) return false;
+    const q = questions[currentQ];
+    if (!q) return false;
+    const action = mapQuizKey(e, q.cloze ? q.cloze.options.length : 3);
+    if (!action) return false;
+
+    if (action.type === 'next') {
+      if (showCorrection || showSkipFeedback) {
+        handleGotIt();
+        return true;
+      }
+      if (answered && lastCorrect === true) {
+        // Skip the short auto-advance delay after a correct answer.
+        if (advanceTimer.current) clearTimeout(advanceTimer.current);
+        // `false` on purpose: this handler runs from the latest render, where `score` already
+        // includes this answer (setScore ran with setAnswered). Passing `true` would count it twice.
+        // The 600 ms timer keeps `true` because it holds the pre-answer closure.
+        advanceToNext(false);
+        return true;
+      }
+      return false;
+    }
+
+    if (answered) return false;
+    if (q.cloze) {
+      handleClozeAnswer(action.index);
+    } else if (action.index === 0) {
+      handleAnswer(false);
+    } else if (action.index === 1) {
+      handleSkip();
+    } else {
+      handleAnswer(true);
+    }
+    return true;
+  });
 
   const getResultMessage = () => {
     const total = questions.length;
@@ -663,6 +703,14 @@ export default function QuizScreen() {
         </View>
       )}
 
+      {Platform.OS === 'web' && (
+        <Text style={[styles.shortcutHint, { color: t.textMuted }]}>
+          {q.cloze
+            ? tr('shortcuts.quizChoiceHint', { max: q.cloze.options.length })
+            : tr('shortcuts.quizTrueFalseHint', { no: tr('quiz.false'), skip: tr('quiz.skip'), yes: tr('quiz.true') })}
+        </Text>
+      )}
+
       <PaywallModal visible={showPaywall} onDismiss={() => setShowPaywall(false)} variant="premium" source="quizHint" />
     </SafeAreaView>
   );
@@ -873,6 +921,12 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderWidth: 1.5,
+  },
+  shortcutHint: {
+    ...typography.footnote,
+    textAlign: 'center',
+    paddingHorizontal: spacing.xl,
+    paddingBottom: spacing.md,
   },
   answerLabel: {
     fontSize: 11,

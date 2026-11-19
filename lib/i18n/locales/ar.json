@@ -89,6 +89,12 @@
     "themeDark": "داكن",
     "themeSystem": "تلقائي",
     "version": "الإصدار",
+    "summaryTitle": "ملخص التقدم",
+    "summaryCopy": "نسخ الملخص",
+    "summaryShare": "مشاركة الملخص",
+    "summaryCopied": "تم نسخ الملخص إلى الحافظة.",
+    "summaryShared": "تمت مشاركة الملخص.",
+    "summaryFailed": "تعذّر نسخ الملخص.",
     "subscription": "الاشتراك",
     "energy": "الطاقة",
     "unlimited": "غير محدود",
@@ -438,5 +444,10 @@
     "allDoneSub": "لا توجد بطاقات مستحقة للمراجعة اليوم. تابع مع كلمات جديدة.",
     "continuePack": "متابعة: {{pack}}",
     "browsePacks": "تصفّح الحزم"
+  },
+  "shortcuts": {
+    "deckHint": "المسافة: اقلب البطاقة · → أو 1: {{known}} · ← أو 2: {{unknown}}",
+    "quizChoiceHint": "1–{{max}}: اختر إجابة · Enter: السؤال التالي",
+    "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: السؤال التالي"
   }
 }
