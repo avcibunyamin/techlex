@@ -13,23 +13,52 @@ export interface ShortcutKeyEvent {
   metaKey?: boolean;
   altKey?: boolean;
   repeat?: boolean;
-  /** tagName of the event target (e.g. 'INPUT'), if any. */
+  /** tagName of the event target (e.g. 'INPUT', 'BUTTON', 'A', 'SUMMARY'), if any. */
   targetTag?: string | null;
+  /** ARIA role of the event target (e.g. 'button', 'radio'), if any. */
+  targetRole?: string | null;
+  /** True when an anchor target has an href attribute. */
+  targetHasHref?: boolean;
   /** True when the event target is contentEditable. */
   targetEditable?: boolean;
 }
 
 const TYPING_TAGS = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
+const INTERACTIVE_TAGS = new Set(['BUTTON', 'SUMMARY']);
+const INTERACTIVE_ROLES = new Set(['button', 'radio']);
 
 export function isTypingTarget(e: Pick<ShortcutKeyEvent, 'targetTag' | 'targetEditable'>): boolean {
   if (e.targetEditable) return true;
   return !!e.targetTag && TYPING_TAGS.has(e.targetTag.toUpperCase());
 }
 
-// Shortcuts never fire while typing, with modifier keys (browser/OS shortcuts)
-// or on auto-repeat (holding Space would flip the card back and forth).
+/**
+ * True when focus is on a control that handles Space or Enter activation itself
+ * (button, [role=button], [role=radio], a[href], summary).
+ */
+export function isInteractiveTarget(
+  e: Pick<ShortcutKeyEvent, 'targetTag' | 'targetRole' | 'targetHasHref'>
+): boolean {
+  const tag = e.targetTag?.toUpperCase() ?? '';
+  if (INTERACTIVE_TAGS.has(tag)) return true;
+  if (tag === 'A' && e.targetHasHref !== false) return true;
+  const role = e.targetRole?.toLowerCase() ?? '';
+  if (INTERACTIVE_ROLES.has(role)) return true;
+  return false;
+}
+
+function isActivationKey(key: string): boolean {
+  return key === ' ' || key === 'Spacebar' || key === 'Enter';
+}
+
+// Shortcuts never fire while typing, with modifier keys (browser/OS shortcuts),
+// on auto-repeat (holding Space would flip the card back and forth), or when
+// Space/Enter is pressed on a focused interactive control.
 function isIgnored(e: ShortcutKeyEvent): boolean {
-  return !!(e.ctrlKey || e.metaKey || e.altKey || e.repeat) || isTypingTarget(e);
+  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return true;
+  if (isTypingTarget(e)) return true;
+  if (isActivationKey(e.key) && isInteractiveTarget(e)) return true;
+  return false;
 }
 
 export function mapDeckKey(e: ShortcutKeyEvent): DeckShortcut | null {

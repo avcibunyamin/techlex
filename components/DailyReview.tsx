@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable, TouchableOpacity, I18nManager } from 'react-native';
 import { RotateCcw, CheckCircle, ChevronRight, Flame, X } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
+import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { Language, Term } from '@/types';
@@ -12,11 +13,16 @@ function useDirection(language: Language) {
   const shouldMirror = isArabic && !I18nManager.isRTL;
   return {
     isArabic,
+    shouldMirror,
     rowDir: shouldMirror ? ('row-reverse' as const) : ('row' as const),
     textDirStyle: isArabic
-      ? ({ writingDirection: 'rtl' as const, textAlign: (shouldMirror ? 'right' : 'left') as 'right' | 'left' })
+      ? ({ writingDirection: 'rtl' as const, textAlign: 'right' as const })
       : undefined,
   };
+}
+
+function hasAnyProgress(progress: Record<string, { timesSeen?: number }>): boolean {
+  return Object.values(progress).some((p) => Boolean(p && (p.timesSeen ?? 1) > 0));
 }
 
 interface ContinuePackButtonProps {
@@ -35,7 +41,14 @@ function ContinuePackButton({ language, lastPackTitle, onPress }: ContinuePackBu
       onPress={onPress}
       style={[styles.continueBtn, { flexDirection: rowDir, backgroundColor: accent, borderColor: accent }]}
     >
-      <Text style={[typography.subhead, { color: colors.dark.text, fontWeight: '600', flexShrink: 1 }]} numberOfLines={1}>
+      <Text
+        style={[
+          typography.subhead,
+          { color: colors.dark.text, fontWeight: '600', flexShrink: 1 },
+          isArabic ? { writingDirection: 'rtl' } : undefined,
+        ]}
+        numberOfLines={1}
+      >
         {lastPackTitle ? tr('dailyReview.continuePack', { pack: lastPackTitle }) : tr('dailyReview.browsePacks')}
       </Text>
       <ChevronRight
@@ -50,19 +63,50 @@ function ContinuePackButton({ language, lastPackTitle, onPress }: ContinuePackBu
 
 interface DailyReviewCardProps {
   totalDue: number;
+  hasProgress?: boolean;
   language: Language;
   lastPackTitle: string | null;
   onStart: () => void;
   onContinuePack: () => void;
 }
 
-/** Entry card: due-count badge and one-tap start, or a congrats state when nothing is due. */
-export function DailyReviewCard({ totalDue, language, lastPackTitle, onStart, onContinuePack }: DailyReviewCardProps) {
+/** Entry card: due-count badge and one-tap start, empty state for new learners, or a congrats state when nothing is due. */
+export function DailyReviewCard({
+  totalDue,
+  hasProgress,
+  language,
+  lastPackTitle,
+  onStart,
+  onContinuePack,
+}: DailyReviewCardProps) {
   const { colors: t } = useTheme();
   const { t: tr } = useTranslation();
   const { isArabic, rowDir, textDirStyle } = useDirection(language);
+  const storeHasProgress = useAppStore((s) => hasAnyProgress(s.progress));
+  const effectiveHasProgress = hasProgress ?? storeHasProgress;
 
   if (totalDue === 0) {
+    const effectivePackTitle = effectiveHasProgress ? lastPackTitle : null;
+
+    if (!effectiveHasProgress) {
+      return (
+        <View style={[styles.card, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+          <View style={[styles.cardRow, { flexDirection: rowDir }]}>
+            <RotateCcw size={22} color={t.textTertiary} strokeWidth={2} />
+            <View style={styles.cardText}>
+              <Text style={[typography.headline, { color: t.text }, textDirStyle]}>
+                {tr('dailyReview.emptyTitle')}
+              </Text>
+              <Text style={[typography.footnote, { color: t.textSecondary, marginTop: spacing.xs }, textDirStyle]}>
+                {tr('dailyReview.emptySub')}
+              </Text>
+            </View>
+          </View>
+          <ContinuePackButton language={language} lastPackTitle={effectivePackTitle} onPress={onContinuePack} />
+        </View>
+      );
+    }
+
     return (
       <View style={[styles.card, { backgroundColor: colors.successMuted, borderColor: colors.success }]}>
         <View style={[styles.cardRow, { flexDirection: rowDir }]}>
@@ -74,7 +118,7 @@ export function DailyReviewCard({ totalDue, language, lastPackTitle, onStart, on
             </Text>
           </View>
         </View>
-        <ContinuePackButton language={language} lastPackTitle={lastPackTitle} onPress={onContinuePack} />
+        <ContinuePackButton language={language} lastPackTitle={effectivePackTitle} onPress={onContinuePack} />
       </View>
     );
   }
@@ -111,6 +155,7 @@ export function DailyReviewCard({ totalDue, language, lastPackTitle, onStart, on
 interface DailyReviewSessionProps {
   terms: Term[];
   totalDue: number;
+  hasProgress?: boolean;
   language: Language;
   streak: number;
   lastPackTitle: string | null;
@@ -126,6 +171,7 @@ interface DailyReviewSessionProps {
 export function DailyReviewSession({
   terms,
   totalDue,
+  hasProgress,
   language,
   streak,
   lastPackTitle,
@@ -136,6 +182,8 @@ export function DailyReviewSession({
   const { colors: t } = useTheme();
   const { t: tr } = useTranslation();
   const { rowDir, textDirStyle } = useDirection(language);
+  const storeHasProgress = useAppStore((s) => hasAnyProgress(s.progress));
+  const effectiveHasProgress = hasProgress ?? storeHasProgress;
 
   return (
     <View style={styles.session}>
@@ -165,15 +213,35 @@ export function DailyReviewSession({
 
       {terms.length === 0 ? (
         <View style={styles.doneWrap}>
-          <CheckCircle size={48} color={colors.success} strokeWidth={1.8} />
-          <Text style={[typography.title, { color: t.text, marginTop: spacing.lg, textAlign: 'center' }]}>
-            {tr('dailyReview.allDoneTitle')}
+          {effectiveHasProgress ? (
+            <CheckCircle size={48} color={colors.success} strokeWidth={1.8} />
+          ) : (
+            <RotateCcw size={48} color={t.textTertiary} strokeWidth={1.8} />
+          )}
+          <Text
+            style={[
+              typography.title,
+              textDirStyle,
+              { color: t.text, marginTop: spacing.lg, textAlign: 'center' },
+            ]}
+          >
+            {tr(effectiveHasProgress ? 'dailyReview.allDoneTitle' : 'dailyReview.emptyTitle')}
           </Text>
-          <Text style={[typography.callout, { color: t.textSecondary, marginTop: spacing.sm, textAlign: 'center' }]}>
-            {tr('dailyReview.allDoneSub')}
+          <Text
+            style={[
+              typography.callout,
+              textDirStyle,
+              { color: t.textSecondary, marginTop: spacing.sm, textAlign: 'center' },
+            ]}
+          >
+            {tr(effectiveHasProgress ? 'dailyReview.allDoneSub' : 'dailyReview.emptySub')}
           </Text>
           <View style={styles.doneAction}>
-            <ContinuePackButton language={language} lastPackTitle={lastPackTitle} onPress={onContinuePack} />
+            <ContinuePackButton
+              language={language}
+              lastPackTitle={effectiveHasProgress ? lastPackTitle : null}
+              onPress={onContinuePack}
+            />
           </View>
         </View>
       ) : (

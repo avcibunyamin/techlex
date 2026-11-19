@@ -4,21 +4,44 @@ export type ShareTextResult = 'copied' | 'shared' | 'dismissed' | 'failed';
 
 // Legacy fallback for browsers without the async clipboard API (e.g. non-HTTPS pages).
 function copyWithTextarea(text: string): boolean {
-  if (typeof document === 'undefined') return false;
+  if (typeof document === 'undefined' || !document.body) return false;
+  const body = document.body;
+  const active = document.activeElement as HTMLElement | null;
+  const previousFocus = active && typeof active.focus === 'function' ? active : null;
   const area = document.createElement('textarea');
   area.value = text;
   area.setAttribute('readonly', '');
   area.style.position = 'fixed';
   area.style.opacity = '0';
-  document.body.appendChild(area);
-  area.select();
   let ok = false;
+  let appended = false;
   try {
+    body.appendChild(area);
+    appended = true;
+    area.select();
     ok = document.execCommand('copy');
   } catch {
     ok = false;
+  } finally {
+    if (appended) {
+      try {
+        if (area.parentNode) {
+          area.parentNode.removeChild(area);
+        } else {
+          body.removeChild(area);
+        }
+      } catch {
+        // Ignore DOM cleanup errors.
+      }
+    }
+    if (previousFocus) {
+      try {
+        previousFocus.focus();
+      } catch {
+        // Ignore focus restoration errors.
+      }
+    }
   }
-  document.body.removeChild(area);
   return ok;
 }
 

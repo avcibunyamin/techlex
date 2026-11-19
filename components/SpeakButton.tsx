@@ -9,9 +9,26 @@ import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { spacing, radius, typography } from '@/constants/theme';
 import { speak, isAvailable, getCachedAvailability, subscribeAvailability } from '@/lib/speech';
-import { SPEECH_RATES } from '@/lib/speech-logic';
+import { SPEECH_RATES, speechRateValue, type SpeechRate } from '@/lib/speech-logic';
 
-/** English voice availability: null while the first check runs, then cached for the session. */
+const MIN_FALLBACK_TIMEOUT_MS = 4000;
+const BASE_FALLBACK_TIMEOUT_MS = 2000;
+const MS_PER_CHAR_AT_NORMAL_RATE = 120;
+
+let activeButtonDone: (() => void) | null = null;
+
+/**
+ * Safety-net timeout used only when the platform TTS engine never fires onDone/onError.
+ * Scaled by text length and speech rate so long or slow readings do not lose their highlight early.
+ */
+function estimateFallbackTimeoutMs(text: string, rate: SpeechRate): number {
+  const chars = text.trim().length;
+  const rateFactor = speechRateValue(rate) || 1;
+  const estimated = Math.ceil((BASE_FALLBACK_TIMEOUT_MS + chars * MS_PER_CHAR_AT_NORMAL_RATE) / rateFactor);
+  return Math.max(MIN_FALLBACK_TIMEOUT_MS, estimated);
+}
+
+/** English voice availability: null while unknown (checking, empty list, or timeout), boolean once resolved. */
 export function useSpeechAvailability(): boolean | null {
   const [available, setAvailable] = useState<boolean | null>(getCachedAvailability);
   useEffect(() => {
@@ -19,8 +36,8 @@ export function useSpeechAvailability(): boolean | null {
     const unsubscribe = subscribeAvailability((v) => {
       if (alive) setAvailable(v);
     });
-    isAvailable().then((v) => {
-      if (alive) setAvailable(v);
+    void isAvailable().then(() => {
+      if (alive) setAvailable(getCachedAvailability());
     });
     return () => {
       alive = false;
@@ -45,14 +62,66 @@ export default function SpeakButton({ text, accessibilityLabel, size = 18, onPre
   const available = useSpeechAvailability();
   const [speaking, setSpeaking] = useState(false);
   const mounted = useRef(true);
-  useEffect(() => () => { mounted.current = false; }, []);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const doneRef = useRef<(() => void) | null>(null);
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      clearTimer();
+      if (doneRef.current && activeButtonDone === doneRef.current) {
+        activeButtonDone = null;
+      }
+      doneRef.current = null;
+    };
+  }, [clearTimer]);
 
   const handlePress = useCallback(() => {
-    setSpeaking(true);
+    // Finish any in-flight press on this button before starting the new one so
+    // speech.ts calling prevDone() will see finished === true and not clear the new timer/highlight.
+    doneRef.current?.();
+    clearTimer();
+    const trimmed = text.trim();
+    if (trimmed && activeButtonDone) {
+      activeButtonDone();
+    }
+    let finished = false;
+    let timerId: ReturnType<typeof setTimeout> | null = null;
     const done = () => {
-      if (mounted.current) setSpeaking(false);
+      if (finished) return;
+      finished = true;
+      if (timerId !== null) {
+        clearTimeout(timerId);
+        if (timerRef.current === timerId) {
+          timerRef.current = null;
+        }
+        timerId = null;
+      }
+      if (activeButtonDone === done) {
+        activeButtonDone = null;
+      }
+      if (doneRef.current === done) {
+        doneRef.current = null;
+        if (mounted.current) setSpeaking(false);
+      }
     };
-    speak(text, {
+    doneRef.current = done;
+    if (trimmed) {
+      activeButtonDone = done;
+    }
+    setSpeaking(true);
+    // Fallback timer fires only if onDone/onError never arrives.
+    timerId = setTimeout(done, estimateFallbackTimeoutMs(trimmed, rate));
+    timerRef.current = timerId;
+    void speak(text, {
       rate,
       onDone: done,
       onError: () => {
@@ -60,9 +129,7 @@ export default function SpeakButton({ text, accessibilityLabel, size = 18, onPre
         onError?.();
       },
     });
-    // onDone is not called when another speak()/stop() interrupts; clear the highlight anyway.
-    setTimeout(done, 4000);
-  }, [text, rate, onError]);
+  }, [text, rate, onError, clearTimer]);
 
   const disabled = available === false;
   const Icon = disabled ? VolumeX : Volume2;

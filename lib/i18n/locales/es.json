@@ -448,6 +448,8 @@
     "sessionInfo": "{{count}} tarjetas en esta sesión · {{total}} pendientes",
     "allDoneTitle": "¡Todo al día!",
     "allDoneSub": "Hoy no hay tarjetas pendientes de repaso. Sigue con palabras nuevas.",
+    "emptyTitle": "Aún no hay tarjetas para repasar",
+    "emptySub": "Aprende tus primeras palabras de un paquete para empezar el repaso diario.",
     "continuePack": "Continuar: {{pack}}",
     "browsePacks": "Ver paquetes"
   },

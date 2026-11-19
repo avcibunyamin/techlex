@@ -20,7 +20,21 @@ export function useWebKeyboard(handler: WebKeyHandler, enabled = true) {
       if (Platform.OS !== 'web' || !enabled || typeof window === 'undefined') return;
 
       const onKeyDown = (event: KeyboardEvent) => {
-        const target = event.target as HTMLElement | null;
+        const rawTarget = event.target as HTMLElement | null;
+        const interactiveTarget =
+          typeof rawTarget?.closest === 'function'
+            ? (rawTarget.closest(
+                'input, textarea, select, button, summary, a[href], [role="button"], [role="radio"], [contenteditable="true"]'
+              ) as HTMLElement | null)
+            : null;
+        const target = interactiveTarget ?? rawTarget;
+        const targetRole =
+          typeof target?.getAttribute === 'function' ? target.getAttribute('role') : null;
+        const targetHasHref =
+          typeof target?.hasAttribute === 'function'
+            ? target.hasAttribute('href')
+            : !!(target as HTMLAnchorElement | null)?.href;
+
         const handled = handlerRef.current({
           key: event.key,
           ctrlKey: event.ctrlKey,
@@ -28,11 +42,11 @@ export function useWebKeyboard(handler: WebKeyHandler, enabled = true) {
           altKey: event.altKey,
           repeat: event.repeat,
           targetTag: target?.tagName ?? null,
-          targetEditable: !!target?.isContentEditable,
+          targetRole,
+          targetHasHref,
+          targetEditable: !!(target?.isContentEditable || rawTarget?.isContentEditable),
         });
         if (handled) {
-          // Capture phase + stopPropagation: a focused button must not also react
-          // to the same Space/Enter press (that would answer twice).
           event.preventDefault();
           event.stopPropagation();
         }

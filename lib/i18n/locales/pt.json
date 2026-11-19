@@ -448,6 +448,8 @@
     "sessionInfo": "{{count}} cartões nesta sessão · {{total}} pendentes",
     "allDoneTitle": "Tudo em dia!",
     "allDoneSub": "Nenhum cartão para revisar hoje. Continue com palavras novas.",
+    "emptyTitle": "Ainda não há cartões para revisar",
+    "emptySub": "Aprenda suas primeiras palavras de um pacote para começar a revisão diária.",
     "continuePack": "Continuar: {{pack}}",
     "browsePacks": "Ver pacotes"
   },

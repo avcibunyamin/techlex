@@ -448,6 +448,8 @@
     "sessionInfo": "このセッション {{count}}枚 · 復習対象 {{total}}枚",
     "allDoneTitle": "復習完了です！",
     "allDoneSub": "今日復習するカードはありません。新しい単語に進みましょう。",
+    "emptyTitle": "復習するカードはまだありません",
+    "emptySub": "パックから最初の単語を学習して、毎日の復習を始めましょう。",
     "continuePack": "続ける: {{pack}}",
     "browsePacks": "パックを見る"
   },

@@ -448,6 +448,8 @@
     "sessionInfo": "{{count}} cartes dans cette session · {{total}} à réviser",
     "allDoneTitle": "Tout est à jour !",
     "allDoneSub": "Aucune carte à réviser aujourd'hui. Continuez avec de nouveaux mots.",
+    "emptyTitle": "Aucune carte à réviser pour l'instant",
+    "emptySub": "Apprenez vos premiers mots dans un pack pour lancer la révision quotidienne.",
     "continuePack": "Continuer : {{pack}}",
     "browsePacks": "Voir les packs"
   },

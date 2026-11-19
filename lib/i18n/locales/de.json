@@ -448,6 +448,8 @@
     "sessionInfo": "{{count}} Karten in dieser Runde · {{total}} fällig",
     "allDoneTitle": "Alles erledigt!",
     "allDoneSub": "Heute sind keine Karten zur Wiederholung fällig. Mach mit neuen Wörtern weiter.",
+    "emptyTitle": "Noch keine Karten zur Wiederholung",
+    "emptySub": "Lerne deine ersten Wörter aus einem Paket, um die tägliche Wiederholung zu starten.",
     "continuePack": "Weiter: {{pack}}",
     "browsePacks": "Pakete ansehen"
   },

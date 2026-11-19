@@ -448,6 +448,8 @@
     "sessionInfo": "Bu oturumda {{count}} kart · toplam {{total}} vadeli",
     "allDoneTitle": "Tebrikler, tekrarlar tamam!",
     "allDoneSub": "Bugün tekrar edilecek kart kalmadı. Yeni kelimelerle devam et.",
+    "emptyTitle": "Henüz tekrar edilecek kart yok",
+    "emptySub": "Günlük tekrarların başlaması için bir paketten ilk kelimelerini öğren.",
     "continuePack": "Devam et: {{pack}}",
     "browsePacks": "Paketlere göz at"
   },

@@ -448,6 +448,8 @@
     "sessionInfo": "이번 세션 {{count}}장 · 복습 대상 {{total}}장",
     "allDoneTitle": "복습 완료!",
     "allDoneSub": "오늘 복습할 카드가 없습니다. 새 단어로 계속하세요.",
+    "emptyTitle": "아직 복습할 카드가 없습니다",
+    "emptySub": "팩에서 첫 단어를 학습해 오늘의 복습을 시작하세요.",
     "continuePack": "계속하기: {{pack}}",
     "browsePacks": "팩 둘러보기"
   },

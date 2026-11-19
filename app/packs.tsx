@@ -99,7 +99,10 @@ export default function PacksScreen() {
   const [wordFilter, setWordFilter] = useState<PackFilter>('all');
   // True while the card deck shows a filtered word list instead of the pack's due cards.
   const [filteredSession, setFilteredSession] = useState(false);
-  const didAutostartRef = useRef(false);
+  const didAutostartRef = useRef<string | null>(null);
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const packListScrollRef = useRef<ScrollView | null>(null);
+  const packListOffsetRef = useRef(0);
   const loadingPackRef = useRef(false);
   const mountedRef = useRef(true);
 
@@ -117,17 +120,22 @@ export default function PacksScreen() {
   const textDirStyle = isArabic
     ? ({
         writingDirection: 'rtl' as const,
-        textAlign: (shouldMirror ? 'right' : 'left') as 'right' | 'left',
+        textAlign: 'right' as const,
       })
     : undefined;
+  const wordDirStyle = isArabic ? styles.ltrTextRight : styles.ltrText;
 
+  const hasProgress = useMemo(
+    () => Object.values(progress).some((p) => Boolean(p && (p.timesSeen ?? 1) > 0)),
+    [progress]
+  );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const allProgress = useMemo(() => getAllPacksProgress(), [packs, progress, packsLoaded]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const dailyDue = useMemo(() => getDailyReviewQueue().totalDue, [progress, packsLoaded]);
   const lastPack = useMemo(
-    () => (activePackId ? packs.find((p) => p.id === activePackId) ?? null : null),
-    [packs, activePackId]
+    () => (hasProgress && activePackId ? packs.find((p) => p.id === activePackId) ?? null : null),
+    [hasProgress, packs, activePackId]
   );
   const lastPackTitle = lastPack
     ? i18n.exists(`categories.${lastPack.id}`)
@@ -162,9 +170,9 @@ export default function PacksScreen() {
   }, []);
 
   const handleStartPack = useCallback(
-    async (pack: Pack, reviewOnly = false) => {
-      if (!pack.load) return;
-      if (loadingPackRef.current) return;
+    async (pack: Pack, reviewOnly = false): Promise<boolean> => {
+      if (!pack.load) return false;
+      if (loadingPackRef.current) return false;
 
       loadingPackRef.current = true;
       setLoadingPackId(pack.id);
@@ -172,36 +180,40 @@ export default function PacksScreen() {
 
       try {
         const ok = await ensurePacks([pack.id]);
-        if (!mountedRef.current) return;
+        if (!mountedRef.current) return false;
 
         const prog = getPackProgress(pack.id);
         if (!ok || prog.loaded === 0) {
           if (!ok) {
             setLoadErrorPackId(pack.id);
           }
-          return;
+          return false;
         }
-
-        setActivePackId(pack.id);
-        setFilteredSession(false);
 
         if (reviewOnly) {
           const revTerms = getPackReviewNeededTerms(pack.id);
-          if (revTerms.length === 0) return;
+          if (revTerms.length === 0) return false;
+          setActivePackId(pack.id);
+          setFilteredSession(false);
+          setBrowsingPackId(null);
           setPackReviewMode(true);
           setPackPracticeMode(false);
           setStudyTerms(revTerms);
           setStudyingPackId(pack.id);
-          return;
+          return true;
         }
 
         const dueTerms = getPackStudyTerms(pack.id, false);
         const isPractice = dueTerms.length === 0;
         const nextTerms = isPractice ? getPackStudyTerms(pack.id, true) : dueTerms;
+        setActivePackId(pack.id);
+        setFilteredSession(false);
+        setBrowsingPackId(null);
         setPackReviewMode(false);
         setPackPracticeMode(isPractice);
         setStudyTerms(nextTerms);
         setStudyingPackId(pack.id);
+        return true;
       } finally {
         loadingPackRef.current = false;
         if (mountedRef.current) {
@@ -213,15 +225,21 @@ export default function PacksScreen() {
   );
 
   useEffect(() => {
-    if (didAutostartRef.current) return;
     const targetPackId = Array.isArray(params.packId) ? params.packId[0] : params.packId;
     const auto = Array.isArray(params.autostart) ? params.autostart[0] : params.autostart;
-    if (auto === '1' && targetPackId) {
-      const target = packs.find((p) => p.id === targetPackId);
-      if (target) {
-        didAutostartRef.current = true;
-        void handleStartPack(target, false);
-      }
+    if (auto !== '1' || !targetPackId) {
+      didAutostartRef.current = null;
+      return;
+    }
+    if (didAutostartRef.current === targetPackId) return;
+    const target = packs.find((p) => p.id === targetPackId);
+    if (target && target.load) {
+      didAutostartRef.current = targetPackId;
+      void handleStartPack(target, false).then((started) => {
+        if (!started && didAutostartRef.current === targetPackId) {
+          didAutostartRef.current = null;
+        }
+      });
     }
   }, [params.autostart, params.packId, packs, handleStartPack]);
 
@@ -234,9 +252,19 @@ export default function PacksScreen() {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setQuery(queryInput), SEARCH_DEBOUNCE_MS);
-    return () => clearTimeout(timer);
-  }, [queryInput]);
+    if (studyingPackId !== null || query === queryInput) return;
+    const timer = setTimeout(() => {
+      searchTimerRef.current = null;
+      setQuery(queryInput);
+    }, SEARCH_DEBOUNCE_MS);
+    searchTimerRef.current = timer;
+    return () => {
+      clearTimeout(timer);
+      if (searchTimerRef.current === timer) {
+        searchTimerRef.current = null;
+      }
+    };
+  }, [queryInput, query, studyingPackId]);
 
   const packTitleOf = useCallback(
     (pack: Pack) =>
@@ -318,36 +346,56 @@ export default function PacksScreen() {
     [filteredWords, progress]
   );
 
+  const resolveActiveFilteredWords = useCallback(() => {
+    if (searchTimerRef.current !== null) {
+      clearTimeout(searchTimerRef.current);
+      searchTimerRef.current = null;
+    }
+    if (query !== queryInput) {
+      setQuery(queryInput);
+      return filterPackTerms(browseTerms, progress, { query: queryInput, filter: wordFilter });
+    }
+    return filteredWords;
+  }, [query, queryInput, browseTerms, progress, wordFilter, filteredWords]);
+
   // Card session on the filtered list; normal deck rules (energy for new cards, swipe sync) apply.
   const handleStudyFiltered = useCallback(() => {
-    if (!browsingPackId || filteredWords.length === 0) return;
+    if (!browsingPackId) return;
+    const words = resolveActiveFilteredWords();
+    if (words.length === 0) return;
     setActivePackId(browsingPackId);
     setPackReviewMode(false);
     setPackPracticeMode(false);
     setFilteredSession(true);
-    setStudyTerms(filteredWords);
+    setStudyTerms(words);
     setStudyingPackId(browsingPackId);
-  }, [browsingPackId, filteredWords, setActivePackId]);
+  }, [browsingPackId, resolveActiveFilteredWords, setActivePackId]);
 
   const handleQuizFiltered = useCallback(() => {
-    if (!browsingPack || filteredQuizReady < MIN_SCOPED_QUIZ_SIZE) return;
-    const trimmed = query.trim();
+    if (!browsingPack) return;
+    const words = resolveActiveFilteredWords();
+    const ids = words.map((w) => w.id);
+    const readyCount = query !== queryInput ? countScopedQuizReady(ids) : filteredQuizReady;
+    if (readyCount < MIN_SCOPED_QUIZ_SIZE) return;
+    const trimmed = queryInput.trim();
     const label = [
       packTitleOf(browsingPack),
       filterLabelOf(wordFilter),
       ...(trimmed ? [`"${trimmed}"`] : []),
     ].join(' · ');
-    setQuizScope({ ids: filteredWords.map((w) => w.id), label });
+    setQuizScope({ ids, label });
     router.navigate('/(tabs)/quiz' as unknown as Parameters<typeof router.navigate>[0]);
   }, [
     browsingPack,
-    filteredQuizReady,
+    resolveActiveFilteredWords,
     query,
+    queryInput,
+    countScopedQuizReady,
+    filteredQuizReady,
     packTitleOf,
     filterLabelOf,
     wordFilter,
     setQuizScope,
-    filteredWords,
     router,
   ]);
 
@@ -366,13 +414,13 @@ export default function PacksScreen() {
         >
           <View style={styles.wordTextCol}>
             <Text
-              style={[typography.headline, { color: t.text }, styles.ltrText]}
+              style={[typography.headline, { color: t.text }, wordDirStyle]}
               numberOfLines={1}
             >
               {item.term}
             </Text>
             <Text
-              style={[typography.footnote, { color: t.textSecondary, marginTop: 2 }, styles.ltrText]}
+              style={[typography.footnote, { color: t.textSecondary, marginTop: 2 }, wordDirStyle]}
               numberOfLines={2}
             >
               {item.translations[termLang].definition}
@@ -414,7 +462,7 @@ export default function PacksScreen() {
         </View>
       );
     },
-    [progress, rowStyle, t, accent, termLang, tr]
+    [progress, rowStyle, wordDirStyle, t, accent, termLang, tr]
   );
 
   const handleNavigateBack = useCallback(() => {
@@ -435,7 +483,12 @@ export default function PacksScreen() {
     setDailySession(null);
     if (lastPack && lastPack.load) {
       void handleStartPack(lastPack, false);
+      return;
     }
+    setStudyingPackId(null);
+    setBrowsingPackId(null);
+    setSelectedGroup('all');
+    packListScrollRef.current?.scrollTo({ y: packListOffsetRef.current, animated: true });
   }, [lastPack, handleStartPack]);
 
   const studyingPack = useMemo(
@@ -456,6 +509,7 @@ export default function PacksScreen() {
         <DailyReviewSession
           terms={dailySession.terms}
           totalDue={dailySession.total}
+          hasProgress={hasProgress}
           language={language}
           streak={streak}
           lastPackTitle={lastPackTitle}
@@ -928,16 +982,25 @@ export default function PacksScreen() {
       </View>
 
       <ScrollView
+        ref={packListScrollRef}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
       >
-        <DailyReviewCard
-          totalDue={dailyDue}
-          language={language}
-          lastPackTitle={lastPackTitle}
-          onStart={startDailyReview}
-          onContinuePack={handleContinueLastPack}
-        />
+        <View
+          onLayout={(e) => {
+            const { y, height } = e.nativeEvent.layout;
+            packListOffsetRef.current = y + height + spacing.lg;
+          }}
+        >
+          <DailyReviewCard
+            totalDue={dailyDue}
+            hasProgress={hasProgress}
+            language={language}
+            lastPackTitle={lastPackTitle}
+            onStart={startDailyReview}
+            onContinuePack={handleContinueLastPack}
+          />
+        </View>
 
         {filteredPacks.map((pack) => {
           const prog = allProgress[pack.id] ?? getPackProgress(pack.id);
@@ -1336,6 +1399,10 @@ const styles = StyleSheet.create({
   },
   ltrText: {
     writingDirection: 'ltr',
+  },
+  ltrTextRight: {
+    writingDirection: 'ltr',
+    textAlign: 'right',
   },
   actionBar: {
     paddingHorizontal: spacing.xl,
