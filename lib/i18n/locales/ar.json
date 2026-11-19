@@ -58,7 +58,8 @@
     "categories": "الفئات",
     "search": "ابحث عن مفاهيم...",
     "shuffle": "خلط",
-    "shuffleAll": "خلط الكل"
+    "shuffleAll": "خلط الكل",
+    "moreResults": "يتم عرض أول {{limit}} نتيجة (+{{count}} نتيجة أخرى متاحة)"
   },
   "term": {
     "definition": "التعريف",
@@ -70,7 +71,8 @@
     "advanced": "متقدّم",
     "showMore": "+{{count}} المزيد",
     "relatedTerms": "مصطلحات ذات صلة",
-    "premiumOnly": "فتح مع بريميوم"
+    "premiumOnly": "فتح مع بريميوم",
+    "rank": "الترتيب #{{rank}}"
   },
   "profile": {
     "title": "الملف الشخصي",
@@ -382,7 +384,9 @@
     "scopeTitle": "اختبار على الكلمات المحددة",
     "scopeSub": "{{label}} · {{count}} كلمة جاهزة",
     "scopeNotEnough": "ادرس {{min}} كلمات على الأقل من هذه القائمة أولًا، ثم عُد.",
-    "scopeClear": "اختبرني في كل كلماتي بدلًا من ذلك"
+    "scopeClear": "اختبرني في كل كلماتي بدلًا من ذلك",
+    "missedTitle": "الكلمات الخاطئة والمتروكة",
+    "retryMissed": "أعد حل أخطائي"
   },
   "premiumModal": {
     "title": "ميزة بريميوم",
@@ -440,7 +444,8 @@
     "noResults": "لا توجد كلمات تطابق هذا البحث.",
     "studyFiltered": "البطاقات ({{count}})",
     "quizFiltered": "اختبار ({{count}})",
-    "quizNeedsSeen": "يحتاج الاختبار إلى {{min}} كلمات على الأقل درستها من قبل في هذه القائمة."
+    "quizNeedsSeen": "يحتاج الاختبار إلى {{min}} كلمات على الأقل درستها من قبل في هذه القائمة.",
+    "openWordDetail": "فتح تفاصيل {{term}}"
   },
   "dailyReview": {
     "title": "المراجعة اليومية",

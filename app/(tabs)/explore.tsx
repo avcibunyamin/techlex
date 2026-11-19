@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList, I18nManager } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check, BookOpen } from 'lucide-react-native';
@@ -11,6 +11,14 @@ import { colors, spacing, radius, typography } from '@/constants/theme';
 import { categories, Category, getAllTags, findCategoryById, getDescendantIds, findParentCategory } from '@/data/categories';
 import { Term, Language, getTermLanguage } from '@/types';
 import { toLocaleUpper } from '@/lib/text-utils';
+import { tokenizeQuery } from '@/lib/pack-filter';
+import {
+  GLOBAL_SEARCH_DEBOUNCE_MS,
+  GLOBAL_SEARCH_LIMIT,
+  searchGlobalTerms,
+  type GlobalSearchItem,
+  type GlobalSearchSource,
+} from '@/lib/global-search';
 
 function CategoryCheckbox({
   category,
@@ -91,14 +99,40 @@ export default function ExploreScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr, i18n } = useTranslation();
-  const { terms, language, selectedTags, toggleTag, setSelectedTags, packs, activePackId, getPackProgress, progress } = useAppStore();
-  const [query, setQuery] = useState('');
+  const {
+    terms,
+    language,
+    selectedTags,
+    setSelectedTags,
+    packs,
+    packsLoaded,
+    activePackId,
+    getPackTerms,
+    getPackProgress,
+    progress,
+  } = useAppStore();
+  const [queryInput, setQueryInput] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  useEffect(() => {
+    if (queryInput.trim().length === 0) {
+      setDebouncedQuery('');
+      return;
+    }
+    const timer = setTimeout(() => {
+      setDebouncedQuery(queryInput);
+    }, GLOBAL_SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [queryInput]);
 
   const isArabic = language === 'ar';
   const shouldMirror = isArabic && !I18nManager.isRTL;
   const rowDir = shouldMirror ? ('row-reverse' as const) : ('row' as const);
   const textDirStyle = isArabic
-    ? ({ writingDirection: 'rtl' as const, textAlign: (shouldMirror ? 'right' : 'left') as 'right' | 'left' })
+    ? ({ writingDirection: 'rtl' as const, textAlign: 'right' as const })
+    : undefined;
+  const wordDirStyle = isArabic
+    ? ({ writingDirection: 'ltr' as const, textAlign: 'right' as const })
     : undefined;
 
   const featuredPack = useMemo(
@@ -146,14 +180,48 @@ export default function ExploreScreen() {
     setSelectedTags(Array.from(current));
   }, [selectedTags, setSelectedTags]);
 
-  const results = useMemo(() => {
-    if (query.length < 2) return [];
-    const q = query.toLowerCase();
-    return terms.filter(term =>
-      term.term.toLowerCase().includes(q) ||
-      term.translations[getTermLanguage(language)].definition.toLowerCase().includes(q)
-    ).slice(0, 20);
-  }, [query, terms, language]);
+  const searchSources = useMemo<GlobalSearchSource<Term>[]>(() => {
+    const sources: GlobalSearchSource<Term>[] = [{ packId: null, terms }];
+    for (const pack of packs) {
+      const packTerms = getPackTerms(pack.id);
+      if (packTerms.length > 0) {
+        sources.push({ packId: pack.id, terms: packTerms });
+      }
+    }
+    return sources;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [terms, packs, packsLoaded, getPackTerms]);
+
+  const effectiveQuery = queryInput.trim().length === 0 ? '' : debouncedQuery;
+  const showSearch = useMemo(() => tokenizeQuery(effectiveQuery).length > 0, [effectiveQuery]);
+
+  const searchResult = useMemo(
+    () => searchGlobalTerms(searchSources, progress, effectiveQuery, GLOBAL_SEARCH_LIMIT),
+    [searchSources, progress, effectiveQuery]
+  );
+
+  const resolveSourceLabel = useCallback(
+    (item: GlobalSearchItem<Term>): string => {
+      if (item.packId) {
+        if (i18n.exists(`categories.${item.packId}`)) {
+          return tr(`categories.${item.packId}`);
+        }
+        const pack = packs.find((p) => p.id === item.packId);
+        return pack ? pack.title[getTermLanguage(language)] : item.packId;
+      }
+      const tag = item.sourceKey;
+      if (tag && i18n.exists(`categories.${tag}`)) {
+        return tr(`categories.${tag}`);
+      }
+      return toLocaleUpper(tag.replace(/-/g, ' '), language);
+    },
+    [i18n, tr, packs, language]
+  );
+
+  const handleClearSearch = useCallback(() => {
+    setQueryInput('');
+    setDebouncedQuery('');
+  }, []);
 
   const handleShuffle = () => {
     if (selectedTags.length === 0) {
@@ -162,25 +230,39 @@ export default function ExploreScreen() {
     router.push('/(tabs)/learn');
   };
 
-  const showSearch = query.length >= 2;
-
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
       <View style={styles.header}>
-        <Text style={[typography.largeTitle, { color: t.text }]}>{tr('explore.title')}</Text>
-        <View style={[styles.searchContainer, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+        <Text style={[typography.largeTitle, { color: t.text }, textDirStyle]}>{tr('explore.title')}</Text>
+        <View
+          style={[
+            styles.searchContainer,
+            { backgroundColor: t.bgElevated, borderColor: t.border, flexDirection: rowDir },
+          ]}
+        >
           <Search size={16} color={t.textTertiary} strokeWidth={1.8} />
           <TextInput
-            style={[typography.body, styles.searchInput, { color: t.text }]}
+            style={[
+              typography.body,
+              styles.searchInput,
+              shouldMirror ? { marginRight: spacing.md, marginLeft: 0 } : null,
+              { color: t.text },
+              textDirStyle,
+            ]}
             placeholder={tr('explore.search')}
             placeholderTextColor={t.textMuted}
-            value={query}
-            onChangeText={setQuery}
+            value={queryInput}
+            onChangeText={setQueryInput}
             autoCorrect={false}
             autoCapitalize="none"
           />
-          {query.length > 0 && (
-            <Pressable onPress={() => setQuery('')}>
+          {queryInput.length > 0 && (
+            <Pressable
+              onPress={handleClearSearch}
+              accessibilityRole="button"
+              accessibilityLabel={tr('packs.clearSearch')}
+              hitSlop={8}
+            >
               <X size={16} color={t.textTertiary} strokeWidth={1.8} />
             </Pressable>
           )}
@@ -189,33 +271,79 @@ export default function ExploreScreen() {
 
       {showSearch ? (
         <FlatList
-          data={results}
-          keyExtractor={item => item.id}
+          data={searchResult.items}
+          keyExtractor={item => item.term.id}
           contentContainerStyle={styles.resultsList}
-          renderItem={({ item }) => (
-            <Pressable
-              style={[styles.resultItem, { borderColor: t.border }]}
-              onPress={() => router.push(`/term/${item.id}`)}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={[typography.headline, { color: t.text }]}>{item.term}</Text>
-                <Text style={[typography.caption, { color: t.textTertiary, marginTop: spacing.xs }]}>
-                  {toLocaleUpper(item.tags[0]?.replace(/-/g, ' ') ?? '', language)}
-                </Text>
-                <Text
-                  style={[typography.callout, { color: t.textSecondary, marginTop: spacing.sm }]}
-                  numberOfLines={2}
-                >
-                  {item.translations[getTermLanguage(language)].definition}
+          keyboardShouldPersistTaps="handled"
+          renderItem={({ item }) => {
+            const isMastered = item.box !== null && item.box >= 3;
+            const isLearning = item.box !== null && item.box < 3;
+            const boxBg = isMastered
+              ? colors.successMuted
+              : isLearning
+                ? colors.accentMuted
+                : t.bgSubtle;
+            const boxColor = isMastered
+              ? colors.success
+              : isLearning
+                ? accent
+                : t.textTertiary;
+            const boxLabel =
+              item.box !== null ? tr('packs.filterBox', { box: item.box }) : tr('packs.filterNew');
+
+            return (
+              <Pressable
+                style={[styles.resultItem, { borderColor: t.border, flexDirection: rowDir }]}
+                onPress={() => router.push(`/term/${item.term.id}`)}
+                accessibilityRole="button"
+                accessibilityLabel={tr('packs.openWordDetail', { term: item.term.term })}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={[typography.headline, { color: t.text }, wordDirStyle]}>
+                    {item.term.term}
+                  </Text>
+                  <View style={[styles.resultMetaRow, { flexDirection: rowDir }]}>
+                    <View style={[styles.sourceBadge, { backgroundColor: t.bgSubtle, borderColor: t.border }]}>
+                      <Text
+                        style={[typography.footnote, { color: t.textSecondary }, textDirStyle]}
+                        numberOfLines={1}
+                      >
+                        {resolveSourceLabel(item)}
+                      </Text>
+                    </View>
+                    <View style={[styles.boxBadge, { backgroundColor: boxBg }]}>
+                      <Text style={[typography.footnote, { color: boxColor, fontWeight: '600' }, textDirStyle]}>
+                        {boxLabel}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text
+                    style={[typography.callout, { color: t.textSecondary, marginTop: spacing.sm }, wordDirStyle]}
+                    numberOfLines={2}
+                  >
+                    {item.term.translations[getTermLanguage(language)].definition}
+                  </Text>
+                </View>
+                <ArrowUpRight size={16} color={t.textTertiary} strokeWidth={1.5} />
+              </Pressable>
+            );
+          }}
+          ListFooterComponent={
+            searchResult.hasMore ? (
+              <View style={[styles.moreResultsFooter, { borderColor: t.border }]}>
+                <Text style={[typography.footnote, { color: t.textTertiary, textAlign: 'center' }, textDirStyle]}>
+                  {tr('explore.moreResults', {
+                    limit: GLOBAL_SEARCH_LIMIT,
+                    count: searchResult.hiddenCount,
+                  })}
                 </Text>
               </View>
-              <ArrowUpRight size={16} color={t.textTertiary} strokeWidth={1.5} />
-            </Pressable>
-          )}
+            ) : null
+          }
           ListEmptyComponent={
             <View style={styles.emptySearch}>
-              <Text style={[typography.body, { color: t.textTertiary }]}>
-                {tr('home.noResults', { query })}
+              <Text style={[typography.body, { color: t.textTertiary }, textDirStyle]}>
+                {tr('home.noResults', { query: effectiveQuery.trim() })}
               </Text>
             </View>
           }
@@ -469,6 +597,31 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.lg,
     borderBottomWidth: 0.5,
     gap: spacing.md,
+  },
+  resultMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginTop: spacing.xs,
+  },
+  sourceBadge: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.sm,
+    borderWidth: 0.5,
+    maxWidth: '75%' as any,
+  },
+  boxBadge: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.sm,
+  },
+  moreResultsFooter: {
+    paddingVertical: spacing.lg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopWidth: 0.5,
   },
   emptySearch: {
     alignItems: 'center',

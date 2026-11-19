@@ -58,7 +58,8 @@
     "categories": "카테고리",
     "search": "개념 검색...",
     "shuffle": "섞기",
-    "shuffleAll": "전체 섞기"
+    "shuffleAll": "전체 섞기",
+    "moreResults": "상위 {{limit}}개 결과 표시 중 (+{{count}}개 결과 더 있음)"
   },
   "term": {
     "definition": "정의",
@@ -70,7 +71,8 @@
     "advanced": "고급",
     "showMore": "+{{count}}개 더",
     "relatedTerms": "관련 용어",
-    "premiumOnly": "Premium으로 잠금 해제"
+    "premiumOnly": "Premium으로 잠금 해제",
+    "rank": "순위 #{{rank}}"
   },
   "profile": {
     "title": "프로필",
@@ -382,7 +384,9 @@
     "scopeTitle": "선택한 단어로 퀴즈",
     "scopeSub": "{{label}} · {{count}}개 단어 준비됨",
     "scopeNotEnough": "먼저 이 단어 중 {{min}}개 이상을 학습한 뒤 다시 오세요.",
-    "scopeClear": "대신 내 모든 단어로 퀴즈 풀기"
+    "scopeClear": "대신 내 모든 단어로 퀴즈 풀기",
+    "missedTitle": "틀리거나 건너뛴 단어",
+    "retryMissed": "틀린 단어만 다시 풀기"
   },
   "premiumModal": {
     "title": "Premium 기능",
@@ -440,7 +444,8 @@
     "noResults": "검색과 일치하는 단어가 없습니다.",
     "studyFiltered": "카드 ({{count}})",
     "quizFiltered": "퀴즈 ({{count}})",
-    "quizNeedsSeen": "퀴즈를 하려면 이 목록에서 이미 학습한 단어가 {{min}}개 이상 필요합니다."
+    "quizNeedsSeen": "퀴즈를 하려면 이 목록에서 이미 학습한 단어가 {{min}}개 이상 필요합니다.",
+    "openWordDetail": "{{term}} 상세 정보 열기"
   },
   "dailyReview": {
     "title": "오늘의 복습",

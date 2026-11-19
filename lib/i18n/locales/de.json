@@ -58,7 +58,8 @@
     "categories": "Kategorien",
     "search": "Begriffe suchen...",
     "shuffle": "Mischen",
-    "shuffleAll": "Alle mischen"
+    "shuffleAll": "Alle mischen",
+    "moreResults": "Top {{limit}} Ergebnisse werden angezeigt (+{{count}} weitere Ergebnisse vorhanden)"
   },
   "term": {
     "definition": "DEFINITION",
@@ -70,7 +71,8 @@
     "advanced": "Experte",
     "showMore": "+{{count}} weitere",
     "relatedTerms": "VERWANDTE BEGRIFFE",
-    "premiumOnly": "Mit Premium freischalten"
+    "premiumOnly": "Mit Premium freischalten",
+    "rank": "Rang #{{rank}}"
   },
   "profile": {
     "title": "Profil",
@@ -382,7 +384,9 @@
     "scopeTitle": "Quiz mit ausgewählten Wörtern",
     "scopeSub": "{{label}} · {{count}} Wörter bereit",
     "scopeNotEnough": "Lerne zuerst mindestens {{min}} dieser Wörter und komm dann zurück.",
-    "scopeClear": "Stattdessen alle meine Wörter abfragen"
+    "scopeClear": "Stattdessen alle meine Wörter abfragen",
+    "missedTitle": "Falsche und übersprungene Wörter",
+    "retryMissed": "Meine Fehler nochmal üben"
   },
   "premiumModal": {
     "title": "Premium-Funktion",
@@ -440,7 +444,8 @@
     "noResults": "Keine Wörter passen zu dieser Suche.",
     "studyFiltered": "Karten ({{count}})",
     "quizFiltered": "Quiz ({{count}})",
-    "quizNeedsSeen": "Ein Quiz braucht mindestens {{min}} Wörter aus dieser Liste, die du schon gelernt hast."
+    "quizNeedsSeen": "Ein Quiz braucht mindestens {{min}} Wörter aus dieser Liste, die du schon gelernt hast.",
+    "openWordDetail": "Details zu {{term}} öffnen"
   },
   "dailyReview": {
     "title": "Tägliche Wiederholung",

@@ -58,7 +58,8 @@
     "categories": "Categories",
     "search": "Search concepts...",
     "shuffle": "Shuffle",
-    "shuffleAll": "Shuffle all"
+    "shuffleAll": "Shuffle all",
+    "moreResults": "Showing top {{limit}} results (+{{count}} more results available)"
   },
   "term": {
     "definition": "DEFINITION",
@@ -70,7 +71,8 @@
     "advanced": "Advanced",
     "showMore": "+{{count}} more",
     "relatedTerms": "RELATED TERMS",
-    "premiumOnly": "Unlock with Premium"
+    "premiumOnly": "Unlock with Premium",
+    "rank": "Rank #{{rank}}"
   },
   "profile": {
     "title": "Profile",
@@ -382,7 +384,9 @@
     "scopeTitle": "Quiz on selected words",
     "scopeSub": "{{label}} · {{count}} words ready",
     "scopeNotEnough": "Study at least {{min}} of these words first, then come back.",
-    "scopeClear": "Quiz all my words instead"
+    "scopeClear": "Quiz all my words instead",
+    "missedTitle": "Missed and skipped words",
+    "retryMissed": "Retry missed words"
   },
   "premiumModal": {
     "title": "Premium Feature",
@@ -440,7 +444,8 @@
     "noResults": "No words match this search.",
     "studyFiltered": "Cards ({{count}})",
     "quizFiltered": "Quiz ({{count}})",
-    "quizNeedsSeen": "A quiz needs at least {{min}} words you have already studied in this list."
+    "quizNeedsSeen": "A quiz needs at least {{min}} words you have already studied in this list.",
+    "openWordDetail": "Open details for {{term}}"
   },
   "dailyReview": {
     "title": "Daily review",

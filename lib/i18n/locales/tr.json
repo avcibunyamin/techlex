@@ -58,7 +58,8 @@
     "categories": "Kategoriler",
     "search": "Kavram ara...",
     "shuffle": "Karıştır",
-    "shuffleAll": "Hepsini karıştır"
+    "shuffleAll": "Hepsini karıştır",
+    "moreResults": "İlk {{limit}} sonuç gösteriliyor (+{{count}} sonuç daha var)"
   },
   "term": {
     "definition": "TANIM",
@@ -70,7 +71,8 @@
     "advanced": "İleri",
     "showMore": "+{{count}} daha fazla",
     "relatedTerms": "İLGİLİ TERİMLER",
-    "premiumOnly": "Premium ile aç"
+    "premiumOnly": "Premium ile aç",
+    "rank": "Sıra #{{rank}}"
   },
   "profile": {
     "title": "Profil",
@@ -382,7 +384,9 @@
     "scopeTitle": "Seçili kelimelerle test",
     "scopeSub": "{{label}} · {{count}} kelime hazır",
     "scopeNotEnough": "Önce bu kelimelerden en az {{min}} tanesini çalış, sonra geri gel.",
-    "scopeClear": "Bunun yerine tüm kelimelerimle test et"
+    "scopeClear": "Bunun yerine tüm kelimelerimle test et",
+    "missedTitle": "Yanlış ve boş bırakılanlar",
+    "retryMissed": "Yanlışlarımı tekrar çöz"
   },
   "premiumModal": {
     "title": "Premium Özellik",
@@ -440,7 +444,8 @@
     "noResults": "Bu aramayla eşleşen kelime yok.",
     "studyFiltered": "Kartlar ({{count}})",
     "quizFiltered": "Test ({{count}})",
-    "quizNeedsSeen": "Test için bu listede daha önce çalıştığın en az {{min}} kelime gerekir."
+    "quizNeedsSeen": "Test için bu listede daha önce çalıştığın en az {{min}} kelime gerekir.",
+    "openWordDetail": "{{term}} kelime detayını aç"
   },
   "dailyReview": {
     "title": "Günlük tekrar",

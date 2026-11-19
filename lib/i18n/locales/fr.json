@@ -58,7 +58,8 @@
     "categories": "Catégories",
     "search": "Rechercher des concepts...",
     "shuffle": "Mélanger",
-    "shuffleAll": "Tout mélanger"
+    "shuffleAll": "Tout mélanger",
+    "moreResults": "Affichage des {{limit}} premiers résultats (+{{count}} autres résultats disponibles)"
   },
   "term": {
     "definition": "DÉFINITION",
@@ -70,7 +71,8 @@
     "advanced": "Avancé",
     "showMore": "+{{count}} de plus",
     "relatedTerms": "TERMES ASSOCIÉS",
-    "premiumOnly": "Débloquer avec Premium"
+    "premiumOnly": "Débloquer avec Premium",
+    "rank": "Rang #{{rank}}"
   },
   "profile": {
     "title": "Profil",
@@ -382,7 +384,9 @@
     "scopeTitle": "Quiz sur les mots sélectionnés",
     "scopeSub": "{{label}} · {{count}} mots prêts",
     "scopeNotEnough": "Étudie d'abord au moins {{min}} de ces mots, puis reviens.",
-    "scopeClear": "Faire plutôt le quiz sur tous mes mots"
+    "scopeClear": "Faire plutôt le quiz sur tous mes mots",
+    "missedTitle": "Mots manqués et passés",
+    "retryMissed": "Revoir mes erreurs"
   },
   "premiumModal": {
     "title": "Fonctionnalité Premium",
@@ -440,7 +444,8 @@
     "noResults": "Aucun mot ne correspond à cette recherche.",
     "studyFiltered": "Cartes ({{count}})",
     "quizFiltered": "Quiz ({{count}})",
-    "quizNeedsSeen": "Un quiz demande au moins {{min}} mots de cette liste déjà étudiés."
+    "quizNeedsSeen": "Un quiz demande au moins {{min}} mots de cette liste déjà étudiés.",
+    "openWordDetail": "Ouvrir les détails de {{term}}"
   },
   "dailyReview": {
     "title": "Révision du jour",

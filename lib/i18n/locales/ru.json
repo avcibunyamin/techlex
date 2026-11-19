@@ -58,7 +58,8 @@
     "categories": "Категории",
     "search": "Поиск терминов...",
     "shuffle": "Перемешать",
-    "shuffleAll": "Перемешать все"
+    "shuffleAll": "Перемешать все",
+    "moreResults": "Показаны первые {{limit}} результатов (ещё +{{count}} результатов)"
   },
   "term": {
     "definition": "ОПРЕДЕЛЕНИЕ",
@@ -70,7 +71,8 @@
     "advanced": "Продвинутый",
     "showMore": "+{{count}} ещё",
     "relatedTerms": "СВЯЗАННЫЕ ТЕРМИНЫ",
-    "premiumOnly": "Разблокировать с Premium"
+    "premiumOnly": "Разблокировать с Premium",
+    "rank": "Ранг #{{rank}}"
   },
   "profile": {
     "title": "Профиль",
@@ -382,7 +384,9 @@
     "scopeTitle": "Тест по выбранным словам",
     "scopeSub": "{{label}} · готово слов: {{count}}",
     "scopeNotEnough": "Сначала выучите хотя бы {{min}} из этих слов, затем возвращайтесь.",
-    "scopeClear": "Лучше тест по всем моим словам"
+    "scopeClear": "Лучше тест по всем моим словам",
+    "missedTitle": "Ошибки и пропущенные слова",
+    "retryMissed": "Повторить мои ошибки"
   },
   "premiumModal": {
     "title": "Премиум-функция",
@@ -440,7 +444,8 @@
     "noResults": "Нет слов, подходящих под этот поиск.",
     "studyFiltered": "Карточки ({{count}})",
     "quizFiltered": "Тест ({{count}})",
-    "quizNeedsSeen": "Для теста нужно не менее {{min}} уже изученных слов из этого списка."
+    "quizNeedsSeen": "Для теста нужно не менее {{min}} уже изученных слов из этого списка.",
+    "openWordDetail": "Открыть подробности: {{term}}"
   },
   "dailyReview": {
     "title": "Ежедневное повторение",

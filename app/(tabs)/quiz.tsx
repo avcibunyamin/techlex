@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import {
   StyleSheet, Text, View, Pressable, ScrollView, I18nManager, Platform,
 } from 'react-native';
@@ -15,8 +15,9 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock, Volume2 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useAppStore, QuizQuestion, QuizMode, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
+import { buildQuizReview } from '@/lib/quiz-review';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { haptic } from '@/lib/haptics';
@@ -42,6 +43,7 @@ type QuizState = 'idle' | 'active' | 'results';
 export default function QuizScreen() {
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
+  const router = useRouter();
   const knownCount = useAppStore(s => s.getKnownTermCount());
   const isPremium = useAppStore(s => s.hasActivePremium());
   const language = useAppStore(s => s.language);
@@ -68,6 +70,16 @@ export default function QuizScreen() {
   const speechAvailable = useSpeechAvailability();
   const listenAvailability = quizModeAvailability('listen', speechAvailable);
   const isArabic = language === 'ar';
+  const textDirStyle = isArabic
+    ? ({ writingDirection: 'rtl' as const, textAlign: 'right' as const })
+    : undefined;
+  const wordDirStyle = isArabic
+    ? ({ writingDirection: 'ltr' as const, textAlign: 'right' as const })
+    : ({ writingDirection: 'ltr' as const });
+  const review = useMemo(
+    () => buildQuizReview(questions, results, MIN_SCOPED_QUIZ_SIZE),
+    [questions, results]
+  );
 
   const advanceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -79,6 +91,7 @@ export default function QuizScreen() {
   const trueBtnScale = useSharedValue(1);
   const startBtnScale = useSharedValue(1);
   const retryBtnScale = useSharedValue(1);
+  const retryMissedBtnScale = useSharedValue(1);
   const skipBtnScale = useSharedValue(1);
   const gotItBtnScale = useSharedValue(1);
 
@@ -93,6 +106,9 @@ export default function QuizScreen() {
   }));
   const retryBtnStyle = useAnimatedStyle(() => ({
     transform: [{ scale: retryBtnScale.value }],
+  }));
+  const retryMissedBtnStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: retryMissedBtnScale.value }],
   }));
   const skipBtnStyle = useAnimatedStyle(() => ({
     transform: [{ scale: skipBtnScale.value }],
@@ -109,9 +125,15 @@ export default function QuizScreen() {
     transform: [{ translateX: shakeX.value }],
   }));
 
-  const startQuiz = useCallback(() => {
+  const startQuizWithScope = useCallback((overrideScopeIds?: readonly string[]) => {
     if (advanceTimer.current) clearTimeout(advanceTimer.current);
-    const qs = generateQuiz(mode, quizScope?.ids);
+    stopSpeech();
+    const effectiveMode =
+      mode === 'listen' && !listenAvailability.enabled && listenAvailability.reason === 'noVoice'
+        ? 'definition'
+        : mode;
+    const scopeIds = Array.isArray(overrideScopeIds) ? [...overrideScopeIds] : quizScope?.ids;
+    const qs = generateQuiz(effectiveMode, scopeIds);
     if (qs.length === 0) return;
     setQuestions(qs);
     setCurrentQ(0);
@@ -126,7 +148,21 @@ export default function QuizScreen() {
     setQuizState('active');
     borderGlow.value = 0;
     shakeX.value = 0;
-  }, [generateQuiz, mode, quizScope, borderGlow, shakeX]);
+    cardKey.value = cardKey.value + 1;
+  }, [generateQuiz, mode, listenAvailability.enabled, listenAvailability.reason, quizScope, borderGlow, shakeX, cardKey]);
+
+  const startQuiz = useCallback(() => {
+    startQuizWithScope();
+  }, [startQuizWithScope]);
+
+  const handleRetryMissed = useCallback(() => {
+    if (!review.canRetryMissed) return;
+    setQuizScope({
+      ids: review.missedIds,
+      label: tr('quiz.missedTitle'),
+    });
+    startQuizWithScope(review.missedIds);
+  }, [review, setQuizScope, tr, startQuizWithScope]);
 
   const advanceToNext = useCallback((wasCorrect: boolean) => {
     if (currentQ + 1 >= questions.length) {
@@ -423,59 +459,175 @@ export default function QuizScreen() {
   if (quizState === 'results') {
     const finalScore = score;
     const xpEarned = finalScore * XP_PER_QUIZ;
+    const hasMissed = review.missedItems.length > 0;
 
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
-        <View style={styles.header}>
-          <Text style={[typography.largeTitle, { color: t.text }]}>{tr('quiz.results')}</Text>
+        <View style={[styles.header, { flexDirection: rowDir }]}>
+          <Text style={[typography.largeTitle, { color: t.text }, textDirStyle]}>{tr('quiz.results')}</Text>
         </View>
-        <Animated.View entering={FadeIn.duration(400)} style={styles.centerContent}>
-          <View style={styles.resultsInner}>
-            <View style={styles.progressDots}>
-              {results.map((r, i) => (
-                <View
-                  key={i}
-                  style={[
-                    styles.progressDot,
-                    { backgroundColor: r === true ? colors.success : r === false ? colors.danger : t.bgSubtle },
-                  ]}
-                />
-              ))}
-            </View>
+        {!hasMissed ? (
+          <Animated.View entering={FadeIn.duration(400)} style={styles.centerContent}>
+            <View style={styles.resultsInner}>
+              <View style={styles.progressDots}>
+                {results.map((r, i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.progressDot,
+                      { backgroundColor: r === true ? colors.success : r === false ? colors.danger : t.bgSubtle },
+                    ]}
+                  />
+                ))}
+              </View>
 
-            <Text style={[styles.scoreText, { color: t.text }]}>
-              {finalScore}/{questions.length}
-            </Text>
-
-            <View style={[styles.xpBadge, { backgroundColor: accent + '15' }]}>
-              <Zap size={16} color={accent} strokeWidth={2} />
-              <Text style={[typography.headline, { color: accent }]}>
-                +{xpEarned} XP
+              <Text style={[styles.scoreText, { color: t.text }]}>
+                {finalScore}/{questions.length}
               </Text>
+
+              <View style={[styles.xpBadge, { backgroundColor: accent + '15' }]}>
+                <Zap size={16} color={accent} strokeWidth={2} />
+                <Text style={[typography.headline, { color: accent }]}>
+                  +{xpEarned} XP
+                </Text>
+              </View>
+
+              <Text style={[typography.callout, { color: t.textTertiary, marginTop: spacing.xl }, isArabic && { writingDirection: 'rtl' }]}>
+                {getResultMessage()}
+              </Text>
+
+              <Animated.View style={[styles.retryBtnWrap, retryBtnStyle]}>
+                <Pressable
+                  style={[styles.startBtn, { backgroundColor: accent, flexDirection: rowDir }]}
+                  onPressIn={() => { retryBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
+                  onPressOut={() => { retryBtnScale.value = withSpring(1, PRESS_SPRING); }}
+                  onPress={() => {
+                    stopSpeech();
+                    setQuizState('idle');
+                    setAnswered(false);
+                    setLastCorrect(null);
+                    setShowCorrection(false);
+                  }}
+                >
+                  <RefreshCw size={16} color="#fff" strokeWidth={2} />
+                  <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.retry')}</Text>
+                </Pressable>
+              </Animated.View>
             </View>
+          </Animated.View>
+        ) : (
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={styles.resultsScrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+            <Animated.View entering={FadeIn.duration(400)} style={styles.resultsWithListInner}>
+              <View style={styles.progressDots}>
+                {results.map((r, i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.progressDot,
+                      { backgroundColor: r === true ? colors.success : r === false ? colors.danger : t.bgSubtle },
+                    ]}
+                  />
+                ))}
+              </View>
 
-            <Text style={[typography.callout, { color: t.textTertiary, marginTop: spacing.xl }]}>
-              {getResultMessage()}
-            </Text>
+              <Text style={[styles.scoreText, { color: t.text }]}>
+                {finalScore}/{questions.length}
+              </Text>
 
-            <Animated.View style={[styles.retryBtnWrap, retryBtnStyle]}>
-              <Pressable
-                style={[styles.startBtn, { backgroundColor: accent }]}
-                onPressIn={() => { retryBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
-                onPressOut={() => { retryBtnScale.value = withSpring(1, PRESS_SPRING); }}
-                onPress={() => {
-                  setQuizState('idle');
-                  setAnswered(false);
-                  setLastCorrect(null);
-                  setShowCorrection(false);
-                }}
-              >
-                <RefreshCw size={16} color="#fff" strokeWidth={2} />
-                <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.retry')}</Text>
-              </Pressable>
+              <View style={[styles.xpBadge, { backgroundColor: accent + '15' }]}>
+                <Zap size={16} color={accent} strokeWidth={2} />
+                <Text style={[typography.headline, { color: accent }]}>
+                  +{xpEarned} XP
+                </Text>
+              </View>
+
+              <Text style={[typography.callout, { color: t.textTertiary, marginTop: spacing.xl }, isArabic && { writingDirection: 'rtl' }]}>
+                {getResultMessage()}
+              </Text>
+
+              <View style={styles.missedSection}>
+                <Text style={[typography.subhead, styles.missedSectionTitle, { color: t.textSecondary }, textDirStyle]}>
+                  {tr('quiz.missedTitle')} ({review.missedItems.length})
+                </Text>
+                {review.missedItems.map((item) => (
+                  <View
+                    key={item.id}
+                    style={[
+                      styles.missedRow,
+                      { flexDirection: rowDir, backgroundColor: t.bgElevated, borderColor: t.border },
+                    ]}
+                  >
+                    <Pressable
+                      style={({ pressed }) => [styles.missedRowMain, pressed && { opacity: 0.7 }]}
+                      onPress={() => router.push(`/term/${item.id}`)}
+                      accessibilityRole="button"
+                      accessibilityLabel={tr('packs.openWordDetail', { term: item.term })}
+                    >
+                      <Text style={[typography.headline, { color: t.text }, wordDirStyle]}>
+                        {item.term}
+                      </Text>
+                      <Text style={[typography.footnote, { color: t.textSecondary, marginTop: spacing.xs }, wordDirStyle]}>
+                        {item.correctDefinition}
+                      </Text>
+                    </Pressable>
+                    <View style={styles.missedRowSpeak}>
+                      <SpeakButton
+                        key={`missed-speak-${item.id}`}
+                        text={item.term}
+                        accessibilityLabel={tr('speech.playTerm', { term: item.term })}
+                      />
+                    </View>
+                  </View>
+                ))}
+              </View>
+
+              {review.canRetryMissed && (
+                <Animated.View style={[styles.retryBtnWrap, retryMissedBtnStyle]}>
+                  <Pressable
+                    style={[styles.startBtn, { backgroundColor: accent, flexDirection: rowDir }]}
+                    onPressIn={() => { retryMissedBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
+                    onPressOut={() => { retryMissedBtnScale.value = withSpring(1, PRESS_SPRING); }}
+                    onPress={handleRetryMissed}
+                    accessibilityRole="button"
+                  >
+                    <RefreshCw size={16} color="#fff" strokeWidth={2} />
+                    <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.retryMissed')}</Text>
+                  </Pressable>
+                </Animated.View>
+              )}
+
+              <Animated.View style={[review.canRetryMissed ? styles.secondaryRetryBtnWrap : styles.retryBtnWrap, retryBtnStyle]}>
+                <Pressable
+                  style={[
+                    styles.startBtn,
+                    { flexDirection: rowDir },
+                    review.canRetryMissed
+                      ? { backgroundColor: t.bgElevated, borderColor: t.border, borderWidth: 1 }
+                      : { backgroundColor: accent },
+                  ]}
+                  onPressIn={() => { retryBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
+                  onPressOut={() => { retryBtnScale.value = withSpring(1, PRESS_SPRING); }}
+                  onPress={() => {
+                    stopSpeech();
+                    setQuizState('idle');
+                    setAnswered(false);
+                    setLastCorrect(null);
+                    setShowCorrection(false);
+                  }}
+                >
+                  <RefreshCw size={16} color={review.canRetryMissed ? t.text : '#fff'} strokeWidth={2} />
+                  <Text style={[typography.headline, { color: review.canRetryMissed ? t.text : '#fff' }]}>
+                    {tr('quiz.retry')}
+                  </Text>
+                </Pressable>
+              </Animated.View>
             </Animated.View>
-          </View>
-        </Animated.View>
+          </ScrollView>
+        )}
       </SafeAreaView>
     );
   }
@@ -1117,6 +1269,41 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing['4xl'],
   },
+  resultsScrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: spacing.xl,
+    paddingBottom: spacing['3xl'],
+  },
+  resultsWithListInner: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  missedSection: {
+    width: '100%',
+    marginTop: spacing['2xl'],
+    gap: spacing.sm,
+  },
+  missedSectionTitle: {
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+  missedRow: {
+    width: '100%',
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  missedRowMain: {
+    flex: 1,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+  missedRowSpeak: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scoreText: {
     fontSize: 64,
     fontWeight: '700',
@@ -1133,7 +1320,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.xl,
   },
   retryBtnWrap: {
-    marginTop: spacing['3xl'],
+    marginTop: spacing['2xl'],
+    width: '100%',
+  },
+  secondaryRetryBtnWrap: {
+    marginTop: spacing.md,
     width: '100%',
   },
 });

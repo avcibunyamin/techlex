@@ -405,11 +405,15 @@ export default function PacksScreen() {
       const wrong = wrongCount(p);
       const isLearnedBox = Boolean(p && p.box >= 3);
       return (
-        <View
-          style={[
+        <Pressable
+          onPress={() => router.push(`/term/${item.id}`)}
+          accessibilityRole="button"
+          accessibilityLabel={tr('packs.openWordDetail', { term: item.term })}
+          style={({ pressed }) => [
             styles.wordRow,
             rowStyle,
             { backgroundColor: t.bgElevated, borderColor: t.border },
+            pressed && { opacity: 0.75 },
           ]}
         >
           <View style={styles.wordTextCol}>
@@ -459,10 +463,10 @@ export default function PacksScreen() {
               </Text>
             )}
           </View>
-        </View>
+        </Pressable>
       );
     },
-    [progress, rowStyle, wordDirStyle, t, accent, termLang, tr]
+    [progress, rowStyle, wordDirStyle, t, accent, termLang, tr, router]
   );
 
   const handleNavigateBack = useCallback(() => {
