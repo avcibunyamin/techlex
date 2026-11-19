@@ -21,6 +21,8 @@ import { useTheme } from '@/lib/useTheme';
 import { haptic } from '@/lib/haptics';
 import { mapDeckKey } from '@/lib/shortcuts';
 import { useWebKeyboard } from '@/lib/useWebKeyboard';
+import { stop as stopSpeech } from '@/lib/speech';
+import { useFocusEffect } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import SwipeCard, { SwipeCardRef } from './SwipeCard';
 import PaywallModal from './PaywallModal';
@@ -117,8 +119,17 @@ export default function CardDeck({
   }, [currentIndex, deckTerms.length, reviewQueue.length]);
 
   useEffect(() => {
-    return () => { flushSwipeQueue(); };
+    return () => { flushSwipeQueue(); stopSpeech(); };
   }, []);
+
+  // Pronunciation belongs to one card: stop it when the card changes or the screen loses focus.
+  useEffect(() => {
+    stopSpeech();
+  }, [currentIndex, deckTerms]);
+
+  useFocusEffect(
+    useCallback(() => () => stopSpeech(), [])
+  );
 
   const showToast = useCallback((msg: string) => {
     clearTimeout(toastTimer.current);

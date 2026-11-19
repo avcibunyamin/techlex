@@ -371,6 +371,12 @@
     "skipRealDefinition": "Doğru tanım:",
     "modeDefinition": "Tanım eşleştirme",
     "modeCloze": "Cümlede boşluk",
+    "modeListen": "Dinle ve seç",
+    "listenPrompt": "Hangi kelimeyi duydun?",
+    "listenReplay": "Tekrar dinle",
+    "listenNoVoice": "Dinle ve seç için bu cihazda İngilizce bir ses gerekiyor. Sistemin metin okuma ayarlarından ekleyebilirsin.",
+    "listenChecking": "İngilizce ses aranıyor…",
+    "listenWrittenPrompt": "Ses kullanılamıyor. Bu tanım hangi kelimeye ait?",
     "clozePrompt": "Boşluğu dolduran kelimeyi seç",
     "correctAnswerLabel": "Doğru cevap:",
     "scopeTitle": "Seçili kelimelerle test",
@@ -449,5 +455,12 @@
     "deckHint": "Boşluk: kartı çevir · → veya 1: {{known}} · ← veya 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: şık seç · Enter: sonraki soru",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: sonraki soru"
+  },
+  "speech": {
+    "playTerm": "{{term}} telaffuzunu dinle",
+    "playExample": "Örnek cümleyi dinle",
+    "rateLabel": "Konuşma hızı",
+    "rateNormal": "Normal",
+    "rateSlow": "Yavaş"
   }
 }

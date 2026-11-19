@@ -371,6 +371,12 @@
     "skipRealDefinition": "正しい定義：",
     "modeDefinition": "定義マッチ",
     "modeCloze": "穴埋め",
+    "modeListen": "聞いて選ぶ",
+    "listenPrompt": "聞こえた単語はどれですか？",
+    "listenReplay": "もう一度聞く",
+    "listenNoVoice": "「聞いて選ぶ」にはこの端末に英語の音声が必要です。システムの読み上げ設定から追加できます。",
+    "listenChecking": "英語の音声を確認しています…",
+    "listenWrittenPrompt": "音声が使えません。この定義に合う単語はどれですか？",
     "clozePrompt": "空欄に入る単語を選んでください",
     "correctAnswerLabel": "正解：",
     "scopeTitle": "選んだ単語でクイズ",
@@ -449,5 +455,12 @@
     "deckHint": "スペース：カードをめくる · → または 1：{{known}} · ← または 2：{{unknown}}",
     "quizChoiceHint": "1–{{max}}：回答を選ぶ · Enter：次の問題",
     "quizTrueFalseHint": "1：{{no}} · 2：{{skip}} · 3：{{yes}} · Enter：次の問題"
+  },
+  "speech": {
+    "playTerm": "{{term}} の発音を聞く",
+    "playExample": "例文を聞く",
+    "rateLabel": "読み上げ速度",
+    "rateNormal": "標準",
+    "rateSlow": "ゆっくり"
   }
 }

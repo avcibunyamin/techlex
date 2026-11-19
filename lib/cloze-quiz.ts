@@ -4,11 +4,20 @@
 export const CLOZE_BLANK = '_____';
 export const CLOZE_DISTRACTOR_COUNT = 3;
 
-export interface ClozeTerm {
+/** Minimal shape needed to build a multiple-choice question (cloze and listen modes). */
+export interface ChoiceTerm {
   id: string;
   term: string;
   pos?: string;
+}
+
+export interface ClozeTerm extends ChoiceTerm {
   translations: { en: { example: string } };
+}
+
+export interface ChoiceOptions {
+  options: ClozeOption[];
+  correctIndex: number;
 }
 
 export interface ClozeMask {
@@ -155,21 +164,18 @@ export function seededShuffle<T>(items: readonly T[], rng: () => number): T[] {
 }
 
 /**
- * Builds a 4-option cloze question from the term's English example.
+ * Builds 4 shuffled options: the target plus 3 distractors.
  * Distractors come only from `packTerms` (the target's own pack), have distinct spellings,
- * and prefer the target's part of speech. Returns null when the example does not contain
- * the term or the pack has fewer than 3 usable distractors.
+ * and prefer the target's part of speech. Returns null when the pack has fewer than 3
+ * usable distractors.
  */
-export function buildClozeQuestion(
-  target: ClozeTerm,
-  packTerms: readonly ClozeTerm[],
+export function buildChoiceOptions(
+  target: ChoiceTerm,
+  packTerms: readonly ChoiceTerm[],
   seed: number,
-): ClozeQuestion | null {
-  const mask = maskTermInSentence(target.translations?.en?.example ?? '', target.term);
-  if (!mask) return null;
-
+): ChoiceOptions | null {
   const seenKeys = new Set<string>([normalize(target.term.trim())]);
-  const candidates: ClozeTerm[] = [];
+  const candidates: ChoiceTerm[] = [];
   for (const t of packTerms) {
     const key = normalize(t.term.trim());
     if (t.id === target.id || !key || seenKeys.has(key)) continue;
@@ -187,11 +193,22 @@ export function buildClozeQuestion(
 
   const options = seededShuffle([target, ...distractors], rng)
     .map((t): ClozeOption => ({ id: t.id, term: t.term }));
-  return {
-    termId: target.id,
-    masked: mask.masked,
-    answerForm: mask.answerForm,
-    options,
-    correctIndex: options.findIndex((o) => o.id === target.id),
-  };
+  return { options, correctIndex: options.findIndex((o) => o.id === target.id) };
+}
+
+/**
+ * Builds a 4-option cloze question from the term's English example (options from
+ * `buildChoiceOptions`). Returns null when the example does not contain the term or the
+ * pack has fewer than 3 usable distractors.
+ */
+export function buildClozeQuestion(
+  target: ClozeTerm,
+  packTerms: readonly ClozeTerm[],
+  seed: number,
+): ClozeQuestion | null {
+  const mask = maskTermInSentence(target.translations?.en?.example ?? '', target.term);
+  if (!mask) return null;
+  const choice = buildChoiceOptions(target, packTerms, seed);
+  if (!choice) return null;
+  return { termId: target.id, masked: mask.masked, answerForm: mask.answerForm, ...choice };
 }

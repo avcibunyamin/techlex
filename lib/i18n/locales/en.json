@@ -371,6 +371,12 @@
     "skipRealDefinition": "Correct definition:",
     "modeDefinition": "Definition match",
     "modeCloze": "Fill the blank",
+    "modeListen": "Listen and choose",
+    "listenPrompt": "Which word did you hear?",
+    "listenReplay": "Play again",
+    "listenNoVoice": "Listen and choose needs an English voice on this device. You can add one in the system text-to-speech settings.",
+    "listenChecking": "Checking for an English voice…",
+    "listenWrittenPrompt": "Sound is not available. Which word matches this definition?",
     "clozePrompt": "Choose the word that fills the blank",
     "correctAnswerLabel": "Correct answer:",
     "scopeTitle": "Quiz on selected words",
@@ -449,5 +455,12 @@
     "deckHint": "Space: flip · → or 1: {{known}} · ← or 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: choose an answer · Enter: next question",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: next question"
+  },
+  "speech": {
+    "playTerm": "Play pronunciation of {{term}}",
+    "playExample": "Play the example sentence",
+    "rateLabel": "Speech speed",
+    "rateNormal": "Normal",
+    "rateSlow": "Slow"
   }
 }

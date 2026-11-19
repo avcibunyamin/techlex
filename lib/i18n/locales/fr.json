@@ -371,6 +371,12 @@
     "skipRealDefinition": "Bonne définition :",
     "modeDefinition": "Associer la définition",
     "modeCloze": "Texte à trous",
+    "modeListen": "Écoute et choisis",
+    "listenPrompt": "Quel mot as-tu entendu ?",
+    "listenReplay": "Réécouter",
+    "listenNoVoice": "« Écoute et choisis » nécessite une voix anglaise sur cet appareil. Tu peux en ajouter une dans les réglages de synthèse vocale du système.",
+    "listenChecking": "Recherche d’une voix anglaise…",
+    "listenWrittenPrompt": "Le son n’est pas disponible. Quel mot correspond à cette définition ?",
     "clozePrompt": "Choisis le mot qui complète le blanc",
     "correctAnswerLabel": "Bonne réponse :",
     "scopeTitle": "Quiz sur les mots sélectionnés",
@@ -449,5 +455,12 @@
     "deckHint": "Espace : retourner · → ou 1 : {{known}} · ← ou 2 : {{unknown}}",
     "quizChoiceHint": "1–{{max}} : choisir une réponse · Entrée : question suivante",
     "quizTrueFalseHint": "1 : {{no}} · 2 : {{skip}} · 3 : {{yes}} · Entrée : question suivante"
+  },
+  "speech": {
+    "playTerm": "Écouter la prononciation de {{term}}",
+    "playExample": "Écouter la phrase d’exemple",
+    "rateLabel": "Vitesse de lecture",
+    "rateNormal": "Normale",
+    "rateSlow": "Lente"
   }
 }

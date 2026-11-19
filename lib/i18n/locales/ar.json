@@ -371,6 +371,12 @@
     "skipRealDefinition": "التعريف الصحيح:",
     "modeDefinition": "مطابقة التعريف",
     "modeCloze": "املأ الفراغ",
+    "modeListen": "استمع واختر",
+    "listenPrompt": "ما الكلمة التي سمعتها؟",
+    "listenReplay": "استمع مرة أخرى",
+    "listenNoVoice": "يحتاج وضع «استمع واختر» إلى صوت إنجليزي على هذا الجهاز. يمكنك إضافته من إعدادات تحويل النص إلى كلام في النظام.",
+    "listenChecking": "جارٍ البحث عن صوت إنجليزي…",
+    "listenWrittenPrompt": "الصوت غير متاح. أي كلمة تطابق هذا التعريف؟",
     "clozePrompt": "اختر الكلمة التي تملأ الفراغ",
     "correctAnswerLabel": "الإجابة الصحيحة:",
     "scopeTitle": "اختبار على الكلمات المحددة",
@@ -449,5 +455,12 @@
     "deckHint": "المسافة: اقلب البطاقة · → أو 1: {{known}} · ← أو 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: اختر إجابة · Enter: السؤال التالي",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: السؤال التالي"
+  },
+  "speech": {
+    "playTerm": "استمع إلى نطق {{term}}",
+    "playExample": "استمع إلى الجملة المثال",
+    "rateLabel": "سرعة النطق",
+    "rateNormal": "عادية",
+    "rateSlow": "بطيئة"
   }
 }

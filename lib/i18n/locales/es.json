@@ -371,6 +371,12 @@
     "skipRealDefinition": "Definición correcta:",
     "modeDefinition": "Emparejar definición",
     "modeCloze": "Completa el hueco",
+    "modeListen": "Escucha y elige",
+    "listenPrompt": "¿Qué palabra has oído?",
+    "listenReplay": "Escuchar de nuevo",
+    "listenNoVoice": "Escucha y elige necesita una voz en inglés en este dispositivo. Puedes añadirla en los ajustes de texto a voz del sistema.",
+    "listenChecking": "Buscando una voz en inglés…",
+    "listenWrittenPrompt": "El sonido no está disponible. ¿Qué palabra corresponde a esta definición?",
     "clozePrompt": "Elige la palabra que completa el hueco",
     "correctAnswerLabel": "Respuesta correcta:",
     "scopeTitle": "Quiz con las palabras seleccionadas",
@@ -449,5 +455,12 @@
     "deckHint": "Espacio: girar · → o 1: {{known}} · ← o 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: elegir respuesta · Intro: siguiente pregunta",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Intro: siguiente pregunta"
+  },
+  "speech": {
+    "playTerm": "Escuchar la pronunciación de {{term}}",
+    "playExample": "Escuchar la frase de ejemplo",
+    "rateLabel": "Velocidad de voz",
+    "rateNormal": "Normal",
+    "rateSlow": "Lenta"
   }
 }

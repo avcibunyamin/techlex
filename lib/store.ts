@@ -9,7 +9,8 @@ import { BADGES, BadgeCheckStats, XP_PER_SWIPE, XP_PER_QUIZ, getLeague, getLevel
 import { getLocalDateString, streakAfterLoad, streakAfterStudy } from './date-utils';
 import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
 import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './review-queue';
-import { buildClozeQuestion, ClozeQuestion } from './cloze-quiz';
+import { buildClozeQuestion, buildChoiceOptions, ClozeQuestion, ChoiceOptions } from './cloze-quiz';
+import { normalizeSpeechRate, DEFAULT_SPEECH_RATE, SpeechRate } from './speech-logic';
 import type { ShareSummaryInput } from './share-summary';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
@@ -62,7 +63,7 @@ function findLoadedTerm(termId: string): Term | undefined {
   return packId ? PACK_TERMS_MAP[packId]?.find(t => t.id === termId) : undefined;
 }
 
-export type QuizMode = 'definition' | 'cloze';
+export type QuizMode = 'definition' | 'cloze' | 'listen';
 
 /** Words picked on another screen (e.g. a filtered pack list) to quiz on. Not persisted. */
 export interface QuizScope {
@@ -102,6 +103,8 @@ export interface QuizQuestion {
   correctDefinition: string;
   /** Set only for cloze questions; otherwise the card is a true/false definition question. */
   cloze?: ClozeQuestion;
+  /** Set only for listen questions: the term is spoken and one of these 4 terms is picked. */
+  listen?: ChoiceOptions;
 }
 
 export interface SwipeQueueItem {
@@ -139,6 +142,8 @@ interface AppState {
   hasCompletedOnboarding: boolean;
   displayName: string;
   themeMode: ThemeMode;
+  /** Local-only pronunciation speed; persisted in AsyncStorage, never synced. */
+  speechRate: SpeechRate;
   subscriptionTier: SubscriptionTier;
   cancelAtPeriodEnd: boolean;
   currentPeriodEnd: number | null;
@@ -166,6 +171,7 @@ interface AppState {
   completeOnboarding: () => void;
   setDisplayName: (name: string) => void;
   setThemeMode: (mode: ThemeMode) => void;
+  setSpeechRate: (rate: SpeechRate) => void;
   swipeRight: (termId: string) => void;
   swipeLeft: (termId: string) => void;
   consumeEnergy: () => boolean;
@@ -246,6 +252,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   hasCompletedOnboarding: false,
   displayName: '',
   themeMode: 'system',
+  speechRate: DEFAULT_SPEECH_RATE,
   subscriptionTier: 'free',
   cancelAtPeriodEnd: false,
   currentPeriodEnd: null,
@@ -332,6 +339,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           displayName: data.displayName || '',
           needsCloudHydration: data.needsCloudHydration ?? false,
           themeMode: data.themeMode || 'system',
+          speechRate: normalizeSpeechRate(data.speechRate),
           subscriptionTier: tier,
           cancelAtPeriodEnd: data.cancelAtPeriodEnd || false,
           currentPeriodEnd: data.currentPeriodEnd || null,
@@ -380,6 +388,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           displayName: s.displayName,
           needsCloudHydration: s.needsCloudHydration,
           themeMode: s.themeMode,
+          speechRate: s.speechRate,
           subscriptionTier: s.subscriptionTier,
           cancelAtPeriodEnd: s.cancelAtPeriodEnd,
           currentPeriodEnd: s.currentPeriodEnd,
@@ -429,6 +438,11 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setThemeMode: (mode) => {
     set({ themeMode: mode });
+    get().saveData();
+  },
+
+  setSpeechRate: (rate) => {
+    set({ speechRate: rate });
     get().saveData();
   },
 
@@ -983,14 +997,18 @@ export const useAppStore = create<AppState>((set, get) => ({
     const questions: QuizQuestion[] = selectedTerms.map((term, index) => {
       const correctDef = term.translations[tl].definition;
 
-      if (mode === 'cloze') {
+      if (mode === 'cloze' || mode === 'listen') {
         // Distractors come from the term's own pack; IT terms share the IT term list as their pack.
         const packId = packIdOfTerm(term.id);
         const packTerms = (packId && PACK_TERMS_MAP[packId]) || terms;
-        const cloze = buildClozeQuestion(term, packTerms, baseSeed + index);
+        const base = { term, displayedDefinition: correctDef, isCorrect: true, correctDefinition: correctDef };
         // No match in the example (or too few distractors): fall back to the definition question below.
-        if (cloze) {
-          return { term, displayedDefinition: correctDef, isCorrect: true, correctDefinition: correctDef, cloze };
+        if (mode === 'cloze') {
+          const cloze = buildClozeQuestion(term, packTerms, baseSeed + index);
+          if (cloze) return { ...base, cloze };
+        } else {
+          const listen = buildChoiceOptions(term, packTerms, baseSeed + index);
+          if (listen) return { ...base, listen };
         }
       }
 

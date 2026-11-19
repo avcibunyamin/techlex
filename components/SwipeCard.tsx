@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect, useMemo, useImperativeHandle, forwardRef } from 'react';
+import React, { useRef, useState, useCallback, useEffect, useMemo, useImperativeHandle, forwardRef } from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -20,6 +20,10 @@ import { findPackById } from '@/data/packs';
 import { useAppStore } from '@/lib/store';
 import { toLocaleUpper } from '@/lib/text-utils';
 import { useTranslation } from 'react-i18next';
+import SpeakButton from './SpeakButton';
+
+// A tap on a speaker button must not also flip the card (the card tap gesture still fires).
+const SPEAK_TAP_GUARD_MS = 500;
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_X_THRESHOLD = SCREEN_WIDTH * 0.28;
@@ -65,6 +69,9 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const { t: tr, i18n } = useTranslation();
   const getTermById = useAppStore((s) => s.getTermById);
   const flipped = useRef(false);
+  // Mirrors `flipped` for render: only the visible face takes touches.
+  const [isFlipped, setIsFlipped] = useState(false);
+  const speakPressedAt = useRef(0);
 
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -81,12 +88,22 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const toggleFlip = useCallback(() => {
     haptic.light();
     flipped.current = !flipped.current;
+    setIsFlipped(flipped.current);
     flipProgress.value = withSpring(flipped.current ? 1 : 0, {
       damping: 18,
       stiffness: 180,
       mass: 0.8,
     });
   }, [flipProgress]);
+
+  const handleTapFlip = useCallback(() => {
+    if (Date.now() - speakPressedAt.current < SPEAK_TAP_GUARD_MS) return;
+    toggleFlip();
+  }, [toggleFlip]);
+
+  const markSpeakPress = useCallback(() => {
+    speakPressedAt.current = Date.now();
+  }, []);
 
   useImperativeHandle(ref, () => ({
     flip: toggleFlip,
@@ -164,7 +181,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
   const tap = Gesture.Tap()
     .enabled(isTopCard)
     .onEnd(() => {
-      runOnJS(toggleFlip)();
+      runOnJS(handleTapFlip)();
     });
 
   const gesture = Gesture.Race(pan, tap);
@@ -246,6 +263,7 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
             isReviewMode && { borderWidth: 1.5 },
             frontStyle,
           ]}
+          pointerEvents={isFlipped ? 'none' : 'auto'}
         >
           <View style={styles.header}>
             {isReviewMode && (
@@ -262,6 +280,15 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
             <Text style={[styles.termText, { color: t.text }]}>
               {term.term}
             </Text>
+            {isTopCard && (
+              <View style={styles.frontSpeak}>
+                <SpeakButton
+                  text={term.term}
+                  accessibilityLabel={tr('speech.playTerm', { term: term.term })}
+                  onPressIn={markSpeakPress}
+                />
+              </View>
+            )}
           </View>
 
           <View style={styles.frontFooter}>
@@ -290,10 +317,20 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
             isReviewMode && { borderWidth: 1.5 },
             backAnimStyle,
           ]}
+          pointerEvents={isFlipped ? 'auto' : 'none'}
         >
-          <Text style={[styles.backTitle, { color: t.text }]}>
-            {term.term}
-          </Text>
+          <View style={styles.backTitleRow}>
+            <Text style={[styles.backTitle, styles.backTitleText, { color: t.text }]}>
+              {term.term}
+            </Text>
+            {isTopCard && (
+              <SpeakButton
+                text={term.term}
+                accessibilityLabel={tr('speech.playTerm', { term: term.term })}
+                onPressIn={markSpeakPress}
+              />
+            )}
+          </View>
           <View style={[styles.divider, { backgroundColor: t.border }]} />
 
             <View style={styles.backContent}>
@@ -308,9 +345,20 @@ const SwipeCard = forwardRef<SwipeCardRef, SwipeCardProps>(function SwipeCard(
                     { backgroundColor: t.bg, borderColor: t.border },
                   ]}
                 >
-                  <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
-                    {tr('term.example')}
-                  </Text>
+                  <View style={styles.codeLabelRow}>
+                    <Text style={[styles.codeLabel, { color: t.textTertiary }]}>
+                      {tr('term.example')}
+                    </Text>
+                    {/* The TR example starts with the English sentence, so English is what gets read. */}
+                    {isTopCard && term.translations.en.example ? (
+                      <SpeakButton
+                        text={term.translations.en.example}
+                        accessibilityLabel={tr('speech.playExample')}
+                        size={14}
+                        onPressIn={markSpeakPress}
+                      />
+                    ) : null}
+                  </View>
                   <Text style={[styles.codeText, { color: t.textSecondary }]}>
                     {translation.example}
                   </Text>
@@ -423,9 +471,29 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
   },
+  frontSpeak: {
+    marginTop: spacing.lg,
+  },
+  backTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
   backTitle: {
     ...typography.headline,
     marginBottom: spacing.md,
+  },
+  backTitleText: {
+    flexShrink: 1,
+    marginBottom: 0,
+  },
+  codeLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: spacing.xs,
   },
   divider: {
     height: StyleSheet.hairlineWidth,

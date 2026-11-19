@@ -371,6 +371,12 @@
     "skipRealDefinition": "올바른 정의:",
     "modeDefinition": "정의 맞추기",
     "modeCloze": "빈칸 채우기",
+    "modeListen": "듣고 고르기",
+    "listenPrompt": "어떤 단어를 들었나요?",
+    "listenReplay": "다시 듣기",
+    "listenNoVoice": "듣고 고르기를 사용하려면 이 기기에 영어 음성이 필요합니다. 시스템의 텍스트 음성 변환 설정에서 추가할 수 있습니다.",
+    "listenChecking": "영어 음성을 확인하는 중…",
+    "listenWrittenPrompt": "소리를 사용할 수 없습니다. 이 정의에 맞는 단어는 무엇인가요?",
     "clozePrompt": "빈칸에 들어갈 단어를 고르세요",
     "correctAnswerLabel": "정답:",
     "scopeTitle": "선택한 단어로 퀴즈",
@@ -449,5 +455,12 @@
     "deckHint": "스페이스: 카드 뒤집기 · → 또는 1: {{known}} · ← 또는 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: 답 선택 · Enter: 다음 문제",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: 다음 문제"
+  },
+  "speech": {
+    "playTerm": "{{term}} 발음 듣기",
+    "playExample": "예문 듣기",
+    "rateLabel": "말하기 속도",
+    "rateNormal": "보통",
+    "rateSlow": "느리게"
   }
 }

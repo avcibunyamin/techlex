@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   StyleSheet, Text, View, Pressable, ScrollView, I18nManager, Platform,
 } from 'react-native';
@@ -13,8 +13,9 @@ import Animated, {
   withDelay,
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock } from 'lucide-react-native';
+import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock, Volume2 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from 'expo-router';
 import { useAppStore, QuizQuestion, QuizMode, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
@@ -23,8 +24,17 @@ import { mapQuizKey } from '@/lib/shortcuts';
 import { useWebKeyboard } from '@/lib/useWebKeyboard';
 import { XP_PER_QUIZ } from '@/constants/badges';
 import PaywallModal from '@/components/PaywallModal';
+import SpeakButton, { SpeechRateToggle, useSpeechAvailability } from '@/components/SpeakButton';
+import { speak, stop as stopSpeech } from '@/lib/speech';
+import { quizModeAvailability, listenQuestionKind } from '@/lib/speech-logic';
 
 const PRESS_SPRING = { damping: 15, stiffness: 300 };
+const QUIZ_MODES: readonly QuizMode[] = ['definition', 'cloze', 'listen'];
+const MODE_LABEL_KEYS: Record<QuizMode, string> = {
+  definition: 'quiz.modeDefinition',
+  cloze: 'quiz.modeCloze',
+  listen: 'quiz.modeListen',
+};
 const MIN_KNOWN_FOR_QUIZ = 10;
 
 type QuizState = 'idle' | 'active' | 'results';
@@ -53,6 +63,11 @@ export default function QuizScreen() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showCorrection, setShowCorrection] = useState(false);
   const [showSkipFeedback, setShowSkipFeedback] = useState(false);
+  // Set when speech fails during this quiz; remaining listen questions are shown written.
+  const [speechFailed, setSpeechFailed] = useState(false);
+  const speechAvailable = useSpeechAvailability();
+  const listenAvailability = quizModeAvailability('listen', speechAvailable);
+  const isArabic = language === 'ar';
 
   const advanceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -106,6 +121,7 @@ export default function QuizScreen() {
     setSelectedOption(null);
     setShowCorrection(false);
     setShowSkipFeedback(false);
+    setSpeechFailed(false);
     setResults(new Array(qs.length).fill(null));
     setQuizState('active');
     borderGlow.value = 0;
@@ -175,12 +191,43 @@ export default function QuizScreen() {
     resolveAnswer(userSaysTrue === q.isCorrect);
   }, [questions, currentQ, resolveAnswer]);
 
-  const handleClozeAnswer = useCallback((index: number) => {
+  // Cloze and listen questions share the 4-option UI.
+  const handleChoiceAnswer = useCallback((index: number) => {
     const q = questions[currentQ];
-    if (answered || !q?.cloze) return;
+    const choice = q?.cloze ?? q?.listen;
+    if (answered || !choice) return;
     setSelectedOption(index);
-    resolveAnswer(index === q.cloze.correctIndex);
+    resolveAnswer(index === choice.correctIndex);
   }, [answered, questions, currentQ, resolveAnswer]);
+
+  const activeQuestion = quizState === 'active' ? questions[currentQ] : undefined;
+  const listenKind = activeQuestion?.listen ? listenQuestionKind(speechAvailable, speechFailed) : null;
+
+  const playListenTerm = useCallback(() => {
+    const q = questions[currentQ];
+    if (!q?.listen) return;
+    speak(q.term.term, {
+      rate: useAppStore.getState().speechRate,
+      onError: () => setSpeechFailed(true),
+    });
+  }, [questions, currentQ]);
+
+  // New question: stop the previous audio; a spoken listen question plays its term once.
+  useEffect(() => {
+    stopSpeech();
+    if (listenKind === 'audio') playListenTerm();
+  }, [quizState, currentQ, questions, listenKind, playListenTerm]);
+
+  useFocusEffect(
+    useCallback(() => () => stopSpeech(), [])
+  );
+
+  // Voice lost before the quiz starts: do not keep an unusable mode selected.
+  useEffect(() => {
+    if (mode === 'listen' && !listenAvailability.enabled && listenAvailability.reason === 'noVoice') {
+      setMode('definition');
+    }
+  }, [mode, listenAvailability.enabled, listenAvailability.reason]);
 
   const handleGotIt = useCallback(() => {
     setShowSkipFeedback(false);
@@ -199,12 +246,13 @@ export default function QuizScreen() {
     setShowSkipFeedback(true);
   }, [answered, currentQ, questions]);
 
-  // Web only. Options follow the on-screen order: cloze 1–4; true/false 1 = false, 2 = skip, 3 = true.
+  // Web only. Options follow the on-screen order: cloze/listen 1–4; true/false 1 = false, 2 = skip, 3 = true.
   useWebKeyboard((e) => {
     if (quizState !== 'active' || showPaywall) return false;
     const q = questions[currentQ];
     if (!q) return false;
-    const action = mapQuizKey(e, q.cloze ? q.cloze.options.length : 3);
+    const choice = q.cloze ?? q.listen;
+    const action = mapQuizKey(e, choice ? choice.options.length : 3);
     if (!action) return false;
 
     if (action.type === 'next') {
@@ -225,8 +273,8 @@ export default function QuizScreen() {
     }
 
     if (answered) return false;
-    if (q.cloze) {
-      handleClozeAnswer(action.index);
+    if (choice) {
+      handleChoiceAnswer(action.index);
     } else if (action.index === 0) {
       handleAnswer(false);
     } else if (action.index === 1) {
@@ -253,23 +301,42 @@ export default function QuizScreen() {
           style={[styles.modePicker, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
           accessibilityRole="radiogroup"
         >
-          {(['definition', 'cloze'] as const).map(m => {
+          {QUIZ_MODES.map(m => {
             const active = mode === m;
+            const { enabled } = quizModeAvailability(m, speechAvailable);
             return (
               <Pressable
                 key={m}
-                style={[styles.modeOption, active && { backgroundColor: t.bgElevated, borderColor: accent }]}
+                style={[
+                  styles.modeOption,
+                  active && { backgroundColor: t.bgElevated, borderColor: accent },
+                  !enabled && styles.modeOptionDisabled,
+                ]}
                 onPress={() => setMode(m)}
+                disabled={!enabled}
                 accessibilityRole="radio"
-                accessibilityState={{ selected: active }}
+                accessibilityState={{ selected: active, disabled: !enabled }}
+                accessibilityHint={!enabled && m === 'listen'
+                  ? tr(listenAvailability.reason === 'checking' ? 'quiz.listenChecking' : 'quiz.listenNoVoice')
+                  : undefined}
               >
                 <Text style={[typography.subhead, { color: active ? accent : t.textSecondary, fontWeight: '600', textAlign: 'center' }]}>
-                  {tr(m === 'cloze' ? 'quiz.modeCloze' : 'quiz.modeDefinition')}
+                  {tr(MODE_LABEL_KEYS[m])}
                 </Text>
               </Pressable>
             );
           })}
         </View>
+        {!listenAvailability.enabled && (
+          <Text style={[typography.footnote, styles.modeNote, { color: t.textTertiary }, isArabic && { writingDirection: 'rtl' }]}>
+            {tr(listenAvailability.reason === 'checking' ? 'quiz.listenChecking' : 'quiz.listenNoVoice')}
+          </Text>
+        )}
+        {mode === 'listen' && (
+          <View style={styles.rateToggleWrap}>
+            <SpeechRateToggle isArabic={isArabic} />
+          </View>
+        )}
         <Animated.View style={[styles.startBtnWrap, startBtnStyle]}>
           <Pressable
             style={[styles.startBtn, { backgroundColor: accent }]}
@@ -416,6 +483,7 @@ export default function QuizScreen() {
   // --- ACTIVE QUIZ STATE ---
   const q = questions[currentQ];
   if (!q) return null;
+  const choice = q.cloze ?? q.listen;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
@@ -466,7 +534,42 @@ export default function QuizScreen() {
               pointerEvents="none"
             />
 
-            {q.cloze ? (
+            {q.listen && listenKind === 'audio' ? (
+              <>
+                {/* Spelling stays hidden until the answer; only the sound is offered. */}
+                <Text style={[typography.subhead, { color: t.textTertiary, textAlign: 'center', marginBottom: spacing.lg }]}>
+                  {tr('quiz.listenPrompt')}
+                </Text>
+                <Pressable
+                  style={({ pressed }) => [
+                    styles.listenPlay,
+                    { borderColor: accent, backgroundColor: accent + '15' },
+                    pressed && { opacity: 0.7 },
+                  ]}
+                  onPress={playListenTerm}
+                  accessibilityRole="button"
+                  accessibilityLabel={tr('quiz.listenReplay')}
+                >
+                  <Volume2 size={32} color={accent} strokeWidth={2} />
+                </Pressable>
+                <Text style={[typography.footnote, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
+                  {tr('quiz.listenReplay')}
+                </Text>
+                <View style={styles.rateToggleWrap}>
+                  <SpeechRateToggle isArabic={isArabic} />
+                </View>
+              </>
+            ) : q.listen ? (
+              <>
+                {/* Written fallback: same options, the definition replaces the sound. */}
+                <Text style={[typography.subhead, { color: t.textTertiary, textAlign: 'center', marginBottom: spacing.lg }]}>
+                  {tr('quiz.listenWrittenPrompt')}
+                </Text>
+                <Text style={[styles.quizDefinition, { color: t.text }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            ) : q.cloze ? (
               <>
                 <Text style={[typography.subhead, { color: t.textTertiary, textAlign: 'center', marginBottom: spacing.lg }]}>
                   {tr('quiz.clozePrompt')}
@@ -481,6 +584,12 @@ export default function QuizScreen() {
                 <Text style={[styles.quizTerm, { color: t.text }]}>
                   {q.term.term}
                 </Text>
+                <View style={styles.termSpeak}>
+                  <SpeakButton
+                    text={q.term.term}
+                    accessibilityLabel={tr('speech.playTerm', { term: q.term.term })}
+                  />
+                </View>
 
                 <View style={[styles.quizDivider, { backgroundColor: t.border }]} />
 
@@ -493,9 +602,9 @@ export default function QuizScreen() {
           </View>
         </Animated.View>
 
-        {q.cloze && !showCorrection && !showSkipFeedback && (
+        {choice && !showCorrection && !showSkipFeedback && (
           <View style={styles.clozeOptions}>
-            {q.cloze.options.map((option, index) => {
+            {choice.options.map((option, index) => {
               const isPicked = selectedOption === index;
               const pickedColor = lastCorrect ? colors.success : colors.danger;
               return (
@@ -507,7 +616,7 @@ export default function QuizScreen() {
                     isPicked && { borderColor: pickedColor, backgroundColor: pickedColor + '15' },
                     pressed && !answered && { opacity: 0.7 },
                   ]}
-                  onPress={() => handleClozeAnswer(index)}
+                  onPress={() => handleChoiceAnswer(index)}
                   disabled={answered}
                   accessibilityRole="button"
                 >
@@ -534,7 +643,22 @@ export default function QuizScreen() {
             entering={FadeIn.duration(250)}
             style={[styles.correctionBox, { borderColor: colors.danger, backgroundColor: colors.dangerMuted }]}
           >
-            {q.cloze ? (
+            {q.listen ? (
+              <>
+                <Text style={[typography.subhead, { color: colors.danger }]}>
+                  {tr('quiz.correctAnswerLabel')}
+                </Text>
+                <View style={styles.answerRow}>
+                  <Text style={[typography.headline, styles.answerText, { color: t.text }]}>
+                    {q.term.term}
+                  </Text>
+                  <SpeakButton text={q.term.term} accessibilityLabel={tr('speech.playTerm', { term: q.term.term })} />
+                </View>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            ) : q.cloze ? (
               <>
                 <Text style={[typography.subhead, { color: colors.danger }]}>
                   {tr('quiz.correctAnswerLabel')}
@@ -542,9 +666,12 @@ export default function QuizScreen() {
                 <Text style={[typography.headline, { color: t.text, marginTop: spacing.xs, writingDirection: 'ltr' }]}>
                   {q.cloze.answerForm}
                 </Text>
-                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic', writingDirection: 'ltr' }]}>
-                  {q.term.translations.en.example}
-                </Text>
+                <View style={styles.answerRow}>
+                  <Text style={[typography.body, styles.answerText, { color: t.textSecondary, fontStyle: 'italic' }]}>
+                    {q.term.translations.en.example}
+                  </Text>
+                  <SpeakButton text={q.term.translations.en.example} accessibilityLabel={tr('speech.playExample')} size={14} />
+                </View>
               </>
             ) : (
               <>
@@ -556,7 +683,7 @@ export default function QuizScreen() {
                 </Text>
               </>
             )}
-            {!q.cloze && q.sourceTerm && (
+            {!choice && q.sourceTerm && (
               isPremium ? (
                 <Text style={[typography.footnote, { color: t.textTertiary, marginTop: spacing.sm }]}>
                   {tr('quiz.definitionFrom', { term: q.sourceTerm.term })}
@@ -588,7 +715,25 @@ export default function QuizScreen() {
             entering={FadeIn.duration(250)}
             style={[styles.correctionBox, { borderColor: accent, backgroundColor: accent + '10' }]}
           >
-            {q.cloze ? (
+            {q.listen ? (
+              <>
+                <Text style={[typography.subhead, { color: accent }]}>
+                  {tr('quiz.correctAnswerLabel')}
+                </Text>
+                <View style={styles.answerRow}>
+                  <Text style={[typography.headline, styles.answerText, { color: t.text }]}>
+                    {q.term.term}
+                  </Text>
+                  <SpeakButton text={q.term.term} accessibilityLabel={tr('speech.playTerm', { term: q.term.term })} />
+                </View>
+                <Text style={[typography.body, { color: t.text, marginTop: spacing.md }]}>
+                  {tr('quiz.skipRealDefinition')}
+                </Text>
+                <Text style={[typography.body, { color: t.textSecondary, marginTop: spacing.xs, fontStyle: 'italic' }]}>
+                  {q.correctDefinition}
+                </Text>
+              </>
+            ) : q.cloze ? (
               <>
                 <Text style={[typography.subhead, { color: accent }]}>
                   {tr('quiz.correctAnswerLabel')}
@@ -660,7 +805,7 @@ export default function QuizScreen() {
       )}
 
       {/* Action buttons — hide when feedback is visible; cloze questions show their options in the scroll view */}
-      {!q.cloze && !showCorrection && !showSkipFeedback && (
+      {!choice && !showCorrection && !showSkipFeedback && (
         <View style={styles.actions}>
           <Animated.View style={falseBtnStyle}>
             <Pressable
@@ -705,8 +850,8 @@ export default function QuizScreen() {
 
       {Platform.OS === 'web' && (
         <Text style={[styles.shortcutHint, { color: t.textMuted }]}>
-          {q.cloze
-            ? tr('shortcuts.quizChoiceHint', { max: q.cloze.options.length })
+          {choice
+            ? tr('shortcuts.quizChoiceHint', { max: choice.options.length })
             : tr('shortcuts.quizTrueFalseHint', { no: tr('quiz.false'), skip: tr('quiz.skip'), yes: tr('quiz.true') })}
         </Text>
       )}
@@ -762,6 +907,41 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: 'transparent',
+  },
+  modeOptionDisabled: {
+    opacity: 0.45,
+  },
+  modeNote: {
+    textAlign: 'center',
+    marginTop: spacing.sm,
+  },
+  rateToggleWrap: {
+    marginTop: spacing.lg,
+    alignItems: 'center',
+  },
+  listenPlay: {
+    alignSelf: 'center',
+    width: 88,
+    height: 88,
+    borderRadius: 44,
+    borderWidth: 1.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  termSpeak: {
+    alignItems: 'center',
+    marginTop: -spacing.md,
+    marginBottom: spacing.xl,
+  },
+  answerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginTop: spacing.xs,
+  },
+  answerText: {
+    flex: 1,
+    writingDirection: 'ltr',
   },
   progressBar: {
     width: '100%',

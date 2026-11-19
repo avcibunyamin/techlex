@@ -371,6 +371,12 @@
     "skipRealDefinition": "Richtige Definition:",
     "modeDefinition": "Definition zuordnen",
     "modeCloze": "Lückentext",
+    "modeListen": "Hören und wählen",
+    "listenPrompt": "Welches Wort hast du gehört?",
+    "listenReplay": "Noch einmal anhören",
+    "listenNoVoice": "„Hören und wählen“ braucht eine englische Stimme auf diesem Gerät. Du kannst sie in den Sprachausgabe-Einstellungen des Systems hinzufügen.",
+    "listenChecking": "Suche nach einer englischen Stimme…",
+    "listenWrittenPrompt": "Ton ist nicht verfügbar. Welches Wort passt zu dieser Definition?",
     "clozePrompt": "Wähle das Wort, das in die Lücke passt",
     "correctAnswerLabel": "Richtige Antwort:",
     "scopeTitle": "Quiz mit ausgewählten Wörtern",
@@ -449,5 +455,12 @@
     "deckHint": "Leertaste: umdrehen · → oder 1: {{known}} · ← oder 2: {{unknown}}",
     "quizChoiceHint": "1–{{max}}: Antwort wählen · Enter: nächste Frage",
     "quizTrueFalseHint": "1: {{no}} · 2: {{skip}} · 3: {{yes}} · Enter: nächste Frage"
+  },
+  "speech": {
+    "playTerm": "Aussprache von {{term}} anhören",
+    "playExample": "Beispielsatz anhören",
+    "rateLabel": "Sprechtempo",
+    "rateNormal": "Normal",
+    "rateSlow": "Langsam"
   }
 }
