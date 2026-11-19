@@ -127,4 +127,15 @@ check('empty input gives an empty queue', () => {
   expectEqual(result.totalDue, 0, 'totalDue');
 });
 
+check('non-finite now returns an empty queue', () => {
+  const progress: Record<string, ReviewProgressLike> = {
+    a: { box: 1, nextReview: NOW - DAY },
+  };
+  for (const badNow of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+    const result = buildReviewQueue([cards('a')], progress, badNow);
+    expectEqual(result.items.length, 0, `items for now=${String(badNow)}`);
+    expectEqual(result.totalDue, 0, `totalDue for now=${String(badNow)}`);
+  }
+});
+
 console.log(`review-queue: ${passed} checks passed`);

@@ -195,12 +195,17 @@ function plural(language: Language, forms: PluralForms, n: number): string {
 
 /** Packs with at least one learned word: most learned first, then highest share, then id. */
 export function rankSharePacks(packs: ShareSummaryPack[], limit = SHARE_SUMMARY_TOP_PACKS): ShareSummaryPack[] {
-  const ratio = (p: ShareSummaryPack) => (p.total > 0 ? p.learned / p.total : 0);
+  const learnedOf = (p: ShareSummaryPack) => count(p.learned);
+  const ratio = (p: ShareSummaryPack) => {
+    const total = count(p.total);
+    return total > 0 ? learnedOf(p) / total : 0;
+  };
+  const cap = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : SHARE_SUMMARY_TOP_PACKS;
   return packs
-    .filter((p) => count(p.learned) > 0)
+    .filter((p) => learnedOf(p) > 0)
     .slice()
-    .sort((a, b) => b.learned - a.learned || ratio(b) - ratio(a) || a.id.localeCompare(b.id))
-    .slice(0, Math.max(0, limit));
+    .sort((a, b) => learnedOf(b) - learnedOf(a) || ratio(b) - ratio(a) || a.id.localeCompare(b.id))
+    .slice(0, cap);
 }
 
 /**
@@ -214,9 +219,10 @@ export function buildShareSummary(input: ShareSummaryInput, maxLength = SHARE_SU
   const streak = count(input.streak);
   const xp = count(input.xp);
   const badges = count(input.badgeCount);
+  const rankedPacks = rankSharePacks(input.packs);
 
   let text: string;
-  if (learned === 0 && xp === 0 && streak === 0 && badges === 0) {
+  if (learned === 0 && xp === 0 && streak === 0 && badges === 0 && rankedPacks.length === 0) {
     text = p.starter;
   } else {
     const stats = [plural(language, p.learned, learned)];
@@ -225,7 +231,7 @@ export function buildShareSummary(input: ShareSummaryInput, maxLength = SHARE_SU
     if (badges > 0) stats.push(plural(language, p.badges, badges));
     const head = `${p.header} ${stats.join(p.sep)}${p.end}`;
 
-    const packParts = rankSharePacks(input.packs).map((pk) => `${pk.title} ${count(pk.learned)}/${count(pk.total)}`);
+    const packParts = rankedPacks.map((pk) => `${pk.title} ${count(pk.learned)}/${count(pk.total)}`);
     text = head;
     for (let n = packParts.length; n > 0; n--) {
       const candidate = `${head} ${p.topPacks} ${packParts.slice(0, n).join(p.sep)}${p.end}`;

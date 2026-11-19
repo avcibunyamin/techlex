@@ -2,6 +2,7 @@
 // Dependency-free checks for lib/pack-filter.ts; exits with a thrown error on the first failure.
 
 import {
+  compareByRank,
   countPackFilters,
   filterPackTerms,
   foldForSearch,
@@ -109,8 +110,28 @@ check('sort by rank, then order when rank is missing, then id; input untouched',
     word('a', 'a', '', '', undefined, 2),
     word('d', 'd', '', '', 1),
   ];
-  expectEqual(ids(filterPackTerms(list, {})), 'd,a,b,c', 'sorted');
+  expectEqual(ids(filterPackTerms(list, {})), 'd,c,a,b', 'sorted');
   expectEqual(ids(list), 'b,c,a,d', 'input not mutated');
+});
+
+check('compareByRank breaks rank ties by order then id, puts NaN/missing rank last, never returns NaN', () => {
+  const list = [
+    word('nan-b', 'nan-b', '', '', Number.NaN, 2),
+    word('no-rank', 'no-rank', '', '', undefined, 1),
+    word('r1-o2-b', 'r1-o2-b', '', '', 1, 2),
+    word('r1-o2-a', 'r1-o2-a', '', '', 1, 2),
+    word('r1-o1', 'r1-o1', '', '', 1, 1),
+  ];
+  expectEqual(
+    ids(filterPackTerms(list, {})),
+    'r1-o1,r1-o2-a,r1-o2-b,no-rank,nan-b',
+    'rank -> order -> id with missing/NaN last',
+  );
+  const nanOrderA = word('x', 'x', '', '', Number.NaN, Number.NaN);
+  const nanOrderB = word('y', 'y', '', '', undefined, Number.NaN);
+  if (Number.isNaN(compareByRank(nanOrderA, nanOrderB)) || Number.isNaN(compareByRank(nanOrderA, list[4]))) {
+    throw new Error('compareByRank returned NaN');
+  }
 });
 
 check('filter and search combine; counts follow the current search', () => {

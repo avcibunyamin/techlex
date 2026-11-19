@@ -41,10 +41,10 @@ export interface ClozeQuestion {
 
 const VOWELS = 'aeiou';
 
-// Lowercases one UTF-16 unit without changing the string length
-// (e.g. 'İ'.toLowerCase() is two units, so it is kept as is).
+// Lowercases one UTF-16 unit without changing the string length.
 function normalizeUnit(unit: string): string {
   if (unit === '’' || unit === '‘') return "'";
+  if (unit === 'İ' || unit === 'I') return 'i';
   const lower = unit.toLowerCase();
   return lower.length === 1 ? lower : unit;
 }
@@ -55,18 +55,23 @@ function normalize(text: string): string {
   return out;
 }
 
-function isWordChar(unit: string | undefined): boolean {
+function isLetter(unit: string | undefined): boolean {
   if (!unit) return false;
-  if (unit >= '0' && unit <= '9') return true;
   return unit.toLowerCase() !== unit.toUpperCase();
 }
 
-/** Base form plus simple regular inflections (s/es/ies, d/ed/ied, ing, e-drop, CVC doubling). */
-export function inflectedForms(word: string): string[] {
+function isWordChar(unit: string | undefined, nextUnit?: string): boolean {
+  if (!unit) return false;
+  if (unit >= '0' && unit <= '9') return true;
+  if ((unit === "'" || unit === '’' || unit === '‘') && isLetter(nextUnit)) return true;
+  return isLetter(unit);
+}
+
+function inflectWord(word: string, minLength: number): string[] {
   const w = normalize(word.trim());
   const forms = new Set<string>([w]);
   // Very short or non-ASCII words are matched only in their base form to avoid false hits ("be" → "bed").
-  if (w.length < 3 || !/^[a-z]+$/.test(w)) return [...forms];
+  if (w.length < minLength || !/^[a-z]+$/.test(w)) return [...forms];
 
   const last = w[w.length - 1];
   const prev = w[w.length - 2];
@@ -88,21 +93,39 @@ export function inflectedForms(word: string): string[] {
   } else {
     forms.add(`${w}ed`);
     forms.add(`${w}ing`);
-    // Consonant-vowel-consonant ending: stop → stopped, stopping.
-    if (!VOWELS.includes(last) && !'wxy'.includes(last) && VOWELS.includes(prev) && !VOWELS.includes(w[w.length - 3])) {
+    // Consonant-vowel-consonant ending: stop → stopped, stopping; "qu" counts as a consonant onset.
+    const beforePrev = w[w.length - 3];
+    const isConsonantBeforeVowel =
+      beforePrev !== undefined &&
+      (!VOWELS.includes(beforePrev) || (beforePrev === 'u' && w[w.length - 4] === 'q'));
+    if (!VOWELS.includes(last) && !'wxy'.includes(last) && VOWELS.includes(prev) && isConsonantBeforeVowel) {
       forms.add(`${w}${last}ed`);
       forms.add(`${w}${last}ing`);
+      if (last === 'z' || last === 's') forms.add(`${w}${last}es`);
     }
   }
   return [...forms];
 }
 
-/** Forms of a (possibly multi-word) term; only the last word is inflected. */
+/** Base form plus simple regular inflections (s/es/ies, d/ed/ied, ing, e-drop, CVC doubling). */
+export function inflectedForms(word: string): string[] {
+  return inflectWord(word, 3);
+}
+
+/** Forms of a (possibly multi-word or hyphenated) term; only the last part is inflected. */
 export function termForms(term: string): string[] {
   const words = normalize(term.trim()).split(/\s+/).filter(Boolean);
   if (words.length === 0) return [];
   const head = words.slice(0, -1).join(' ');
-  return inflectedForms(words[words.length - 1])
+  const lastWord = words[words.length - 1];
+  const hyphenIdx = lastWord.lastIndexOf('-');
+  const lastWordForms =
+    hyphenIdx > 0 && hyphenIdx < lastWord.length - 1
+      ? inflectWord(lastWord.slice(hyphenIdx + 1), 2).map(
+          (form) => `${lastWord.slice(0, hyphenIdx)}-${form}`,
+        )
+      : inflectedForms(lastWord);
+  return lastWordForms
     .map((form) => (head ? `${head} ${form}` : form))
     .sort((a, b) => b.length - a.length);
 }
@@ -122,9 +145,12 @@ export function maskTermInSentence(sentence: string, term: string): ClozeMask | 
   let i = 0;
   while (i < sentence.length) {
     let matched = '';
-    if (!isWordChar(sentence[i - 1])) {
+    if (!isWordChar(sentence[i - 1], sentence[i])) {
       for (const form of forms) {
-        if (lower.startsWith(form, i) && !isWordChar(sentence[i + form.length])) {
+        if (
+          lower.startsWith(form, i) &&
+          !isWordChar(sentence[i + form.length], sentence[i + form.length + 1])
+        ) {
           matched = form;
           break;
         }
@@ -174,11 +200,15 @@ export function buildChoiceOptions(
   packTerms: readonly ChoiceTerm[],
   seed: number,
 ): ChoiceOptions | null {
-  const seenKeys = new Set<string>([normalize(target.term.trim())]);
+  const targetKey = normalize(target.term.trim());
+  if (!targetKey) return null;
+  const seenKeys = new Set<string>([targetKey]);
+  const seenIds = new Set<string>([target.id]);
   const candidates: ChoiceTerm[] = [];
   for (const t of packTerms) {
     const key = normalize(t.term.trim());
-    if (t.id === target.id || !key || seenKeys.has(key)) continue;
+    if (!t.id || seenIds.has(t.id) || !key || seenKeys.has(key)) continue;
+    seenIds.add(t.id);
     seenKeys.add(key);
     candidates.push(t);
   }

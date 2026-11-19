@@ -8,6 +8,10 @@ const BOX_INTERVALS: Record<number, number> = {
   5: 14 * 24 * 60 * 60 * 1000,    // 2 weeks
 };
 
+function normalizeBox(box: number): 1 | 2 | 3 | 4 | 5 {
+  return Number.isInteger(box) && box >= 1 && box <= 5 ? (box as 1 | 2 | 3 | 4 | 5) : 1;
+}
+
 export function createProgress(termId: string): UserProgress {
   const now = Date.now();
   return {
@@ -22,7 +26,8 @@ export function createProgress(termId: string): UserProgress {
 
 export function markKnown(progress: UserProgress): UserProgress {
   const now = Date.now();
-  const newBox = Math.min(progress.box + 1, 5) as 1 | 2 | 3 | 4 | 5;
+  const currentBox = normalizeBox(progress.box);
+  const newBox = Math.min(currentBox + 1, 5) as 1 | 2 | 3 | 4 | 5;
   return {
     ...progress,
     box: newBox,
@@ -35,11 +40,12 @@ export function markKnown(progress: UserProgress): UserProgress {
 
 export function markUnknown(progress: UserProgress): UserProgress {
   const now = Date.now();
+  const newBox = normalizeBox(1);
   return {
     ...progress,
-    box: 1,
+    box: newBox,
     lastSeen: now,
-    nextReview: now + BOX_INTERVALS[1],
+    nextReview: now + BOX_INTERVALS[newBox],
     timesSeen: progress.timesSeen + 1,
   };
 }

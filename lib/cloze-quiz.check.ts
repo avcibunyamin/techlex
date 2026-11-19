@@ -2,8 +2,11 @@
 // Dependency-free checks for lib/cloze-quiz.ts; exits with a thrown error on the first failure.
 
 import {
+  buildChoiceOptions,
   buildClozeQuestion,
+  inflectedForms,
   maskTermInSentence,
+  termForms,
   CLOZE_BLANK,
   type ClozeTerm,
 } from './cloze-quiz';
@@ -127,6 +130,75 @@ check('the same seed gives the same question; different seeds vary', () => {
 check('fewer than 3 usable distractors returns null', () => {
   const small = [PACK[0], card('p-2', 'refund'), card('p-7', 'invoice'), card('p-8', 'refund')];
   expectEqual(buildClozeQuestion(PACK[0], small, 1), null, 'too few distractors');
+});
+
+check('contractions with ASCII or smart apostrophes are not split at the apostrophe', () => {
+  expectMasked(
+    "They can't wait, so help if you can.",
+    'can',
+    `They can't wait, so help if you ${B}.`,
+    'can',
+  );
+  expectMasked(
+    'They can’t wait, so help if you can.',
+    'can',
+    `They can’t wait, so help if you ${B}.`,
+    'can',
+  );
+  expectEqual(maskTermInSentence("They can't wait.", 'can'), null, 'contraction only');
+});
+
+check('Turkish uppercase İ and I normalize to i in masking and option deduplication', () => {
+  expectMasked('İnvoice totals are due today.', 'invoice', `${B} totals are due today.`, 'İnvoice');
+  expectMasked('Invoice totals are due today.', 'İnvoice', `${B} totals are due today.`, 'Invoice');
+  const pool = [
+    card('t-1', 'invoice'),
+    card('t-2', 'İnvoice'),
+    card('t-3', 'refund'),
+    card('t-4', 'receipt'),
+  ];
+  expectEqual(buildChoiceOptions(pool[0], pool, 1), null, 'İnvoice deduplicated against invoice');
+});
+
+check('qu- onset counts as consonant for CVC doubling (equip, quiz)', () => {
+  const equipForms = inflectedForms('equip');
+  if (!equipForms.includes('equipped') || !equipForms.includes('equipping')) {
+    throw new Error(`equip forms missing equipped/equipping: ${equipForms.join(',')}`);
+  }
+  const quizForms = inflectedForms('quiz');
+  if (!quizForms.includes('quizzes') || !quizForms.includes('quizzed') || !quizForms.includes('quizzing')) {
+    throw new Error(`quiz forms missing quizzes/quizzed/quizzing: ${quizForms.join(',')}`);
+  }
+  expectMasked('The lab is equipped with sensors.', 'equip', `The lab is ${B} with sensors.`, 'equipped');
+  expectMasked('Short quizzes reinforce memory.', 'quiz', `Short ${B} reinforce memory.`, 'quizzes');
+});
+
+check('hyphenated terms inflect the final segment (follow-up → follow-ups)', () => {
+  if (!termForms('follow-up').includes('follow-ups')) {
+    throw new Error(`follow-up forms missing follow-ups: ${termForms('follow-up').join(',')}`);
+  }
+  expectMasked(
+    'Schedule two follow-ups next week.',
+    'follow-up',
+    `Schedule two ${B} next week.`,
+    'follow-ups',
+  );
+});
+
+check('buildChoiceOptions enforces unique distractor IDs and rejects empty target term', () => {
+  expectEqual(buildChoiceOptions(card('p-1', ''), PACK, 1), null, 'empty target term');
+  expectEqual(buildChoiceOptions(card('p-1', '   '), PACK, 1), null, 'whitespace target term');
+  const dupIdPool = [
+    card('p-1', 'invoice', '', 'noun'),
+    card('dup', 'refund', '', 'noun'),
+    card('dup', 'reimburse', '', 'verb'),
+    card('p-3', 'receipt', '', 'noun'),
+  ];
+  expectEqual(buildChoiceOptions(dupIdPool[0], dupIdPool, 1), null, 'duplicate distractor id skipped');
+  const validPool = [...dupIdPool, card('p-4', 'budget', '', 'noun')];
+  const choice = buildChoiceOptions(validPool[0], validPool, 1);
+  if (!choice) throw new Error('expected valid choice options');
+  expectEqual(new Set(choice.options.map((o) => o.id)).size, 4, '4 unique option ids');
 });
 
 console.log(`cloze-quiz: ${passed} checks passed`);

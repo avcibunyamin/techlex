@@ -108,9 +108,22 @@ export function matchesFilter(p: PackFilterProgress | undefined, filter: PackFil
 }
 
 export function compareByRank(a: PackFilterTerm, b: PackFilterTerm): number {
-  const ra = a.rank ?? a.order;
-  const rb = b.rank ?? b.order;
-  if (ra !== rb) return ra - rb;
+  const aHasRank = typeof a.rank === 'number' && Number.isFinite(a.rank);
+  const bHasRank = typeof b.rank === 'number' && Number.isFinite(b.rank);
+  if (aHasRank && bHasRank) {
+    if (a.rank !== b.rank) return (a.rank as number) < (b.rank as number) ? -1 : 1;
+  } else if (aHasRank !== bHasRank) {
+    return aHasRank ? -1 : 1;
+  }
+
+  const aHasOrder = typeof a.order === 'number' && Number.isFinite(a.order);
+  const bHasOrder = typeof b.order === 'number' && Number.isFinite(b.order);
+  if (aHasOrder && bHasOrder) {
+    if (a.order !== b.order) return a.order < b.order ? -1 : 1;
+  } else if (aHasOrder !== bHasOrder) {
+    return aHasOrder ? -1 : 1;
+  }
+
   return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 }
 

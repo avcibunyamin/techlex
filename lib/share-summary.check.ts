@@ -129,4 +129,26 @@ check('no emoji and no invalid numbers in any language', () => {
   includes(weird, '7 XP');
 });
 
+check('rankSharePacks uses integer count() values, defaults non-finite limit, and non-empty packs skip starter', () => {
+  const fractional = [
+    pack('b', 5.9, 100), // displays as 5/100 (5%)
+    pack('a', 5.1, 50),  // displays as 5/50 (10%) -> higher share on integer counts
+    pack('c', 0.9, 10),  // count(0.9) === 0 -> skipped
+    pack('d', 2, 100),
+    pack('e', 1, 100),
+  ];
+  assert(
+    rankSharePacks(fractional).map((p) => p.id).join(',') === 'a,b,d',
+    `expected a,b,d, got ${rankSharePacks(fractional).map((p) => p.id).join(',')}`,
+  );
+  assert(rankSharePacks(fractional, Number.NaN).length === 3, 'NaN limit should use default 3');
+  assert(rankSharePacks(fractional, Number.POSITIVE_INFINITY).length === 3, 'Infinity limit should use default 3');
+
+  const withPackOnly = buildShareSummary(
+    input({ learnedCount: 0, streak: 0, xp: 0, badgeCount: 0, packs: [pack('ngsl-1', 5, 1000, 'NGSL 1')] }),
+  );
+  includes(withPackOnly, 'Top packs: NGSL 1 5/1000.');
+  excludes(withPackOnly, 'I just started');
+});
+
 console.log(`share-summary: ${passed} checks passed`);

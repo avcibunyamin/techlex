@@ -29,6 +29,9 @@ export function buildReviewQueue<T extends { id: string }>(
   now: number,
   limit: number = DEFAULT_REVIEW_LIMIT
 ): ReviewQueueResult<T> {
+  if (!Number.isFinite(now)) {
+    return { items: [], totalDue: 0 };
+  }
   const seen = new Set<string>();
   const due: { item: T; box: number; nextReview: number }[] = [];
 
