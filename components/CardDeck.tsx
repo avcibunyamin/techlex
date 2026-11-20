@@ -16,13 +16,15 @@ import {
 } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Term, Language, UserProgress } from '@/types';
-import { useAppStore } from '@/lib/store';
+import { useAppStore, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { haptic } from '@/lib/haptics';
 import { mapDeckKey } from '@/lib/shortcuts';
 import { useWebKeyboard } from '@/lib/useWebKeyboard';
 import { stop as stopSpeech } from '@/lib/speech';
-import { useFocusEffect } from 'expo-router';
+import { SessionSwipe, summarizeSession } from '@/lib/session-summary';
+import { XP_PER_SWIPE } from '@/constants/badges';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import SwipeCard, { SwipeCardRef } from './SwipeCard';
 import PaywallModal from './PaywallModal';
@@ -55,7 +57,8 @@ export default function CardDeck({
   const { colors: t, accent } = useTheme();
   const { t: tr } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { swipeRight, swipeLeft, consumeEnergy, energyLevel, hasActivePremium, flushSwipeQueue, progress, undoSwipe } = useAppStore();
+  const { swipeRight, swipeLeft, consumeEnergy, energyLevel, hasActivePremium, flushSwipeQueue, progress, undoSwipe, setQuizScope } = useAppStore();
+  const router = useRouter();
 
   const [showPaywall, setShowPaywall] = useState(false);
   const [paywallVariant, setPaywallVariant] = useState<'energy' | 'premium'>('energy');
@@ -68,6 +71,8 @@ export default function CardDeck({
   const [deckTerms, setDeckTerms] = useState<Term[]>(terms);
   const [seenTermIds, setSeenTermIds] = useState<Set<string>>(new Set());
   const [swipeHistory, setSwipeHistory] = useState<SwipeHistoryEntry | null>(null);
+  // Every swipe of this session (re-fed cards included), for the end-of-session summary.
+  const [sessionLog, setSessionLog] = useState<SessionSwipe[]>([]);
 
   const dragX = useSharedValue(0);
   const dragY = useSharedValue(0);
@@ -102,6 +107,7 @@ export default function CardDeck({
     setReviewQueue([]);
     setSeenTermIds(new Set());
     setSwipeHistory(null);
+    setSessionLog([]);
   }, [terms]);
 
   // Auto-feed review queue when deck is exhausted
@@ -154,6 +160,7 @@ export default function CardDeck({
       swipeRight(term.id);
     }
     setSeenTermIds(prev => new Set(prev).add(term.id));
+    setSessionLog(prev => [...prev, { termId: term.id, direction: 'right' }]);
     setCurrentIndex((i) => i + 1);
   }, [currentIndex, deckTerms, swipeRight, consumeEnergy, isReviewCard, isReviewMode, isPracticeMode, progress]);
 
@@ -174,6 +181,7 @@ export default function CardDeck({
       swipeLeft(term.id);
     }
     setSeenTermIds(prev => new Set(prev).add(term.id));
+    setSessionLog(prev => [...prev, { termId: term.id, direction: 'left' }]);
     setReviewQueue((prev) => [...prev, term]);
     setCurrentIndex((i) => i + 1);
   }, [currentIndex, deckTerms, swipeLeft, consumeEnergy, isReviewCard, isReviewMode, isPracticeMode, progress]);
@@ -216,6 +224,7 @@ export default function CardDeck({
         setReviewQueue((prev) => [...prev, term]);
       }
       setSeenTermIds(prev => new Set(prev).add(term.id));
+      setSessionLog(prev => [...prev, { termId: term.id, direction }]);
       setCurrentIndex((i) => i + 1);
       animatingRef.current = false;
     }, delay);
@@ -231,6 +240,7 @@ export default function CardDeck({
     }
 
     setCurrentIndex((i) => i - 1);
+    setSessionLog((prev) => prev.slice(0, -1));
 
     if (entry.direction === 'left') {
       setReviewQueue((prev) => {
@@ -254,7 +264,13 @@ export default function CardDeck({
     setDeckTerms(terms);
     setSeenTermIds(new Set());
     setSwipeHistory(null);
+    setSessionLog([]);
     onRestart?.();
+  };
+
+  const handleSessionQuiz = (ids: string[]) => {
+    setQuizScope({ ids, label: tr('learn.sessionScope') });
+    router.navigate('/(tabs)/quiz' as unknown as Parameters<typeof router.navigate>[0]);
   };
 
   const isMobile = Platform.OS !== 'web';
@@ -315,6 +331,14 @@ export default function CardDeck({
       );
     }
 
+    const summary = summarizeSession(sessionLog, isPracticeMode ? 0 : XP_PER_SWIPE);
+    const summaryItems = [
+      { key: 'seen', value: summary.seenIds.length, label: tr('learn.sessionSeen'), color: t.text },
+      { key: 'known', value: summary.knownCount, label: tr('learn.swipeRight'), color: colors.success },
+      { key: 'review', value: summary.reviewCount, label: tr('learn.sessionReview'), color: colors.warning },
+      { key: 'xp', value: summary.xpEarned, label: tr('learn.sessionXp'), color: accent },
+    ];
+
     return (
       <View style={styles.empty}>
         {isPracticeMode && (
@@ -342,6 +366,44 @@ export default function CardDeck({
         <Text style={[typography.body, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.sm }]}>
           {tr('learn.completedSub')}
         </Text>
+        {summary.seenIds.length > 0 && (
+          <View
+            style={[
+              styles.summaryRow,
+              shouldMirror ? styles.rowReverse : styles.row,
+              { backgroundColor: t.bgElevated, borderColor: t.border },
+            ]}
+          >
+            {summaryItems.map((item) => (
+              <View key={item.key} style={styles.summaryItem}>
+                <Text style={[typography.title, { color: item.color }]}>{item.value}</Text>
+                <Text
+                  style={[typography.footnote, { color: t.textTertiary, textAlign: 'center', marginTop: spacing.xs }]}
+                  numberOfLines={2}
+                >
+                  {item.label}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+        {summary.seenIds.length >= MIN_SCOPED_QUIZ_SIZE && (
+          <Pressable
+            style={[styles.sessionQuizBtn, { backgroundColor: colors.accentMuted, borderColor: accent + '40' }]}
+            onPress={() => handleSessionQuiz(summary.seenIds)}
+            accessibilityRole="button"
+          >
+            <Text
+              style={[
+                typography.subhead,
+                { color: accent, fontWeight: '600', textAlign: 'center' },
+                isArabic ? { writingDirection: 'rtl' } : undefined,
+              ]}
+            >
+              {tr('learn.sessionQuiz')}
+            </Text>
+          </Pressable>
+        )}
         <Pressable style={[styles.restartBtn, { borderColor: t.border }]} onPress={handleRestart}>
           <RefreshCw size={14} color={accent} strokeWidth={1.8} />
           <Text style={[typography.subhead, { color: accent, marginLeft: spacing.sm }]}>{tr('learn.restart')}</Text>
@@ -508,6 +570,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: spacing['4xl'],
+  },
+  summaryRow: {
+    alignSelf: 'stretch',
+    marginTop: spacing['2xl'],
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  summaryItem: { flex: 1, alignItems: 'center', paddingHorizontal: spacing.xs },
+  sessionQuizBtn: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    marginTop: spacing.xl,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: radius.sm,
+    borderWidth: 1,
   },
   restartBtn: {
     flexDirection: 'row',

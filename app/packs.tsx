@@ -61,7 +61,7 @@ export default function PacksScreen() {
   const { colors: t, accent } = useTheme();
   const router = useRouter();
   const { t: tr, i18n } = useTranslation();
-  const params = useLocalSearchParams<{ packId?: string; autostart?: string }>();
+  const params = useLocalSearchParams<{ packId?: string; autostart?: string; daily?: string }>();
 
   const {
     packs,
@@ -482,6 +482,19 @@ export default function PacksScreen() {
     const queue = getDailyReviewQueue();
     setDailySession({ terms: queue.items, total: queue.totalDue });
   }, [getDailyReviewQueue]);
+
+  // `?daily=1` (home shortcut) opens the daily review once per navigation.
+  const didAutoDailyRef = useRef(false);
+  useEffect(() => {
+    const daily = Array.isArray(params.daily) ? params.daily[0] : params.daily;
+    if (daily !== '1') {
+      didAutoDailyRef.current = false;
+      return;
+    }
+    if (didAutoDailyRef.current) return;
+    didAutoDailyRef.current = true;
+    startDailyReview();
+  }, [params.daily, startDailyReview]);
 
   const handleContinueLastPack = useCallback(() => {
     setDailySession(null);
