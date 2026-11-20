@@ -32,6 +32,7 @@ import {
 import { Stack, useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useAppStore, MAX_ENERGY, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
+import { packIdOfTerm } from '@/data/packs';
 import {
   PACK_FILTERS,
   PackFilter,
@@ -64,6 +65,8 @@ export default function PacksScreen() {
   const params = useLocalSearchParams<{ packId?: string; autostart?: string; daily?: string }>();
 
   const {
+    isLoaded,
+    loadData,
     packs,
     packsLoaded,
     activePackId,
@@ -107,6 +110,12 @@ export default function PacksScreen() {
   const mountedRef = useRef(true);
 
   useEffect(() => {
+    if (!isLoaded) {
+      void loadData();
+    }
+  }, [isLoaded, loadData]);
+
+  useEffect(() => {
     return () => {
       mountedRef.current = false;
     };
@@ -124,6 +133,15 @@ export default function PacksScreen() {
       })
     : undefined;
   const wordDirStyle = isArabic ? styles.ltrTextRight : styles.ltrText;
+
+  const progressPackIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const termId of Object.keys(progress)) {
+      const packId = packIdOfTerm(termId);
+      if (packId) ids.add(packId);
+    }
+    return Array.from(ids);
+  }, [progress]);
 
   const hasProgress = useMemo(
     () => Object.values(progress).some((p) => Boolean(p && (p.timesSeen ?? 1) > 0)),
@@ -193,6 +211,7 @@ export default function PacksScreen() {
         if (reviewOnly) {
           const revTerms = getPackReviewNeededTerms(pack.id);
           if (revTerms.length === 0) return false;
+          setDailySession(null);
           setActivePackId(pack.id);
           setFilteredSession(false);
           setBrowsingPackId(null);
@@ -206,6 +225,7 @@ export default function PacksScreen() {
         const dueTerms = getPackStudyTerms(pack.id, false);
         const isPractice = dueTerms.length === 0;
         const nextTerms = isPractice ? getPackStudyTerms(pack.id, true) : dueTerms;
+        setDailySession(null);
         setActivePackId(pack.id);
         setFilteredSession(false);
         setBrowsingPackId(null);
@@ -231,6 +251,7 @@ export default function PacksScreen() {
       didAutostartRef.current = null;
       return;
     }
+    if (!isLoaded) return;
     if (didAutostartRef.current === targetPackId) return;
     const target = packs.find((p) => p.id === targetPackId);
     if (target && target.load) {
@@ -241,7 +262,7 @@ export default function PacksScreen() {
         }
       });
     }
-  }, [params.autostart, params.packId, packs, handleStartPack]);
+  }, [isLoaded, params.autostart, params.packId, packs, handleStartPack]);
 
   // Closes the deck; after a filtered session this returns to the word list (browsingPackId stays set).
   const handleBackToPacks = useCallback(() => {
@@ -363,6 +384,7 @@ export default function PacksScreen() {
     if (!browsingPackId) return;
     const words = resolveActiveFilteredWords();
     if (words.length === 0) return;
+    setDailySession(null);
     setActivePackId(browsingPackId);
     setPackReviewMode(false);
     setPackPracticeMode(false);
@@ -480,10 +502,25 @@ export default function PacksScreen() {
   // Snapshot the queue so the deck does not reset after every swipe.
   const startDailyReview = useCallback(() => {
     const queue = getDailyReviewQueue();
+    setPackReviewMode(false);
+    setPackPracticeMode(false);
+    setFilteredSession(false);
+    setStudyingPackId(null);
+    setBrowsingPackId(null);
     setDailySession({ terms: queue.items, total: queue.totalDue });
   }, [getDailyReviewQueue]);
 
-  // `?daily=1` (home shortcut) opens the daily review once per navigation.
+  const handleCloseDailyReview = useCallback(() => {
+    setDailySession(null);
+    setPackReviewMode(false);
+    setPackPracticeMode(false);
+    setFilteredSession(false);
+    setStudyingPackId(null);
+    setBrowsingPackId(null);
+  }, []);
+
+  // `?daily=1` (home shortcut) opens the daily review once per navigation,
+  // after store hydration and any packs referenced in progress have loaded.
   const didAutoDailyRef = useRef(false);
   useEffect(() => {
     const daily = Array.isArray(params.daily) ? params.daily[0] : params.daily;
@@ -491,10 +528,36 @@ export default function PacksScreen() {
       didAutoDailyRef.current = false;
       return;
     }
-    if (didAutoDailyRef.current) return;
-    didAutoDailyRef.current = true;
-    startDailyReview();
-  }, [params.daily, startDailyReview]);
+    if (!isLoaded || didAutoDailyRef.current) return;
+
+    const missingPackIds = progressPackIds.filter(
+      (id) => getPackTerms(id).length === 0 && packs.some((p) => p.id === id && Boolean(p.load))
+    );
+    if (missingPackIds.length === 0) {
+      didAutoDailyRef.current = true;
+      startDailyReview();
+      return;
+    }
+
+    let cancelled = false;
+    void ensurePacks(missingPackIds).finally(() => {
+      if (cancelled || !mountedRef.current || didAutoDailyRef.current) return;
+      didAutoDailyRef.current = true;
+      startDailyReview();
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    isLoaded,
+    packsLoaded,
+    params.daily,
+    progressPackIds,
+    packs,
+    getPackTerms,
+    ensurePacks,
+    startDailyReview,
+  ]);
 
   const handleContinueLastPack = useCallback(() => {
     setDailySession(null);
@@ -530,7 +593,7 @@ export default function PacksScreen() {
           language={language}
           streak={streak}
           lastPackTitle={lastPackTitle}
-          onClose={() => setDailySession(null)}
+          onClose={handleCloseDailyReview}
           onRestart={startDailyReview}
           onContinuePack={handleContinueLastPack}
         />

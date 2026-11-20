@@ -77,7 +77,8 @@
     "showMore": "+{{count}} weitere",
     "relatedTerms": "VERWANDTE BEGRIFFE",
     "premiumOnly": "Mit Premium freischalten",
-    "rank": "Rang #{{rank}}"
+    "rank": "Rang #{{rank}}",
+    "notFound": "Wort nicht gefunden"
   },
   "profile": {
     "title": "Profil",

@@ -77,7 +77,8 @@
     "showMore": "+{{count}} daha fazla",
     "relatedTerms": "İLGİLİ TERİMLER",
     "premiumOnly": "Premium ile aç",
-    "rank": "Sıra #{{rank}}"
+    "rank": "Sıra #{{rank}}",
+    "notFound": "Kelime bulunamadı"
   },
   "profile": {
     "title": "Profil",

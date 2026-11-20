@@ -77,7 +77,8 @@
     "showMore": "+{{count}}件",
     "relatedTerms": "関連用語",
     "premiumOnly": "Premiumで解放",
-    "rank": "頻度順 #{{rank}}"
+    "rank": "頻度順 #{{rank}}",
+    "notFound": "単語が見つかりません"
   },
   "profile": {
     "title": "プロフィール",

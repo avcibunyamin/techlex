@@ -17,7 +17,7 @@ import { Target, X, Check, HelpCircle, RefreshCw, Zap, Lock, Volume2 } from 'luc
 import { useTranslation } from 'react-i18next';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useAppStore, QuizQuestion, QuizMode, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
-import { buildQuizReview } from '@/lib/quiz-review';
+import { buildQuizReview, getQuizResultMessageKey, getQuizScopeKey } from '@/lib/quiz-review';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { haptic } from '@/lib/haptics';
@@ -80,7 +80,18 @@ export default function QuizScreen() {
     () => buildQuizReview(questions, results, MIN_SCOPED_QUIZ_SIZE),
     [questions, results]
   );
+  // Check actual store readiness (loaded terms/progress), not just raw missed count.
+  const missedReadyCount = useAppStore(s =>
+    review.canRetryMissed ? s.countScopedQuizReady(review.missedIds) : 0
+  );
+  const canRetryMissed = review.canRetryMissed && missedReadyCount >= MIN_SCOPED_QUIZ_SIZE;
 
+  const scopeKey = useMemo(() => getQuizScopeKey(quizScope), [quizScope]);
+  const lastScopeRef = useRef(quizScope);
+  const lastScopeKeyRef = useRef(scopeKey);
+  const advancingRef = useRef(false);
+  const answeredRef = useRef(false);
+  const submittedRef = useRef(false);
   const advanceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const borderGlow = useSharedValue(0);
@@ -125,16 +136,75 @@ export default function QuizScreen() {
     transform: [{ translateX: shakeX.value }],
   }));
 
-  const startQuizWithScope = useCallback((overrideScopeIds?: readonly string[]) => {
-    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+  const resetToIdle = useCallback(() => {
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = undefined;
+    }
     stopSpeech();
+    advancingRef.current = false;
+    answeredRef.current = false;
+    submittedRef.current = false;
+    setQuizState('idle');
+    setAnswered(false);
+    setLastCorrect(null);
+    setSelectedOption(null);
+    setShowCorrection(false);
+    setShowSkipFeedback(false);
+    setSpeechFailed(false);
+  }, []);
+
+  useEffect(() => () => {
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = undefined;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (quizState === 'active') {
+      advancingRef.current = false;
+      answeredRef.current = false;
+    }
+  }, [quizState, currentQ, questions]);
+
+  // Reset completed results to idle when an external quizScope change arrives.
+  // Active quizzes are never overwritten silently; the new scope applies once
+  // the user exits the quiz or returns to idle from results.
+  useEffect(() => {
+    if (scopeKey === lastScopeKeyRef.current && (quizScope === null || quizScope === lastScopeRef.current)) {
+      return;
+    }
+    lastScopeRef.current = quizScope;
+    lastScopeKeyRef.current = scopeKey;
+    if (quizState === 'results') {
+      resetToIdle();
+    }
+  }, [quizScope, scopeKey, quizState, resetToIdle]);
+
+  const startQuizWithScope = useCallback((overrideScope?: { ids: string[]; label: string }): boolean => {
     const effectiveMode =
       mode === 'listen' && !listenAvailability.enabled && listenAvailability.reason === 'noVoice'
         ? 'definition'
         : mode;
-    const scopeIds = Array.isArray(overrideScopeIds) ? [...overrideScopeIds] : quizScope?.ids;
+    const scopeIds = overrideScope ? [...overrideScope.ids] : quizScope?.ids;
     const qs = generateQuiz(effectiveMode, scopeIds);
-    if (qs.length === 0) return;
+    if (qs.length === 0) return false;
+
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = undefined;
+    }
+    stopSpeech();
+    if (overrideScope) {
+      // Only commit the new scope after a quiz is actually generated.
+      lastScopeRef.current = overrideScope;
+      lastScopeKeyRef.current = getQuizScopeKey(overrideScope);
+      setQuizScope(overrideScope);
+    }
+    advancingRef.current = false;
+    answeredRef.current = false;
+    submittedRef.current = false;
     setQuestions(qs);
     setCurrentQ(0);
     setScore(0);
@@ -149,25 +219,34 @@ export default function QuizScreen() {
     borderGlow.value = 0;
     shakeX.value = 0;
     cardKey.value = cardKey.value + 1;
-  }, [generateQuiz, mode, listenAvailability.enabled, listenAvailability.reason, quizScope, borderGlow, shakeX, cardKey]);
+    return true;
+  }, [generateQuiz, mode, listenAvailability.enabled, listenAvailability.reason, quizScope, setQuizScope, borderGlow, shakeX, cardKey]);
 
   const startQuiz = useCallback(() => {
     startQuizWithScope();
   }, [startQuizWithScope]);
 
   const handleRetryMissed = useCallback(() => {
-    if (!review.canRetryMissed) return;
-    setQuizScope({
+    if (!canRetryMissed) return;
+    startQuizWithScope({
       ids: review.missedIds,
       label: tr('quiz.missedTitle'),
     });
-    startQuizWithScope(review.missedIds);
-  }, [review, setQuizScope, tr, startQuizWithScope]);
+  }, [canRetryMissed, review.missedIds, tr, startQuizWithScope]);
 
   const advanceToNext = useCallback((wasCorrect: boolean) => {
+    if (advancingRef.current) return;
+    advancingRef.current = true;
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = undefined;
+    }
     if (currentQ + 1 >= questions.length) {
-      const finalScore = wasCorrect ? score + 1 : score;
-      submitQuizResults(finalScore, questions.length);
+      if (!submittedRef.current) {
+        submittedRef.current = true;
+        const finalScore = wasCorrect ? score + 1 : score;
+        submitQuizResults(finalScore, questions.length);
+      }
       setQuizState('results');
     } else {
       setCurrentQ(i => i + 1);
@@ -180,11 +259,12 @@ export default function QuizScreen() {
       shakeX.value = 0;
       cardKey.value = cardKey.value + 1;
     }
-  }, [currentQ, questions, score, submitQuizResults, borderGlow, shakeX, cardKey]);
+  }, [currentQ, questions.length, score, submitQuizResults, borderGlow, shakeX, cardKey]);
 
   // Shared by the true/false and cloze questions: same Leitner promote/downgrade and XP flow.
   const resolveAnswer = useCallback((isUserCorrect: boolean) => {
-    if (answered || currentQ >= questions.length) return;
+    if (answered || answeredRef.current || currentQ >= questions.length) return;
+    answeredRef.current = true;
 
     const q = questions[currentQ];
 
@@ -204,7 +284,9 @@ export default function QuizScreen() {
         withTiming(1, { duration: 200 }),
         withDelay(200, withTiming(0, { duration: 300 })),
       );
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
       advanceTimer.current = setTimeout(() => {
+        advanceTimer.current = undefined;
         advanceToNext(true);
       }, 600);
     } else {
@@ -231,7 +313,7 @@ export default function QuizScreen() {
   const handleChoiceAnswer = useCallback((index: number) => {
     const q = questions[currentQ];
     const choice = q?.cloze ?? q?.listen;
-    if (answered || !choice) return;
+    if (answered || answeredRef.current || !choice) return;
     setSelectedOption(index);
     resolveAnswer(index === choice.correctIndex);
   }, [answered, questions, currentQ, resolveAnswer]);
@@ -266,12 +348,14 @@ export default function QuizScreen() {
   }, [mode, listenAvailability.enabled, listenAvailability.reason]);
 
   const handleGotIt = useCallback(() => {
+    if (advancingRef.current) return;
     setShowSkipFeedback(false);
     advanceToNext(false);
   }, [advanceToNext]);
 
   const handleSkip = useCallback(() => {
-    if (answered || currentQ >= questions.length) return;
+    if (answered || answeredRef.current || currentQ >= questions.length) return;
+    answeredRef.current = true;
     setAnswered(true);
     setLastCorrect(null);
     setResults(prev => {
@@ -298,7 +382,6 @@ export default function QuizScreen() {
       }
       if (answered && lastCorrect === true) {
         // Skip the short auto-advance delay after a correct answer.
-        if (advanceTimer.current) clearTimeout(advanceTimer.current);
         // `false` on purpose: this handler runs from the latest render, where `score` already
         // includes this answer (setScore ran with setAnswered). Passing `true` would count it twice.
         // The 600 ms timer keeps `true` because it holds the pre-answer closure.
@@ -308,7 +391,7 @@ export default function QuizScreen() {
       return false;
     }
 
-    if (answered) return false;
+    if (answered || answeredRef.current) return false;
     if (choice) {
       handleChoiceAnswer(action.index);
     } else if (action.index === 0) {
@@ -321,13 +404,7 @@ export default function QuizScreen() {
     return true;
   });
 
-  const getResultMessage = () => {
-    const total = questions.length;
-    const finalScore = score;
-    if (finalScore === total) return tr('quiz.perfect');
-    if (finalScore >= 7) return tr('quiz.great');
-    return tr('quiz.tryAgain');
-  };
+  const getResultMessage = () => tr(getQuizResultMessageKey(score, questions.length));
 
   // --- IDLE STATE ---
   if (quizState === 'idle') {
@@ -501,13 +578,7 @@ export default function QuizScreen() {
                   style={[styles.startBtn, { backgroundColor: accent, flexDirection: rowDir }]}
                   onPressIn={() => { retryBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
                   onPressOut={() => { retryBtnScale.value = withSpring(1, PRESS_SPRING); }}
-                  onPress={() => {
-                    stopSpeech();
-                    setQuizState('idle');
-                    setAnswered(false);
-                    setLastCorrect(null);
-                    setShowCorrection(false);
-                  }}
+                  onPress={resetToIdle}
                 >
                   <RefreshCw size={16} color="#fff" strokeWidth={2} />
                   <Text style={[typography.headline, { color: '#fff' }]}>{tr('quiz.retry')}</Text>
@@ -585,7 +656,7 @@ export default function QuizScreen() {
                 ))}
               </View>
 
-              {review.canRetryMissed && (
+              {canRetryMissed && (
                 <Animated.View style={[styles.retryBtnWrap, retryMissedBtnStyle]}>
                   <Pressable
                     style={[styles.startBtn, { backgroundColor: accent, flexDirection: rowDir }]}
@@ -600,27 +671,21 @@ export default function QuizScreen() {
                 </Animated.View>
               )}
 
-              <Animated.View style={[review.canRetryMissed ? styles.secondaryRetryBtnWrap : styles.retryBtnWrap, retryBtnStyle]}>
+              <Animated.View style={[canRetryMissed ? styles.secondaryRetryBtnWrap : styles.retryBtnWrap, retryBtnStyle]}>
                 <Pressable
                   style={[
                     styles.startBtn,
                     { flexDirection: rowDir },
-                    review.canRetryMissed
+                    canRetryMissed
                       ? { backgroundColor: t.bgElevated, borderColor: t.border, borderWidth: 1 }
                       : { backgroundColor: accent },
                   ]}
                   onPressIn={() => { retryBtnScale.value = withSpring(0.95, PRESS_SPRING); }}
                   onPressOut={() => { retryBtnScale.value = withSpring(1, PRESS_SPRING); }}
-                  onPress={() => {
-                    stopSpeech();
-                    setQuizState('idle');
-                    setAnswered(false);
-                    setLastCorrect(null);
-                    setShowCorrection(false);
-                  }}
+                  onPress={resetToIdle}
                 >
-                  <RefreshCw size={16} color={review.canRetryMissed ? t.text : '#fff'} strokeWidth={2} />
-                  <Text style={[typography.headline, { color: review.canRetryMissed ? t.text : '#fff' }]}>
+                  <RefreshCw size={16} color={canRetryMissed ? t.text : '#fff'} strokeWidth={2} />
+                  <Text style={[typography.headline, { color: canRetryMissed ? t.text : '#fff' }]}>
                     {tr('quiz.retry')}
                   </Text>
                 </Pressable>
@@ -639,11 +704,21 @@ export default function QuizScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]} edges={['top']}>
-      <View style={styles.header}>
-        <Text style={[typography.largeTitle, { color: t.text }]}>{tr('quiz.title')}</Text>
-        <Text style={[typography.subhead, { color: t.textTertiary }]}>
-          {currentQ + 1}/{questions.length}
-        </Text>
+      <View style={[styles.header, { flexDirection: rowDir }]}>
+        <Text style={[typography.largeTitle, { color: t.text }, textDirStyle]}>{tr('quiz.title')}</Text>
+        <View style={[styles.activeHeaderRight, { flexDirection: rowDir }]}>
+          <Text style={[typography.subhead, { color: t.textTertiary }]}>
+            {currentQ + 1}/{questions.length}
+          </Text>
+          <Pressable
+            onPress={resetToIdle}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel={tr('common.close')}
+          >
+            <X size={20} color={t.textSecondary} strokeWidth={1.75} />
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.progressDots}>
@@ -1021,6 +1096,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: spacing.xl,
     paddingBottom: spacing.md,
+  },
+  activeHeaderRight: {
+    alignItems: 'center',
+    gap: spacing.md,
   },
   centerContent: {
     flex: 1,

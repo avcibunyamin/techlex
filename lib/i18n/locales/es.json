@@ -77,7 +77,8 @@
     "showMore": "+{{count}} más",
     "relatedTerms": "TÉRMINOS RELACIONADOS",
     "premiumOnly": "Desbloquear con Premium",
-    "rank": "Rango #{{rank}}"
+    "rank": "Rango #{{rank}}",
+    "notFound": "Palabra no encontrada"
   },
   "profile": {
     "title": "Perfil",

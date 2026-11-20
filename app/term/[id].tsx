@@ -81,11 +81,13 @@ export default function TermDetail() {
     }
     if (!targetPackId) return;
     let alive = true;
-    void ensurePacks([targetPackId]).finally(() => {
-      if (alive) {
-        setSettledTermId(termId);
-      }
-    });
+    void ensurePacks([targetPackId])
+      .catch(() => {})
+      .finally(() => {
+        if (alive) {
+          setSettledTermId(termId);
+        }
+      });
     return () => {
       alive = false;
     };
@@ -133,7 +135,53 @@ export default function TermDetail() {
     );
   }
 
-  if (!term) return null;
+  if (!term) {
+    return (
+      <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]}>
+        <View style={[styles.header, rowStyle]}>
+          <Pressable
+            onPress={handleClose}
+            hitSlop={12}
+            accessibilityRole="button"
+            accessibilityLabel={tr('common.close')}
+          >
+            <X size={20} color={t.textSecondary} strokeWidth={1.5} />
+          </Pressable>
+        </View>
+        <View style={styles.loadingWrap}>
+          <Text
+            style={[
+              typography.headline,
+              { color: t.text, textAlign: 'center' },
+              isArabic && { writingDirection: 'rtl' },
+            ]}
+          >
+            {tr('term.notFound')}
+          </Text>
+          <Pressable
+            onPress={handleClose}
+            style={({ pressed }) => [
+              styles.notFoundBtn,
+              { backgroundColor: t.bgElevated, borderColor: t.border },
+              pressed && { opacity: 0.7 },
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={tr('common.close')}
+          >
+            <Text
+              style={[
+                typography.subhead,
+                { color: accent, fontWeight: '600' },
+                isArabic && { writingDirection: 'rtl' },
+              ]}
+            >
+              {tr('common.close')}
+            </Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const p = progress[term.id];
   const isLearnedBox = Boolean(p && p.box >= 3);
@@ -361,6 +409,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.sm,
     padding: spacing.xl,
+  },
+  notFoundBtn: {
+    marginTop: spacing.md,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 1,
   },
   content: { padding: spacing.xl, paddingTop: 0, paddingBottom: spacing['6xl'] },
   termRow: {

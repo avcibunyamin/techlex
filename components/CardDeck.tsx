@@ -100,15 +100,27 @@ export default function CardDeck({
     return seenTermIds.has(termId);
   }, [seenTermIds]);
 
+  const animatingRef = useRef(false);
+  const swipeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelPendingSwipe = useCallback(() => {
+    if (swipeTimerRef.current !== null) {
+      clearTimeout(swipeTimerRef.current);
+      swipeTimerRef.current = null;
+    }
+    animatingRef.current = false;
+  }, []);
+
   // Reset when parent terms change
   useEffect(() => {
+    cancelPendingSwipe();
     setDeckTerms(terms);
     setCurrentIndex(0);
     setReviewQueue([]);
     setSeenTermIds(new Set());
     setSwipeHistory(null);
     setSessionLog([]);
-  }, [terms]);
+  }, [terms, cancelPendingSwipe]);
 
   // Auto-feed review queue when deck is exhausted
   useEffect(() => {
@@ -125,8 +137,12 @@ export default function CardDeck({
   }, [currentIndex, deckTerms.length, reviewQueue.length]);
 
   useEffect(() => {
-    return () => { flushSwipeQueue(); stopSpeech(); };
-  }, []);
+    return () => {
+      cancelPendingSwipe();
+      flushSwipeQueue();
+      stopSpeech();
+    };
+  }, [cancelPendingSwipe]);
 
   // Pronunciation belongs to one card: stop it when the card changes or the screen loses focus.
   useEffect(() => {
@@ -190,8 +206,6 @@ export default function CardDeck({
     setShowPaywall(true);
   }, []);
 
-  const animatingRef = useRef(false);
-
   const handleButtonSwipe = useCallback((direction: 'right' | 'left') => {
     if (currentIndex >= deckTerms.length || animatingRef.current) return;
     const term = deckTerms[currentIndex];
@@ -210,7 +224,13 @@ export default function CardDeck({
 
     const delay = direction === 'right' ? 250 : 340;
 
-    setTimeout(() => {
+    if (swipeTimerRef.current !== null) {
+      clearTimeout(swipeTimerRef.current);
+      swipeTimerRef.current = null;
+    }
+
+    swipeTimerRef.current = setTimeout(() => {
+      swipeTimerRef.current = null;
       if (direction === 'right') {
         haptic.success();
         if (!isPracticeMode) {
@@ -242,6 +262,15 @@ export default function CardDeck({
     setCurrentIndex((i) => i - 1);
     setSessionLog((prev) => prev.slice(0, -1));
 
+    if (!entry.wasReview) {
+      setSeenTermIds((prev) => {
+        if (!prev.has(entry.termId)) return prev;
+        const next = new Set(prev);
+        next.delete(entry.termId);
+        return next;
+      });
+    }
+
     if (entry.direction === 'left') {
       setReviewQueue((prev) => {
         for (let i = prev.length - 1; i >= 0; i--) {
@@ -259,6 +288,7 @@ export default function CardDeck({
   }, [swipeHistory, currentIndex, isPracticeMode, undoSwipe]);
 
   const handleRestart = () => {
+    cancelPendingSwipe();
     setCurrentIndex(0);
     setReviewQueue([]);
     setDeckTerms(terms);

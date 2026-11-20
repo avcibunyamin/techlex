@@ -77,7 +77,8 @@
     "showMore": "+{{count}} ещё",
     "relatedTerms": "СВЯЗАННЫЕ ТЕРМИНЫ",
     "premiumOnly": "Разблокировать с Premium",
-    "rank": "Ранг #{{rank}}"
+    "rank": "Ранг #{{rank}}",
+    "notFound": "Слово не найдено"
   },
   "profile": {
     "title": "Профиль",

@@ -2,6 +2,14 @@
 // whether a scoped retry quiz can be started. No React Native or store imports.
 
 export const DEFAULT_MIN_RETRY_SIZE = 4;
+export const GREAT_SCORE_RATIO = 0.7;
+
+export type QuizResultMessageKey = 'quiz.perfect' | 'quiz.great' | 'quiz.tryAgain';
+
+export interface QuizScopeIdentity {
+  ids: readonly string[];
+  label?: string;
+}
 
 export interface QuizReviewQuestion {
   term: {
@@ -72,4 +80,40 @@ export function buildQuizReview(
     missedIds,
     canRetryMissed: missedIds.length >= threshold,
   };
+}
+
+/**
+ * Returns the i18n message key for a completed quiz based on accuracy ratio
+ * rather than a fixed score cutoff, so shorter scoped quizzes (4–9 questions)
+ * receive proportional feedback.
+ */
+export function getQuizResultMessageKey(
+  score: number,
+  total: number,
+  greatRatio: number = GREAT_SCORE_RATIO
+): QuizResultMessageKey {
+  if (!Number.isFinite(score) || !Number.isFinite(total) || total <= 0) {
+    return 'quiz.tryAgain';
+  }
+  const safeScore = Math.max(0, score);
+  if (safeScore >= total) {
+    return 'quiz.perfect';
+  }
+  const threshold =
+    Number.isFinite(greatRatio) && greatRatio > 0 && greatRatio <= 1
+      ? greatRatio
+      : GREAT_SCORE_RATIO;
+  if (safeScore / total + 1e-9 >= threshold) {
+    return 'quiz.great';
+  }
+  return 'quiz.tryAgain';
+}
+
+/**
+ * Builds a stable string identity for a quiz scope so screens can detect
+ * scope changes independently of unrelated re-renders.
+ */
+export function getQuizScopeKey(scope: QuizScopeIdentity | null | undefined): string {
+  if (!scope || scope.ids.length === 0) return '';
+  return `${scope.label ?? ''}\0${scope.ids.join('\0')}`;
 }

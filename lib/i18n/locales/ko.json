@@ -77,7 +77,8 @@
     "showMore": "+{{count}}개 더",
     "relatedTerms": "관련 용어",
     "premiumOnly": "Premium으로 잠금 해제",
-    "rank": "순위 #{{rank}}"
+    "rank": "순위 #{{rank}}",
+    "notFound": "단어를 찾을 수 없습니다"
   },
   "profile": {
     "title": "프로필",

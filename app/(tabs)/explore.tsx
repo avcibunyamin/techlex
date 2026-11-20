@@ -138,13 +138,13 @@ export default function ExploreScreen() {
   const featuredPack = useMemo(
     () => packs.find(p => p.id === activePackId && getPackProgress(p.id).loaded > 0) ?? packs[0] ?? null,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [packs, activePackId, progress]
+    [packs, activePackId, progress, packsLoaded]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const featuredProgress = useMemo(
     () => (featuredPack ? getPackProgress(featuredPack.id) : null),
-    [featuredPack, progress]
+    [featuredPack, progress, packsLoaded]
   );
 
   const selectedSet = useMemo(() => new Set(selectedTags), [selectedTags]);

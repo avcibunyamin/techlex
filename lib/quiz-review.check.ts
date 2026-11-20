@@ -3,8 +3,11 @@
 
 import {
   DEFAULT_MIN_RETRY_SIZE,
+  GREAT_SCORE_RATIO,
   buildQuizReview,
   extractMissedQuizItems,
+  getQuizResultMessageKey,
+  getQuizScopeKey,
   type QuizReviewQuestion,
 } from './quiz-review';
 
@@ -101,6 +104,51 @@ check('retry threshold boundary checks below, at, and above MIN_SCOPED_QUIZ_SIZE
   const fiveMissed = buildQuizReview(questions, [false, null, false, false, false], Number.NaN);
   expectEqual(fiveMissed.missedIds.length, 5, '5 missed count');
   expectEqual(fiveMissed.canRetryMissed, true, '5 >= default 4 enables retry');
+});
+
+check('getQuizResultMessageKey uses score ratio across 4-to-10-question quizzes', () => {
+  expectEqual(getQuizResultMessageKey(10, 10), 'quiz.perfect', '10/10 is perfect');
+  expectEqual(getQuizResultMessageKey(7, 10), 'quiz.great', '7/10 is great (70%)');
+  expectEqual(getQuizResultMessageKey(6, 10), 'quiz.tryAgain', '6/10 is tryAgain (60%)');
+
+  // Short scoped quizzes (4-7 questions) should not require >= 7 correct answers.
+  expectEqual(getQuizResultMessageKey(4, 4), 'quiz.perfect', '4/4 is perfect');
+  expectEqual(getQuizResultMessageKey(3, 4), 'quiz.great', '3/4 is great (75%)');
+  expectEqual(getQuizResultMessageKey(2, 4), 'quiz.tryAgain', '2/4 is tryAgain (50%)');
+
+  expectEqual(getQuizResultMessageKey(4, 5), 'quiz.great', '4/5 is great (80%)');
+  expectEqual(getQuizResultMessageKey(3, 5), 'quiz.tryAgain', '3/5 is tryAgain (60%)');
+
+  expectEqual(getQuizResultMessageKey(5, 6), 'quiz.great', '5/6 is great (83%)');
+  expectEqual(getQuizResultMessageKey(4, 6), 'quiz.tryAgain', '4/6 is tryAgain (67%)');
+
+  expectEqual(getQuizResultMessageKey(6, 7), 'quiz.great', '6/7 is great (86%)');
+  expectEqual(getQuizResultMessageKey(5, 7), 'quiz.great', '5/7 is great (71%)');
+  expectEqual(getQuizResultMessageKey(4, 7), 'quiz.tryAgain', '4/7 is tryAgain (57%)');
+});
+
+check('getQuizResultMessageKey handles invalid or edge inputs safely', () => {
+  expectEqual(getQuizResultMessageKey(0, 0), 'quiz.tryAgain', '0/0 does not report perfect');
+  expectEqual(getQuizResultMessageKey(-1, 5), 'quiz.tryAgain', 'negative score clamps to 0');
+  expectEqual(getQuizResultMessageKey(Number.NaN, 10), 'quiz.tryAgain', 'NaN score falls back');
+  expectEqual(getQuizResultMessageKey(5, Number.NaN), 'quiz.tryAgain', 'NaN total falls back');
+  expectEqual(
+    getQuizResultMessageKey(7, 10, Number.NaN),
+    getQuizResultMessageKey(7, 10, GREAT_SCORE_RATIO),
+    'invalid ratio falls back to default 0.7'
+  );
+});
+
+check('getQuizScopeKey distinguishes empty, label, and id list changes', () => {
+  expectEqual(getQuizScopeKey(null), '', 'null scope is empty key');
+  expectEqual(getQuizScopeKey({ ids: [], label: 'Empty' }), '', 'empty ids is empty key');
+  const k1 = getQuizScopeKey({ ids: ['a', 'b', 'c', 'd'], label: 'Pack A' });
+  const k2 = getQuizScopeKey({ ids: ['a', 'b', 'c', 'd'], label: 'Pack A' });
+  const k3 = getQuizScopeKey({ ids: ['a', 'b', 'c', 'e'], label: 'Pack A' });
+  const k4 = getQuizScopeKey({ ids: ['a', 'b', 'c', 'd'], label: 'Pack B' });
+  expectEqual(k1 === k2, true, 'identical scopes produce identical keys');
+  expectEqual(k1 === k3, false, 'different ids produce different keys');
+  expectEqual(k1 === k4, false, 'different labels produce different keys');
 });
 
 console.log(`quiz-review: ${passed} checks passed`);

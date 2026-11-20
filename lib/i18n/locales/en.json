@@ -77,7 +77,8 @@
     "showMore": "+{{count}} more",
     "relatedTerms": "RELATED TERMS",
     "premiumOnly": "Unlock with Premium",
-    "rank": "Rank #{{rank}}"
+    "rank": "Rank #{{rank}}",
+    "notFound": "Word not found"
   },
   "profile": {
     "title": "Profile",
