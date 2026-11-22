@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList, I18nManager } from 'react-native';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList, I18nManager, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check, BookOpen } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -15,7 +15,11 @@ import { tokenizeQuery } from '@/lib/pack-filter';
 import {
   GLOBAL_SEARCH_DEBOUNCE_MS,
   GLOBAL_SEARCH_LIMIT,
+  GLOBAL_SEARCH_PACK_BATCH_SIZE,
+  getUnloadedPackIds,
+  loadSearchPacksInBatches,
   searchGlobalTerms,
+  shouldLoadPacksForQuery,
   type GlobalSearchItem,
   type GlobalSearchSource,
 } from '@/lib/global-search';
@@ -107,12 +111,16 @@ export default function ExploreScreen() {
     packs,
     packsLoaded,
     activePackId,
+    ensurePacks,
     getPackTerms,
     getPackProgress,
     progress,
   } = useAppStore();
   const [queryInput, setQueryInput] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [isLoadingPacks, setIsLoadingPacks] = useState(false);
+  const exhaustedPackIdsRef = useRef<Set<string>>(new Set());
+  const loadRunIdRef = useRef(0);
 
   useEffect(() => {
     if (queryInput.trim().length === 0) {
@@ -194,6 +202,46 @@ export default function ExploreScreen() {
 
   const effectiveQuery = queryInput.trim().length === 0 ? '' : debouncedQuery;
   const showSearch = useMemo(() => tokenizeQuery(effectiveQuery).length > 0, [effectiveQuery]);
+  const shouldLoadPacks = useMemo(
+    () => shouldLoadPacksForQuery(queryInput) && shouldLoadPacksForQuery(effectiveQuery),
+    [queryInput, effectiveQuery]
+  );
+
+  useEffect(() => {
+    if (!shouldLoadPacks) {
+      setIsLoadingPacks(false);
+      return;
+    }
+
+    const packIds = packs.map((p) => p.id);
+    const isPackLoaded = (packId: string) => getPackTerms(packId).length > 0;
+    const unloadedIds = getUnloadedPackIds(packIds, isPackLoaded, exhaustedPackIdsRef.current);
+    if (unloadedIds.length === 0) {
+      setIsLoadingPacks(false);
+      return;
+    }
+
+    let cancelled = false;
+    const runId = ++loadRunIdRef.current;
+    setIsLoadingPacks(true);
+
+    void loadSearchPacksInBatches({
+      packIds,
+      isPackLoaded,
+      ensurePacks,
+      batchSize: GLOBAL_SEARCH_PACK_BATCH_SIZE,
+      exhaustedPackIds: exhaustedPackIdsRef.current,
+      shouldCancel: () => cancelled || loadRunIdRef.current !== runId,
+    }).finally(() => {
+      if (!cancelled && loadRunIdRef.current === runId) {
+        setIsLoadingPacks(false);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [shouldLoadPacks, packs, ensurePacks, getPackTerms]);
 
   const searchResult = useMemo(
     () => searchGlobalTerms(searchSources, progress, effectiveQuery, GLOBAL_SEARCH_LIMIT),
@@ -275,6 +323,25 @@ export default function ExploreScreen() {
           keyExtractor={item => item.term.id}
           contentContainerStyle={styles.resultsList}
           keyboardShouldPersistTaps="handled"
+          ListHeaderComponent={
+            isLoadingPacks ? (
+              <View
+                style={[
+                  styles.loadingPacksRow,
+                  { backgroundColor: t.bgSubtle, borderColor: t.border, flexDirection: rowDir },
+                ]}
+                accessibilityLiveRegion="polite"
+              >
+                <ActivityIndicator size="small" color={accent} />
+                <Text
+                  style={[typography.footnote, { color: t.textSecondary, flex: 1 }, textDirStyle]}
+                  numberOfLines={1}
+                >
+                  {tr('explore.loadingPacks')}
+                </Text>
+              </View>
+            ) : null
+          }
           renderItem={({ item }) => {
             const isMastered = item.box !== null && item.box >= 3;
             const isLearning = item.box !== null && item.box < 3;
@@ -591,6 +658,16 @@ const styles = StyleSheet.create({
   },
   nodeDot: { width: 8, height: 8, borderRadius: 4 },
   resultsList: { padding: spacing.xl, paddingTop: 0 },
+  loadingPacksRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 0.5,
+    marginBottom: spacing.sm,
+  },
   resultItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',

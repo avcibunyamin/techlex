@@ -13,6 +13,158 @@ import {
 
 export const GLOBAL_SEARCH_LIMIT = 30;
 export const GLOBAL_SEARCH_DEBOUNCE_MS = 200;
+export const GLOBAL_SEARCH_MIN_PACK_LOAD_CHARS = 2;
+export const GLOBAL_SEARCH_PACK_BATCH_SIZE = 2;
+
+export function shouldLoadPacksForQuery(
+  query: string,
+  minChars: number = GLOBAL_SEARCH_MIN_PACK_LOAD_CHARS
+): boolean {
+  const tokens = tokenizeQuery(query);
+  if (tokens.length === 0) return false;
+  const charCount = tokens.reduce((sum, token) => sum + token.length, 0);
+  const threshold = Number.isFinite(minChars)
+    ? Math.max(1, Math.floor(minChars))
+    : GLOBAL_SEARCH_MIN_PACK_LOAD_CHARS;
+  return charCount >= threshold;
+}
+
+export function getUnloadedPackIds(
+  packIds: readonly string[],
+  isPackLoaded: (packId: string) => boolean,
+  excludedIds?: ReadonlySet<string>
+): string[] {
+  const seen = new Set<string>();
+  const unloaded: string[] = [];
+  for (const rawId of packIds) {
+    if (typeof rawId !== 'string') continue;
+    const id = rawId.trim();
+    if (!id || seen.has(id)) continue;
+    seen.add(id);
+    if (excludedIds?.has(id)) continue;
+    if (!isPackLoaded(id)) {
+      unloaded.push(id);
+    }
+  }
+  return unloaded;
+}
+
+export function chunkPackIds(
+  packIds: readonly string[],
+  batchSize: number = GLOBAL_SEARCH_PACK_BATCH_SIZE
+): string[][] {
+  const safeBatchSize = Number.isFinite(batchSize)
+    ? Math.max(1, Math.floor(batchSize))
+    : GLOBAL_SEARCH_PACK_BATCH_SIZE;
+  const uniqueIds: string[] = [];
+  const seen = new Set<string>();
+  for (const rawId of packIds) {
+    if (typeof rawId !== 'string') continue;
+    const id = rawId.trim();
+    if (!id || seen.has(id)) continue;
+    seen.add(id);
+    uniqueIds.push(id);
+  }
+  const chunks: string[][] = [];
+  for (let i = 0; i < uniqueIds.length; i += safeBatchSize) {
+    chunks.push(uniqueIds.slice(i, i + safeBatchSize));
+  }
+  return chunks;
+}
+
+export interface LoadSearchPacksOptions {
+  packIds: readonly string[];
+  isPackLoaded: (packId: string) => boolean;
+  ensurePacks: (packIds: string[]) => Promise<boolean>;
+  batchSize?: number;
+  exhaustedPackIds?: Set<string>;
+  shouldCancel?: () => boolean;
+  onBatchSettled?: () => void;
+}
+
+export interface LoadSearchPacksResult {
+  attemptedIds: string[];
+  loadedIds: string[];
+  retriedIds: string[];
+  failedIds: string[];
+}
+
+export async function loadSearchPacksInBatches(
+  options: LoadSearchPacksOptions
+): Promise<LoadSearchPacksResult> {
+  const {
+    packIds,
+    isPackLoaded,
+    ensurePacks,
+    batchSize = GLOBAL_SEARCH_PACK_BATCH_SIZE,
+    exhaustedPackIds,
+    shouldCancel,
+    onBatchSettled,
+  } = options;
+
+  const initialUnloaded = getUnloadedPackIds(packIds, isPackLoaded, exhaustedPackIds);
+  const batches = chunkPackIds(initialUnloaded, batchSize);
+  const attemptedIds: string[] = [];
+  const retriedIds: string[] = [];
+  const failedIds: string[] = [];
+
+  for (const batch of batches) {
+    if (shouldCancel?.()) break;
+    const pendingBatch = batch.filter(
+      (id) => !isPackLoaded(id) && !exhaustedPackIds?.has(id)
+    );
+    if (pendingBatch.length === 0) continue;
+
+    attemptedIds.push(...pendingBatch);
+    let batchOk = false;
+    try {
+      batchOk = await ensurePacks(pendingBatch);
+    } catch {
+      batchOk = false;
+    }
+    onBatchSettled?.();
+
+    if (shouldCancel?.()) break;
+
+    let failedInBatch = pendingBatch.filter((id) => !isPackLoaded(id));
+    if (!batchOk && failedInBatch.length === 0) {
+      failedInBatch = [...pendingBatch];
+    }
+
+    if (failedInBatch.length > 0) {
+      if (shouldCancel?.()) break;
+      retriedIds.push(...failedInBatch);
+      let retryOk = false;
+      try {
+        retryOk = await ensurePacks(failedInBatch);
+      } catch {
+        retryOk = false;
+      }
+      onBatchSettled?.();
+
+      let stillFailed = failedInBatch.filter((id) => !isPackLoaded(id));
+      if (!retryOk && stillFailed.length === 0) {
+        stillFailed = [...failedInBatch];
+      }
+      for (const id of stillFailed) {
+        if (!failedIds.includes(id)) {
+          failedIds.push(id);
+        }
+        exhaustedPackIds?.add(id);
+      }
+    }
+  }
+
+  const failedSet = new Set(failedIds);
+  const loadedIds = attemptedIds.filter((id) => isPackLoaded(id) && !failedSet.has(id));
+
+  return {
+    attemptedIds,
+    loadedIds,
+    retriedIds,
+    failedIds,
+  };
+}
 
 export interface GlobalSearchTerm extends PackFilterTerm {
   tags?: readonly string[];

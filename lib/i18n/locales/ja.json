@@ -64,7 +64,8 @@
     "search": "コンセプトを検索...",
     "shuffle": "シャッフル",
     "shuffleAll": "すべてシャッフル",
-    "moreResults": "上位{{limit}}件を表示中（他に+{{count}}件の結果があります）"
+    "moreResults": "上位{{limit}}件を表示中（他に+{{count}}件の結果があります）",
+    "loadingPacks": "単語パックを読み込み中..."
   },
   "term": {
     "definition": "定義",

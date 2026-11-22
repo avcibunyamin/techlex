@@ -2,11 +2,18 @@
 
 import {
   GLOBAL_SEARCH_LIMIT,
+  GLOBAL_SEARCH_MIN_PACK_LOAD_CHARS,
+  GLOBAL_SEARCH_PACK_BATCH_SIZE,
+  chunkPackIds,
+  getUnloadedPackIds,
+  loadSearchPacksInBatches,
   normalizeSearchBox,
   scoreTermMatch,
   searchGlobalTerms,
+  shouldLoadPacksForQuery,
   type GlobalSearchTerm,
   type GlobalSearchProgressMap,
+  type GlobalSearchSource,
 } from './global-search';
 
 function assert(condition: unknown, message: string): void {
@@ -232,4 +239,147 @@ let passed = 0;
   passed += 1;
 }
 
-console.log(`global-search: ${passed} checks passed`);
+// 7. shouldLoadPacksForQuery requires >= 2 letters/chars; getUnloadedPackIds and chunkPackIds batch unloaded packs
+{
+  assert(GLOBAL_SEARCH_MIN_PACK_LOAD_CHARS === 2, 'default min chars should be 2');
+  assert(GLOBAL_SEARCH_PACK_BATCH_SIZE === 2, 'default batch size should be 2');
+  assert(shouldLoadPacksForQuery('') === false, 'empty query must not load packs');
+  assert(shouldLoadPacksForQuery('   ') === false, 'whitespace query must not load packs');
+  assert(shouldLoadPacksForQuery('a') === false, '1-char query must not load packs');
+  assert(shouldLoadPacksForQuery('  İ  ') === false, '1 Turkish char query must not load packs');
+  assert(shouldLoadPacksForQuery('ab') === true, '2-char query should load packs');
+  assert(shouldLoadPacksForQuery('İs') === true, '2 Turkish chars should load packs');
+  assert(shouldLoadPacksForQuery('a b') === true, 'two 1-char tokens (2 chars total) should load packs');
+
+  const loaded = new Set<string>(['ngsl-1']);
+  const exhausted = new Set<string>(['bsl-2']);
+  const unloaded = getUnloadedPackIds(
+    ['ngsl-1', 'ngsl-2', 'ngsl-3', 'nawl-1', 'bsl-1', 'bsl-2', 'tsl-1', 'ngsl-2'],
+    (id) => loaded.has(id),
+    exhausted
+  );
+  assert(
+    unloaded.join(',') === 'ngsl-2,ngsl-3,nawl-1,bsl-1,tsl-1',
+    `unexpected unloaded list: ${unloaded.join(',')}`
+  );
+
+  const chunks = chunkPackIds(unloaded, 2);
+  assert(chunks.length === 3, `expected 3 batches, got ${chunks.length}`);
+  assert(chunks[0].join(',') === 'ngsl-2,ngsl-3', 'batch 1 mismatch');
+  assert(chunks[1].join(',') === 'nawl-1,bsl-1', 'batch 2 mismatch');
+  assert(chunks[2].join(',') === 'tsl-1', 'batch 3 mismatch');
+  passed += 1;
+}
+
+async function runAsyncChecks(): Promise<void> {
+  // 8. loadSearchPacksInBatches loads unloaded packs in small batches and updates search results progressively
+  {
+    const packCatalog: Record<string, GlobalSearchTerm[]> = {
+      'ngsl-1': [makeTerm('ngsl-0001', 'strategy', 'Strateji', 'Plan of action', { rank: 1 })],
+      'ngsl-2': [makeTerm('ngsl-1001', 'strategic', 'Stratejik', 'Relating to strategy', { rank: 1001 })],
+      'nawl-1': [makeTerm('nawl-0001', 'strategize', 'Strateji kurmak', 'Devise a strategy', { rank: 1 })],
+      'bsl-1': [makeTerm('bsl-0001', 'strategist', 'Stratejist', 'Expert in strategy', { rank: 1 })],
+    };
+    const loadedPacks = new Set<string>(['ngsl-1']);
+    const ensureCalls: string[][] = [];
+    const matchCountsAfterEachBatch: number[] = [];
+
+    const buildSources = (): GlobalSearchSource<GlobalSearchTerm>[] => {
+      const sources: GlobalSearchSource<GlobalSearchTerm>[] = [];
+      for (const id of Object.keys(packCatalog)) {
+        if (loadedPacks.has(id)) {
+          sources.push({ packId: id, terms: packCatalog[id] });
+        }
+      }
+      return sources;
+    };
+
+    const result = await loadSearchPacksInBatches({
+      packIds: ['ngsl-1', 'ngsl-2', 'nawl-1', 'bsl-1'],
+      isPackLoaded: (id) => loadedPacks.has(id),
+      batchSize: 2,
+      ensurePacks: async (ids) => {
+        ensureCalls.push([...ids]);
+        for (const id of ids) {
+          loadedPacks.add(id);
+        }
+        return true;
+      },
+      onBatchSettled: () => {
+        const res = searchGlobalTerms(buildSources(), {}, 'strateg');
+        matchCountsAfterEachBatch.push(res.totalMatches);
+      },
+    });
+
+    assert(ensureCalls.length === 2, `expected 2 batch calls, got ${ensureCalls.length}`);
+    assert(ensureCalls[0].join(',') === 'ngsl-2,nawl-1', `unexpected batch 1: ${ensureCalls[0].join(',')}`);
+    assert(ensureCalls[1].join(',') === 'bsl-1', `unexpected batch 2: ${ensureCalls[1].join(',')}`);
+    assert(
+      matchCountsAfterEachBatch.join(',') === '3,4',
+      `expected progressive match counts 3,4, got ${matchCountsAfterEachBatch.join(',')}`
+    );
+    assert(result.loadedIds.join(',') === 'ngsl-2,nawl-1,bsl-1', 'all 3 unloaded packs should load');
+    assert(result.retriedIds.length === 0 && result.failedIds.length === 0, 'no retries or failures expected');
+    passed += 1;
+  }
+
+  // 9. loadSearchPacksInBatches keeps existing results on error, retries failed packs once, and marks permanently failed packs in exhaustedPackIds
+  {
+    const loadedPacks = new Set<string>(['ngsl-1']);
+    const exhausted = new Set<string>();
+    const attemptsByPack: Record<string, number> = {};
+
+    // 'ngsl-2' fails first time then succeeds on retry; 'bsl-1' fails both initial and retry.
+    const firstRun = await loadSearchPacksInBatches({
+      packIds: ['ngsl-1', 'ngsl-2', 'bsl-1', 'tsl-1'],
+      isPackLoaded: (id) => loadedPacks.has(id),
+      batchSize: 2,
+      exhaustedPackIds: exhausted,
+      ensurePacks: async (ids) => {
+        let allOk = true;
+        for (const id of ids) {
+          attemptsByPack[id] = (attemptsByPack[id] ?? 0) + 1;
+          if (id === 'ngsl-2' && attemptsByPack[id] === 1) {
+            allOk = false;
+            continue;
+          }
+          if (id === 'bsl-1') {
+            allOk = false;
+            continue;
+          }
+          loadedPacks.add(id);
+        }
+        return allOk;
+      },
+    });
+
+    assert(attemptsByPack['ngsl-1'] === undefined, 'already loaded pack must not be requested');
+    assert(attemptsByPack['ngsl-2'] === 2, `ngsl-2 should be tried twice (initial + 1 retry), got ${attemptsByPack['ngsl-2']}`);
+    assert(attemptsByPack['bsl-1'] === 2, `bsl-1 should be tried twice (initial + 1 retry), got ${attemptsByPack['bsl-1']}`);
+    assert(attemptsByPack['tsl-1'] === 1, `tsl-1 should succeed on first try, got ${attemptsByPack['tsl-1']}`);
+    assert(firstRun.retriedIds.join(',') === 'ngsl-2,bsl-1', `unexpected retriedIds: ${firstRun.retriedIds.join(',')}`);
+    assert(firstRun.loadedIds.join(',') === 'ngsl-2,tsl-1', `unexpected loadedIds: ${firstRun.loadedIds.join(',')}`);
+    assert(firstRun.failedIds.join(',') === 'bsl-1', `unexpected failedIds: ${firstRun.failedIds.join(',')}`);
+    assert(exhausted.has('bsl-1'), 'permanently failed pack must be added to exhaustedPackIds');
+
+    // Second run must not retry exhausted 'bsl-1' or already loaded packs
+    const secondRun = await loadSearchPacksInBatches({
+      packIds: ['ngsl-1', 'ngsl-2', 'bsl-1', 'tsl-1'],
+      isPackLoaded: (id) => loadedPacks.has(id),
+      batchSize: 2,
+      exhaustedPackIds: exhausted,
+      ensurePacks: async () => {
+        throw new Error('should not call ensurePacks when all packs are loaded or exhausted');
+      },
+    });
+    assert(secondRun.attemptedIds.length === 0, 'second run should attempt 0 packs');
+    passed += 1;
+  }
+
+  console.log(`global-search: ${passed} checks passed`);
+}
+
+void runAsyncChecks().catch((err) => {
+  console.error(err);
+  process.exitCode = 1;
+});

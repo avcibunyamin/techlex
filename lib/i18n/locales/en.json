@@ -64,7 +64,8 @@
     "search": "Search concepts...",
     "shuffle": "Shuffle",
     "shuffleAll": "Shuffle all",
-    "moreResults": "Showing top {{limit}} results (+{{count}} more results available)"
+    "moreResults": "Showing top {{limit}} results (+{{count}} more results available)",
+    "loadingPacks": "Loading word packs..."
   },
   "term": {
     "definition": "DEFINITION",

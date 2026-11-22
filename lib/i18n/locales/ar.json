@@ -64,7 +64,8 @@
     "search": "ابحث عن مفاهيم...",
     "shuffle": "خلط",
     "shuffleAll": "خلط الكل",
-    "moreResults": "يتم عرض أول {{limit}} نتيجة (+{{count}} نتيجة أخرى متاحة)"
+    "moreResults": "يتم عرض أول {{limit}} نتيجة (+{{count}} نتيجة أخرى متاحة)",
+    "loadingPacks": "جارٍ تحميل حزم الكلمات..."
   },
   "term": {
     "definition": "التعريف",
