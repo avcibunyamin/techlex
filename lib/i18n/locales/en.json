@@ -79,7 +79,9 @@
     "relatedTerms": "RELATED TERMS",
     "premiumOnly": "Unlock with Premium",
     "rank": "Rank #{{rank}}",
-    "notFound": "Word not found"
+    "notFound": "Word not found",
+    "bookmark": "Save word",
+    "unbookmark": "Remove from saved"
   },
   "profile": {
     "title": "Profile",

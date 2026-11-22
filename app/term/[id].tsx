@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { X, ArrowUpRight, ChevronDown } from 'lucide-react-native';
+import { X, ArrowUpRight, ChevronDown, Bookmark, BookmarkCheck } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
@@ -31,9 +31,11 @@ export default function TermDetail() {
   const {
     language,
     progress,
+    bookmarkedIds,
     packsLoaded,
     getTermById,
     ensurePacks,
+    toggleBookmark,
   } = useAppStore();
 
   const [showAllRelated, setShowAllRelated] = useState(false);
@@ -208,6 +210,7 @@ export default function TermDetail() {
   const hasMoreRelated = allRelated.length > INITIAL_RELATED;
 
   const difficultyKey = { 1: 'beginner', 2: 'intermediate', 3: 'advanced' }[term.difficulty] as string;
+  const isBookmarked = bookmarkedIds.includes(term.id);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: t.bg }]}>
@@ -219,6 +222,19 @@ export default function TermDetail() {
           accessibilityLabel={tr('common.close')}
         >
           <X size={20} color={t.textSecondary} strokeWidth={1.5} />
+        </Pressable>
+        <Pressable
+          onPress={() => toggleBookmark(term.id)}
+          hitSlop={12}
+          accessibilityRole="button"
+          accessibilityState={{ selected: isBookmarked }}
+          accessibilityLabel={tr(isBookmarked ? 'term.unbookmark' : 'term.bookmark')}
+        >
+          {isBookmarked ? (
+            <BookmarkCheck size={20} color={accent} strokeWidth={1.8} />
+          ) : (
+            <Bookmark size={20} color={t.textSecondary} strokeWidth={1.5} />
+          )}
         </Pressable>
       </View>
 

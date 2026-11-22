@@ -79,7 +79,9 @@
     "relatedTerms": "İLGİLİ TERİMLER",
     "premiumOnly": "Premium ile aç",
     "rank": "Sıra #{{rank}}",
-    "notFound": "Kelime bulunamadı"
+    "notFound": "Kelime bulunamadı",
+    "bookmark": "Kelimeyi kaydet",
+    "unbookmark": "Kaydedilenlerden çıkar"
   },
   "profile": {
     "title": "Profil",

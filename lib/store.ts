@@ -12,6 +12,7 @@ import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './rev
 import { buildClozeQuestion, buildChoiceOptions, ClozeQuestion, ChoiceOptions } from './cloze-quiz';
 import { normalizeSpeechRate, DEFAULT_SPEECH_RATE, SpeechRate } from './speech-logic';
 import { DEFAULT_DAILY_GOAL, resolvePersistedDailyGoal } from './daily-goal';
+import { normalizeBookmarkIds, toggleBookmarkIds } from './bookmarks';
 import type { ShareSummaryInput } from './share-summary';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
@@ -147,6 +148,8 @@ interface AppState {
   themeMode: ThemeMode;
   /** Local-only pronunciation speed; persisted in AsyncStorage, never synced. */
   speechRate: SpeechRate;
+  /** Local-only saved term IDs (newest first); persisted in AsyncStorage, never synced. */
+  bookmarkedIds: string[];
   subscriptionTier: SubscriptionTier;
   cancelAtPeriodEnd: boolean;
   currentPeriodEnd: number | null;
@@ -175,6 +178,7 @@ interface AppState {
   setDisplayName: (name: string) => void;
   setThemeMode: (mode: ThemeMode) => void;
   setSpeechRate: (rate: SpeechRate) => void;
+  toggleBookmark: (termId: string) => void;
   swipeRight: (termId: string) => void;
   swipeLeft: (termId: string) => void;
   consumeEnergy: () => boolean;
@@ -257,6 +261,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   displayName: '',
   themeMode: 'system',
   speechRate: DEFAULT_SPEECH_RATE,
+  bookmarkedIds: [],
   subscriptionTier: 'free',
   cancelAtPeriodEnd: false,
   currentPeriodEnd: null,
@@ -346,6 +351,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           needsCloudHydration: data.needsCloudHydration ?? false,
           themeMode: data.themeMode || 'system',
           speechRate: normalizeSpeechRate(data.speechRate),
+          bookmarkedIds: normalizeBookmarkIds(data.bookmarkedIds),
           subscriptionTier: tier,
           cancelAtPeriodEnd: data.cancelAtPeriodEnd || false,
           currentPeriodEnd: data.currentPeriodEnd || null,
@@ -396,6 +402,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           needsCloudHydration: s.needsCloudHydration,
           themeMode: s.themeMode,
           speechRate: s.speechRate,
+          bookmarkedIds: s.bookmarkedIds,
           subscriptionTier: s.subscriptionTier,
           cancelAtPeriodEnd: s.cancelAtPeriodEnd,
           currentPeriodEnd: s.currentPeriodEnd,
@@ -450,6 +457,12 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setSpeechRate: (rate) => {
     set({ speechRate: rate });
+    get().saveData();
+  },
+
+  toggleBookmark: (termId) => {
+    const { bookmarkedIds } = get();
+    set({ bookmarkedIds: toggleBookmarkIds(bookmarkedIds, termId) });
     get().saveData();
   },
 
