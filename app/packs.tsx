@@ -103,6 +103,7 @@ export default function PacksScreen() {
   // True while the card deck shows a filtered word list instead of the pack's due cards.
   const [filteredSession, setFilteredSession] = useState(false);
   const didAutostartRef = useRef<string | null>(null);
+  const didAutoBrowseRef = useRef<string | null>(null);
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const packListScrollRef = useRef<ScrollView | null>(null);
   const packListOffsetRef = useRef(0);
@@ -304,9 +305,9 @@ export default function PacksScreen() {
   );
 
   const handleBrowsePack = useCallback(
-    async (pack: Pack) => {
-      if (!pack.load) return;
-      if (loadingPackRef.current) return;
+    async (pack: Pack): Promise<boolean> => {
+      if (!pack.load) return false;
+      if (loadingPackRef.current) return false;
 
       loadingPackRef.current = true;
       setLoadingPackId(pack.id);
@@ -314,15 +315,16 @@ export default function PacksScreen() {
 
       try {
         const ok = await ensurePacks([pack.id]);
-        if (!mountedRef.current) return;
+        if (!mountedRef.current) return false;
         if (!ok) {
           setLoadErrorPackId(pack.id);
-          return;
+          return false;
         }
         setQueryInput('');
         setQuery('');
         setWordFilter('all');
         setBrowsingPackId(pack.id);
+        return true;
       } finally {
         loadingPackRef.current = false;
         if (mountedRef.current) {
@@ -332,6 +334,27 @@ export default function PacksScreen() {
     },
     [ensurePacks]
   );
+
+  // Open the pack's word list once when navigated with `packId` without `autostart=1` (e.g. Profile > Pack Progress).
+  useEffect(() => {
+    const targetPackId = Array.isArray(params.packId) ? params.packId[0] : params.packId;
+    const auto = Array.isArray(params.autostart) ? params.autostart[0] : params.autostart;
+    if (auto === '1' || !targetPackId) {
+      didAutoBrowseRef.current = null;
+      return;
+    }
+    if (!isLoaded) return;
+    if (didAutoBrowseRef.current === targetPackId) return;
+    const target = packs.find((p) => p.id === targetPackId);
+    if (target && target.load) {
+      didAutoBrowseRef.current = targetPackId;
+      void handleBrowsePack(target).then((opened) => {
+        if (!opened && didAutoBrowseRef.current === targetPackId) {
+          didAutoBrowseRef.current = null;
+        }
+      });
+    }
+  }, [isLoaded, params.autostart, params.packId, packs, handleBrowsePack]);
 
   const handleCloseBrowse = useCallback(() => {
     setBrowsingPackId(null);
