@@ -139,7 +139,9 @@
     "thisWeek": "今週",
     "signUpToSync": "登録して同期",
     "deleteAccount": "アカウント削除",
-    "deleteAccountConfirm": "アカウントとすべての学習進捗が完全に削除されます。この操作は取り消せません。"
+    "deleteAccountConfirm": "アカウントとすべての学習進捗が完全に削除されます。この操作は取り消せません。",
+    "dailyGoal": "1日の目標",
+    "dailyGoalCards": "{{count}}枚"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",

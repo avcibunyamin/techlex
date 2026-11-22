@@ -139,7 +139,9 @@
     "thisWeek": "ESTA SEMANA",
     "signUpToSync": "Cadastre-se para sincronizar",
     "deleteAccount": "Excluir conta",
-    "deleteAccountConfirm": "Sua conta e todo o seu progresso de aprendizado serão excluídos permanentemente. Esta ação não pode ser desfeita."
+    "deleteAccountConfirm": "Sua conta e todo o seu progresso de aprendizado serão excluídos permanentemente. Esta ação não pode ser desfeita.",
+    "dailyGoal": "Meta diária",
+    "dailyGoalCards": "{{count}} cartões"
   },
   "auth": {
     "welcomeBack": "Bem-vindo de volta",

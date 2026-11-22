@@ -139,7 +139,9 @@
     "thisWeek": "ESTA SEMANA",
     "signUpToSync": "Regístrate para sincronizar",
     "deleteAccount": "Eliminar cuenta",
-    "deleteAccountConfirm": "Tu cuenta y todo tu progreso de aprendizaje se eliminarán permanentemente. Esta acción no se puede deshacer."
+    "deleteAccountConfirm": "Tu cuenta y todo tu progreso de aprendizaje se eliminarán permanentemente. Esta acción no se puede deshacer.",
+    "dailyGoal": "Objetivo diario",
+    "dailyGoalCards": "{{count}} tarjetas"
   },
   "auth": {
     "welcomeBack": "Bienvenido de vuelta",

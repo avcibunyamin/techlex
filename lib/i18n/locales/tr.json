@@ -139,7 +139,9 @@
     "thisWeek": "BU HAFTA",
     "signUpToSync": "Senkronize etmek için kayıt ol",
     "deleteAccount": "Hesabı Sil",
-    "deleteAccountConfirm": "Hesabınız ve tüm öğrenme ilerlemeniz kalıcı olarak silinecektir. Bu işlem geri alınamaz."
+    "deleteAccountConfirm": "Hesabınız ve tüm öğrenme ilerlemeniz kalıcı olarak silinecektir. Bu işlem geri alınamaz.",
+    "dailyGoal": "Günlük hedef",
+    "dailyGoalCards": "{{count}} kart"
   },
   "auth": {
     "welcomeBack": "Tekrar hoş geldin",

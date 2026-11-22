@@ -139,7 +139,9 @@
     "thisWeek": "هذا الأسبوع",
     "signUpToSync": "سجّل حساباً للمزامنة",
     "deleteAccount": "حذف الحساب",
-    "deleteAccountConfirm": "سيتم حذف حسابك وجميع تقدمك في التعلم نهائيًا. لا يمكن التراجع عن هذا الإجراء."
+    "deleteAccountConfirm": "سيتم حذف حسابك وجميع تقدمك في التعلم نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
+    "dailyGoal": "الهدف اليومي",
+    "dailyGoalCards": "{{count}} بطاقة"
   },
   "auth": {
     "welcomeBack": "أهلاً بعودتك",

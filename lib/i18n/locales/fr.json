@@ -139,7 +139,9 @@
     "thisWeek": "CETTE SEMAINE",
     "signUpToSync": "S'inscrire pour synchroniser",
     "deleteAccount": "Supprimer le compte",
-    "deleteAccountConfirm": "Votre compte et toutes vos données de progression seront supprimés définitivement. Cette action est irréversible."
+    "deleteAccountConfirm": "Votre compte et toutes vos données de progression seront supprimés définitivement. Cette action est irréversible.",
+    "dailyGoal": "Objectif quotidien",
+    "dailyGoalCards": "{{count}} cartes"
   },
   "auth": {
     "welcomeBack": "Content de te revoir",

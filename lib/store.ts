@@ -11,6 +11,7 @@ import { PACKS, findPackById, packIdOfTerm } from '@/data/packs';
 import { buildReviewQueue, DEFAULT_REVIEW_LIMIT, ReviewQueueResult } from './review-queue';
 import { buildClozeQuestion, buildChoiceOptions, ClozeQuestion, ChoiceOptions } from './cloze-quiz';
 import { normalizeSpeechRate, DEFAULT_SPEECH_RATE, SpeechRate } from './speech-logic';
+import { DEFAULT_DAILY_GOAL, resolvePersistedDailyGoal } from './daily-goal';
 import type { ShareSummaryInput } from './share-summary';
 
 import cybersecurityTerms from '@/data/terms/cybersecurity.json';
@@ -134,6 +135,8 @@ interface AppState {
   longestStreak: number;
   lastActiveDate: string | null;
   dailyGoal: number;
+  /** True once the user explicitly chooses a daily goal, allowing 10 to persist across restarts. */
+  dailyGoalUserSet: boolean;
   todayCount: number;
   totalSwipes: number;
   xp: number;
@@ -243,7 +246,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   streak: 0,
   longestStreak: 0,
   lastActiveDate: null,
-  dailyGoal: 30,
+  dailyGoal: DEFAULT_DAILY_GOAL,
+  dailyGoalUserSet: false,
   todayCount: 0,
   totalSwipes: 0,
   xp: 0,
@@ -318,6 +322,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         }
 
         const newLongest = Math.max(data.longestStreak || 0, streak);
+        const dailyGoalUserSet = data.dailyGoalUserSet === true;
         set({
           progress,
           activePackId:
@@ -329,7 +334,8 @@ export const useAppStore = create<AppState>((set, get) => ({
           streak,
           longestStreak: newLongest,
           lastActiveDate: data.lastActiveDate ?? null,
-          dailyGoal: (data.dailyGoal && data.dailyGoal !== 10) ? data.dailyGoal : 30,
+          dailyGoal: resolvePersistedDailyGoal(data.dailyGoal, dailyGoalUserSet),
+          dailyGoalUserSet,
           todayCount,
           totalSwipes: data.totalSwipes || 0,
           xp: data.xp || 0,
@@ -380,6 +386,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           longestStreak: s.longestStreak,
           lastActiveDate: s.lastActiveDate,
           dailyGoal: s.dailyGoal,
+          dailyGoalUserSet: s.dailyGoalUserSet,
           todayCount: s.todayCount,
           totalSwipes: s.totalSwipes,
           xp: s.xp,
@@ -422,7 +429,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   setDailyGoal: (goal) => {
-    set({ dailyGoal: goal });
+    set({ dailyGoal: goal, dailyGoalUserSet: true });
     get().saveData();
   },
 
@@ -602,7 +609,7 @@ export const useAppStore = create<AppState>((set, get) => ({
           streak,
           longestStreak: profile.longestStreak,
           lastActiveDate: profile.lastActiveDate,
-          dailyGoal: (profile.dailyGoal && profile.dailyGoal !== 10) ? profile.dailyGoal : 30,
+          dailyGoal: resolvePersistedDailyGoal(profile.dailyGoal, local.dailyGoalUserSet),
           todayCount,
           totalSwipes: profile.totalSwipes,
           xp: profile.xp,
@@ -1184,7 +1191,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         streak,
         longestStreak: profile.longestStreak ?? 0,
         lastActiveDate: profile.lastActiveDate ?? null,
-        dailyGoal: (profile.dailyGoal && profile.dailyGoal !== 10) ? profile.dailyGoal : 30,
+        dailyGoal: resolvePersistedDailyGoal(profile.dailyGoal, get().dailyGoalUserSet),
         todayCount,
         totalSwipes: profile.totalSwipes ?? 0,
         xp: profile.xp ?? 0,

@@ -139,7 +139,9 @@
     "thisWeek": "THIS WEEK",
     "signUpToSync": "Sign up to sync",
     "deleteAccount": "Delete Account",
-    "deleteAccountConfirm": "This will permanently delete your account and all learning progress. This cannot be undone."
+    "deleteAccountConfirm": "This will permanently delete your account and all learning progress. This cannot be undone.",
+    "dailyGoal": "Daily goal",
+    "dailyGoalCards": "{{count}} cards"
   },
   "auth": {
     "welcomeBack": "Welcome back",

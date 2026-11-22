@@ -139,7 +139,9 @@
     "thisWeek": "DIESE WOCHE",
     "signUpToSync": "Registrieren zum Synchronisieren",
     "deleteAccount": "Konto löschen",
-    "deleteAccountConfirm": "Ihr Konto und Ihr gesamter Lernfortschritt werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden."
+    "deleteAccountConfirm": "Ihr Konto und Ihr gesamter Lernfortschritt werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
+    "dailyGoal": "Tagesziel",
+    "dailyGoalCards": "{{count}} Karten"
   },
   "auth": {
     "welcomeBack": "Willkommen zurück",

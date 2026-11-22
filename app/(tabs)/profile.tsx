@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   StyleSheet, Text, View, ScrollView, Pressable,
-  TextInput, ActivityIndicator, Alert, Platform,
+  TextInput, ActivityIndicator, Alert, Platform, I18nManager,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Flame, Target, BookCheck, Brain, ChevronRight,
   LogIn, LogOut, Globe, Sun, Moon, Monitor,
   Zap, Infinity, Crown, AtSign, Check, X, AlertCircle,
-  Award, RotateCcw, Users, Heart, Sparkles, ChevronDown, Copy, Share2,
+  Award, RotateCcw, Users, Heart, Sparkles, ChevronDown, Copy, Share2, Volume2,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,8 @@ import { changeLanguage } from '@/lib/i18n';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
 import { buildShareSummary } from '@/lib/share-summary';
 import { shareText, ShareTextResult } from '@/lib/share-text';
+import { DAILY_GOAL_OPTIONS } from '@/lib/daily-goal';
+import { SPEECH_RATES } from '@/lib/speech-logic';
 import { Language, getTermLanguage } from '@/types';
 
 export default function ProfileScreen() {
@@ -32,12 +34,16 @@ export default function ProfileScreen() {
   const [deleting, setDeleting] = useState(false);
   const {
     streak, longestStreak, language, setLanguage, progress, terms,
-    dailyGoal, todayCount,
-    setThemeMode, subscriptionTier, energyLevel,
+    dailyGoal, setDailyGoal, todayCount,
+    setThemeMode, speechRate, setSpeechRate, subscriptionTier, energyLevel,
     totalSwipes, xp, earnedBadges, getLevel, getLeague, hasActivePremium,
     cancelAtPeriodEnd, currentPeriodEnd, setCancelAtPeriodEnd,
     packs, packsLoaded, getShareSummaryInput,
   } = useAppStore();
+
+  const isArabic = language === 'ar';
+  const rowDir = isArabic && !I18nManager.isRTL ? 'row-reverse' : 'row';
+  const textDirStyle = isArabic ? ({ writingDirection: 'rtl', textAlign: 'right' } as const) : undefined;
 
   const progressValues = Object.values(progress);
   const stats = getStats(progressValues);
@@ -637,20 +643,20 @@ export default function ProfileScreen() {
         </View>
 
         {/* ==================== UYGULAMA AYARLARI ==================== */}
-        <Text style={[typography.caption, { color: t.textTertiary, marginTop: spacing['3xl'], marginBottom: spacing.lg }]}>
+        <Text style={[typography.caption, { color: t.textTertiary, marginTop: spacing['3xl'], marginBottom: spacing.lg }, textDirStyle]}>
           {tr('profile.appSettings')}
         </Text>
         <View style={[styles.settingsGroup, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
           <Pressable
-            style={[styles.settingRow, { borderColor: t.border }]}
+            style={[styles.settingRow, { borderColor: t.border, flexDirection: rowDir }]}
             onPress={() => { setShowLangPicker(!showLangPicker); setShowThemePicker(false); }}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+            <View style={[styles.settingLabelGroup, { flexDirection: rowDir }]}>
               <Globe size={14} color={accent} strokeWidth={1.5} />
-              <Text style={[typography.body, { color: t.text }]}>{tr('profile.language')}</Text>
+              <Text style={[typography.body, { color: t.text }, textDirStyle]}>{tr('profile.language')}</Text>
             </View>
-            <View style={styles.settingValue}>
-              <Text style={[typography.subhead, { color: t.textSecondary }]}>
+            <View style={[styles.settingValue, { flexDirection: rowDir }]}>
+              <Text style={[typography.subhead, { color: t.textSecondary }, textDirStyle]}>
                 {languageOptions.find(l => l.code === i18n.language)?.label ?? i18n.language}
               </Text>
               <ChevronRight
@@ -681,15 +687,15 @@ export default function ProfileScreen() {
           )}
 
           <Pressable
-            style={[styles.settingRow, { borderColor: t.border }]}
+            style={[styles.settingRow, { borderColor: t.border, flexDirection: rowDir }]}
             onPress={() => { setShowThemePicker(!showThemePicker); setShowLangPicker(false); }}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+            <View style={[styles.settingLabelGroup, { flexDirection: rowDir }]}>
               <ThemeIcon size={14} color={accent} strokeWidth={1.5} />
-              <Text style={[typography.body, { color: t.text }]}>{tr('profile.theme')}</Text>
+              <Text style={[typography.body, { color: t.text }, textDirStyle]}>{tr('profile.theme')}</Text>
             </View>
-            <View style={styles.settingValue}>
-              <Text style={[typography.subhead, { color: t.textSecondary }]}>
+            <View style={[styles.settingValue, { flexDirection: rowDir }]}>
+              <Text style={[typography.subhead, { color: t.textSecondary }, textDirStyle]}>
                 {tr(`profile.theme${themeMode.charAt(0).toUpperCase() + themeMode.slice(1)}`)}
               </Text>
               <ChevronRight
@@ -719,8 +725,102 @@ export default function ProfileScreen() {
             </View>
           )}
 
-          <View style={styles.settingRow}>
-            <Text style={[typography.body, { color: t.text }]}>{tr('profile.version')}</Text>
+          {/* Daily goal selector (10 / 20 / 30 / 50 cards) */}
+          <View style={[styles.settingSegmentBlock, { borderColor: t.border }]}>
+            <View style={[styles.settingSegmentHeader, { flexDirection: rowDir }]}>
+              <View style={[styles.settingLabelGroup, { flexDirection: rowDir }]}>
+                <Target size={14} color={accent} strokeWidth={1.5} />
+                <Text style={[typography.body, { color: t.text }, textDirStyle]}>
+                  {tr('profile.dailyGoal')}
+                </Text>
+              </View>
+              <Text style={[typography.subhead, { color: t.textSecondary }, textDirStyle]}>
+                {tr('profile.dailyGoalCards', { count: dailyGoal })}
+              </Text>
+            </View>
+            <View
+              style={[styles.segmentGroup, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
+              accessibilityRole="radiogroup"
+              accessibilityLabel={tr('profile.dailyGoal')}
+            >
+              {DAILY_GOAL_OPTIONS.map(goal => {
+                const active = dailyGoal === goal;
+                return (
+                  <Pressable
+                    key={goal}
+                    onPress={() => setDailyGoal(goal)}
+                    accessibilityRole="radio"
+                    accessibilityLabel={tr('profile.dailyGoalCards', { count: goal })}
+                    accessibilityState={{ selected: active, checked: active }}
+                    style={[
+                      styles.segmentOption,
+                      active && { backgroundColor: t.bgElevated, borderColor: accent },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        typography.subhead,
+                        { color: active ? accent : t.textSecondary, fontWeight: active ? '600' : '500' },
+                      ]}
+                    >
+                      {goal}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
+          {/* Speech rate selector (existing SpeechRate values) */}
+          <View style={[styles.settingSegmentBlock, { borderColor: t.border }]}>
+            <View style={[styles.settingSegmentHeader, { flexDirection: rowDir }]}>
+              <View style={[styles.settingLabelGroup, { flexDirection: rowDir }]}>
+                <Volume2 size={14} color={accent} strokeWidth={1.5} />
+                <Text style={[typography.body, { color: t.text }, textDirStyle]}>
+                  {tr('speech.rateLabel')}
+                </Text>
+              </View>
+              <Text style={[typography.subhead, { color: t.textSecondary }, textDirStyle]}>
+                {tr(speechRate === 'slow' ? 'speech.rateSlow' : 'speech.rateNormal')}
+              </Text>
+            </View>
+            <View
+              style={[styles.segmentGroup, { flexDirection: rowDir, backgroundColor: t.bgSubtle }]}
+              accessibilityRole="radiogroup"
+              accessibilityLabel={tr('speech.rateLabel')}
+            >
+              {SPEECH_RATES.map(rate => {
+                const active = speechRate === rate;
+                const label = tr(rate === 'slow' ? 'speech.rateSlow' : 'speech.rateNormal');
+                return (
+                  <Pressable
+                    key={rate}
+                    onPress={() => setSpeechRate(rate)}
+                    accessibilityRole="radio"
+                    accessibilityLabel={label}
+                    accessibilityState={{ selected: active, checked: active }}
+                    style={[
+                      styles.segmentOption,
+                      active && { backgroundColor: t.bgElevated, borderColor: accent },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        typography.subhead,
+                        { color: active ? accent : t.textSecondary, fontWeight: active ? '600' : '500' },
+                        textDirStyle,
+                      ]}
+                    >
+                      {label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
+          <View style={[styles.settingRow, { flexDirection: rowDir, borderBottomWidth: 0 }]}>
+            <Text style={[typography.body, { color: t.text }, textDirStyle]}>{tr('profile.version')}</Text>
             <Text style={[typography.subhead, { color: t.textTertiary }]}>1.0.0</Text>
           </View>
         </View>
@@ -811,7 +911,36 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     borderBottomWidth: 0.5,
   },
+  settingLabelGroup: {
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
   settingValue: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  settingSegmentBlock: {
+    padding: spacing.lg,
+    borderBottomWidth: 0.5,
+    gap: spacing.md,
+  },
+  settingSegmentHeader: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  segmentGroup: {
+    padding: 3,
+    borderRadius: radius.md,
+    gap: spacing.xs,
+  },
+  segmentOption: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.sm,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
   cancelBanner: {
     flexDirection: 'row',
     alignItems: 'flex-start',
