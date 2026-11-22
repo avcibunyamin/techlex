@@ -36,12 +36,12 @@ export default function LearnScreen() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const activePack = useMemo(
     () => packs.find((p) => p.id === activePackId && getPackProgress(p.id).loaded > 0) ?? packs[0] ?? null,
-    [packs, activePackId, progress]
+    [packs, activePackId, progress, packsLoaded]
   );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const activePackProgress = useMemo(
     () => (activePack ? getPackProgress(activePack.id) : null),
-    [activePack, progress]
+    [activePack, progress, packsLoaded]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
