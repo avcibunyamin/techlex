@@ -141,7 +141,8 @@
     "deleteAccount": "Konto löschen",
     "deleteAccountConfirm": "Ihr Konto und Ihr gesamter Lernfortschritt werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.",
     "dailyGoal": "Tagesziel",
-    "dailyGoalCards": "{{count}} Karten"
+    "dailyGoalCards": "{{count}} Karten",
+    "packProgress": "Paketfortschritt"
   },
   "auth": {
     "welcomeBack": "Willkommen zurück",
@@ -351,7 +352,8 @@
     "tsl-1": "TOEIC-Wortschatz 1–1000",
     "tsl-2": "TOEIC-Wortschatz 1001–1250",
     "english": "Englisch",
-    "exam": "Prüfung"
+    "exam": "Prüfung",
+    "frontend": "Frontend"
   },
   "quiz": {
     "title": "Test",
@@ -478,5 +480,36 @@
     "rateLabel": "Sprechtempo",
     "rateNormal": "Normal",
     "rateSlow": "Langsam"
+  },
+  "badges": {
+    "title": "Abzeichen",
+    "earnedCount": "{{earned}} von {{total}} freigeschaltet",
+    "locked": "Gesperrt",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Aufwärmphase",
+      "streak-7": "Eine Woche stark",
+      "streak-30": "Monatsroutine",
+      "streak-100": "Zenturio",
+      "swipes-100": "Erste Hundert",
+      "swipes-500": "Wortsammler",
+      "swipes-1000": "Lexikon-Baumeister",
+      "swipes-5000": "Vokabelmeister",
+      "blue-team-rookie": "Blue-Team-Neuling",
+      "red-team-rookie": "Red-Team-Neuling",
+      "dom-bender": "DOM-Bändiger",
+      "ai-architect": "KI-Architekt",
+      "network-guru": "Netzwerk-Guru",
+      "night-owl": "Nachteule",
+      "early-bird": "Frühaufsteher"
+    },
+    "cond": {
+      "streak": "{{count}} Tage in Folge",
+      "longestStreak": "Beste Serie: {{count}} Tage",
+      "swipes": "{{count}} Karten wiederholt",
+      "tag": "{{count}} Wörter in {{tag}}",
+      "nightOwl": "Zwischen 23:00 und 05:00 lernen",
+      "earlyBird": "Zwischen 05:00 und 08:00 lernen"
+    }
   }
 }

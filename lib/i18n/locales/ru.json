@@ -141,7 +141,8 @@
     "deleteAccount": "Удалить аккаунт",
     "deleteAccountConfirm": "Ваш аккаунт и весь прогресс обучения будут удалены навсегда. Это действие нельзя отменить.",
     "dailyGoal": "Дневная цель",
-    "dailyGoalCards": "{{count}} карт."
+    "dailyGoalCards": "{{count}} карт.",
+    "packProgress": "Прогресс по наборам"
   },
   "auth": {
     "welcomeBack": "С возвращением",
@@ -351,7 +352,8 @@
     "tsl-1": "Лексика TOEIC 1–1000",
     "tsl-2": "Лексика TOEIC 1001–1250",
     "english": "Английский",
-    "exam": "Экзамены"
+    "exam": "Экзамены",
+    "frontend": "Фронтенд"
   },
   "quiz": {
     "title": "Тест",
@@ -478,5 +480,36 @@
     "rateLabel": "Скорость речи",
     "rateNormal": "Обычная",
     "rateSlow": "Медленная"
+  },
+  "badges": {
+    "title": "Значки",
+    "earnedCount": "Получено {{earned}} из {{total}}",
+    "locked": "Закрыто",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Разминка",
+      "streak-7": "Неделя в строю",
+      "streak-30": "Привычка месяца",
+      "streak-100": "Центурион",
+      "swipes-100": "Первая сотня",
+      "swipes-500": "Коллекционер слов",
+      "swipes-1000": "Мастер лексикона",
+      "swipes-5000": "Гуру словаря",
+      "blue-team-rookie": "Новобранец Blue Team",
+      "red-team-rookie": "Новобранец Red Team",
+      "dom-bender": "Повелитель DOM",
+      "ai-architect": "Архитектор ИИ",
+      "network-guru": "Гуру сетей",
+      "night-owl": "Полуночник",
+      "early-bird": "Ранняя пташка"
+    },
+    "cond": {
+      "streak": "Серия {{count}} дн.",
+      "longestStreak": "Лучшая серия: {{count}} дн.",
+      "swipes": "Просмотрено карточек: {{count}}",
+      "tag": "{{count}} слов в «{{tag}}»",
+      "nightOwl": "Занимайся с 23:00 до 05:00",
+      "earlyBird": "Занимайся с 05:00 до 08:00"
+    }
   }
 }

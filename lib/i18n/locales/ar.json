@@ -141,7 +141,8 @@
     "deleteAccount": "حذف الحساب",
     "deleteAccountConfirm": "سيتم حذف حسابك وجميع تقدمك في التعلم نهائيًا. لا يمكن التراجع عن هذا الإجراء.",
     "dailyGoal": "الهدف اليومي",
-    "dailyGoalCards": "{{count}} بطاقة"
+    "dailyGoalCards": "{{count}} بطاقة",
+    "packProgress": "تقدّم الحزم"
   },
   "auth": {
     "welcomeBack": "أهلاً بعودتك",
@@ -351,7 +352,8 @@
     "tsl-1": "مفردات TOEIC‏ 1–1000",
     "tsl-2": "مفردات TOEIC‏ 1001–1250",
     "english": "الإنجليزية",
-    "exam": "الاختبارات"
+    "exam": "الاختبارات",
+    "frontend": "الواجهة الأمامية"
   },
   "quiz": {
     "title": "اختبار",
@@ -478,5 +480,36 @@
     "rateLabel": "سرعة النطق",
     "rateNormal": "عادية",
     "rateSlow": "بطيئة"
+  },
+  "badges": {
+    "title": "الشارات",
+    "earnedCount": "تم كسب {{earned}} من {{total}}",
+    "locked": "مقفلة",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "بداية الحماس",
+      "streak-7": "أسبوع متواصل",
+      "streak-30": "عادة شهرية",
+      "streak-100": "قائد المئة",
+      "swipes-100": "المئة الأولى",
+      "swipes-500": "جامع الكلمات",
+      "swipes-1000": "باني المعجم",
+      "swipes-5000": "سيّد المفردات",
+      "blue-team-rookie": "مبتدئ الفريق الأزرق",
+      "red-team-rookie": "مبتدئ الفريق الأحمر",
+      "dom-bender": "مروّض DOM",
+      "ai-architect": "مهندس الذكاء الاصطناعي",
+      "network-guru": "خبير الشبكات",
+      "night-owl": "بومة الليل",
+      "early-bird": "طائر الصباح"
+    },
+    "cond": {
+      "streak": "سلسلة {{count}} يوم",
+      "longestStreak": "أفضل سلسلة {{count}} يوم",
+      "swipes": "مراجعة {{count}} بطاقة",
+      "tag": "{{count}} كلمة في {{tag}}",
+      "nightOwl": "ادرس بين 23:00 و05:00",
+      "earlyBird": "ادرس بين 05:00 و08:00"
+    }
   }
 }

@@ -141,7 +141,8 @@
     "deleteAccount": "Eliminar cuenta",
     "deleteAccountConfirm": "Tu cuenta y todo tu progreso de aprendizaje se eliminarán permanentemente. Esta acción no se puede deshacer.",
     "dailyGoal": "Objetivo diario",
-    "dailyGoalCards": "{{count}} tarjetas"
+    "dailyGoalCards": "{{count}} tarjetas",
+    "packProgress": "Progreso de paquetes"
   },
   "auth": {
     "welcomeBack": "Bienvenido de vuelta",
@@ -351,7 +352,8 @@
     "tsl-1": "Vocabulario TOEIC 1–1000",
     "tsl-2": "Vocabulario TOEIC 1001–1250",
     "english": "Inglés",
-    "exam": "Exámenes"
+    "exam": "Exámenes",
+    "frontend": "Frontend"
   },
   "quiz": {
     "title": "Test",
@@ -478,5 +480,36 @@
     "rateLabel": "Velocidad de voz",
     "rateNormal": "Normal",
     "rateSlow": "Lenta"
+  },
+  "badges": {
+    "title": "Insignias",
+    "earnedCount": "{{earned}} de {{total}} conseguidas",
+    "locked": "Bloqueada",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Calentando motores",
+      "streak-7": "Una semana firme",
+      "streak-30": "Hábito mensual",
+      "streak-100": "Centurión",
+      "swipes-100": "Primer centenar",
+      "swipes-500": "Coleccionista de palabras",
+      "swipes-1000": "Constructor de léxico",
+      "swipes-5000": "Maestro del vocabulario",
+      "blue-team-rookie": "Novato del Blue Team",
+      "red-team-rookie": "Novato del Red Team",
+      "dom-bender": "Domador del DOM",
+      "ai-architect": "Arquitecto de IA",
+      "network-guru": "Gurú de redes",
+      "night-owl": "Ave nocturna",
+      "early-bird": "Madrugador"
+    },
+    "cond": {
+      "streak": "Racha de {{count}} días",
+      "longestStreak": "Mejor racha de {{count}} días",
+      "swipes": "{{count}} tarjetas repasadas",
+      "tag": "{{count}} palabras en {{tag}}",
+      "nightOwl": "Estudia entre las 23:00 y las 05:00",
+      "earlyBird": "Estudia entre las 05:00 y las 08:00"
+    }
   }
 }

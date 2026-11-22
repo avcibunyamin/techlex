@@ -141,7 +141,8 @@
     "deleteAccount": "アカウント削除",
     "deleteAccountConfirm": "アカウントとすべての学習進捗が完全に削除されます。この操作は取り消せません。",
     "dailyGoal": "1日の目標",
-    "dailyGoalCards": "{{count}}枚"
+    "dailyGoalCards": "{{count}}枚",
+    "packProgress": "パックの進捗"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",
@@ -351,7 +352,8 @@
     "tsl-1": "TOEIC 単語 1–1000",
     "tsl-2": "TOEIC 単語 1001–1250",
     "english": "英語",
-    "exam": "試験"
+    "exam": "試験",
+    "frontend": "フロントエンド"
   },
   "quiz": {
     "title": "テスト",
@@ -478,5 +480,36 @@
     "rateLabel": "読み上げ速度",
     "rateNormal": "標準",
     "rateSlow": "ゆっくり"
+  },
+  "badges": {
+    "title": "バッジ",
+    "earnedCount": "{{total}}個中{{earned}}個獲得",
+    "locked": "未解除",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "ウォームアップ",
+      "streak-7": "1週間達成",
+      "streak-30": "月間ルーティン",
+      "streak-100": "百日達成者",
+      "swipes-100": "最初の100枚",
+      "swipes-500": "ワードコレクター",
+      "swipes-1000": "語彙ビルダー",
+      "swipes-5000": "語彙マスター",
+      "blue-team-rookie": "ブルーチーム新人",
+      "red-team-rookie": "レッドチーム新人",
+      "dom-bender": "DOMの使い手",
+      "ai-architect": "AIアーキテクト",
+      "network-guru": "ネットワークの達人",
+      "night-owl": "夜型チャレンジャー",
+      "early-bird": "朝活チャレンジャー"
+    },
+    "cond": {
+      "streak": "{{count}}日連続学習",
+      "longestStreak": "最高{{count}}日連続",
+      "swipes": "カード{{count}}枚を学習",
+      "tag": "{{tag}}の単語を{{count}}語学習",
+      "nightOwl": "23:00〜05:00に学習",
+      "earlyBird": "05:00〜08:00に学習"
+    }
   }
 }

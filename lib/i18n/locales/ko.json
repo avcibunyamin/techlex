@@ -141,7 +141,8 @@
     "deleteAccount": "계정 삭제",
     "deleteAccountConfirm": "계정과 모든 학습 진행 상황이 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.",
     "dailyGoal": "일일 목표",
-    "dailyGoalCards": "{{count}}장"
+    "dailyGoalCards": "{{count}}장",
+    "packProgress": "팩 진행도"
   },
   "auth": {
     "welcomeBack": "다시 오셨군요",
@@ -351,7 +352,8 @@
     "tsl-1": "TOEIC 어휘 1–1000",
     "tsl-2": "TOEIC 어휘 1001–1250",
     "english": "영어",
-    "exam": "시험"
+    "exam": "시험",
+    "frontend": "프론트엔드"
   },
   "quiz": {
     "title": "테스트",
@@ -478,5 +480,36 @@
     "rateLabel": "말하기 속도",
     "rateNormal": "보통",
     "rateSlow": "느리게"
+  },
+  "badges": {
+    "title": "배지",
+    "earnedCount": "{{total}}개 중 {{earned}}개 획득",
+    "locked": "잠김",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "워밍업",
+      "streak-7": "일주일 돌파",
+      "streak-30": "한 달 습관",
+      "streak-100": "백전백승",
+      "swipes-100": "첫 100장",
+      "swipes-500": "단어 수집가",
+      "swipes-1000": "어휘 건축가",
+      "swipes-5000": "어휘 마스터",
+      "blue-team-rookie": "블루팀 루키",
+      "red-team-rookie": "레드팀 루키",
+      "dom-bender": "DOM 마스터",
+      "ai-architect": "AI 아키텍트",
+      "network-guru": "네트워크 고수",
+      "night-owl": "올빼미족",
+      "early-bird": "얼리버드"
+    },
+    "cond": {
+      "streak": "{{count}}일 연속 학습",
+      "longestStreak": "최고 {{count}}일 연속",
+      "swipes": "카드 {{count}}장 복습",
+      "tag": "{{tag}} 단어 {{count}}개 학습",
+      "nightOwl": "23:00~05:00 사이 학습",
+      "earlyBird": "05:00~08:00 사이 학습"
+    }
   }
 }

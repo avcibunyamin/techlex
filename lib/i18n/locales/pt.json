@@ -141,7 +141,8 @@
     "deleteAccount": "Excluir conta",
     "deleteAccountConfirm": "Sua conta e todo o seu progresso de aprendizado serão excluídos permanentemente. Esta ação não pode ser desfeita.",
     "dailyGoal": "Meta diária",
-    "dailyGoalCards": "{{count}} cartões"
+    "dailyGoalCards": "{{count}} cartões",
+    "packProgress": "Progresso nos pacotes"
   },
   "auth": {
     "welcomeBack": "Bem-vindo de volta",
@@ -351,7 +352,8 @@
     "tsl-1": "Vocabulário TOEIC 1–1000",
     "tsl-2": "Vocabulário TOEIC 1001–1250",
     "english": "Inglês",
-    "exam": "Exames"
+    "exam": "Exames",
+    "frontend": "Frontend"
   },
   "quiz": {
     "title": "Teste",
@@ -478,5 +480,36 @@
     "rateLabel": "Velocidade da fala",
     "rateNormal": "Normal",
     "rateSlow": "Lenta"
+  },
+  "badges": {
+    "title": "Insígnias",
+    "earnedCount": "{{earned}} de {{total}} conquistadas",
+    "locked": "Bloqueada",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Aquecendo",
+      "streak-7": "Uma Semana Firme",
+      "streak-30": "Hábito Mensal",
+      "streak-100": "Centurião",
+      "swipes-100": "Primeira Centena",
+      "swipes-500": "Colecionador de Palavras",
+      "swipes-1000": "Construtor de Léxico",
+      "swipes-5000": "Mestre do Vocabulário",
+      "blue-team-rookie": "Recruta Blue Team",
+      "red-team-rookie": "Recruta Red Team",
+      "dom-bender": "Mestre do DOM",
+      "ai-architect": "Arquiteto de IA",
+      "network-guru": "Guru de Redes",
+      "night-owl": "Coruja Noturna",
+      "early-bird": "Madrugador"
+    },
+    "cond": {
+      "streak": "Sequência de {{count}} dias",
+      "longestStreak": "Melhor sequência de {{count}} dias",
+      "swipes": "{{count}} cartões revisados",
+      "tag": "{{count}} palavras em {{tag}}",
+      "nightOwl": "Estude entre 23:00 e 05:00",
+      "earlyBird": "Estude entre 05:00 e 08:00"
+    }
   }
 }
