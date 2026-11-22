@@ -1,0 +1,60 @@
+name: CI
+
+# Every push and pull request: type-check, the pure-logic checks, locale parity and a web build.
+# Deploying stays in deploy.yml (GitHub Pages, on push to main).
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: true
+      EXPO_PUBLIC_SUPABASE_URL: ""
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ""
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Logic checks (lib/*.check.ts)
+        run: for f in lib/*.check.ts; do echo "== $f"; npx --yes tsx@4 "$f"; done
+
+      - name: All locales have the same keys as en.json
+        run: |
+          node -e '
+            const fs = require("fs"), dir = "lib/i18n/locales";
+            const flat = (o, p = "") => Object.entries(o).flatMap(([k, v]) => v && typeof v === "object" ? flat(v, p + k + ".") : [p + k]);
+            const keys = (f) => new Set(flat(JSON.parse(fs.readFileSync(dir + "/" + f, "utf8"))));
+            const en = keys("en.json");
+            let bad = 0;
+            for (const f of fs.readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+              const k = keys(f);
+              const missing = [...en].filter((x) => !k.has(x)), extra = [...k].filter((x) => !en.has(x));
+              if (missing.length || extra.length) { bad++; console.log(f, "missing:", missing.slice(0, 10), "extra:", extra.slice(0, 10)); }
+            }
+            console.log(en.size, "keys;", bad ? bad + " locale(s) differ" : "all locales match");
+            process.exit(bad ? 1 : 0);
+          '
+
+      - name: Web build
+        run: npx expo export --platform web --output-dir dist-ci
+        timeout-minutes: 8
