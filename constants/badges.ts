@@ -1,8 +1,23 @@
+export type BadgeDisplayCond =
+  | 'streak'
+  | 'longestStreak'
+  | 'swipes'
+  | 'tag'
+  | 'nightOwl'
+  | 'earlyBird';
+
+export interface BadgeDisplay {
+  cond: BadgeDisplayCond;
+  count?: number;
+  tag?: string;
+}
+
 export interface BadgeDefinition {
   id: string;
   icon: string;
   category: 'streak' | 'volume' | 'sector' | 'special';
   xpReward: number;
+  display: BadgeDisplay;
   condition: (stats: BadgeCheckStats) => boolean;
 }
 
@@ -22,6 +37,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Flame',
     category: 'streak',
     xpReward: 50,
+    display: { cond: 'streak', count: 3 },
     condition: (s) => s.streak >= 3,
   },
   {
@@ -29,6 +45,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Flame',
     category: 'streak',
     xpReward: 150,
+    display: { cond: 'streak', count: 7 },
     condition: (s) => s.streak >= 7,
   },
   {
@@ -36,6 +53,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Flame',
     category: 'streak',
     xpReward: 500,
+    display: { cond: 'streak', count: 30 },
     condition: (s) => s.streak >= 30,
   },
   {
@@ -43,6 +61,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Flame',
     category: 'streak',
     xpReward: 2000,
+    display: { cond: 'longestStreak', count: 100 },
     condition: (s) => s.longestStreak >= 100,
   },
 
@@ -52,6 +71,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Layers',
     category: 'volume',
     xpReward: 100,
+    display: { cond: 'swipes', count: 100 },
     condition: (s) => s.totalSwipes >= 100,
   },
   {
@@ -59,6 +79,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Layers',
     category: 'volume',
     xpReward: 300,
+    display: { cond: 'swipes', count: 500 },
     condition: (s) => s.totalSwipes >= 500,
   },
   {
@@ -66,6 +87,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Award',
     category: 'volume',
     xpReward: 750,
+    display: { cond: 'swipes', count: 1000 },
     condition: (s) => s.totalSwipes >= 1000,
   },
   {
@@ -73,6 +95,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Trophy',
     category: 'volume',
     xpReward: 2500,
+    display: { cond: 'swipes', count: 5000 },
     condition: (s) => s.totalSwipes >= 5000,
   },
 
@@ -82,6 +105,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Shield',
     category: 'sector',
     xpReward: 200,
+    display: { cond: 'tag', count: 50, tag: 'blue-team' },
     condition: (s) => (s.tagCounts['blue-team'] ?? 0) >= 50,
   },
   {
@@ -89,6 +113,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Crosshair',
     category: 'sector',
     xpReward: 200,
+    display: { cond: 'tag', count: 50, tag: 'red-team' },
     condition: (s) => (s.tagCounts['red-team'] ?? 0) >= 50,
   },
   {
@@ -96,6 +121,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Code',
     category: 'sector',
     xpReward: 200,
+    display: { cond: 'tag', count: 50, tag: 'frontend' },
     condition: (s) => (s.tagCounts['frontend'] ?? 0) >= 50,
   },
   {
@@ -103,6 +129,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Brain',
     category: 'sector',
     xpReward: 200,
+    display: { cond: 'tag', count: 50, tag: 'ai-ml' },
     condition: (s) => (s.tagCounts['ai-ml'] ?? 0) >= 50,
   },
   {
@@ -110,6 +137,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Network',
     category: 'sector',
     xpReward: 200,
+    display: { cond: 'tag', count: 50, tag: 'networking' },
     condition: (s) => (s.tagCounts['networking'] ?? 0) >= 50,
   },
 
@@ -119,6 +147,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Moon',
     category: 'special',
     xpReward: 100,
+    display: { cond: 'nightOwl' },
     condition: (s) => s.studyHour !== undefined && (s.studyHour >= 23 || s.studyHour < 5),
   },
   {
@@ -126,6 +155,7 @@ export const BADGES: BadgeDefinition[] = [
     icon: 'Sun',
     category: 'special',
     xpReward: 100,
+    display: { cond: 'earlyBird' },
     condition: (s) => s.studyHour !== undefined && s.studyHour >= 5 && s.studyHour < 8,
   },
 ];

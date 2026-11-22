@@ -9,6 +9,7 @@ import {
   LogIn, LogOut, Globe, Sun, Moon, Monitor,
   Zap, Infinity, Crown, AtSign, Check, X, AlertCircle,
   Award, RotateCcw, Users, Heart, Sparkles, ChevronDown, Copy, Share2, Volume2,
+  Layers, Trophy, Shield, Crosshair, Code, Network,
 } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +25,22 @@ import { buildShareSummary } from '@/lib/share-summary';
 import { shareText, ShareTextResult } from '@/lib/share-text';
 import { DAILY_GOAL_OPTIONS } from '@/lib/daily-goal';
 import { SPEECH_RATES } from '@/lib/speech-logic';
+import { buildBadgeShowcase } from '@/lib/badge-showcase';
 import { Language, getTermLanguage } from '@/types';
+
+const BADGE_ICON_MAP: Record<string, typeof Award> = {
+  Flame,
+  Layers,
+  Award,
+  Trophy,
+  Shield,
+  Crosshair,
+  Code,
+  Brain,
+  Network,
+  Moon,
+  Sun,
+};
 
 export default function ProfileScreen() {
   const { colors: t, accent, themeMode } = useTheme();
@@ -38,7 +54,7 @@ export default function ProfileScreen() {
     setThemeMode, speechRate, setSpeechRate, subscriptionTier, energyLevel,
     totalSwipes, xp, earnedBadges, getLevel, getLeague, hasActivePremium,
     cancelAtPeriodEnd, currentPeriodEnd, setCancelAtPeriodEnd,
-    packs, packsLoaded, getShareSummaryInput,
+    packs, packsLoaded, getAllPacksProgress, getShareSummaryInput,
   } = useAppStore();
 
   const isArabic = language === 'ar';
@@ -212,6 +228,30 @@ export default function ProfileScreen() {
     return { ...cat, total: catTerms.length, mastered };
   }).filter(cat => cat.mastered > 0), [terms, progress]);
 
+  const badgeShowcase = useMemo(() => buildBadgeShowcase(earnedBadges), [earnedBadges]);
+  const earnedBadgeCount = useMemo(
+    () => badgeShowcase.filter(b => b.earned).length,
+    [badgeShowcase]
+  );
+
+  const termLang = getTermLanguage(language);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const seenPacks = useMemo(() => {
+    const allProg = getAllPacksProgress();
+    return packs
+      .map(pack => {
+        const prog = allProg[pack.id];
+        const seen = prog?.seen ?? 0;
+        const learned = prog?.learned ?? 0;
+        const total = prog?.total ?? pack.size;
+        const title = i18n.exists(`categories.${pack.id}`)
+          ? tr(`categories.${pack.id}`)
+          : pack.title[termLang];
+        return { packId: pack.id, title, seen, learned, total };
+      })
+      .filter(item => item.seen > 0);
+  }, [packs, progress, packsLoaded, language, termLang, i18n, tr, getAllPacksProgress]);
+
   const isWeb = Platform.OS === 'web';
   const [summaryStatus, setSummaryStatus] = useState<ShareTextResult | null>(null);
   const summaryTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -289,6 +329,163 @@ export default function ProfileScreen() {
             <Text style={[typography.footnote, { color: t.textTertiary }]}>{tr('profile.today')}</Text>
           </View>
         </View>
+
+        {/* Badges Showcase */}
+        <View style={[styles.sectionHeaderRow, { flexDirection: rowDir }]}>
+          <Text style={[typography.caption, { color: t.textTertiary }, textDirStyle]}>
+            {tr('badges.title')}
+          </Text>
+          <Text style={[typography.footnote, { color: t.textTertiary }, textDirStyle]}>
+            {tr('badges.earnedCount', { earned: earnedBadgeCount, total: badgeShowcase.length })}
+          </Text>
+        </View>
+        <View style={[styles.badgesGrid, { flexDirection: rowDir }]}>
+          {badgeShowcase.map(badge => {
+            const BadgeIcon = BADGE_ICON_MAP[badge.icon] ?? Award;
+            const badgeName = tr(`badges.names.${badge.id}`);
+            const tagLabel = badge.display.tag ? tr(`categories.${badge.display.tag}`) : undefined;
+            const condText = tr(`badges.cond.${badge.display.cond}`, {
+              count: badge.display.count,
+              tag: tagLabel,
+            });
+            const xpText = tr('badges.xpReward', { xp: badge.xpReward });
+            const a11yLabel = badge.earned
+              ? `${badgeName}, ${condText}, ${xpText}`
+              : `${badgeName}, ${condText}, ${xpText}, ${tr('badges.locked')}`;
+
+            return (
+              <View
+                key={badge.id}
+                accessible
+                accessibilityLabel={a11yLabel}
+                style={[
+                  styles.badgeCard,
+                  {
+                    backgroundColor: t.bgElevated,
+                    borderColor: badge.earned ? accent + '45' : t.border,
+                    opacity: badge.earned ? 1 : 0.48,
+                  },
+                ]}
+              >
+                <View style={[styles.badgeCardTop, { flexDirection: rowDir }]}>
+                  <View
+                    style={[
+                      styles.badgeIconWrap,
+                      { backgroundColor: badge.earned ? accent + '18' : t.bgSubtle },
+                    ]}
+                  >
+                    <BadgeIcon
+                      size={16}
+                      color={badge.earned ? accent : t.textMuted}
+                      strokeWidth={1.8}
+                    />
+                  </View>
+                  <Text
+                    style={[
+                      typography.footnote,
+                      { color: badge.earned ? accent : t.textTertiary, fontWeight: '600' },
+                      textDirStyle,
+                    ]}
+                  >
+                    {xpText}
+                  </Text>
+                </View>
+                <Text
+                  style={[
+                    typography.subhead,
+                    { color: badge.earned ? t.text : t.textSecondary, fontWeight: '600' },
+                    textDirStyle,
+                  ]}
+                  numberOfLines={1}
+                >
+                  {badgeName}
+                </Text>
+                <Text
+                  style={[
+                    typography.footnote,
+                    { color: badge.earned ? t.textSecondary : t.textTertiary },
+                    textDirStyle,
+                  ]}
+                >
+                  {condText}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+
+        {/* Pack Progress (packs with at least one seen word) */}
+        {seenPacks.length > 0 && (
+          <>
+            <Text
+              style={[
+                typography.caption,
+                { color: t.textTertiary, marginTop: spacing['2xl'], marginBottom: spacing.sm },
+                textDirStyle,
+              ]}
+            >
+              {tr('profile.packProgress')}
+            </Text>
+            <View style={[styles.packProgressGroup, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+              {seenPacks.map((item, idx) => {
+                const { packId } = item;
+                const learnedText = tr('packs.learnedCount', {
+                  learned: item.learned,
+                  total: item.total,
+                });
+                const ratio = item.total > 0 ? Math.min(1, Math.max(0, item.learned / item.total)) : 0;
+                const isLast = idx === seenPacks.length - 1;
+                return (
+                  <Pressable
+                    key={packId}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${item.title}, ${learnedText}`}
+                    onPress={() => router.push({ pathname: '/packs', params: { packId } })}
+                    style={[
+                      styles.packProgressRow,
+                      {
+                        borderColor: t.border,
+                        borderBottomWidth: isLast ? 0 : 0.5,
+                        flexDirection: rowDir,
+                      },
+                    ]}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <View style={[styles.catHeader, { flexDirection: rowDir }]}>
+                        <Text
+                          style={[typography.subhead, { color: t.text, flex: 1 }, textDirStyle]}
+                          numberOfLines={1}
+                        >
+                          {item.title}
+                        </Text>
+                        <Text style={[typography.footnote, { color: t.textTertiary }, textDirStyle]}>
+                          {learnedText}
+                        </Text>
+                      </View>
+                      <View style={[styles.catBar, { backgroundColor: t.bgSubtle }]}>
+                        <View
+                          style={[
+                            styles.catBarFill,
+                            {
+                              backgroundColor: accent,
+                              width: `${ratio * 100}%`,
+                            },
+                          ]}
+                        />
+                      </View>
+                    </View>
+                    <ChevronRight
+                      size={14}
+                      color={t.textTertiary}
+                      strokeWidth={1.5}
+                      style={isArabic && !I18nManager.isRTL ? { transform: [{ rotate: '180deg' }] } : undefined}
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
+          </>
+        )}
 
         {/* Energy bar */}
         <View style={[styles.energyBar, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
@@ -861,6 +1058,48 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl,
     borderRadius: radius.lg,
     borderWidth: 0.5,
+  },
+  sectionHeaderRow: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginTop: spacing['2xl'],
+    marginBottom: spacing.sm,
+  },
+  badgesGrid: {
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  badgeCard: {
+    flexGrow: 1,
+    flexBasis: '47%',
+    minWidth: 145,
+    padding: spacing.md,
+    borderRadius: radius.lg,
+    borderWidth: 0.5,
+    gap: spacing.xs,
+  },
+  badgeCardTop: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  badgeIconWrap: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  packProgressGroup: {
+    borderRadius: radius.lg,
+    borderWidth: 0.5,
+    overflow: 'hidden',
+  },
+  packProgressRow: {
+    alignItems: 'center',
+    padding: spacing.lg,
+    gap: spacing.md,
   },
   energyBar: {
     flexDirection: 'row',

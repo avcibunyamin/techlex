@@ -141,7 +141,8 @@
     "deleteAccount": "Hesabı Sil",
     "deleteAccountConfirm": "Hesabınız ve tüm öğrenme ilerlemeniz kalıcı olarak silinecektir. Bu işlem geri alınamaz.",
     "dailyGoal": "Günlük hedef",
-    "dailyGoalCards": "{{count}} kart"
+    "dailyGoalCards": "{{count}} kart",
+    "packProgress": "Paket ilerlemesi"
   },
   "auth": {
     "welcomeBack": "Tekrar hoş geldin",
@@ -351,7 +352,8 @@
     "tsl-1": "TOEIC İngilizcesi 1–1000",
     "tsl-2": "TOEIC İngilizcesi 1001–1250",
     "english": "İngilizce",
-    "exam": "Sınav"
+    "exam": "Sınav",
+    "frontend": "Frontend"
   },
   "quiz": {
     "title": "Test",
@@ -478,5 +480,36 @@
     "rateLabel": "Konuşma hızı",
     "rateNormal": "Normal",
     "rateSlow": "Yavaş"
+  },
+  "badges": {
+    "title": "Rozetler",
+    "earnedCount": "{{earned}} / {{total}} kazanıldı",
+    "locked": "Kilitli",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Isınma Turu",
+      "streak-7": "Bir Haftalık Seri",
+      "streak-30": "Aylık Alışkanlık",
+      "streak-100": "Yüzbaşı",
+      "swipes-100": "İlk Yüz",
+      "swipes-500": "Kelime Koleksiyoncusu",
+      "swipes-1000": "Sözlük Ustası",
+      "swipes-5000": "Kelime Hazinesi Ustası",
+      "blue-team-rookie": "Blue Team Çaylağı",
+      "red-team-rookie": "Red Team Çaylağı",
+      "dom-bender": "DOM Bükücü",
+      "ai-architect": "Yapay Zeka Mimarı",
+      "network-guru": "Ağ Gurusu",
+      "night-owl": "Gece Kuşu",
+      "early-bird": "Erkenci Kuş"
+    },
+    "cond": {
+      "streak": "{{count}} günlük seri",
+      "longestStreak": "{{count}} günlük en iyi seri",
+      "swipes": "{{count}} kart çalışıldı",
+      "tag": "{{tag}} alanında {{count}} kelime",
+      "nightOwl": "23:00 ile 05:00 arasında çalış",
+      "earlyBird": "05:00 ile 08:00 arasında çalış"
+    }
   }
 }

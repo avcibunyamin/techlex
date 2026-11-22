@@ -141,7 +141,8 @@
     "deleteAccount": "Delete Account",
     "deleteAccountConfirm": "This will permanently delete your account and all learning progress. This cannot be undone.",
     "dailyGoal": "Daily goal",
-    "dailyGoalCards": "{{count}} cards"
+    "dailyGoalCards": "{{count}} cards",
+    "packProgress": "Pack progress"
   },
   "auth": {
     "welcomeBack": "Welcome back",
@@ -351,7 +352,8 @@
     "tsl-1": "TOEIC Vocabulary 1–1000",
     "tsl-2": "TOEIC Vocabulary 1001–1250",
     "english": "English",
-    "exam": "Exam"
+    "exam": "Exam",
+    "frontend": "Frontend"
   },
   "quiz": {
     "title": "Test",
@@ -478,5 +480,36 @@
     "rateLabel": "Speech speed",
     "rateNormal": "Normal",
     "rateSlow": "Slow"
+  },
+  "badges": {
+    "title": "Badges",
+    "earnedCount": "{{earned}} of {{total}} earned",
+    "locked": "Locked",
+    "xpReward": "+{{xp}} XP",
+    "names": {
+      "streak-3": "Warming Up",
+      "streak-7": "One Week Strong",
+      "streak-30": "Monthly Habit",
+      "streak-100": "Centurion",
+      "swipes-100": "First Hundred",
+      "swipes-500": "Word Collector",
+      "swipes-1000": "Lexicon Builder",
+      "swipes-5000": "Vocabulary Master",
+      "blue-team-rookie": "Blue Team Rookie",
+      "red-team-rookie": "Red Team Rookie",
+      "dom-bender": "DOM Bender",
+      "ai-architect": "AI Architect",
+      "network-guru": "Network Guru",
+      "night-owl": "Night Owl",
+      "early-bird": "Early Bird"
+    },
+    "cond": {
+      "streak": "{{count}}-day streak",
+      "longestStreak": "{{count}}-day best streak",
+      "swipes": "{{count}} cards reviewed",
+      "tag": "{{count}} words in {{tag}}",
+      "nightOwl": "Study between 23:00 and 05:00",
+      "earlyBird": "Study between 05:00 and 08:00"
+    }
   }
 }
