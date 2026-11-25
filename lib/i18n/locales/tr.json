@@ -65,7 +65,12 @@
     "shuffle": "Karıştır",
     "shuffleAll": "Hepsini karıştır",
     "moreResults": "İlk {{limit}} sonuç gösteriliyor (+{{count}} sonuç daha var)",
-    "loadingPacks": "Paketler yükleniyor..."
+    "loadingPacks": "Paketler yükleniyor...",
+    "savedTitle": "Kaydettiklerim",
+    "savedEmpty": "Bir kelimedeki yer imine dokun, burada dursun.",
+    "savedQuiz": "Bunlarla test et",
+    "savedShowAll": "Tümünü göster",
+    "savedNeedMore": "Test için en az {{count}} kelime kaydedip görmelisin."
   },
   "term": {
     "definition": "TANIM",

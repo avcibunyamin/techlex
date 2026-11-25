@@ -1,4 +1,11 @@
-import { MAX_BOOKMARKS, normalizeBookmarkIds, toggleBookmarkIds } from './bookmarks';
+import {
+  MAX_BOOKMARKS,
+  SAVED_WORDS_PREVIEW_LIMIT,
+  buildSavedWordsView,
+  getUnloadedBookmarkPackIds,
+  normalizeBookmarkIds,
+  toggleBookmarkIds,
+} from './bookmarks';
 
 function assert(condition: boolean, message: string): void {
   if (!condition) {
@@ -83,4 +90,74 @@ function assert(condition: boolean, message: string): void {
   assert(res.join(',') === 'a,b', 'blank toggle target should return normalized existing list');
 }
 
-console.log('bookmarks: 6 checks passed');
+// 7. getUnloadedBookmarkPackIds resolves deduplicated unloaded pack IDs once and skips loaded/requested packs.
+{
+  const loadedTerms = new Map<string, { id: string }>([['it-api', { id: 'it-api' }]]);
+  const loadedPacks = new Set<string>(['nawl-1']);
+  const requestedPacks = new Set<string>();
+  const fakePackIdOfTerm = (id: string): string | undefined => {
+    if (id.startsWith('ngsl-')) return 'ngsl-1';
+    if (id.startsWith('nawl-')) return 'nawl-1';
+    if (id.startsWith('bsl-')) return 'bsl-1';
+    return undefined;
+  };
+
+  const firstPass = getUnloadedBookmarkPackIds(
+    ['it-api', 'ngsl-0001', 'ngsl-0002', 'nawl-0999', 'bsl-0010', 'unknown-id'],
+    {
+      getTermById: (id) => loadedTerms.get(id),
+      packIdOfTerm: fakePackIdOfTerm,
+      isPackLoaded: (packId) => loadedPacks.has(packId),
+      requestedPackIds: requestedPacks,
+    }
+  );
+  assert(
+    firstPass.join(',') === 'ngsl-1,bsl-1',
+    'should only return unloaded, unrequested pack IDs in order without duplicates'
+  );
+
+  for (const packId of firstPass) {
+    requestedPacks.add(packId);
+  }
+  const secondPass = getUnloadedBookmarkPackIds(
+    ['it-api', 'ngsl-0001', 'ngsl-0002', 'nawl-0999', 'bsl-0010', 'unknown-id'],
+    {
+      getTermById: (id) => loadedTerms.get(id),
+      packIdOfTerm: fakePackIdOfTerm,
+      isPackLoaded: (packId) => loadedPacks.has(packId),
+      requestedPackIds: requestedPacks,
+    }
+  );
+  assert(secondPass.length === 0, 'already requested pack IDs must not be requested again');
+}
+
+// 8. buildSavedWordsView omits unfound IDs, caps preview to 5 items, and expands when showAll is true.
+{
+  const catalog = new Map<string, { id: string; term: string }>([
+    ['w1', { id: 'w1', term: 'one' }],
+    ['w2', { id: 'w2', term: 'two' }],
+    ['w3', { id: 'w3', term: 'three' }],
+    ['w4', { id: 'w4', term: 'four' }],
+    ['w5', { id: 'w5', term: 'five' }],
+    ['w6', { id: 'w6', term: 'six' }],
+  ]);
+
+  const idsWithMissing = ['w1', 'missing-1', 'w2', 'w3', 'w4', 'w5', 'missing-2', 'w6'];
+  const preview = buildSavedWordsView(idsWithMissing, (id) => catalog.get(id), false);
+  assert(preview.totalCount === 6, 'totalCount should count only found terms');
+  assert(
+    preview.visibleTerms.length === SAVED_WORDS_PREVIEW_LIMIT,
+    'preview should cap visibleTerms at SAVED_WORDS_PREVIEW_LIMIT (5)'
+  );
+  assert(
+    preview.visibleTerms.map((t) => t.id).join(',') === 'w1,w2,w3,w4,w5',
+    'preview should keep bookmark order and exclude missing IDs'
+  );
+  assert(preview.hasMore === true, 'hasMore should be true when totalCount exceeds preview limit');
+
+  const expanded = buildSavedWordsView(idsWithMissing, (id) => catalog.get(id), true);
+  assert(expanded.visibleTerms.length === 6, 'showAll=true should return all found terms');
+  assert(expanded.hasMore === false, 'hasMore should be false when showAll is true');
+}
+
+console.log('bookmarks: 8 checks passed');

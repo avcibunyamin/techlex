@@ -65,7 +65,12 @@
     "shuffle": "Shuffle",
     "shuffleAll": "Shuffle all",
     "moreResults": "Showing top {{limit}} results (+{{count}} more results available)",
-    "loadingPacks": "Loading word packs..."
+    "loadingPacks": "Loading word packs...",
+    "savedTitle": "Saved words",
+    "savedEmpty": "Tap the bookmark on a word to keep it here.",
+    "savedQuiz": "Quiz these",
+    "savedShowAll": "Show all",
+    "savedNeedMore": "Save and see at least {{count}} words to quiz them."
   },
   "term": {
     "definition": "DEFINITION",

@@ -1,17 +1,23 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, ScrollView, Pressable, TextInput, FlatList, I18nManager, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check, BookOpen } from 'lucide-react-native';
+import { Search, X, ChevronRight, ArrowUpRight, Shuffle, Check, BookOpen, Bookmark, Target } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useAppStore } from '@/lib/store';
+import { useAppStore, MIN_SCOPED_QUIZ_SIZE } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 import { colors, spacing, radius, typography } from '@/constants/theme';
 import { categories, Category, getAllTags, findCategoryById, getDescendantIds, findParentCategory } from '@/data/categories';
+import { packIdOfTerm } from '@/data/packs';
 import { Term, Language, getTermLanguage } from '@/types';
 import { toLocaleUpper } from '@/lib/text-utils';
 import { tokenizeQuery } from '@/lib/pack-filter';
+import {
+  SAVED_WORDS_PREVIEW_LIMIT,
+  buildSavedWordsView,
+  getUnloadedBookmarkPackIds,
+} from '@/lib/bookmarks';
 import {
   GLOBAL_SEARCH_DEBOUNCE_MS,
   GLOBAL_SEARCH_LIMIT,
@@ -112,15 +118,61 @@ export default function ExploreScreen() {
     packsLoaded,
     activePackId,
     ensurePacks,
+    getTermById,
     getPackTerms,
     getPackProgress,
     progress,
+    bookmarkedIds,
+    countScopedQuizReady,
+    setQuizScope,
   } = useAppStore();
   const [queryInput, setQueryInput] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [isLoadingPacks, setIsLoadingPacks] = useState(false);
+  const [showAllSaved, setShowAllSaved] = useState(false);
   const exhaustedPackIdsRef = useRef<Set<string>>(new Set());
+  const requestedBookmarkPacksRef = useRef<Set<string>>(new Set());
   const loadRunIdRef = useRef(0);
+
+  useEffect(() => {
+    if (bookmarkedIds.length <= SAVED_WORDS_PREVIEW_LIMIT && showAllSaved) {
+      setShowAllSaved(false);
+    }
+  }, [bookmarkedIds.length, showAllSaved]);
+
+  useEffect(() => {
+    if (bookmarkedIds.length === 0) return;
+    const packIdsToLoad = getUnloadedBookmarkPackIds(bookmarkedIds, {
+      getTermById,
+      packIdOfTerm,
+      isPackLoaded: (packId) => getPackTerms(packId).length > 0,
+      requestedPackIds: requestedBookmarkPacksRef.current,
+    });
+    if (packIdsToLoad.length === 0) return;
+    for (const packId of packIdsToLoad) {
+      requestedBookmarkPacksRef.current.add(packId);
+    }
+    void ensurePacks(packIdsToLoad);
+  }, [bookmarkedIds, packsLoaded, getTermById, getPackTerms, ensurePacks]);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const savedWordsView = useMemo(
+    () => buildSavedWordsView(bookmarkedIds, getTermById, showAllSaved, SAVED_WORDS_PREVIEW_LIMIT),
+    [bookmarkedIds, getTermById, showAllSaved, terms, packsLoaded]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const savedQuizReadyCount = useMemo(
+    () => countScopedQuizReady(bookmarkedIds),
+    [countScopedQuizReady, bookmarkedIds, progress, terms, packsLoaded]
+  );
+  const canQuizSaved = savedQuizReadyCount >= MIN_SCOPED_QUIZ_SIZE;
+
+  const handleQuizSaved = useCallback(() => {
+    if (countScopedQuizReady(bookmarkedIds) < MIN_SCOPED_QUIZ_SIZE) return;
+    setQuizScope({ ids: bookmarkedIds, label: tr('explore.savedTitle') });
+    router.navigate('/(tabs)/quiz' as unknown as Parameters<typeof router.navigate>[0]);
+  }, [bookmarkedIds, countScopedQuizReady, setQuizScope, tr, router]);
 
   useEffect(() => {
     if (queryInput.trim().length === 0) {
@@ -516,7 +568,122 @@ export default function ExploreScreen() {
               </View>
             )}
 
-            <View style={styles.sectionHeader}>
+            {bookmarkedIds.length === 0 ? (
+              <View
+                style={[
+                  styles.savedEmptyRow,
+                  { backgroundColor: t.bgElevated, borderColor: t.border, flexDirection: rowDir },
+                ]}
+              >
+                <Bookmark size={14} color={t.textTertiary} strokeWidth={1.8} />
+                <Text
+                  style={[typography.footnote, { color: t.textTertiary, flex: 1 }, textDirStyle]}
+                  numberOfLines={1}
+                >
+                  {tr('explore.savedEmpty')}
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.savedSection}>
+                <View style={[styles.sectionHeader, { flexDirection: rowDir }]}>
+                  <View style={[styles.savedTitleRow, { flexDirection: rowDir }]}>
+                    <Text style={[typography.caption, { color: t.textTertiary }, textDirStyle]}>
+                      {tr('explore.savedTitle')}
+                    </Text>
+                    <View style={[styles.savedCountBadge, { backgroundColor: t.bgSubtle, borderColor: t.border }]}>
+                      <Text style={[typography.caption, { color: t.textSecondary }]}>
+                        {savedWordsView.totalCount}
+                      </Text>
+                    </View>
+                  </View>
+                  {savedWordsView.hasMore && (
+                    <Pressable
+                      onPress={() => setShowAllSaved(true)}
+                      accessibilityRole="button"
+                      accessibilityLabel={tr('explore.savedShowAll')}
+                      hitSlop={8}
+                    >
+                      <Text style={[typography.caption, { color: accent }, textDirStyle]}>
+                        {tr('explore.savedShowAll')}
+                      </Text>
+                    </Pressable>
+                  )}
+                </View>
+
+                {savedWordsView.visibleTerms.length > 0 && (
+                  <View style={[styles.savedCard, { backgroundColor: t.bgElevated, borderColor: t.border }]}>
+                    {savedWordsView.visibleTerms.map((item, idx) => (
+                      <Pressable
+                        key={item.id}
+                        style={[
+                          styles.savedWordRow,
+                          idx > 0 && { borderTopWidth: 0.5, borderTopColor: t.border },
+                          { flexDirection: rowDir },
+                        ]}
+                        onPress={() => router.push(`/term/${item.id}`)}
+                        accessibilityRole="button"
+                        accessibilityLabel={tr('packs.openWordDetail', { term: item.term })}
+                      >
+                        <View style={{ flex: 1 }}>
+                          <Text
+                            style={[typography.headline, { color: t.text }, wordDirStyle]}
+                            numberOfLines={1}
+                          >
+                            {item.term}
+                          </Text>
+                          <Text
+                            style={[
+                              typography.footnote,
+                              { color: t.textSecondary, marginTop: 2 },
+                              wordDirStyle,
+                            ]}
+                            numberOfLines={1}
+                          >
+                            {item.translations[getTermLanguage(language)].definition}
+                          </Text>
+                        </View>
+                        <ArrowUpRight size={15} color={t.textTertiary} strokeWidth={1.5} />
+                      </Pressable>
+                    ))}
+                  </View>
+                )}
+
+                <View style={styles.savedQuizWrap}>
+                  <Pressable
+                    disabled={!canQuizSaved}
+                    onPress={handleQuizSaved}
+                    accessibilityRole="button"
+                    accessibilityState={{ disabled: !canQuizSaved }}
+                    style={[
+                      styles.savedQuizBtn,
+                      {
+                        backgroundColor: canQuizSaved ? accent : t.bgSubtle,
+                        borderColor: canQuizSaved ? accent : t.border,
+                        flexDirection: rowDir,
+                      },
+                    ]}
+                  >
+                    <Target size={15} color={canQuizSaved ? colors.dark.text : t.textMuted} strokeWidth={2} />
+                    <Text
+                      style={[
+                        typography.subhead,
+                        { color: canQuizSaved ? colors.dark.text : t.textMuted, fontWeight: '600' },
+                        textDirStyle,
+                      ]}
+                    >
+                      {tr('explore.savedQuiz')}
+                    </Text>
+                  </Pressable>
+                  {!canQuizSaved && (
+                    <Text style={[typography.footnote, { color: t.textTertiary }, textDirStyle]}>
+                      {tr('explore.savedNeedMore', { count: MIN_SCOPED_QUIZ_SIZE })}
+                    </Text>
+                  )}
+                </View>
+              </View>
+            )}
+
+            <View style={[styles.sectionHeader, { flexDirection: rowDir }]}>
               <Text style={[typography.caption, { color: t.textTertiary }]}>
                 {tr('explore.knowledgeMap')}
               </Text>
@@ -594,6 +761,53 @@ const styles = StyleSheet.create({
   },
   packsSection: {
     marginBottom: spacing['2xl'],
+  },
+  savedEmptyRow: {
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 0.5,
+    marginBottom: spacing['2xl'],
+  },
+  savedSection: {
+    marginBottom: spacing['2xl'],
+  },
+  savedTitleRow: {
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  savedCountBadge: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 1,
+    borderRadius: radius.full,
+    borderWidth: 0.5,
+  },
+  savedCard: {
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  savedWordRow: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+  },
+  savedQuizWrap: {
+    marginTop: spacing.md,
+    gap: spacing.xs,
+  },
+  savedQuizBtn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    borderWidth: 1,
   },
   packBanner: {
     borderRadius: radius.lg,
