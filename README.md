@@ -5,7 +5,7 @@ IT terminology learning platform built with React Native + Expo.
 ## Features
 
 - **Swipe-based learning** — Tinder-style flashcards with Leitner spaced repetition (5 boxes)
-- **500 IT terms** — Cybersecurity, Software Development, AI/ML, Networking, and UX
+- **500 IT terms** — AI & ML, Cybersecurity, Design & UX, Networking, Software Development
 - **Multi-category selection** — Pick categories, shuffle, and learn
 - **Energy system** — Freemium model with 30 max energy, 5-minute refill
 - **Level system** — Level up every 100 swipes
@@ -76,4 +76,4 @@ migration before releasing the client that uses the secure sync RPCs.
 
 ## License
 
-Private project. All rights reserved.
+All rights reserved.
