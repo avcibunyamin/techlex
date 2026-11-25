@@ -1144,6 +1144,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       longestStreak: 0,
       lastActiveDate: null,
       earnedBadges: [],
+      bookmarkedIds: [],
       subscriptionTier: 'free' as SubscriptionTier,
       cancelAtPeriodEnd: false,
       currentPeriodEnd: null,
