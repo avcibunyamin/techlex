@@ -31,10 +31,24 @@ jobs:
 
       - run: npm ci
 
+      # The site lives under /techlex/ on GitHub Pages. app.json has no baseUrl (it was dropped on
+      # 2026-09-15 for local and store builds), so it is set here for the Pages build only.
+      - name: Base URL /techlex for Pages
+        run: |
+          node -e '
+            const fs = require("fs"), app = JSON.parse(fs.readFileSync("app.json", "utf8"));
+            app.expo.experiments = { ...app.expo.experiments, baseUrl: "/techlex" };
+            fs.writeFileSync("app.json", JSON.stringify(app, null, 2) + "\n");
+          '
+
       - run: npx expo export --platform web --clear
         timeout-minutes: 5
 
-      - run: ls -la dist/ && grep -o 'src="[^"]*"' dist/index.html
+      # Refuse to deploy a page whose script paths miss the /techlex base (a blank site).
+      - name: Script paths use /techlex
+        run: |
+          ls -la dist/ && grep -o 'src="[^"]*"' dist/index.html
+          grep -q 'src="/techlex/_expo/' dist/index.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
