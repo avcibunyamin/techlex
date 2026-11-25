@@ -65,7 +65,12 @@
     "shuffle": "Embaralhar",
     "shuffleAll": "Embaralhar tudo",
     "moreResults": "Mostrando os primeiros {{limit}} resultados (+{{count}} resultados disponíveis)",
-    "loadingPacks": "Carregando pacotes de palavras..."
+    "loadingPacks": "Carregando pacotes de palavras...",
+    "savedTitle": "Palavras salvas",
+    "savedEmpty": "Toque no marcador de uma palavra para mantê-la aqui.",
+    "savedQuiz": "Testar estas",
+    "savedShowAll": "Mostrar tudo",
+    "savedNeedMore": "Salve e veja pelo menos {{count}} palavras para fazer um quiz."
   },
   "term": {
     "definition": "DEFINIÇÃO",
@@ -79,7 +84,9 @@
     "relatedTerms": "TERMOS RELACIONADOS",
     "premiumOnly": "Desbloquear com Premium",
     "rank": "Posição #{{rank}}",
-    "notFound": "Palavra não encontrada"
+    "notFound": "Palavra não encontrada",
+    "bookmark": "Salvar palavra",
+    "unbookmark": "Remover das salvas"
   },
   "profile": {
     "title": "Perfil",

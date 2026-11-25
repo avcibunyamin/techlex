@@ -65,7 +65,12 @@
     "shuffle": "خلط",
     "shuffleAll": "خلط الكل",
     "moreResults": "يتم عرض أول {{limit}} نتيجة (+{{count}} نتيجة أخرى متاحة)",
-    "loadingPacks": "جارٍ تحميل حزم الكلمات..."
+    "loadingPacks": "جارٍ تحميل حزم الكلمات...",
+    "savedTitle": "الكلمات المحفوظة",
+    "savedEmpty": "اضغط على الإشارة المرجعية لأي كلمة للاحتفاظ بها هنا.",
+    "savedQuiz": "اختبر هذه الكلمات",
+    "savedShowAll": "عرض الكل",
+    "savedNeedMore": "احفظ وشاهد {{count}} كلمات على الأقل لاختبارها."
   },
   "term": {
     "definition": "التعريف",
@@ -79,7 +84,9 @@
     "relatedTerms": "مصطلحات ذات صلة",
     "premiumOnly": "فتح مع بريميوم",
     "rank": "الترتيب #{{rank}}",
-    "notFound": "لم يتم العثور على الكلمة"
+    "notFound": "لم يتم العثور على الكلمة",
+    "bookmark": "حفظ الكلمة",
+    "unbookmark": "إزالة من المحفوظات"
   },
   "profile": {
     "title": "الملف الشخصي",

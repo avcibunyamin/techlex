@@ -65,7 +65,12 @@
     "shuffle": "シャッフル",
     "shuffleAll": "すべてシャッフル",
     "moreResults": "上位{{limit}}件を表示中（他に+{{count}}件の結果があります）",
-    "loadingPacks": "単語パックを読み込み中..."
+    "loadingPacks": "単語パックを読み込み中...",
+    "savedTitle": "保存した単語",
+    "savedEmpty": "単語のブックマークをタップすると、ここに保存されます。",
+    "savedQuiz": "これらでクイズ",
+    "savedShowAll": "すべて表示",
+    "savedNeedMore": "クイズを始めるには、少なくとも{{count}}個の単語を保存して閲覧してください。"
   },
   "term": {
     "definition": "定義",
@@ -79,7 +84,9 @@
     "relatedTerms": "関連用語",
     "premiumOnly": "Premiumで解放",
     "rank": "頻度順 #{{rank}}",
-    "notFound": "単語が見つかりません"
+    "notFound": "単語が見つかりません",
+    "bookmark": "単語を保存",
+    "unbookmark": "保存済みから削除"
   },
   "profile": {
     "title": "プロフィール",

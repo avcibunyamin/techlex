@@ -65,7 +65,12 @@
     "shuffle": "Mischen",
     "shuffleAll": "Alle mischen",
     "moreResults": "Top {{limit}} Ergebnisse werden angezeigt (+{{count}} weitere Ergebnisse vorhanden)",
-    "loadingPacks": "Wortpakete werden geladen..."
+    "loadingPacks": "Wortpakete werden geladen...",
+    "savedTitle": "Gespeicherte Wörter",
+    "savedEmpty": "Tippe auf das Lesezeichen eines Wortes, um es hier zu speichern.",
+    "savedQuiz": "Diese abfragen",
+    "savedShowAll": "Alle anzeigen",
+    "savedNeedMore": "Speichere und sieh dir mindestens {{count}} Wörter an, um sie abzufragen."
   },
   "term": {
     "definition": "DEFINITION",
@@ -79,7 +84,9 @@
     "relatedTerms": "VERWANDTE BEGRIFFE",
     "premiumOnly": "Mit Premium freischalten",
     "rank": "Rang #{{rank}}",
-    "notFound": "Wort nicht gefunden"
+    "notFound": "Wort nicht gefunden",
+    "bookmark": "Wort speichern",
+    "unbookmark": "Aus Gespeicherten entfernen"
   },
   "profile": {
     "title": "Profil",
